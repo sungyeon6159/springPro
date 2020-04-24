@@ -2,8 +2,8 @@ package com.sist.spring.portfolio.project;
 
 import java.util.List;
 
-import com.sist.spring.portfolio.DTO;
-import com.sist.spring.portfolio.Dao;
+import com.sist.spring.cmn.DTO;
+import com.sist.spring.cmn.Dao;
 
 public class ProjectDao implements Dao {
 

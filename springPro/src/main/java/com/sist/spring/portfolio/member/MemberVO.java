@@ -1,6 +1,6 @@
 package com.sist.spring.portfolio.member;
 
-import com.sist.spring.portfolio.DTO;
+import com.sist.spring.cmn.DTO;
 
 public class MemberVO extends DTO {
 	
@@ -14,8 +14,6 @@ public class MemberVO extends DTO {
 	private String email;
 	/** 생년월일 */
 	private String birthday;
-	/** 성별 */
-	private String sexdstn;
 	/** 핸드폰번호 */
 	private String phone;
 	/** 권한 */
@@ -65,14 +63,6 @@ public class MemberVO extends DTO {
 		this.birthday = birthday;
 	}
 
-	public String getSexdstn() {
-		return sexdstn;
-	}
-
-	public void setSexdstn(String sexdstn) {
-		this.sexdstn = sexdstn;
-	}
-
 	public String getPhone() {
 		return phone;
 	}
@@ -100,26 +90,24 @@ public class MemberVO extends DTO {
 	@Override
 	public String toString() {
 		return "MemberVO [memberId=" + memberId + ", password=" + password + ", name=" + name + ", email=" + email
-				+ ", birthday=" + birthday + ", sexdstn=" + sexdstn + ", phone=" + phone + ", authority=" + authority
-				+ ", open=" + open + ", toString()=" + super.toString() + "]";
+				+ ", birthday=" + birthday + ", phone=" + phone + ", authority=" + authority + ", open=" + open
+				+ ", toString()=" + super.toString() + "]";
 	}
 
-	public MemberVO(String memberId, String password, String name, String email, String birthday, String sexdstn,
-			String phone, String authority, String open) {
+	public MemberVO(String memberId, String password, String name, String email, String birthday, String phone,
+			String authority, String open) {
 		super();
 		this.memberId = memberId;
 		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.birthday = birthday;
-		this.sexdstn = sexdstn;
 		this.phone = phone;
 		this.authority = authority;
 		this.open = open;
 	}
 
 	
-
 	
 	
 }

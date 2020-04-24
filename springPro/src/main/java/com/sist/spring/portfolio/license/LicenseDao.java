@@ -2,14 +2,14 @@ package com.sist.spring.portfolio.license;
 
 import java.util.List;
 
-import com.sist.spring.portfolio.DTO;
-import com.sist.spring.portfolio.Dao;
+import com.sist.spring.cmn.DTO;
+import com.sist.spring.cmn.Dao;
 
 public class LicenseDao implements Dao {
 
 	@Override
 	public int doInsert(DTO dto) {
-		// TODO Auto-generated method stub
+		StringBuilder sb=new StringBuilder();
 		return 0;
 	}
 
