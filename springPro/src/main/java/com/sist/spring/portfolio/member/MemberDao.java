@@ -1,48 +1,105 @@
+/**
+ * 
+ */
 package com.sist.spring.portfolio.member;
 
 import java.util.List;
 
-import com.sist.spring.portfolio.DTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-public interface MemberDao {
-	/**
-	 * 등록
-	 * @param dto
-	 * @return int
-	 */
-	public int doInsert(DTO dto);
-	/**
-	 * 수정   
-	 * @param dto
-	 * @return int
-	 */
-	public int doUpdate(DTO dto);
+import com.sist.spring.portfolio.DTO;
+import com.sist.spring.portfolio.Dao;
+
+/**
+ * @author sist
+ *
+ */
+public class MemberDao implements Dao {
+	//Logger
+	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
-	/**
-	 * 단건조회
-	 * @param dto
-	 * @return DTO
-	 */
-	public DTO doSelectOne(DTO dto);
+	//JDBCTemplate
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	
-	/**
-	 * 삭제
-	 * @param dto
-	 * @return int
-	 */
-	public int doDelete(DTO dto);
+	public MemberDao() {}
 	
-	/**
-	 * 목록조회
-	 * @param dto
-	 * @return
-	 */
-	public List<?> doRetrieve(DTO dto);
-	   
-	/**
-	 * 전체 조회
-	 * @param dto
-	 * @return
-	 */
-	public List<?> getAll(DTO dto);	   
+	@Override
+	public int doInsert(DTO dto) {
+		int flag = 0;
+		MemberVO inVO = (MemberVO) dto;
+		
+		StringBuilder  sb=new StringBuilder();
+		sb.append(" INSERT INTO MEMBER ( 	\n");
+		sb.append("     user_id,               \n");
+		sb.append("     password,               \n");
+		sb.append("     name,          		   \n");
+		sb.append("     email,          	  \n");
+		sb.append("     birthday,              \n");
+		sb.append("     sexdstn,        	  \n");
+		sb.append("     phone,         		 \n");
+		sb.append("     authority,          \n");
+		sb.append("     open          \n");
+		sb.append(" ) VALUES (              \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?,                  \n");
+		sb.append("     ?                  \n");
+		sb.append(" )                       \n");	
+		//Query수행
+		LOG.debug("==============================");
+		LOG.debug("=Query=\n"+sb.toString());
+		LOG.debug("=Param=\n"+inVO.toString());
+		Object[] args= {inVO.getMemberId()
+				       ,inVO.getPassword()
+				       ,inVO.getName()
+				       ,inVO.getEmail()
+				       ,inVO.getBirthday()
+				       ,inVO.getSexdstn()
+				       ,inVO.getPhone()
+				       ,inVO.getAuthority()
+				       ,inVO.getOpen()
+		};
+		flag = this.jdbcTemplate.update(sb.toString(), args);
+		
+		
+		LOG.debug("==============================");
+		
+		return flag;
+	}
+
+	@Override
+	public int doUpdate(DTO dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public DTO doSelectOne(DTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int doDelete(DTO dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<?> doRetrieve(DTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }
