@@ -28,7 +28,7 @@
 	<h5>소현 commit + 승종 commit</h5>
 	<h5>진우 Commit</h5>
 	<h5>진우 Commit</h5>
-	<h5>성연 Commit</h5>
+	<h5>성연 Commit</h5>   
 	
 </body>
 </html>
