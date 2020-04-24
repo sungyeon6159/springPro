@@ -103,6 +103,9 @@
                 <form action="start.spring">
                 	<input type="submit" class="btn btn-primary py-3 px-3" value="nextPageTest">
                 </form>
+                <form action="/spring/covid/start.spring">
+                	<input type="submit" class="btn btn-primary py-3 px-3" value="covidTest">
+                </form>
               </div>
 	          </div>
 	        </div>
