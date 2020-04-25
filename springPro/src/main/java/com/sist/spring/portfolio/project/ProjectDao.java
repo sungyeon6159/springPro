@@ -10,11 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Dao;
 import com.sist.spring.portfolio.member.MemberVO;
 
+@Repository
 public class ProjectDao implements Dao {
 
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -41,12 +43,12 @@ public class ProjectDao implements Dao {
 			outData.setPjtTool(rs.getString("pjt_tool"));
 			outData.setGitAddress(rs.getString("git_address"));
 			
-			if(rs.getInt("rnum")==0) {
-				outData.setNum(1);
-			}else {
-				outData.setNum(rs.getInt("rnum"));
-			}
-			outData.setTotalCnt(rs.getInt("total_cnt"));
+//			if(rs.getInt("rnum")==0) {
+//				outData.setNum(1);
+//			}else {
+//				outData.setNum(rs.getInt("rnum"));
+//			}
+//			outData.setTotalCnt(rs.getInt("total_cnt"));
 			return outData;
 		}
 
@@ -186,9 +188,20 @@ public class ProjectDao implements Dao {
 	 */
 	@Override
 	public List<?> doRetrieve(DTO dto) {
+		
+		LOG.debug("============================");
+		LOG.debug("=doRetrieve/ProjectDao");
+		LOG.debug("============================");
+		
+		
 		ProjectVO inVO=(ProjectVO)dto;
 		List<ProjectVO> outList=new ArrayList<ProjectVO>();
 		StringBuilder sb=new StringBuilder();
+		
+		LOG.debug("============================");
+		LOG.debug("=doRetrieve/param"+inVO);
+		LOG.debug("============================");
+		
 		
 		sb.append("SELECT               ");
 		sb.append("    pjt_name,        ");
@@ -203,7 +216,15 @@ public class ProjectDao implements Dao {
 		sb.append("    project          ");
 		sb.append("WHERE                ");
 		sb.append("    member_id=?      ");
-		Object args[]= {inVO.getMemberId()};
+		Object args[]= {inVO.getMemberId()
+				,inVO.getMemberId()
+				,inVO.getMemberId()
+				,inVO.getMemberId()
+				,inVO.getMemberId()
+				,inVO.getMemberId()
+				,inVO.getMemberId()
+				,inVO.getMemberId()
+				};
 		
 		outList=this.jdbcTemplate.queryForList(sb.toString(), args,ProjectVO.class);
 		LOG.debug("=outList=\n"+outList);
