@@ -181,6 +181,9 @@ public class ProjectDao implements Dao {
 		return 0;
 	}
 
+	/***
+	 * 사용자가 등록한 프로젝트의 개수만큼 List.size를 반환
+	 */
 	@Override
 	public List<?> doRetrieve(DTO dto) {
 		ProjectVO inVO=(ProjectVO)dto;
