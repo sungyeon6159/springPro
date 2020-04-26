@@ -19,6 +19,13 @@
  */
 package com.sist.spring.covid;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,6 +34,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Service;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author 82104
@@ -66,5 +75,28 @@ public class CovidService implements Service {
 	public List<?> doRetrieve(DTO dto) {
 		return covidDao.doRetrieve(dto);
 	}
+	
+	//Json URL 호출 
+		public String readAll(Reader rd) throws IOException {
+	      StringBuilder sb = new StringBuilder();
+	      int cp;
+	      while ((cp = rd.read()) != -1) {
+	        sb.append((char) cp);
+	      }
+	      return sb.toString();
+	    }
+		
+	//호출할 json URL 입력(시작메소드)
+    public JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+      InputStream is = new URL(url).openStream();
+      try {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+        String jsonText = readAll(rd);
+        JSONObject json = new JSONObject(jsonText);
+        return json;
+      } finally {
+        is.close();
+      }
+    }
 
 }
