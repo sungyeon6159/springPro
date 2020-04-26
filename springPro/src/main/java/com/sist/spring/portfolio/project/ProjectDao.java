@@ -216,17 +216,16 @@ public class ProjectDao implements Dao {
 		sb.append("    project          ");
 		sb.append("WHERE                ");
 		sb.append("    member_id=?      ");
-		Object args[]= {inVO.getMemberId()
-				,inVO.getMemberId()
-				,inVO.getMemberId()
-				,inVO.getMemberId()
-				,inVO.getMemberId()
-				,inVO.getMemberId()
-				,inVO.getMemberId()
-				,inVO.getMemberId()
-				};
+//		Object args[]= {inVO.getMemberId()};
 		
-		outList=this.jdbcTemplate.queryForList(sb.toString(), args,ProjectVO.class);
+		//Param setting
+		List<Object> listArgs = new ArrayList<Object>();
+				
+		listArgs.add(inVO.getMemberId());
+				
+		
+		
+		outList=this.jdbcTemplate.query(sb.toString(),listArgs.toArray(), rowMapper);
 		LOG.debug("=outList=\n"+outList);
 		LOG.debug("==============================");
 		

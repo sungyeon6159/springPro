@@ -3,6 +3,8 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=utf-8"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,15 +123,19 @@
                       <!-- <h2 class="mb-4">Projects</h2> -->
                      <table cellpadding="3">
                         <tbody>
-                        	<tr>
-                        		<td colspan="3">
+                        <tr>
+                        	<td colspan="3">
                         		<small>이 곳에서는 그동안 배우고 적용한 프로젝트를 볼 수 있는 곳입니다. <br>해당하는 버튼을 클릭하면 소스와,시연영상을 보실 수 있습니다.</small>
-                        		</td>
-                        	</tr>
-                        	<tr>
+                        	</td>
+                        </tr>
+                        <tr>
                         	<td><br/></td>
-                        	</tr>
-                           <tr>
+                        </tr>
+                        <c:choose>
+                		<%-- data가 있는 경우 --%>
+                		<c:when test="${pjtList.size()>0}">
+                			<c:forEach var="vo" items="${pjtList}">
+	                		<tr>
                               <td><h5 class="text-primary" ><b>1차 프로젝트</b></h5></td>
                            </tr>
                            <tr>
@@ -139,31 +145,40 @@
                                  </a>  
                               </td>
                               <td>
-                              	<p><b> 이름:</b></p>
+                              	<p><b> subject:</b></p>
                               </td>
                               <td>
-                              	<p> MySportsGround(MSG)</p>
+                              	<p> ${vo.pjtName}</p>
                               </td>
-                           </tr>
-                           <tr>
-                           	  <td>
-                           	  	<p><b> 주제:</b></p>
-                           	  </td>
-                           	  <td>
-                           	  	<p> 주제란 이것이다</p>
-                           	  </td>
                            </tr>
                            <tr>
                            	  <td>
                            	  	<p><b> 설명:</b></p>
                            	  </td>
                            	  <td>
-                           	  	<p> 설명이란 이것이다</p>
+                           	  	<p>${vo.pjtInfo}</p>
+                           	  </td>
+                           </tr>
+                           <tr>
+                           	  <td>
+                           	  	<p><b> 사용 툴:</b></p>
+                           	  </td>
+                           	  <td>
+                           	  	<p>${vo.pjtTool}</p>
+                           	  </td>
+                           </tr>
+                           
+                           <tr>
+                           	  <td>
+                           	  	<p><b>프로젝트 기간</b></p>
+                           	  </td>
+                           	  <td>
+                           	  	<p>${vo.pjtStart}-${vo.pjtEnd}</p>
                            	  </td>
                            </tr>
                            <tr>
                            	  <td colspan="2" align="center">
-                           	      <a href="https://github.com/shkim9019/eHRGit0101/blob/master/eHRGit0101/src/eHRGit0101/HelloWorld.java">
+                           	      <a href="${vo.gitAddress}">
                            	      	<input type="button" class="btn btn-outline-primary" value="소스보기"/>
                            	      </a> &nbsp;&nbsp;
                            	  	  <input type="button" class="btn btn-outline-primary" value="영상보기"/>  
@@ -172,87 +187,15 @@
                            <tr>
                         	<td><br/></td>
                         	</tr>
-                           <tr>
-                              <td><h5 class="text-primary"><b>2차 프로젝트</b></h5></td>
-                           </tr>
-                           <tr>
-                              <td rowspan="4">
-                                 <a href="https://github.com/shkim9019/eHRGit0101">
-                                 	<img src="${hContext}/resources/images/image_1.jpg" width="170" height="170" align="top">
-                                 </a>
-                              </td>
-                              <td>
-                              	<p><b> 이름:</b></p>
-                              </td>
-                              <td>
-                              	<p> 숙박의 민족</p>
-                              </td>
-                           </tr>
-                           <tr>
-                           	  <td>
-                           	  	<p><b> 주제:</b></p>
-                           	  </td>
-                           	  <td>
-                           	  	<p>주제란 이것이다</p>
-                           	  </td>
-                           </tr>
-                           <tr>
-                           	  <td>
-                           	  	<p><b> 설명:</b></p>
-                           	  </td>
-                           	  <td>
-                           	  	<p> 설명이란 이것이다</p>
-                           	  </td>
-                           </tr>
-                           <tr>
-                           	  <td colspan="2" align="center">
-                           	      <input type="button" class="btn btn-outline-primary" value="소스보기"/> &nbsp;&nbsp;
-                           	  	  <input type="button" class="btn btn-outline-primary" value="영상보기"/>  
-                           	  </td>
-                           </tr>
-                           <tr>
-                        	<td><br/></td>
-                        	</tr>
-                           <tr>
-                              <td><h5 class="text-primary"><b>3차 프로젝트</b></h5></td>
-                           </tr>
-                           <tr>
-                              <td rowspan="4">
-                                 <a href="https://github.com/shkim9019/eHRGit0101">
-                                 	<img src="${hContext}/resources/images/image_1.jpg" width="170" height="170" align="top">
-                                 </a>
-                              </td>
-                              <td>
-                              	<p><b> 이름:</b></p>
-                              </td>
-                              <td>
-                              	<p> 봄봄 </p>
-                              </td>
-                           </tr>
-                           <tr>
-                           	  <td>
-                           	  	<p><b> 주제:</b></p>
-                           	  </td>
-                           	  <td>
-                           	  	<p> 주제란 이것이다</p>
-                           	  </td>
-                           </tr>
-                           <tr>
-                           	  <td>
-                           	  	<p><b> 설명:</b></p>
-                           	  </td>
-                           	  <td>
-                           	  	<p> 설명이란 이것이다</p>
-                           	  </td>
-                           </tr>
-                           <tr>
-                           	  <td colspan="2" align="center">
-                           	      <form action="/spring/covid/start.spring">
-	                				 <input type="submit" class="btn btn-outline-primary" value="covidTest">
-                            	  	 <input type="button" class="btn btn-outline-primary" value="영상보기"/>  
-	               			      </form>
-                           	  </td>
-                           </tr>
+	                	    </c:forEach>
+                		</c:when>
+                		<%-- data가 없는 경우 --%>
+                		<c:otherwise>
+                			<tr>
+                				<td colspan="99">등록된 게시글이 없습니다</td>
+                			</tr>
+                		</c:otherwise>
+                	</c:choose>
                         </tbody>
                      </table>
                      </div>
