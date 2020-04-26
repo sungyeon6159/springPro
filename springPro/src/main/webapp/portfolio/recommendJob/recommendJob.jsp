@@ -62,80 +62,14 @@
   	<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="about-section">
       <div class="container">
          <div class="row d-flex no-gutters">
-         	<form action="${hContext}/portfolio/signUp.do" name="signUp_frm" method="post">
-			<table>
-				<tr>
-					<td colspan=2>
-						<h1>회원가입</h1>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p>아이디<p>
-					</td>
-					<td>
-						<input type="text" id="memberId" name="memberId">
-					</td>
-				</tr>
-				<tr>	
-					<td>
-						<p>비밀번호<p>
-					</td>
-					<td>
-						<input type="password" id="memberId" name="memberPw">
-					</td>
-				</tr>
-				<tr>	
-					<td>
-						<p>이름 <p>
-					</td>
-					<td>
-						<input type="text" id="memberName" name="memberName">
-					</td>
-				</tr>
-				<tr>	
-					<td>
-						<p>연락처 <p>
-					</td>
-					<td>
-						<input type="text" id="phone" name="phone">
-					</td>
-				</tr>
-				<tr>	
-					<td>
-						<p>이메일 <p>
-					</td>
-					<td>
-						<input type="text" id="email" name="email">
-					</td>
-				</tr>
-				<tr>	
-					<td>
-						<p>생년월일 <p>
-					</td>
-					<td>
-						<input type="text" id="birth" name="birth">
-					</td>
-				</tr>
-				<tr>	
-					<td>
-						<p>공개여부<p>
-					</td>
-					<td>
-						공개 &nbsp <input type="radio" name="readable" id="readable" checked>
-						비공개 &nbsp <input type="radio" name="readable" id="readable">
-					</td>
-				</tr>
-			
-				<tr>
-					<td colspan=2>
-					<input class="btn btn-outline-primary" type="submit" value="회원가입"><br/>
-					<button type="button" onclick="javascript:signUp();" class="btn btn-primary btn-sm">검색</button>
-					</td>
-				</tr>
-			</table>
-			</form>
-          </div>
+         
+         
+         ${companyList}
+         
+         
+         
+         
+         </div>
       </div><!-- //container -->
    </section>
 

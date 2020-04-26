@@ -99,6 +99,7 @@
                <ul class="nav nav-tabs">
                  <li class="nav-item"><a href="#AboutMe" class="nav-link active" data-toggle="tab"><span>AboutMe</span></a></li>
                  <li class="nav-item"><a href="#Projects" class="nav-link" data-toggle="tab"><span>Projects</span></a></li>
+                 <li class="nav-item"><a href="#recommend" class="nav-link" data-toggle="tab"><span>Recommends</span></a></li>
                  <li class="nav-item"><a href="#Skills" class="nav-link" data-toggle="tab"><span>Skills</span></a></li>
                  <li class="nav-item"><a href="#Awards" class="nav-link" data-toggle="tab"><span>Awards</span></a></li>
                </ul>
@@ -199,9 +200,45 @@
                         </tbody>
                      </table>
                      </div>
-
+						
                      <!-- //Projects -->
-                     
+                     <div class="tab-pane fade" id="recommend">
+                      <!-- <h2 class="mb-4">Projects</h2> -->
+                     <table cellpadding="3">
+                        <tbody>
+                        <tr>
+                        	<td colspan="3">
+                        		<small>키워드에 맞는 채용공고<br></small>
+                        	</td>
+                        </tr>
+                        <tr>
+                        	<td><br/></td>
+                        </tr>
+                        <c:choose>
+                		<%-- data가 있는 경우 --%>
+                		<c:when test="${companyList.size()>0}">
+                			<c:forEach var="company" items="${companyList}">
+	                		<tr>
+                              <td><h5 class="text-primary" ><b>채용 공고</b></h5></td>
+                           </tr>
+                           <tr>
+                           	  <td>
+                           	  	<p>${company}</p>
+                           	  </td>
+                           </tr>
+	                	    </c:forEach>
+                		</c:when>
+                		<%-- data가 없는 경우 --%>
+                		<c:otherwise>
+                			<tr>
+                				<td colspan="99">추천 키워드를 지정해주세요</td>
+                			</tr>
+                		</c:otherwise>
+                	</c:choose>
+                        </tbody>
+                     </table>
+                     </div>
+                     <!-- recommend -->
                      <!-- Skills -->
                      <div class="tab-pane fade" id="Skills">
                         <div id="page-3" class= "page three">
