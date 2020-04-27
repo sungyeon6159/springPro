@@ -13,7 +13,7 @@ public class MemberVO extends DTO {
 	/** 이메일 */
 	private String email;
 	/** 생년월일 */
-	private String birthday;
+	private String birth;
 	/** 핸드폰번호 */
 	private String phone;
 	/** 권한 */
@@ -55,12 +55,12 @@ public class MemberVO extends DTO {
 		this.email = email;
 	}
 
-	public String getBirthday() {
-		return birthday;
+	public String getBirth() {
+		return birth;
 	}
 
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 
 	public String getPhone() {
@@ -90,24 +90,23 @@ public class MemberVO extends DTO {
 	@Override
 	public String toString() {
 		return "MemberVO [memberId=" + memberId + ", password=" + password + ", name=" + name + ", email=" + email
-				+ ", birthday=" + birthday + ", phone=" + phone + ", authority=" + authority + ", open=" + open
+				+ ", birth=" + birth + ", phone=" + phone + ", authority=" + authority + ", open=" + open
 				+ ", toString()=" + super.toString() + "]";
 	}
 
-	public MemberVO(String memberId, String password, String name, String email, String birthday, String phone,
+	public MemberVO(String memberId, String password, String name, String email, String birth, String phone,
 			String authority, String open) {
 		super();
 		this.memberId = memberId;
 		this.password = password;
 		this.name = name;
 		this.email = email;
-		this.birthday = birthday;
+		this.birth = birth;
 		this.phone = phone;
 		this.authority = authority;
 		this.open = open;
 	}
 
-	
 	
 	
 }

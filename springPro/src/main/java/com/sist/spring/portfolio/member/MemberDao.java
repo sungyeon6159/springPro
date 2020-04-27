@@ -30,11 +30,11 @@ public class MemberDao implements Dao {
 
 		public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			MemberVO outData=new MemberVO();
-			outData.setMemberId(rs.getString("memberid"));
+			outData.setMemberId(rs.getString("member_id"));
 			outData.setPassword(rs.getString("password"));
 			outData.setName(rs.getString("name"));
 			outData.setEmail(rs.getString("email"));
-			outData.setBirthday(rs.getString("birthday"));
+			outData.setBirth(rs.getString("birth"));
 			outData.setPhone(rs.getString("phone"));
 			outData.setAuthority(rs.getString("authority"));
 			outData.setOpen(rs.getString("open"));
@@ -58,11 +58,11 @@ public class MemberDao implements Dao {
 		
 		StringBuilder  sb=new StringBuilder();
 		sb.append(" INSERT INTO MEMBER ( 	\n");
-		sb.append("     memberid,               \n");
+		sb.append("     member_id,               \n");
 		sb.append("     password,               \n");
 		sb.append("     name,          		   \n");
 		sb.append("     email,          	  \n");
-		sb.append("     birthday,              \n");
+		sb.append("     birth,              \n");
 		sb.append("     phone,         		 \n");
 		sb.append("     authority,          \n");
 		sb.append("     open          \n");
@@ -84,7 +84,7 @@ public class MemberDao implements Dao {
 				       ,inVO.getPassword()
 				       ,inVO.getName()
 				       ,inVO.getEmail()
-				       ,inVO.getBirthday()
+				       ,inVO.getBirth()
 				       ,inVO.getPhone()
 				       ,inVO.getAuthority()
 				       ,inVO.getOpen()
@@ -106,12 +106,12 @@ public class MemberDao implements Dao {
 		sb.append(" SET password = ?,               \n");
 		sb.append("     name = ?,          		   \n");
 		sb.append("     email = ?,          	  \n");
-		sb.append("     birthday = ?,              \n");
+		sb.append("     birth = ?,              \n");
 		sb.append("     phone = ?,         		 \n");
 		sb.append("     authority = ?,          \n");
 		sb.append("     open = ?          \n");
 		sb.append(" WHERE                    \n");
-		sb.append("     memberid = ?             \n");
+		sb.append("     member_id = ?             \n");
 		
 		LOG.debug("==============================");
 		LOG.debug("=Query=\n"+sb.toString());
@@ -119,7 +119,7 @@ public class MemberDao implements Dao {
 		Object[] args= {inVO.getPassword()
 				      ,inVO.getName()
 				      ,inVO.getEmail()
-				      ,inVO.getBirthday()
+				      ,inVO.getBirth()
 				      ,inVO.getPhone()
 				      ,inVO.getAuthority()
 				      ,inVO.getOpen()
@@ -136,11 +136,11 @@ public class MemberDao implements Dao {
 		MemberVO inVO  = (MemberVO) dto;//Param UserVO
 		StringBuilder  sb=new StringBuilder();
 		sb.append(" SELECT                   \n");
-		sb.append("     memberid,             \n");
+		sb.append("     member_id,             \n");
 		sb.append("     password,           \n");
 		sb.append("     name,          		   \n");
 		sb.append("     email,          	  \n");
-		sb.append("     birthday,              \n");
+		sb.append("     birth,              \n");
 		sb.append("     phone,         		 \n");
 		sb.append("     authority,          \n");
 		sb.append("     open          		\n");
@@ -148,7 +148,7 @@ public class MemberDao implements Dao {
 		sb.append("     1 total_cnt   \n");
 		sb.append(" FROM                      \n");
 		sb.append("     member               \n");
-		sb.append(" WHERE memberid = ?       \n");
+		sb.append(" WHERE member_id = ?       \n");
 		
 		//Query수행
 		LOG.debug("==============================");
@@ -171,7 +171,7 @@ public class MemberDao implements Dao {
 		MemberVO inVO = (MemberVO) dto;
 		StringBuilder  sb=new StringBuilder();
 		sb.append(" DELETE FROM hr_member \n");
-		sb.append(" WHERE u_id = ?        \n");
+		sb.append(" WHERE member_id = ?        \n");
 		LOG.debug("==============================");
 		LOG.debug("=Query=\n"+sb.toString());
 		LOG.debug("=Param="+inVO);
@@ -205,11 +205,11 @@ public class MemberDao implements Dao {
 		StringBuilder sb=new StringBuilder();
 		sb.append("SELECT T1.*,T2.*                                              \n");
 		sb.append("FROM(                                                         \n");
-		sb.append("    SELECT  B.memberId,                                       \n");
+		sb.append("    SELECT  B.member_id,                                      \n");
 		sb.append("            B.password,                                       \n");
 		sb.append("            B.name,                                           \n");
 		sb.append("            B.email,                                          \n");
-		sb.append("            B.birthday,                                       \n");
+		sb.append("            B.birth,                                          \n");
 		sb.append("            B.phone,                                     	 \n");
 		sb.append("            B.authority,                                      \n");
 		sb.append("            B.open,          								 \n");
@@ -254,7 +254,6 @@ public class MemberDao implements Dao {
 			listArg.add(inVO.getPageSize());
 			listArg.add(inVO.getPageNum());
 			listArg.add(inVO.getSearchWord());
-			
 		}else {
 			listArg.add(inVO.getPageSize());
 			listArg.add(inVO.getPageNum());
