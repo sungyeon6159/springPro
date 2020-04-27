@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Dao;
+import com.sist.spring.cmn.SearchVO;
 
 /**
  * @author sist
@@ -185,9 +186,87 @@ public class MemberDao implements Dao {
 
 	@Override
 	public List<?> doRetrieve(DTO dto) {
-		String test=null;
-		return null;
+		SearchVO  inVO= (SearchVO) dto;
+		//검색구분
+		  //ID : 10
+		  //이름: 20
+		//검색어
+		StringBuilder whereSb=new StringBuilder();
 		
+		if(null !=inVO && !"".equals(inVO.getSearchDiv())) {
+			if(inVO.getSearchDiv().equals("10")) {
+				whereSb.append("WHERE u_id like '%' || ? ||'%'   \n");
+			}else if(inVO.getSearchDiv().equals("20")) {
+				whereSb.append("WHERE name like '%' || ? ||'%'   \n");
+			}
+		}
+		
+		
+		StringBuilder sb=new StringBuilder();
+		sb.append("SELECT T1.*,T2.*                                              \n");
+		sb.append("FROM(                                                         \n");
+		sb.append("    SELECT  B.memberId,                                       \n");
+		sb.append("            B.password,                                       \n");
+		sb.append("            B.name,                                           \n");
+		sb.append("            B.email,                                          \n");
+		sb.append("            B.birthday,                                       \n");
+		sb.append("            B.phone,                                     	 \n");
+		sb.append("            B.authority,                                      \n");
+		sb.append("            B.open,          								 \n");
+		sb.append("            rnum                                              \n");		
+		sb.append("    FROM(                                                     \n");
+		sb.append("        SELECT ROWNUM rnum,                                   \n");
+		sb.append("               A.*                                            \n");
+		sb.append("        FROM (                                                \n");
+		sb.append("            SELECT *                                          \n");
+		sb.append("            FROM hr_member                                    \n");
+		sb.append("            ORDER BY reg_dt DESC                              \n");
+		sb.append("            --검색조건                                                                                   \n");
+		//--검색----------------------------------------------------------------------
+		sb.append(whereSb.toString());
+		//--검색----------------------------------------------------------------------				
+		sb.append("        )A --10                                               \n");
+		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
+		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) \n");
+		sb.append("    )B --1                                                    \n");
+		//sb.append("    WHERE B.RNUM >= (&PAGE_SIZE*(&PAGE_NUM-1)+1)              \n");
+		sb.append("    WHERE B.RNUM >= (?*(?-1)+1)              \n");
+		sb.append("    )T1 CROSS JOIN                                            \n");
+		sb.append("    (                                                         \n");
+		sb.append("    SELECT count(*) total_cnt                                 \n");
+		sb.append("    FROM hr_member                                            \n");
+		sb.append("    --검색조건                                                   \n");
+		//--검색----------------------------------------------------------------------
+		sb.append(whereSb.toString());
+		//--검색----------------------------------------------------------------------
+		sb.append("    )T2                                                       \n");
+
+		//param 
+		List<Object> listArg = new ArrayList<Object>();
+		
+		
+		//param set
+		if(null !=inVO && !"".equals(inVO.getSearchDiv())) {
+			listArg.add(inVO.getSearchWord());
+			listArg.add(inVO.getPageSize());
+			listArg.add(inVO.getPageNum());
+			listArg.add(inVO.getPageSize());
+			listArg.add(inVO.getPageSize());
+			listArg.add(inVO.getPageNum());
+			listArg.add(inVO.getSearchWord());
+			
+		}else {
+			listArg.add(inVO.getPageSize());
+			listArg.add(inVO.getPageNum());
+			listArg.add(inVO.getPageSize());
+			listArg.add(inVO.getPageSize());
+			listArg.add(inVO.getPageNum());			
+		}
+		
+		List<MemberVO> retList = this.jdbcTemplate.query(sb.toString(), listArg.toArray(), rowMapper);
+		LOG.debug("query \n"+sb.toString());
+		LOG.debug("param:"+listArg);
+		return retList;
 	}
 
 }

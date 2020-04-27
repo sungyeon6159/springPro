@@ -43,7 +43,7 @@ public class ProjectController {
 		LOG.debug("==ProjectService/doRetrieve");
 		LOG.debug("==========================");
 		
-		search.setMemberId("iod1124");
+		search.setMemberId("iod1125");
 		
 		List<ProjectVO> list=(List<ProjectVO>)pjtService.doRetrieve(search);
 		
