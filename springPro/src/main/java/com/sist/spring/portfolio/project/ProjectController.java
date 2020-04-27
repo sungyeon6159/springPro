@@ -33,6 +33,16 @@ public class ProjectController {
 	@Autowired
 	ProjectService pjtService;
 	
+	@RequestMapping(value="/portfolio/do_insert.spring"
+			,method=RequestMethod.GET
+			,produces ="application/json; charset=UTF-8")
+	public String doInsert(HttpServletRequest req, ProjectVO search, Model model) {
+		
+		
+		return null;
+	}
+	
+	
 	
 	@RequestMapping(value="/portfolio/do_retrieve.spring"
 					,method=RequestMethod.GET
