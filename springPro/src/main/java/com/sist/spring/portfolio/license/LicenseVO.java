@@ -28,36 +28,24 @@ import com.sist.spring.cmn.DTO;
 public class LicenseVO extends DTO {
 	private String lName ; /**자격증명 */
 	private String lGroup; /**자격 분류(국가기술,국가전문,민간,외국 등) */
-	private String lKind ; /**자격증 종류(기사,기능사 등) */
+	private String lGrade ; /**자격증 종류(기사,기능사,1급,2급) */
 	private String lNum  ; /**자격증 번호 */
-	private String lLevel; /**자격 등급(1급,2급 등) */
-	private String lGet  ; /**취득일 */
+	private String lDate  ; /**취득일 */
 	private String lOrgan; /**발행기관 */
-	private String userId; /**회원ID */
+	private String memberId; /**회원ID */
 
-	 public LicenseVO() {}
+	public LicenseVO() {}
 
-	/**
-	 * @param lName
-	 * @param lGroup
-	 * @param lKind
-	 * @param lNum
-	 * @param lLevel
-	 * @param lGet
-	 * @param lOrgan
-	 * @param userId
-	 */
-	public LicenseVO(String lName, String lGroup, String lKind, String lNum, String lLevel, String lGet, String lOrgan,
-			String userId) {
+	public LicenseVO(String lName, String lGroup, String lGrade, String lNum, String lDate, String lOrgan,
+			String memberId) {
 		super();
 		this.lName = lName;
 		this.lGroup = lGroup;
-		this.lKind = lKind;
+		this.lGrade = lGrade;
 		this.lNum = lNum;
-		this.lLevel = lLevel;
-		this.lGet = lGet;
+		this.lDate = lDate;
 		this.lOrgan = lOrgan;
-		this.userId = userId;
+		this.memberId = memberId;
 	}
 
 	/**
@@ -89,17 +77,17 @@ public class LicenseVO extends DTO {
 	}
 
 	/**
-	 * @return the lKind
+	 * @return the lGrade
 	 */
-	public String getlKind() {
-		return lKind;
+	public String getlGrade() {
+		return lGrade;
 	}
 
 	/**
-	 * @param lKind the lKind to set
+	 * @param lGrade the lGrade to set
 	 */
-	public void setlKind(String lKind) {
-		this.lKind = lKind;
+	public void setlGrade(String lGrade) {
+		this.lGrade = lGrade;
 	}
 
 	/**
@@ -117,31 +105,17 @@ public class LicenseVO extends DTO {
 	}
 
 	/**
-	 * @return the lLevel
+	 * @return the lDate
 	 */
-	public String getlLevel() {
-		return lLevel;
+	public String getlDate() {
+		return lDate;
 	}
 
 	/**
-	 * @param lLevel the lLevel to set
+	 * @param lDate the lDate to set
 	 */
-	public void setlLevel(String lLevel) {
-		this.lLevel = lLevel;
-	}
-
-	/**
-	 * @return the lGet
-	 */
-	public String getlGet() {
-		return lGet;
-	}
-
-	/**
-	 * @param lGet the lGet to set
-	 */
-	public void setlGet(String lGet) {
-		this.lGet = lGet;
+	public void setlDate(String lDate) {
+		this.lDate = lDate;
 	}
 
 	/**
@@ -159,38 +133,36 @@ public class LicenseVO extends DTO {
 	}
 
 	/**
-	 * @return the userId
+	 * @return the memberId
 	 */
-	public String getUserId() {
-		return userId;
+	public String getMemberId() {
+		return memberId;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param memberId the memberId to set
 	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	@Override
 	public String toString() {
-		return "LicenseVO [lName=" + lName + ", lGroup=" + lGroup + ", lKind=" + lKind + ", lNum=" + lNum + ", lLevel="
-				+ lLevel + ", lGet=" + lGet + ", lOrgan=" + lOrgan + ", userId=" + userId + ", toString()="
-				+ super.toString() + "]";
+		return "LicenseVO [lName=" + lName + ", lGroup=" + lGroup + ", lGrade=" + lGrade + ", lNum=" + lNum + ", lDate="
+				+ lDate + ", lOrgan=" + lOrgan + ", memberId=" + memberId + ", toString()=" + super.toString() + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((lGet == null) ? 0 : lGet.hashCode());
+		result = prime * result + ((lDate == null) ? 0 : lDate.hashCode());
+		result = prime * result + ((lGrade == null) ? 0 : lGrade.hashCode());
 		result = prime * result + ((lGroup == null) ? 0 : lGroup.hashCode());
-		result = prime * result + ((lKind == null) ? 0 : lKind.hashCode());
-		result = prime * result + ((lLevel == null) ? 0 : lLevel.hashCode());
 		result = prime * result + ((lName == null) ? 0 : lName.hashCode());
 		result = prime * result + ((lNum == null) ? 0 : lNum.hashCode());
 		result = prime * result + ((lOrgan == null) ? 0 : lOrgan.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
 		return result;
 	}
 
@@ -203,25 +175,20 @@ public class LicenseVO extends DTO {
 		if (getClass() != obj.getClass())
 			return false;
 		LicenseVO other = (LicenseVO) obj;
-		if (lGet == null) {
-			if (other.lGet != null)
+		if (lDate == null) {
+			if (other.lDate != null)
 				return false;
-		} else if (!lGet.equals(other.lGet))
+		} else if (!lDate.equals(other.lDate))
+			return false;
+		if (lGrade == null) {
+			if (other.lGrade != null)
+				return false;
+		} else if (!lGrade.equals(other.lGrade))
 			return false;
 		if (lGroup == null) {
 			if (other.lGroup != null)
 				return false;
 		} else if (!lGroup.equals(other.lGroup))
-			return false;
-		if (lKind == null) {
-			if (other.lKind != null)
-				return false;
-		} else if (!lKind.equals(other.lKind))
-			return false;
-		if (lLevel == null) {
-			if (other.lLevel != null)
-				return false;
-		} else if (!lLevel.equals(other.lLevel))
 			return false;
 		if (lName == null) {
 			if (other.lName != null)
@@ -238,13 +205,14 @@ public class LicenseVO extends DTO {
 				return false;
 		} else if (!lOrgan.equals(other.lOrgan))
 			return false;
-		if (userId == null) {
-			if (other.userId != null)
+		if (memberId == null) {
+			if (other.memberId != null)
 				return false;
-		} else if (!userId.equals(other.userId))
+		} else if (!memberId.equals(other.memberId))
 			return false;
 		return true;
 	}
-	 
+
+ 	 
 	 
 }

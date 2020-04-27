@@ -30,14 +30,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		@Override
 		public LicenseVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			LicenseVO outData = new LicenseVO();
-			outData.setlName(rs.getString("lNname"));
+			outData.setlName(rs.getString("lName"));
 			outData.setlGroup(rs.getString("lGroup"));
-			outData.setlKind(rs.getString("lKind"));
+			outData.setlGrade(rs.getString("lGrade"));
 			outData.setlNum(rs.getString("lNum"));
-			outData.setlLevel(rs.getString("lLevel"));
-			outData.setlGet(rs.getString("lGet"));
+			outData.setlDate(rs.getString("lDate"));
 			outData.setlOrgan(rs.getString("lOrgan"));
-			outData.setUserId(rs.getString("userId"));
+			outData.setMemberId(rs.getString("memberId"));
 			
 			return outData;
 		}
@@ -48,25 +47,24 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		int flag = 0;
 		LicenseVO inVO = (LicenseVO)dto;
 		StringBuilder sb=new StringBuilder();
-		sb.append("INSERT INTO License(  \n");
-		sb.append("		     lname,      \n");
-		sb.append("		     lOrgan,     \n");
-		sb.append("		     lGroup,     \n");
-		sb.append("		     lKind,      \n");
-		sb.append("		     lNum,       \n");
-		sb.append("		     lLevel,     \n");
-		sb.append("		     lGet,       \n");
-		sb.append("		     userId,     \n");
-		sb.append(")VALUES(              \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?           \n");
-		sb.append(")                     \n");
+		sb.append("INSERT INTO License(   \n");
+		sb.append("		     l_name,      \n");
+		sb.append("		     l_group,     \n");
+		sb.append("		     l_grade,     \n");
+		sb.append("		     l_num,       \n");
+		sb.append("		     l_date       \n");
+		sb.append("		     l_organ,     \n");
+		sb.append("		     member_id,   \n");
+		sb.append(")VALUES(               \n");
+		sb.append("		     ?,           \n");
+		sb.append("		     ?,           \n");
+		sb.append("		     ?,           \n");
+		sb.append("		     ?,           \n");
+		sb.append("		     ?,           \n");
+		sb.append("		     ?,           \n");
+		sb.append("		     ?,           \n");
+		sb.append("		     ?            \n");
+		sb.append(")                      \n");
 		
 		LOG.debug("========================================");
 		LOG.debug("==============doInsert==================");
@@ -76,12 +74,11 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		Object[] args = {
 							inVO.getlName(),
 							inVO.getlGroup(),
-							inVO.getlKind(),
+							inVO.getlGrade(),
 							inVO.getlNum(),
-							inVO.getlLevel(),
-							inVO.getlGet(),
+							inVO.getlDate(),
 							inVO.getlOrgan(),
-							inVO.getUserId()
+							inVO.getMemberId()
 						};
 		flag = this.jdbcTemplate.update(sb.toString(),args);
 		LOG.debug("flag = "+flag);
@@ -91,9 +88,43 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public int doUpdate(DTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int flag = 0;
+		LicenseVO inVO = (LicenseVO) dto;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("UPDATE License           \n");
+		sb.append("SET l_group = ?          \n");
+		sb.append("   ,l_grade = ?          \n");
+		sb.append("   ,l_num = ?            \n");
+		sb.append("   ,l_date = ?           \n");
+		sb.append("   ,l_organ = ?          \n");
+		sb.append("WHERE  member_id = ?     \n");
+		sb.append("ANE l_name=? 			\n");
+		    
+		//Query 수행
+		LOG.debug("==================================");
+		LOG.debug("QEURY =\n"+sb.toString());
+		LOG.debug("Param ="+inVO.toString());
+		LOG.debug("==================================");
+		
+		Object[] args = {
+						 inVO.getlGroup(),
+						 inVO.getlGrade(),
+						 inVO.getlNum(),
+						 inVO.getlDate(),
+						 inVO.getlOrgan(),
+						 inVO.getMemberId(),
+						 inVO.getlName()
+		};
+		
+		flag = jdbcTemplate.update(sb.toString(), args);
+		LOG.debug("==================================");
+		LOG.debug("flag ="+flag);
+		LOG.debug("==================================");
+		
+		return flag;
 	}
+	
 
 	@Override
 	public DTO doSelectOne(DTO dto) {
@@ -101,24 +132,23 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		LicenseVO outVO = new LicenseVO();
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("SELECT               ");
-		sb.append("    lname,           ");
-		sb.append("    lOrgan,          ");
-		sb.append("    lGroup,          ");
-		sb.append("    lKind,           ");
-		sb.append("    lNum,            ");
-		sb.append("    lLevel,          ");
-		sb.append("    lGet,            ");
-		sb.append("    userId,          ");
-		sb.append("FROM                 ");
-		sb.append("    License          ");
-		sb.append("WHERE                ");
-		sb.append("    lname=?          ");
-		sb.append("    AND userId= ?    ");
+		sb.append("SELECT               \n");
+		sb.append("    l_name,          \n");
+		sb.append("    l_group,         \n");
+		sb.append("    l_grade,         \n");
+		sb.append("    l_num,           \n");
+		sb.append("    l_date,          \n");
+		sb.append("    l_organ,         \n");
+		sb.append("    member_id,       \n");
+		sb.append("FROM                 \n");
+		sb.append("    License          \n");
+		sb.append("WHERE                \n");
+		sb.append("    l_name=?         \n");
+		sb.append("    AND member_id= ? \n");
 		
 		Object args[] = {
 						  inVO.getlName(),
-						  inVO.getUserId()
+						  inVO.getMemberId()
 						};
 		
 		outVO = this.jdbcTemplate.queryForObject(sb.toString(),
@@ -127,12 +157,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		LOG.debug("======================================");
 		LOG.debug("===========doSelectOne===========");
 		LOG.debug("QEURY =\n"+sb.toString());
-		LOG.debug("Param ="+inVO.getUserId());
+		LOG.debug("Param ="+inVO.getMemberId());
 		LOG.debug("outVO ="+outVO);
 		LOG.debug("======================================");
 		return outVO;
 	}
 
+	//회원 탈퇴시
 	@Override
 	public int doDelete(DTO dto) {
 		int flag=0;
@@ -141,14 +172,14 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("DELETE FROM License   \n");
-		sb.append("WHERE userId=? 		 \n");
+		sb.append("WHERE member_id=? 		 \n");
 		
 		LOG.debug("==================================");
 		LOG.debug("============doDelete=============");
 		LOG.debug("QEURY =\n"+sb.toString());
 		LOG.debug("Param ="+inVO);
 		
-		Object[] args = {inVO.getUserId()};
+		Object[] args = {inVO.getMemberId()};
 		
 		//jdbcTemplate.update(sql, args(가변배열))
 		flag = jdbcTemplate.update(sb.toString(), args);
@@ -157,23 +188,50 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		return flag;
 	}
-
+	
+	//단순 자격내용 삭제
+	public int doDeleteLicense(DTO dto) {
+		int flag=0;
+		
+		LicenseVO inVO=(LicenseVO) dto;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("DELETE FROM License       \n");
+		sb.append("WHERE member_id=? 		 \n");
+		sb.append("AND l_name=?              \n");
+		
+		LOG.debug("==================================");
+		LOG.debug("============doDelete=============");
+		LOG.debug("QEURY =\n"+sb.toString());
+		LOG.debug("Param ="+inVO);
+		
+		Object[] args = {inVO.getMemberId(),
+						 inVO.getlName()
+						 };
+		
+		//jdbcTemplate.update(sql, args(가변배열))
+		flag = jdbcTemplate.update(sb.toString(), args);
+		LOG.debug("flag ="+flag);
+		LOG.debug("==================================");
+		
+		return flag;
+	}
+	
 	@Override
 	public List<?> doRetrieve(DTO dto) {
-		//userId로만 조회
+		//member_id로만 조회
 		SearchVO  inVO= (SearchVO) dto;
 
 		StringBuilder sb=new StringBuilder();
 		sb.append("SELECT T1.*,T2.*                                                \n");
 		sb.append("FROM(                                                           \n");
-		sb.append("    SELECT  B.lname,                                            \n");
-		sb.append("            B.lGroup,                                           \n");
-		sb.append("            B.lKind,                                            \n");
-		sb.append("            B.lNum,                                             \n");
-		sb.append("            B.lLevel,                                           \n");
-		sb.append("            TO_CHAR(B.lGet,'YYYY/MM/DD') lGet,                  \n");
-		sb.append("            B.userId,                                           \n");
-		sb.append("            B.lOrgan,                                           \n");
+		sb.append("    SELECT  B.l_name,                                           \n");
+		sb.append("            B.l_group,                                          \n");
+		sb.append("            B.l_grade,                                          \n");
+		sb.append("            B.l_num,                                            \n");
+		sb.append("            TO_CHAR(B.lGet,'YYYY/MM/DD') l_date,                \n");
+		sb.append("            B.member_id,                                        \n");
+		sb.append("            B.l_organ,                                          \n");
 		sb.append("            rnum                                                \n");		
 		sb.append("    FROM(                                                       \n");
 		sb.append("        SELECT ROWNUM rnum,                                     \n");
@@ -181,7 +239,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("        FROM (                                                  \n");
 		sb.append("            SELECT *                                            \n");
 		sb.append("            FROM license                                        \n");
-		sb.append("		   WHERE userId like '%' || ? ||'%'  					   \n");
+		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
 		sb.append("        )A --10                                                 \n");
 		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
 		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) \n");
@@ -192,7 +250,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("    (                                                           \n");
 		sb.append("    SELECT count(*) total_cnt                                   \n");
 		sb.append("    FROM license                                                \n");
-		sb.append("		   WHERE userId like '%' || ? ||'%'  					   \n");
+		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
 		sb.append("    )T2                                                         \n");
 		
 		//param 
@@ -215,7 +273,5 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		return retlist;
 	
 	}
-
-	
 
 }
