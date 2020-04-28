@@ -32,13 +32,11 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		public CommentVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CommentVO outData = new CommentVO();
 			outData.setMemberId(rs.getString("memberId"));
-			outData.setRegId(rs.getString("regId"));
-			outData.setModId(rs.getString("modId"));
+			outData.setcNo(rs.getString("cNo"));
+			outData.setcContent(rs.getString("cContent"));
+			outData.setcOpen(rs.getString("cOpen"));
 			outData.setRegDt(rs.getString("regDt"));
 			outData.setModDt(rs.getString("modDt"));
-			outData.setcommentNo(rs.getString("commentNo"));
-			outData.setOpen(rs.getString("open"));
-			outData.setContent(rs.getString("content"));
 			
 			return outData;
 		}
@@ -50,17 +48,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		CommentVO inVO = (CommentVO)dto;
 		StringBuilder sb=new StringBuilder();
 		sb.append("INSERT INTO Comment(  \n");
-		sb.append("		     memberId,      \n");
-		sb.append("		     regId,     \n");
-		sb.append("		     modId,     \n");
-		sb.append("		     regDt,      \n");
-		sb.append("		     modDt,       \n");
-		sb.append("		     commentNo,     \n");
-		sb.append("		     open,       \n");
-		sb.append("		     content,     \n");
+		sb.append("		     c_no,      \n");
+		sb.append("		     c_content,     \n");
+		sb.append("		     c_open,       \n");
+		sb.append("		     reg_dt,     \n");
+		sb.append("		     mod_dt,     \n");
+		sb.append("		     member_id     \n");
 		sb.append(")VALUES(              \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
 		sb.append("		     ?,          \n");
 		sb.append("		     ?,          \n");
 		sb.append("		     ?,          \n");
@@ -75,14 +69,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		LOG.debug("param = "+inVO.toString());
 		
 		Object[] args = {
-							inVO.getMemberId(),
-							inVO.getRegId(),
-							inVO.getModId(),
+							
+							inVO.getcNo(),
+							inVO.getcContent(),
+							inVO.getcOpen(),
 							inVO.getRegDt(),
 							inVO.getModDt(),
-							inVO.getcommentNo(),
-							inVO.getOpen(),
-							inVO.getContent()
+							inVO.getMemberId()
 						};
 		flag = this.jdbcTemplate.update(sb.toString(),args);
 		LOG.debug("flag = "+flag);
@@ -99,23 +92,21 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		sb.append("UPDATE COMMENT       ");
 		sb.append("SET                  ");
-		sb.append("    modId = ?    ");
-		sb.append("    ,modDt = ?    ");
-		sb.append("    ,open = ?");
-		sb.append("    ,content = ?   ");
+		sb.append("    mod_dt = ?    ");
+		sb.append("    ,c_open = ?");
+		sb.append("    ,c_content = ?   ");
 		
 		sb.append("WHERE                ");
-		sb.append("    commentNo = ?     ");
+		sb.append("    c_no = ?     ");
 		LOG.debug("==============================");
 		LOG.debug("=Query=\n"+sb.toString());
 		LOG.debug("=Param= "+inVO.toString());
 		
 		
-		Object[] args= {inVO.getModId()
-						,inVO.getModDt()
-						,inVO.getOpen()
-						,inVO.getContent()
-						,inVO.getcommentNo()
+		Object[] args= {inVO.getModDt()
+						,inVO.getcOpen()
+						,inVO.getcContent()
+						,inVO.getcNo()
 						
 					};
 		flag=this.jdbcTemplate.update(sb.toString(),args);
@@ -133,22 +124,20 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("SELECT               ");
-		sb.append("		     memberId,      \n");
-		sb.append("		     regId,     \n");
-		sb.append("		     modId,     \n");
-		sb.append("		     regDt,      \n");
-		sb.append("		     modDt,       \n");
-		sb.append("		     commentNo,     \n");
-		sb.append("		     open,       \n");
-		sb.append("		     content,     \n");
+		sb.append("		     c_no,      \n");
+		sb.append("		     c_content,     \n");
+		sb.append("		     c_open,       \n");
+		sb.append("		     reg_dt,     \n");
+		sb.append("		     mod_dt,     \n");
+		sb.append("		     member_id     \n");
 		sb.append("FROM                 ");
 		sb.append("    Comment          ");
 		sb.append("WHERE                ");
-		sb.append("    commentNo=?          ");
+		sb.append("    c_no=?          ");
 		
 		
 		Object args[] = {
-						  inVO.getcommentNo()
+						  inVO.getcNo()
 						};
 		
 		outVO = this.jdbcTemplate.queryForObject(sb.toString(),
@@ -157,7 +146,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		LOG.debug("======================================");
 		LOG.debug("===========doSelectOne===========");
 		LOG.debug("QEURY =\n"+sb.toString());
-		LOG.debug("Param ="+inVO.getRegId());
+		LOG.debug("Param ="+inVO.getcNo());
 		LOG.debug("outVO ="+outVO);
 		LOG.debug("======================================");
 		return outVO;
@@ -171,14 +160,14 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("DELETE FROM Comment   \n");
-		sb.append("WHERE commentNo=? 		 \n");
+		sb.append("WHERE c_no=? 		 \n");
 		
 		LOG.debug("==================================");
 		LOG.debug("============doDelete=============");
 		LOG.debug("QEURY =\n"+sb.toString());
 		LOG.debug("Param ="+inVO);
 		
-		Object[] args = {inVO.getcommentNo()};
+		Object[] args = {inVO.getcNo()};
 		
 		//jdbcTemplate.update(sql, args(가변배열))
 		flag = jdbcTemplate.update(sb.toString(), args);
@@ -195,14 +184,12 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		StringBuilder sb=new StringBuilder();
 		sb.append("SELECT T1.*,T2.*                                                \n");
 		sb.append("FROM(                                                           \n");
-		sb.append("    SELECT  B.memberId,                                            \n");
-		sb.append("            B.regId,                                           \n");
-		sb.append("            B.modId,                                            \n");
-		sb.append("            B.regDt,                                             \n");
-		sb.append("            B.modDt,                                           \n");
-		sb.append("            B.commentNo,                  \n");
-		sb.append("            B.open,                                           \n");
-		sb.append("            B.content,                                           \n");
+		sb.append("    SELECT  B.c_no,                                            \n");
+		sb.append("            B.c_content,                                            \n");
+		sb.append("            B.c_open,                                             \n");
+		sb.append("            B.reg_dt,                                           \n");
+		sb.append("            B.mod_dt,                  \n");
+		sb.append("            B.member_id,                                           \n");
 		sb.append("            rnum                                                \n");		
 		sb.append("    FROM(                                                       \n");
 		sb.append("        SELECT ROWNUM rnum,                                     \n");
@@ -210,7 +197,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("        FROM (                                                  \n");
 		sb.append("            SELECT *                                            \n");
 		sb.append("            FROM Comment                                        \n");
-		sb.append("		   WHERE content like '%' || ? ||'%'  					   \n");
+		sb.append("		   WHERE c_content like '%' || ? ||'%'  					   \n");
 		sb.append("        )A --10                                                 \n");
 		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
 		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) \n");
@@ -220,8 +207,8 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("    )T1 CROSS JOIN                                              \n");
 		sb.append("    (                                                           \n");
 		sb.append("    SELECT count(*) total_cnt                                   \n");
-		sb.append("    FROM license                                                \n");
-		sb.append("		   WHERE content like '%' || ? ||'%'  					   \n");
+		sb.append("    FROM Comment                                                \n");
+		sb.append("		   WHERE c_content like '%' || ? ||'%'  					   \n");
 		sb.append("    )T2                                                         \n");
 		
 		//param 
