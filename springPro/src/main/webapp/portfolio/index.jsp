@@ -61,9 +61,8 @@
 	          <li class="nav-item"><a href="#Projects-section" class="nav-link"><span>Projects</span></a></li>
 	          <li class="nav-item"><a href="#Skills-section" class="nav-link"><span>Skills</span></a></li>
 	          <li class="nav-item"><a href="#License-section" class="nav-link"><span>License</span></a></li>
-	          <li class="nav-item"><a href="#blog-section" class="nav-link"><span>Services</span></a></li>
-	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Recommends</span></a></li>
-	          <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Others</span></a></li>
+	          <li class="nav-item"><a href="#" class="nav-link"><span>Recommends</span></a></li>
+	          <li class="nav-item"><a href="#" class="nav-link"><span>Others</span></a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -85,7 +84,7 @@
 			  				<h2> 
 								  <span
 								     class="txt-rotate"
-								     data-period="2000"
+								     data-period="1000"
 								     data-rotate='[  "Now,", "Let me", "introduce myself"  ]'></span>
 								</h2>
 							</div>
@@ -432,8 +431,11 @@
 					 				<i class="flaticon-analysis"></i>
 					 			</span>
 					 			<div class="desc">
-					 				<h3 class="mb-5">Web Design</h3>
-					 				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+					 				<h3 class="mb-5">정보처리기사</h3>
+					 				<p>자격 분류:</p>
+					 				<p>자격 종류:</p>
+					 				<p>자격증 번호:</p>
+					 				<p>자격증 취득일:</p>
 					 			</div>
 					 		</a>
 					 	</div>
@@ -443,8 +445,11 @@
 					 				<i class="flaticon-flasks"></i>
 					 			</span>
 					 			<div class="desc">
-					 				<h3 class="mb-5">Phtography</h3>
-					 				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+					 				<h3 class="mb-5">컴퓨터 활용 1급</h3>
+									<p>자격 분류:</p>
+					 				<p>자격 종류:</p>
+					 				<p>자격증 번호:</p>
+					 				<p>자격증 취득일:</p>
 					 			</div>
 					 		</a>
 					 	</div>
@@ -454,8 +459,11 @@
 					 				<i class="flaticon-ideas"></i>
 					 			</span>
 					 			<div class="desc">
-					 				<h3 class="mb-5">Web Developer</h3>
-					 				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+					 				<h3 class="mb-5">컴퓨터 활용 2급</h3>
+					 				<p>자격 분류:</p>
+					 				<p>자격 종류:</p>
+					 				<p>자격증 번호:</p>
+					 				<p>자격증 취득일:</p>
 					 			</div>
 					 		</a>
 					 	</div>
@@ -466,7 +474,7 @@
      </section>  
     <!-- //License -->
 	
-    <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
+<!--     <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
     	<div class="container">
     		<div class="row">
     			<div class="col-md-3">
@@ -604,7 +612,7 @@
 						      <div class="bg-white rounded-lg shadow p-4">
 						        <h2 class="h5 font-weight-bold text-center mb-4">CSS</h2>
 
-						        <!-- Progress bar 1 -->
+						        Progress bar 1
 						        <div class="progress mx-auto" data-value='90'>
 						          <span class="progress-left">
                         <span class="progress-bar border-primary"></span>
@@ -616,9 +624,9 @@
 						            <div class="h2 font-weight-bold">90<sup class="small">%</sup></div>
 						          </div>
 						        </div>
-						        <!-- END -->
+						        END
 
-						        <!-- Demo info -->
+						        Demo info
 						        <div class="row text-center mt-4">
 						          <div class="col-6 border-right">
 						            <div class="h4 font-weight-bold mb-0">28%</div><span class="small text-gray">Last week</span>
@@ -627,7 +635,7 @@
 						            <div class="h4 font-weight-bold mb-0">60%</div><span class="small text-gray">Last month</span>
 						          </div>
 						        </div>
-						        <!-- END -->
+						        END
 						      </div>
 						    </div>
 
@@ -635,7 +643,7 @@
 						      <div class="bg-white rounded-lg shadow p-4">
 						        <h2 class="h5 font-weight-bold text-center mb-4">HTML</h2>
 
-						        <!-- Progress bar 1 -->
+						        Progress bar 1
 						        <div class="progress mx-auto" data-value='80'>
 						          <span class="progress-left">
                         <span class="progress-bar border-primary"></span>
@@ -647,9 +655,9 @@
 						            <div class="h2 font-weight-bold">80<sup class="small">%</sup></div>
 						          </div>
 						        </div>
-						        <!-- END -->
+						        END
 
-						        <!-- Demo info -->
+						        Demo info
 						        <div class="row text-center mt-4">
 						          <div class="col-6 border-right">
 						            <div class="h4 font-weight-bold mb-0">28%</div><span class="small text-gray">Last week</span>
@@ -658,7 +666,7 @@
 						            <div class="h4 font-weight-bold mb-0">60%</div><span class="small text-gray">Last month</span>
 						          </div>
 						        </div>
-						        <!-- END -->
+						        END
 						      </div>
 						    </div>
 
@@ -666,7 +674,7 @@
 						      <div class="bg-white rounded-lg shadow p-4">
 						        <h2 class="h5 font-weight-bold text-center mb-4">jQuery</h2>
 
-						        <!-- Progress bar 1 -->
+						        Progress bar 1
 						        <div class="progress mx-auto" data-value='75'>
 						          <span class="progress-left">
                         <span class="progress-bar border-primary"></span>
@@ -678,9 +686,9 @@
 						            <div class="h2 font-weight-bold">75<sup class="small">%</sup></div>
 						          </div>
 						        </div>
-						        <!-- END -->
+						        END
 
-						        <!-- Demo info -->
+						        Demo info
 						        <div class="row text-center mt-4">
 						          <div class="col-6 border-right">
 						            <div class="h4 font-weight-bold mb-0">28%</div><span class="small text-gray">Last week</span>
@@ -689,7 +697,7 @@
 						            <div class="h4 font-weight-bold mb-0">60%</div><span class="small text-gray">Last month</span>
 						          </div>
 						        </div>
-						        <!-- END -->
+						        END
 						      </div>
 						    </div>
 					  	</div>
@@ -813,159 +821,9 @@
 			  </div>
     	</div>
     </section>
+ -->	
 	
-	
-    <section class="ftco-section" id="services-section">
-    	<div class="container-fluid px-md-5">
-    		<div class="row justify-content-center py-5 mt-5">
-          <div class="col-md-12 heading-section text-center ftco-animate">
-          	<h1 class="big big-2">Services</h1>
-            <h2 class="mb-4">Services</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-          </div>
-        </div>
-    		<div class="row">
-					<div class="col-md-4 text-center d-flex ftco-animate">
-						<a href="#" class="services-1 shadow">
-							<span class="icon">
-								<i class="flaticon-analysis"></i>
-							</span>
-							<div class="desc">
-								<h3 class="mb-5">Web Design</h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-4 text-center d-flex ftco-animate">
-						<a href="#" class="services-1 shadow">
-							<span class="icon">
-								<i class="flaticon-flasks"></i>
-							</span>
-							<div class="desc">
-								<h3 class="mb-5">Phtography</h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-4 text-center d-flex ftco-animate">
-						<a href="#" class="services-1 shadow">
-							<span class="icon">
-								<i class="flaticon-ideas"></i>
-							</span>
-							<div class="desc">
-								<h3 class="mb-5">Web Developer</h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</a>
-					</div>
-
-					<div class="col-md-4 text-center d-flex ftco-animate">
-						<a href="#" class="services-1 shadow">
-							<span class="icon">
-								<i class="flaticon-innovation"></i>
-							</span>
-							<div class="desc">
-								<h3 class="mb-5">App Developing</h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-4 text-center d-flex ftco-animate">
-						<a href="#" class="services-1 shadow">
-							<span class="icon">
-								<i class="flaticon-ux-design"></i>
-							</span>
-							<div class="desc">
-								<h3 class="mb-5">Branding</h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-4 text-center d-flex ftco-animate">
-						<a href="#" class="services-1 shadow">
-							<span class="icon">
-								<i class="flaticon-idea"></i>
-							</span>
-							<div class="desc">
-								<h3 class="mb-5">Product Strategy</h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</a>
-					</div>
-				</div>
-    	</div>
-    </section>
- 
-
-    <section class="ftco-section ftco-project" id="projects-section">
-    	<div class="container-fluid px-md-0">
-    		<div class="row no-gutters justify-content-center pb-5">
-          <div class="col-md-12 heading-section text-center ftco-animate">
-          	<h1 class="big big-2">Projects</h1>
-            <h2 class="mb-4">Our Projects</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-          </div>
-        </div>
-    		<div class="row no-gutters">
-    			<div class="col-md-4">
-    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/work-1.jpg);">
-    					<div class="overlay"></div>
-	    				<div class="text text-center p-4">
-	    					<h3><a href="#">Branding &amp; Illustration Design</a></h3>
-	    					<span>Web Design</span>
-	    				</div>
-    				</div>
-  				</div>
-  				<div class="col-md-4">
-    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/work-2.jpg);">
-    					<div class="overlay"></div>
-	    				<div class="text text-center p-4">
-	    					<h3><a href="#">Branding &amp; Illustration Design</a></h3>
-	    					<span>Web Design</span>
-	    				</div>
-    				</div>
-  				</div>
-
-    			<div class="col-md-4">
-    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/work-3.jpg);">
-    					<div class="overlay"></div>
-	    				<div class="text text-center p-4">
-	    					<h3><a href="#">Branding &amp; Illustration Design</a></h3>
-	    					<span>Web Design</span>
-	    				</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/work-4.jpg);">
-    					<div class="overlay"></div>
-	    				<div class="text text-center p-4">
-	    					<h3><a href="#">Branding &amp; Illustration Design</a></h3>
-	    					<span>Web Design</span>
-	    				</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/work-5.jpg);">
-    					<div class="overlay"></div>
-	    				<div class="text text-center p-4">
-	    					<h3><a href="#">Branding &amp; Illustration Design</a></h3>
-	    					<span>Web Design</span>
-	    				</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4">
-    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/work-6.jpg);">
-    					<div class="overlay"></div>
-	    				<div class="text text-center p-4">
-	    					<h3><a href="#">Branding &amp; Illustration Design</a></h3>
-	    					<span>Web Design</span>
-	    				</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-
+<!-- 
     <section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
     	<div class="container-fluid px-md-5">
 				<div class="row d-md-flex align-items-center">
@@ -1004,8 +862,8 @@
         </div>
       </div>
     </section>
-
-
+ -->
+<!-- 
     <section class="ftco-section" id="blog-section">
       <div class="container">
         <div class="row justify-content-center mb-5 pb-5">
@@ -1083,7 +941,7 @@
 				</div>
 			</div>
 		</section>
-
+ -->
     <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
       <div class="container">
       	<div class="row justify-content-center mb-5 pb-3">
@@ -1226,7 +1084,7 @@
           <div class="col-md-12 text-center">
 
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="index.jsp" target="_blank">Bombom</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
         </div>
