@@ -18,7 +18,7 @@ public class SeleniumTest {
 	    //Properties
 	    public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
 	    public static final String WEB_DRIVER_PATH = "C:/Users/sist/git/springPro/springPro/src/main/webapp/selenium/chromedriver_win32/chromedriver.exe";
-	    
+	       
 	    //크롤링 할 URL
 	    private String base_url;
 	    

@@ -25,7 +25,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
 		<!-- lib source download -->
-	    <downloadSources>true</downloadSources>
+	    <downloadSources>true</downloadSources>   
 	    <!-- JavaDoc download -->
 	    <downloadJavadocs>true</downloadJavadocs>
 	</properties>

@@ -65,7 +65,7 @@
 	          <li class="nav-item"><a href="#" class="nav-link"><span>Others</span></a></li>
 	        </ul>
 	      </div>
-	    </div>
+	    </div>    
 	      <div class="row" align="left"> 
 	      	<ol>
 	      		<li> phone: 010-xxxx-xxxx</li>
