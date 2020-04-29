@@ -80,20 +80,21 @@ public class CovidController {
         	JsonObject object=(JsonObject)memberArray.get(i);
         	int codeEndpoint= object.get("code").toString().lastIndexOf("\"");
         	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");
-        	int stockAtEndpoint= object.get("stock_at").toString().lastIndexOf("\"");
-        	int createdAtEndpoint= object.get("created_at").toString().lastIndexOf("\"");
+        	//null처리 필요	 ""으로
+//        	int stockAtEndpoint= object.get("stock_at").toString().lastIndexOf("\"");
+//        	int createdAtEndpoint= object.get("created_at").toString().lastIndexOf("\"");
         	int addrEndpoint= object.get("addr").toString().lastIndexOf("\"");
         	int typeEndpoint= object.get("type").toString().lastIndexOf("\"");
-        	int remainStatEndpoint= object.get("remain_stat").toString().lastIndexOf("\"");
+//        	int remainStatEndpoint= object.get("remain_stat").toString().lastIndexOf("\"");
         	
         	
         	String getCode = object.get("code").toString().substring(1, codeEndpoint);
         	String getName = object.get("name").toString().substring(1, nameEndpoint);
-        	String getStockAt = object.get("stock_at").toString().substring(1, stockAtEndpoint);
-        	String getCreatedAt = object.get("created_at").toString().substring(1, createdAtEndpoint);
+//        	String getStockAt = object.get("stock_at").toString().substring(1, stockAtEndpoint);
+//        	String getCreatedAt = object.get("created_at").toString().substring(1, createdAtEndpoint);
         	String getAddr = object.get("addr").toString().substring(1, addrEndpoint);
         	String getType = object.get("type").toString().substring(1, typeEndpoint);
-        	String getRemainStat = object.get("remain_stat").toString().substring(1, remainStatEndpoint);
+//        	String getRemainStat = object.get("remain_stat").toString().substring(1, remainStatEndpoint);
         	double getLng = Double.valueOf(object.get("lng").toString());
         	double getLat = Double.valueOf(object.get("lat").toString());
         	
