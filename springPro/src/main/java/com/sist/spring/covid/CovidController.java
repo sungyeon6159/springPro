@@ -62,9 +62,11 @@ public class CovidController {
 	@RequestMapping(value = "covid/do_retrieve",method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req, CovidParmVO vo, Model model) throws JSONException, IOException {
 		String url = "covid/index";
-		
-		String currentLat="37.556789";	//나중에 주소 api검색시 값을 받아 저장 default=쌍용 
-		String currentLng="126.919527";
+		String currentLng = req.getParameter("lng");
+		String currentLat = req.getParameter("lat");
+	
+//		String currentLat="37.544169";	//나중에 주소 api검색시 값을 받아 저장 default=쌍용 
+//		String currentLng="127.049948";
 		JSONObject json1 = covidService.readJsonFromUrl("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+currentLat+"&lng="+currentLng+"&m=300");
 		System.out.println("aaaaaa"+json1);
 		JsonParser parser=new JsonParser();
@@ -96,7 +98,7 @@ public class CovidController {
         	double getLat = Double.valueOf(object.get("lat").toString());
         	
         	//임의로 한명 회원아아디 setting
-        	vo.setUserId("abcd");
+        	vo.setMemberId("wogns");
         	vo.setCode(getCode);
         	vo.setName(getName);
         	vo.setAddr(getAddr);
@@ -109,7 +111,8 @@ public class CovidController {
         }
         
         System.out.println(list);
-        
+        model.addAttribute("currentLng", currentLng);
+        model.addAttribute("currentLat", currentLat);
         model.addAttribute("list",list);
 		
 		return url;

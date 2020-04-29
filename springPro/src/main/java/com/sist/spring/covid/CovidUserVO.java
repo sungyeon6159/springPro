@@ -26,33 +26,33 @@ import com.sist.spring.cmn.DTO;
  * Covid 회원가입 VO
  */
 public class CovidUserVO extends DTO {
-	private String userId;			//회원아이디
+	private String memberId;			//회원아이디
 	private String passWord;		//비밀번호
 	private String email;			//이메일
 	private String mobilePhone;		//핸드폰번호
 	
 	public CovidUserVO() {}
 
-	public CovidUserVO(String userId, String passWord, String email, String mobilePhone) {
+	public CovidUserVO(String memberId, String passWord, String email, String mobilePhone) {
 		super();
-		this.userId = userId;
+		this.memberId = memberId;
 		this.passWord = passWord;
 		this.email = email;
 		this.mobilePhone = mobilePhone;
 	}
 
 	/**
-	 * @return the userId
+	 * @return the memberId
 	 */
-	public String getUserId() {
-		return userId;
+	public String getMemberId() {
+		return memberId;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param memberId the memberId to set
 	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	/**
@@ -99,9 +99,11 @@ public class CovidUserVO extends DTO {
 
 	@Override
 	public String toString() {
-		return "CovidUserVO [userId=" + userId + ", passWord=" + passWord + ", email=" + email + ", mobilePhone="
+		return "CovidUserVO [memberId=" + memberId + ", passWord=" + passWord + ", email=" + email + ", mobilePhone="
 				+ mobilePhone + ", toString()=" + super.toString() + "]";
 	}
+
+	
 	
 	
 	

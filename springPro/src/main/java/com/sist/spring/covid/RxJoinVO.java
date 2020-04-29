@@ -26,7 +26,7 @@ import com.sist.spring.cmn.DTO;
  * 관심약국 조인VO
  */
 public class RxJoinVO extends DTO {
-	private String userId;		//회원아이디
+	private String memberId;		//회원아이디
 	private String code;		//일련번호
 	private String name;		//약국명
 	private String addr;		//약국주소
@@ -36,9 +36,9 @@ public class RxJoinVO extends DTO {
 	
 	public RxJoinVO() {}
 
-	public RxJoinVO(String userId, String code, String name, String addr, double lng, double lat, String email) {
+	public RxJoinVO(String memberId, String code, String name, String addr, double lng, double lat, String email) {
 		super();
-		this.userId = userId;
+		this.memberId = memberId;
 		this.code = code;
 		this.name = name;
 		this.addr = addr;
@@ -48,17 +48,17 @@ public class RxJoinVO extends DTO {
 	}
 
 	/**
-	 * @return the userId
+	 * @return the memberId
 	 */
-	public String getUserId() {
-		return userId;
+	public String getMemberId() {
+		return memberId;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param memberId the memberId to set
 	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	/**
@@ -147,9 +147,11 @@ public class RxJoinVO extends DTO {
 
 	@Override
 	public String toString() {
-		return "RxJoinVO [userId=" + userId + ", code=" + code + ", name=" + name + ", addr=" + addr + ", lng=" + lng
-				+ ", lat=" + lat + ", email=" + email + ", toString()=" + super.toString() + "]";
+		return "RxJoinVO [memberId=" + memberId + ", code=" + code + ", name=" + name + ", addr=" + addr + ", lng="
+				+ lng + ", lat=" + lat + ", email=" + email + ", toString()=" + super.toString() + "]";
 	}
+
+	
 	
 	
 }

@@ -30,7 +30,7 @@ public class CovidDao implements Dao {
 		@Override
 		public RxJoinVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			RxJoinVO outData = new RxJoinVO();
-			outData.setUserId(rs.getString("user_id"));
+			outData.setMemberId(rs.getString("member_id"));
 			outData.setCode(rs.getString("code"));
 			outData.setName(rs.getString("name"));
 			outData.setAddr(rs.getString("addr"));
@@ -56,7 +56,7 @@ public class CovidDao implements Dao {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO covid_user (	\n");
-		sb.append("    user_id,             \n");
+		sb.append("    member_id,           \n");
 		sb.append("    password,            \n");
 		sb.append("    email,               \n");
 		sb.append("    mobile_phone         \n");
@@ -72,7 +72,7 @@ public class CovidDao implements Dao {
 		LOG.debug("Param:" + inVO.toString());
 		LOG.debug("=====================");
 		
-		Object[] args = {inVO.getUserId(),
+		Object[] args = {inVO.getMemberId(),
 				inVO.getPassWord(),
 				inVO.getEmail(),
 				inVO.getMobilePhone()
@@ -92,12 +92,12 @@ public class CovidDao implements Dao {
 		CovidParmVO inVO = (CovidParmVO) dto;
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO pharmacy (	\n");
-		sb.append("    user_id,             \n");
+		sb.append("    member_id,           \n");
+		sb.append("    code                 \n");
 		sb.append("    name,                \n");
 		sb.append("    addr,                \n");
 		sb.append("    lng,                 \n");
 		sb.append("    lat,                 \n");
-		sb.append("    code                 \n");
 		sb.append(") VALUES (               \n");
 		sb.append("    ?,                   \n");
 		sb.append("    ?,                   \n");
@@ -112,12 +112,12 @@ public class CovidDao implements Dao {
 		LOG.debug("Param:" + inVO.toString());
 		LOG.debug("=====================");
 		
-		Object[] args = {inVO.getUserId(),
+		Object[] args = {inVO.getMemberId(),
+						inVO.getCode(),
 						inVO.getName(),
 						inVO.getAddr(),
 						inVO.getLng(),
-						inVO.getLat(),
-						inVO.getCode()
+						inVO.getLat()
 		};
 		flag = jdbcTemplate.update(sb.toString(), args);
 		
@@ -134,25 +134,26 @@ public class CovidDao implements Dao {
 		CovidParmVO inVO = (CovidParmVO) dto;
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE pharmacy	\n");
-		sb.append("SET code = ?,    \n");
+		sb.append("SET 		        \n");
 		sb.append("    name = ?,    \n");
 		sb.append("    addr = ?,    \n");
 		sb.append("    lng = ?,     \n");
 		sb.append("    lat = ?      \n");
 		sb.append("WHERE            \n");
-		sb.append("    user_id = ?  \n");
+		sb.append("    member_id = ?\n");
+		sb.append("AND code = ?     \n");
 		
 		LOG.debug("=====================");
 		LOG.debug("Query:" + sb.toString());
 		LOG.debug("Param:" + inVO.toString());
 		LOG.debug("=====================");
 		
-		Object[] args = {inVO.getCode(),
-						inVO.getName(),
+		Object[] args = { inVO.getName(),
 						inVO.getAddr(),
 						inVO.getLng(),
 						inVO.getLat(),
-						inVO.getUserId()
+						inVO.getMemberId(),
+						inVO.getCode()
 		};
 		flag = jdbcTemplate.update(sb.toString(), args);
 		
@@ -168,7 +169,7 @@ public class CovidDao implements Dao {
 		RxJoinVO inVO = (RxJoinVO) dto;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT t1.user_id,					\n");
+		sb.append("SELECT t1.member_id,					\n");
 		sb.append("       t1.code,                      \n");
 		sb.append("       t1.name,                      \n");
 		sb.append("       t1.addr,                      \n");
@@ -176,15 +177,15 @@ public class CovidDao implements Dao {
 		sb.append("       t1.lat,                       \n");
 		sb.append("       t2.email                      \n");
 		sb.append("FROM pharmacy t1, COVID_USER t2      \n");
-		sb.append("WHERE t1.user_id = t2.user_id        \n");
-		sb.append("AND t1.user_id = ?                   \n");
+		sb.append("WHERE t1.member_id = t2.member_id    \n");
+		sb.append("AND t1.member_id = ?                 \n");
 		
 		LOG.debug("=====================");
 		LOG.debug("Query:" + sb.toString());
 		LOG.debug("Param:" + inVO.toString());
 		LOG.debug("=====================");
 		
-		Object[] args = {inVO.getUserId()};
+		Object[] args = {inVO.getMemberId()};
 		
 		outVO = this.jdbcTemplate.queryForObject(sb.toString(), args, rowMapper);
 		
@@ -202,7 +203,7 @@ public class CovidDao implements Dao {
 		RxJoinVO inVO = (RxJoinVO) dto;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT t1.user_id,					\n");
+		sb.append("SELECT t1.member_id,					\n");
 		sb.append("       t1.code,                      \n");
 		sb.append("       t1.name,                      \n");
 		sb.append("       t1.addr,                      \n");
@@ -210,15 +211,15 @@ public class CovidDao implements Dao {
 		sb.append("       t1.lat,                       \n");
 		sb.append("       t2.email                      \n");
 		sb.append("FROM pharmacy t1, COVID_USER t2      \n");
-		sb.append("WHERE t1.user_id = t2.user_id        \n");
-		sb.append("AND t1.user_id = ?                   \n");
+		sb.append("WHERE t1.member_id = t2.member_id    \n");
+		sb.append("AND t1.member_id = ?                 \n");
 		
 		LOG.debug("=====================");
 		LOG.debug("Query:" + sb.toString());
 		LOG.debug("Param:" + inVO.toString());
 		LOG.debug("=====================");
 		
-		Object[] args = {inVO.getUserId()};
+		Object[] args = {inVO.getMemberId()};
 		
 		List<RxJoinVO> list =this.jdbcTemplate.query(sb.toString(), args, rowMapper);
 		

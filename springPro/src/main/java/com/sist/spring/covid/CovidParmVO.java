@@ -26,7 +26,7 @@ import com.sist.spring.cmn.DTO;
  * Covid 관심약국 VO
  */
 public class CovidParmVO extends DTO {
-	private String userId;		//회원아이디
+	private String memberId;	//회원아이디
 	private String code;		//일련번호
 	private String name;		//약국명
 	private String addr;		//약국주소
@@ -35,14 +35,28 @@ public class CovidParmVO extends DTO {
 	
 	public CovidParmVO() {}
 
-	public CovidParmVO(String code, String name, String addr, double lng, double lat, String userId) {
+	public CovidParmVO(String memberId, String code, String name, String addr, double lng, double lat) {
 		super();
+		this.memberId = memberId;
 		this.code = code;
 		this.name = name;
 		this.addr = addr;
 		this.lng = lng;
 		this.lat = lat;
-		this.userId = userId;
+	}
+
+	/**
+	 * @return the memberId
+	 */
+	public String getMemberId() {
+		return memberId;
+	}
+
+	/**
+	 * @param memberId the memberId to set
+	 */
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	/**
@@ -115,25 +129,12 @@ public class CovidParmVO extends DTO {
 		this.lat = lat;
 	}
 
-	/**
-	 * @return the userId
-	 */
-	public String getUserId() {
-		return userId;
-	}
-
-	/**
-	 * @param userId the userId to set
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	@Override
 	public String toString() {
-		return "CovidParmVO [code=" + code + ", name=" + name + ", addr=" + addr + ", lng=" + lng + ", lat=" + lat
-				+ ", userId=" + userId + ", toString()=" + super.toString() + "]";
+		return "CovidParmVO [memberId=" + memberId + ", code=" + code + ", name=" + name + ", addr=" + addr + ", lng="
+				+ lng + ", lat=" + lat + ", toString()=" + super.toString() + "]";
 	}
+
 	
 	
 }
