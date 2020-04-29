@@ -27,7 +27,7 @@
 </head>
 <body>
 	<h1>공적마스크 약국 검색 하기</h1>
-	<form action="${hContext}/covid/do_retrieve" name="addr_frm" method="get">
+	<form action="${hContext}/covid/do_retrieve.spring" name="addr_frm" method="get">
 	
 		<input type="text" id="address" name="address" size="50" disabled="disabled"/> 
 		<input type="button" onclick="searchKakaoAddress();" value="주소검색" />
@@ -91,7 +91,7 @@
 	var frm = document.addr_frm;
 	frm.lng.value = $("#lng").val();
 	frm.lat.value = $("#lat").val();
-	frm.action = "${hContext}/covid/do_retrieve";
+	frm.action = "${hContext}/covid/do_retrieve.spring";
 	frm.submit();
 	
 	}

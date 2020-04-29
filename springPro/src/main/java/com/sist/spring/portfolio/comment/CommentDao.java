@@ -10,12 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Dao;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.portfolio.license.LicenseVO;
-
+@Repository
 public class CommentDao implements Dao {
 	
 private final Logger LOG = LoggerFactory.getLogger(this.getClass());

@@ -59,7 +59,7 @@ public class CovidController {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "covid/do_retrieve",method = RequestMethod.GET)
+	@RequestMapping(value = "covid/do_retrieve.spring",method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req, CovidParmVO vo, Model model) throws JSONException, IOException {
 		String url = "covid/index";
 		String currentLng = req.getParameter("lng");
