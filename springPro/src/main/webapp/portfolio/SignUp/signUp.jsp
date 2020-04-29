@@ -1,3 +1,19 @@
+<%--
+  /**
+  * Class Name : 
+  * Description : 
+  * Modification Information
+  *
+  *   수정일                   수정자                      수정내용
+  *  -------    --------    ---------------------------
+  *  2020. 4. 29.            최초 생성
+  *
+  * author 실행환경 개발팀
+  * since 2009.01.06
+  *
+  * Copyright (C) 2009 by KandJang  All right reserved.
+  */
+--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=utf-8" %>
@@ -12,29 +28,23 @@
   <title>Bombom</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/open-iconic-bootstrap.min.css">
-  
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/animate.css">
-  
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/owl.carousel.min.css">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/owl.theme.default.min.css">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/magnific-popup.css">
-
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/aos.css">
-
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/ionicons.min.css">
-  
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/flaticon.css">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/icomoon.css">
   <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/style.css">
 </head>
+
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.jsp"><span>R</span>onaldo</a>
+	      <a class="navbar-brand" href="index.jsp"><span>B</span>ombom</a>
 	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -43,11 +53,9 @@
 	        <ul class="navbar-nav nav ml-auto">
 	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
 	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-	          <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
-	          <li class="nav-item"><a href="#services-section" class="nav-link"><span>Services</span></a></li>
-	          <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Projects</span></a></li>
-	          <li class="nav-item"><a href="#blog-section" class="nav-link"><span>My Blog</span></a></li>
-	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
+	          <li class="nav-item"><a href="#License-section" class="nav-link"><span>License</span></a></li>
+	          <li class="nav-item"><a href="#Skills-section" class="nav-link"><span>Skills</span></a></li>
+	          <li class="nav-item"><a href="#Projects-section" class="nav-link"><span>Projects</span></a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -138,6 +146,85 @@
           </div>
       </div><!-- //container -->
    </section>
+   
+   <!-- Skills -->
+    <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="Skills-section">
+    	<div class="container-fluid px-md-5">
+    		<div class="row justify-content-center py-5 mt-5">
+          		<div class="col-md-12 heading-section text-center ftco-animate">
+           			 <h2 class="mb-4">Skills</h2>
+           			 <div align="center">
+           			 	<form action="${hContext}/skill/do_insert.do" name="signUp_skill" method="post">
+           			 	<!-- SkillController 할때 인서트 부분을 이렇게 하셨으면 좋겠는데 볼수있을까여 민지양이ㅋㅋ-->
+	           			 <table>
+	                        <tbody>
+		                        <tr>
+									<td>
+										<p>Programming Language</p>
+									</td>
+									<td>
+										<!-- <input type="text" id="skillName" name="skillName"> -->
+										<select id="skillName" name="skillName">
+											<option value="Java">Java</option>
+											<option value="C">C</option>
+											<option value="Python">Python</option>
+											<option value="C++">C++</option>
+											<option value="C#">C#</option>
+											<option value="Visual Basic.NET">Visual Basic.NET</option>
+											<option value="JavaScript">JavaScript</option>
+											<option value="PHP">PHP</option>
+											<option value="SQL">SQL</option>
+											<option value="R">R</option>
+											<option value="Swift">Swift</option>
+											<option value="Go">Go</option>
+											<option value="Ruby">Ruby</option>
+											<option value="Assmbler">Assmbler</option>
+											<option value="PL/SQL">PL/SQL</option>
+											<option value="Perl">Perl</option>
+											<option value="Objective-C">Objective-C</option>
+											<option value="MATLAB">MATLAB</option>
+											<option value="Visual Basic">Visual Basic</option>
+											<option value="Scratch">Scratch</option>
+										</select>
+									</td>
+								</tr>
+								<tr>	
+									<td>
+										<p>Mastership Level</p>
+									</td>
+									<td>
+										<select id="mastery" name="mastery">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+										</select>
+									</td>
+								</tr>
+								<tr>	
+									<td>
+										<p>Activity content </p>
+									</td>
+									<td>
+										<p><textarea rows="10" cols="50"></textarea></p>
+										<p><input type="submit" value="submit"> </p>
+									</td>
+								</tr>
+	                        </tbody>
+	                     </table>
+	                     </form>
+           			 </div>
+           		</div>
+           	</div>
+        </div>
+    </section>
+	<!--// Skills -->
 
 
     <footer class="ftco-footer ftco-section">
