@@ -68,7 +68,7 @@
 	    </div>    
 	      <div class="row" align="left"> 
 	      	<ol>
-	      		<li> phone: 010-xxxx-xxxx</li>
+	      		<li> phone: ${pageContext.request.contextPath }</li>
 	      		<li> Email: abcdefg@naver.com</li>
 	      	</ol>
 	      </div>
