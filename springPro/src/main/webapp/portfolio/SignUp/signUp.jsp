@@ -209,7 +209,7 @@
 								</tr>
 								<tr>	
 									<td>
-										<p>Activity content </p>
+										<p>Activity content</p>
 									</td>
 									<td>
 										<p><textarea rows="10" cols="50"></textarea></p>
