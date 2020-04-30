@@ -26,7 +26,8 @@ import com.sist.spring.cmn.SearchVO;
 public class ProjectController {
 	
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
-	
+	private final String UPLOAD_FILE="C:\\SPRING_SPRING\\pjtVideo";	
+
 	public ProjectController() {	
 	}
 	
@@ -36,9 +37,10 @@ public class ProjectController {
 	@RequestMapping(value="/portfolio/do_insert.spring"
 			,method=RequestMethod.GET
 			,produces ="application/json; charset=UTF-8")
-	public String doInsert(HttpServletRequest req, ProjectVO search, Model model) {
-		
-		
+	public String doInsert(HttpServletRequest req, Model model) {
+		LOG.debug("doInsert");
+		String pjtName=req.getParameter("pjtName");
+		LOG.debug(pjtName);
 		return null;
 	}
 	
