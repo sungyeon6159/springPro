@@ -21,6 +21,8 @@
 <% response.setContentType("text/html; charset=utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,17 +70,16 @@
 		<br/>
 	</div>  
       <div class="container">
+        	<hr/>
+        	<p><h3>프로젝트 경험</h3></p>
+        	<br/><br/>
+       
          <div class="row d-flex no-gutters">
-         	<form action="${hContext}/portfolio/do_insert.spring" name="signUp_pjt_frm" method="post">
-			<table>
-				<tr>
-					<td colspan=2>
-						<h1>프로젝트 경험</h1>
-					</td>
-				</tr>
+        <form action="${hContext}/portfoilo/upload.spring" method="post" enctype="multipart/form-data" name="uploadFrm">
+				<table>
 				<tr>
 					<td>
-						<p>프로젝트명<p>
+						프로젝트명
 					</td>
 					<td>
 						<input type="text" id="pjtName" name="pjtName">
@@ -89,7 +90,7 @@
 						<p>프로젝트 설명<p>
 					</td>
 					<td>
-						<input type="text" id="pjtInfo" name="pjtInfo">
+						<textarea cols="50" rows="3" id="pjtInfo" name="pjtInfo"></textarea>
 					</td>
 				</tr>
 				<tr>	
@@ -97,11 +98,7 @@
 						<p>프로젝트 기간 <p>
 					</td>
 					<td>
-						<input type="date" id="pjtStart" name="pjtStart">
-					</td>
-					
-					<td>
-						<input type="date" id="pjtEnd" name="pjtEnd">
+						<input type="date" id="pjtStart" name="pjtStart"> - <input type="date" id="pjtEnd" name="pjtEnd">
 					</td>
 				</tr>
 				<tr>	
@@ -114,22 +111,34 @@
 				</tr>
 				<tr>	
 					<td>
-						<p>시연동영상 업로드 <p>
+						<p>프로젝트 시연영상<p>
 					</td>
 					<td>
-						<input type="file" id="videoUpload" name="videoUpload">
+						<input type="file" id="videoFile" name="videoFile">
 					</td>
 				</tr>
-			
+				
 				<tr>
 					<td colspan=2>
-					<input class="btn btn-outline-primary" type="submit" value="완료"><br/>
+					<input class="btn btn-outline-primary" type="submit" value="입력"><br/>
 					<button type="button" onclick="javascript:pjtInsert();" class="btn btn-primary btn-sm">검색</button>
 					</td>
 				</tr>
 			</table>
-			</form>
+		    </form>
+		    <hr>
           </div>
+				<c:choose>
+					<c:when test="${videoFile.size()>0}">
+					<tr>
+						<td colspan="2">
+							<video src="${hContext}/resources/video/UCC.avi" width='200' controls autoplay></video>
+						</td>
+					</tr>
+					</c:when>
+				</c:choose>
+			
+
       </div><!-- //container -->
    
   
@@ -218,16 +227,30 @@
   <script src="${hContext}/resources/js/aos.js"></script>
   <script src="${hContext}/resources/js/jquery.animateNumber.min.js"></script>
   <script src="${hContext}/resources/js/scrollax.min.js"></script>
-  
+
+
+
   <script src="${hContext}/resources/js/main.js"></script>
     <script type="text/javascript">
 		function pjtInsert() {
+			console.log("pjtInsert");
 			//console.log("doRetrieve()");
 			var frm = document.signUp_pjt_frm;
 			frm.action = "${hContext}/portfolio/do_insert.spring";
-			frm.submit();
+			frm.method="GET";
+			frm.submit(); 
 		}
 
+	$("#uploadBtn").on("click", function(){
+		console.log("uploadTest");
+		var frm=document.uploadFrm;
+		frm.file01.value=$("#videoFile").value;
+		frm.action = "${hContext}/portfoilo/upload.spring";
+		frm.method="POST"
+		frm.submit();
+		
+		});
+		
     </script>
 </body>
 </html>

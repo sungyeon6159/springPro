@@ -25,7 +25,7 @@ public class MemberController {
 	
 	//@Qualifier("dummyMailSender") : root-context.xml bean id
 	@Autowired
-	MemberService userService;
+	MemberService memberService;
 	
 	
 	@RequestMapping(value = "member/do_retrieve.do", method = RequestMethod.GET)
@@ -54,7 +54,7 @@ public class MemberController {
 		LOG.debug("1.2=search="+search);
 		LOG.debug("1.2===================");
 		
-		List<MemberVO> list = (List<MemberVO>) userService.doRetrieve(search);
+		List<MemberVO> list = (List<MemberVO>) memberService.doRetrieve(search);
 		LOG.debug("1.3===================");
 		for(MemberVO vo :list) {
 			LOG.debug("vo="+vo);
@@ -86,7 +86,7 @@ public class MemberController {
 		LOG.debug("1=user="+user);
 		LOG.debug("1===================");
 
-		int  flag = userService.doUpdate(user);
+		int  flag = memberService.doUpdate(user);
 		LOG.debug("1.2===================");
 		LOG.debug("1.2=flag="+flag); 
 		LOG.debug("1.2===================");
@@ -124,7 +124,7 @@ public class MemberController {
 		LOG.debug("1=user="+user);
 		LOG.debug("1===================");
 		
-		MemberVO outVO = (MemberVO) userService.doSelectOne(user);
+		MemberVO outVO = (MemberVO) memberService.doSelectOne(user);
 		LOG.debug("1.2===================");
 		LOG.debug("1.2=outVO="+outVO);
 		LOG.debug("1.2===================");
@@ -150,7 +150,7 @@ public class MemberController {
 		LOG.debug("1===================");
 		
 		int flag = 0;
-		flag = userService.doDelete(user);
+		flag = memberService.doDelete(user);
 		
 		MessageVO message = new MessageVO();
 		message.setMsgId(String.valueOf(flag));
@@ -187,7 +187,7 @@ public class MemberController {
 		LOG.debug("1=user="+user);
 		LOG.debug("1===================");
 		
-		int  flag = userService.doInsert(user);
+		int  flag = memberService.doInsert(user);
 		
 		LOG.debug("1.2===================");
 		LOG.debug("1.2=flag="+flag); 

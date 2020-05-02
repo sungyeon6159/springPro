@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Dao;
@@ -22,6 +23,7 @@ import com.sist.spring.cmn.SearchVO;
  * @author sist
  *
  */
+@Repository
 public class MemberDao implements Dao {
 	//Logger
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());

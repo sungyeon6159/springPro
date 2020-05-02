@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Service;
 
+@org.springframework.stereotype.Service
 public class MemberService implements Service {
 
 	@Autowired
 	MemberDao memberDao;
 	
-	
+	public MemberService() {
+	}
 	@Override
 	public int doInsert(DTO dto) {
 		return this.memberDao.doInsert(dto);
