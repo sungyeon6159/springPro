@@ -55,8 +55,8 @@ public class ProjectController {
 			LOG.debug("doUpload 확인");
 			ProjectVO inVO=new ProjectVO();
 		//RootDir생성
-			List<FileVO>  list =new ArrayList<FileVO>();
-		
+			List<PjtFileVO> fileList =new ArrayList<PjtFileVO>();
+			List<ProjectVO> pjtList=new ArrayList<ProjectVO>();
 				File fileRootDir =new File(this.UPLOAD_FILE);
 				if(fileRootDir.isDirectory() ==false) {
 					boolean flag = fileRootDir.mkdirs();
@@ -99,16 +99,17 @@ public class ProjectController {
 					fileVO.setSaveFileNm(renameFile.getAbsolutePath());
 					fileVO.setExt(ext);
 					dbInVO.setExt(ext);
-					dbInVO.setDivFile("동영상");
+					dbInVO.setDivFile(1);
 					dbInVO.setFileSize(mFile.getSize());
 					dbInVO.setOrgNm(orgFileName);
 					dbInVO.setSavePNm(saveFileName);
 					
-					list.add(fileVO);
+//					list.add(fileVO);
 					mFile.transferTo(new File(renameFile.getAbsolutePath()));
 				}
 				dbInVO.setGitAddress(mReg.getParameter("gitAddress"));
 				dbInVO.setMemberId("iod1124");
+				inVO.setMemberId("iod1124");
 				inVO.setPjtName(mReg.getParameter("pjtName"));
 				inVO.setPjtInfo(mReg.getParameter("pjtInfo"));
 				inVO.setPjtStart(mReg.getParameter("pjtStart"));
@@ -125,7 +126,8 @@ public class ProjectController {
 				LOG.debug("Project Info: "+inVO.toString());
 				LOG.debug("=====================================");
 				
-				model.addObject("videoFile", list);
+				model.addObject("videoFile",dbInVO);
+				model.addObject("projectDb",inVO);
 				model.setViewName("portfolio/SignUp/projectSignUp");// /file/file.jsp
 				return model;
 			}	

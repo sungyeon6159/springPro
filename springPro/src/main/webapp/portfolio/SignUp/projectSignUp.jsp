@@ -76,6 +76,48 @@
        
          <div class="row d-flex no-gutters">
         <form action="${hContext}/portfoilo/upload.spring" method="post" enctype="multipart/form-data" name="uploadFrm">
+				<c:choose>
+					<c:when test="${videoFile != null}">
+					<table>
+					<tr>
+						<td rowspan="4">
+							<video src="${hContext}/resources/video/sistAir.avi" width='100' controls autoplay></video>
+						</td>
+						<td>
+							프로젝트명
+						</td>
+						<td>
+							${projectDb.pjtName}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							프로젝트 설명
+						</td>
+						<td>
+							${projectDb.pjtInfo}
+						</td>
+						
+					</tr>
+					<tr>
+						<td>
+							프로젝트 기간
+						</td>
+						<td>
+							${projectDb.pjtStart} - ${projectDb.pjtEnd}
+						</td>
+					</tr>	
+					<tr>
+						<td>
+							깃허브 주소
+						</td>
+						<td>
+							<a href="https://github.com/Taller88/SistAirlines" target="_blank">${projectDb.gitAddress}</a>
+						</td>
+					</tr>
+					</table>
+					</c:when>
+				</c:choose>
 				<table>
 				<tr>
 					<td>
@@ -128,16 +170,7 @@
 		    </form>
 		    <hr>
           </div>
-				<c:choose>
-					<c:when test="${videoFile.size()>0}">
-					<tr>
-						<td colspan="2">
-							<video src="${hContext}/resources/video/UCC.avi" width='200' controls autoplay></video>
-						</td>
-					</tr>
-					</c:when>
-				</c:choose>
-			
+							
 
       </div><!-- //container -->
    

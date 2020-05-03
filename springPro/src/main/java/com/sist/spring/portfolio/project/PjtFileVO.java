@@ -7,7 +7,12 @@ public class PjtFileVO extends DTO {
 	private String orgNm;
 	private long fileSize;
 	private String ext;
-	private String divFile;
+	/**
+	 * divFile 파일 구분
+	 * 1- 동영상 
+	 * 0- 사진
+	 */
+	private int divFile;
 	private String gitAddress;
 	private String memberId;
 	
@@ -41,10 +46,10 @@ public class PjtFileVO extends DTO {
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
-	public String getDivFile() {
+	public int getDivFile() {
 		return divFile;
 	}
-	public void setDivFile(String divFile) {
+	public void setDivFile(int divFile) {
 		this.divFile = divFile;
 	}
 	public String getGitAddress() {

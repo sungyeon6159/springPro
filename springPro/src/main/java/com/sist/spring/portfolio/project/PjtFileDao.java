@@ -34,7 +34,7 @@ public class PjtFileDao implements Dao {
 
 		public PjtFileVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			PjtFileVO outData=new PjtFileVO();
-			outData.setDivFile(rs.getString("div_file"));
+			outData.setDivFile(rs.getInt("div_file"));
 			outData.setMemberId(rs.getString("member_id"));
 			outData.setExt(rs.getString("ext"));
 			outData.setFileSize(rs.getLong("file_size"));
