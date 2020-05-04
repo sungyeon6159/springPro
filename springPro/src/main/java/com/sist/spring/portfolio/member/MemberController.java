@@ -28,7 +28,7 @@ public class MemberController {
 	MemberService memberService;
 	
 	
-	@RequestMapping(value = "member/do_retrieve.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/portfolio/do_retrieve.spring", method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req, SearchVO search, Model model){
 		LOG.debug("1===================");
 		LOG.debug("1=search="+search);
@@ -74,7 +74,7 @@ public class MemberController {
 		
 		
 //		member/member_mng -> /+member/member_mng+.jsp
-		return "member/member_mng";
+		return "portfolio/member/member_mng";
 	}
 
 	

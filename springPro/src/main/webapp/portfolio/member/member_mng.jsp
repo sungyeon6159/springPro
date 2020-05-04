@@ -95,12 +95,12 @@
     		<table class="table table-striped table-bordered" id="memberTable">
     		    <!-- hidden-sm hidden-xs 숨기기 -->
     			<thead class="bg-primary">
-    				<th class="text-center col-lg-1 col-md-1 hidden-sm hidden-xs ">번호</th>
-    				<th class="text-center col-lg-3 col-md-3 col-sm-3 col-xs-3">ID</th>
-    				<th class="text-center col-lg-2 col-md-2 col-sm-1 col-xs-1">이름</th>
-    				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs  ">레벨</th>
+    				<th class="text-center col-lg-2 col-md-2 col-sm-3 col-xs-3">사진</th>
+    				<th class="text-center col-lg-2 col-md-2 col-sm-3 col-xs-3">ID</th>
+    				<th class="text-center col-lg-2 col-md-2 col-sm-3 col-xs-3">이름</th>
+    				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs ">생년월일</th>
     				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs ">이메일</th>
-    				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs ">등록일</th>
+    				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs ">핸드폰번호</th>
     			</thead>
     			<tbody>
     				<!-- Data있는 경우 -->
@@ -108,8 +108,8 @@
     					<c:when test="${list.size()>0 }">
     						<c:forEach var="vo" items="${list }">
 		    					<tr>
-			    					<td class="text-center hidden-sm hidden-xs">${vo.num}</td>
-			    					<td class="text-left">${vo.member_id}</td>
+			    					<td class="text-left"><img src="../resources/images/test.jpg" width="100" height="100" /></td>
+			    					<td class="text-left">${vo.memberId}</td>
 			    					<td class="text-left">${vo.name }</td>
 			    					<td class="text-left hidden-sm hidden-xs">${vo.birth }</td>
 			    					<td class="text-left hidden-sm hidden-xs">${vo.email }</td>
@@ -150,7 +150,7 @@
             </div>
         </div>    
         <!--// Button Area -->
-        
+        ${hContext}
         <!-- 입력 From -->
         <form action="${hContext}/member/do_update.do" name="member_edit" method="post" class="form-horizontal">
         	<!-- 아이디 -->
@@ -539,7 +539,7 @@
 			//console.log('doRetrieve');
 			var frm = document.member_frm;
 			frm.pageNum.value = 1;
-			frm.action = "/spring/portfolio/member/member/do_retrieve.do";
+			frm.action = "${hContext}/portfolio/do_retrieve.spring";
 			frm.submit();
 		}
 		

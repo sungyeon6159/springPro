@@ -221,8 +221,8 @@ public class MemberDao implements Dao {
 		sb.append("               A.*                                            \n");
 		sb.append("        FROM (                                                \n");
 		sb.append("            SELECT *                                          \n");
-		sb.append("            FROM hr_member                                    \n");
-		sb.append("            ORDER BY reg_dt DESC                              \n");
+		sb.append("            FROM member                                    \n");
+		//sb.append("            ORDER BY reg_dt DESC                              \n");
 		sb.append("            --검색조건                                                                                   \n");
 		//--검색----------------------------------------------------------------------
 		sb.append(whereSb.toString());
@@ -236,7 +236,7 @@ public class MemberDao implements Dao {
 		sb.append("    )T1 CROSS JOIN                                            \n");
 		sb.append("    (                                                         \n");
 		sb.append("    SELECT count(*) total_cnt                                 \n");
-		sb.append("    FROM hr_member                                            \n");
+		sb.append("    FROM member                                            \n");
 		sb.append("    --검색조건                                                   \n");
 		//--검색----------------------------------------------------------------------
 		sb.append(whereSb.toString());
