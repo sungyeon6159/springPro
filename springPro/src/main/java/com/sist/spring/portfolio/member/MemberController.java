@@ -116,7 +116,7 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping(value = "member/do_select_one.do",method = RequestMethod.POST
+	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.POST
 			,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doSelectOne(MemberVO user) {

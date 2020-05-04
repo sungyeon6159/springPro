@@ -155,9 +155,9 @@
         <form action="${hContext}/member/do_update.do" name="member_edit" method="post" class="form-horizontal">
         	<!-- 아이디 -->
 			<div class="form-group">
-				<label for="u_id" class="col-lg-4 col-sm-4 col-xs-4 control-label">아이디</label>
+				<label for="u_id" class="col-lg-4 col-sm-4 col-xs-4 control-label">ID</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" maxlength="20" class="form-control input-sm" id="u_id" name="u_id" placeholder="아이디" disabled="disabled"/>
+					<input type="text" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디" disabled="disabled"/>
 				</div>
 			</div>
 			<!--// 아이디 -->
@@ -191,7 +191,7 @@
 			<!--// 레벨 -->
 			<!-- 로그인 횟수-->
 			<div class="form-group">
-				<label for="login" class="col-lg-4 col-sm-4 col-xs-4 control-label">로그인</label>
+				<label for="login" class="col-lg-4 col-sm-4 col-xs-4 control-label">폰번호</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
 					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="login" name="login" placeholder="로그인" />
 				</div>
@@ -199,7 +199,7 @@
 			<!--// 로그인 횟수-->
 			<!-- 추천 횟수-->
 			<div class="form-group">
-				<label for="recommend" class="col-lg-4 col-sm-4 col-xs-4 control-label">추천</label>
+				<label for="recommend" class="col-lg-4 col-sm-4 col-xs-4 control-label">생년월일</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
 					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="recommend" name="recommend" placeholder="추천" />
 				</div>
@@ -484,29 +484,28 @@
 			console.log("#memberTable>tbody"+ $(this));
 			var tds = $(this).children();
 			//console.log("tds:"+ tds.text());
-			var uId = tds.eq(1).text();
-			console.log("uId:"+ uId);
+			var memberId = tds.eq(1).text();
+			console.log("memberId:"+ memberId);
 
 			//ajax
 			$.ajax({
 			   type:"POST",
-			   url:"${hContext}/member/do_select_one.do",
+			   url:"${hContext}/portfolio/do_select_one.spring",
 			   dataType:"html", 
-			   data:{"u_id":uId
+			   data:{"memberId":memberId
 			   },
 			   success:function(data){ //성공
-			      //console.log("data:"+data);
+			      console.log("data:"+data);
 			      var parseData = $.parseJSON(data);
-			      console.log("u_id:"+parseData.u_id);
+			      console.log("member_id:"+parseData.memberId);
 
-			      $("#u_id").val(parseData.u_id);
+			      $("#memberId").val(parseData.memberId);
 			      $("#name").val(parseData.name);
-			      $("#passwd").val(parseData.passwd);
-			      $("#level").val(parseData.level);
-			      $("#login").val(parseData.login);
-			      $("#recommend").val(parseData.recommend);
+			      $("#passwd").val(parseData.password);
+			      $("#login").val(parseData.phone);
+			      $("#recommend").val(parseData.birth);
 			      $("#email").val(parseData.email);
-			      $("#regDt").val(parseData.regDt);
+			      $("#regDt").val(parseData.authority);
 
 			      //버튼제어: 등록, 수정, 삭제(disable)
 				  //enable 등록,$("#u_id")

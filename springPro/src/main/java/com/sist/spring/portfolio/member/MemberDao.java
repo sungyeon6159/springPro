@@ -145,9 +145,9 @@ public class MemberDao implements Dao {
 		sb.append("     birth,              \n");
 		sb.append("     phone,         		 \n");
 		sb.append("     authority,          \n");
-		sb.append("     open          		\n");
-		sb.append("     1 rnum,       \n"); 
-		sb.append("     1 total_cnt   \n");
+		sb.append("     open,          		\n");
+		sb.append("     1 rnum,       		\n"); 
+		sb.append("     1 total_cnt  		 \n");
 		sb.append(" FROM                      \n");
 		sb.append("     member               \n");
 		sb.append(" WHERE member_id = ?       \n");
