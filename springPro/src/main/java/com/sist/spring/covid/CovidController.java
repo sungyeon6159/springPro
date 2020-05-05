@@ -67,45 +67,71 @@ public class CovidController {
 	
 //		String currentLat="37.544169";	//나중에 주소 api검색시 값을 받아 저장 default=쌍용 
 //		String currentLng="127.049948";
-		JSONObject json1 = covidService.readJsonFromUrl("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+currentLat+"&lng="+currentLng+"&m=300");
-		System.out.println("aaaaaa"+json1);
+		JSONObject json1 = covidService.readJsonFromUrl("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+currentLat+"&lng="+currentLng+"&m=1000");
 		JsonParser parser=new JsonParser();
         JsonObject jsonObj=(JsonObject)parser.parse(json1.toString());
         JsonArray memberArray=(JsonArray)jsonObj.get("stores");
-        //model.addAttribute("memberArray",memberArray);
         
         List<CovidParmVO> list = new ArrayList<CovidParmVO>();
         for(int i=0; i<memberArray.size(); i++) {
         	vo = new CovidParmVO();
         	JsonObject object=(JsonObject)memberArray.get(i);
-        	int codeEndpoint= object.get("code").toString().lastIndexOf("\"");
-        	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");
-        	//null처리 필요	 ""으로
-//        	int stockAtEndpoint= object.get("stock_at").toString().lastIndexOf("\"");
-//        	int createdAtEndpoint= object.get("created_at").toString().lastIndexOf("\"");
-        	int addrEndpoint= object.get("addr").toString().lastIndexOf("\"");
-        	int typeEndpoint= object.get("type").toString().lastIndexOf("\"");
-//        	int remainStatEndpoint= object.get("remain_stat").toString().lastIndexOf("\"");
         	
+        	if(object.get("remain_stat").isJsonNull()) {
+        		int codeEndpoint= object.get("code").toString().lastIndexOf("\"");	//api 뿌려지는 value값이  ""로 싸여있므로 짜름
+            	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");
+            	int addrEndpoint= object.get("addr").toString().lastIndexOf("\"");
+            	int typeEndpoint= object.get("type").toString().lastIndexOf("\"");
+            	
+            	
+            	String getCode = object.get("code").toString().substring(1, codeEndpoint);
+            	String getName = object.get("name").toString().substring(1, nameEndpoint);
+
+            	String getAddr = object.get("addr").toString().substring(1, addrEndpoint);
+            	String getType = object.get("type").toString().substring(1, typeEndpoint);
+
+            	double getLng = Double.valueOf(object.get("lng").toString());
+            	double getLat = Double.valueOf(object.get("lat").toString());
+            	
+             	//임의로 한명 회원아아디 setting
+            	vo.setMemberId("wogns");
+            	vo.setCode(getCode);
+            	vo.setName(getName);
+            	vo.setAddr(getAddr);
+            	vo.setLng(getLng);
+            	vo.setLat(getLat);
+            	vo.setRemainStat("empty");		//또는 empty로 변경, break를 empty로 변경(어차피 없는것이므로
+        	} else {
+        		int codeEndpoint= object.get("code").toString().lastIndexOf("\"");
+            	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");
+            	
+            	//나중에 필요하면 null체크하고 쓰면됨
+//            	int stockAtEndpoint= object.get("stock_at").toString().lastIndexOf("\"");
+//            	int createdAtEndpoint= object.get("created_at").toString().lastIndexOf("\"");
+            	int addrEndpoint= object.get("addr").toString().lastIndexOf("\"");
+            	int typeEndpoint= object.get("type").toString().lastIndexOf("\"");
+            	int remainStatEndpoint= object.get("remain_stat").toString().lastIndexOf("\"");
+            	
+            	
+            	String getCode = object.get("code").toString().substring(1, codeEndpoint);
+            	String getName = object.get("name").toString().substring(1, nameEndpoint);
+//            	String getStockAt = object.get("stock_at").toString().substring(1, stockAtEndpoint);
+//            	String getCreatedAt = object.get("created_at").toString().substring(1, createdAtEndpoint);
+            	String getAddr = object.get("addr").toString().substring(1, addrEndpoint);
+            	String getType = object.get("type").toString().substring(1, typeEndpoint);
+            	String getRemainStat = object.get("remain_stat").toString().substring(1, remainStatEndpoint);
+            	double getLng = Double.valueOf(object.get("lng").toString());
+            	double getLat = Double.valueOf(object.get("lat").toString());
+            	//임의로 한명 회원아아디 setting
+            	vo.setMemberId("wogns");
+            	vo.setCode(getCode);
+            	vo.setName(getName);
+            	vo.setAddr(getAddr);
+            	vo.setLng(getLng);
+            	vo.setLat(getLat);
+            	vo.setRemainStat(getRemainStat);
+        	}
         	
-        	String getCode = object.get("code").toString().substring(1, codeEndpoint);
-        	String getName = object.get("name").toString().substring(1, nameEndpoint);
-//        	String getStockAt = object.get("stock_at").toString().substring(1, stockAtEndpoint);
-//        	String getCreatedAt = object.get("created_at").toString().substring(1, createdAtEndpoint);
-        	String getAddr = object.get("addr").toString().substring(1, addrEndpoint);
-        	String getType = object.get("type").toString().substring(1, typeEndpoint);
-//        	String getRemainStat = object.get("remain_stat").toString().substring(1, remainStatEndpoint);
-        	double getLng = Double.valueOf(object.get("lng").toString());
-        	double getLat = Double.valueOf(object.get("lat").toString());
-        	
-        	//임의로 한명 회원아아디 setting
-        	vo.setMemberId("wogns");
-        	vo.setCode(getCode);
-        	vo.setName(getName);
-        	vo.setAddr(getAddr);
-        	vo.setLng(getLng);
-        	vo.setLat(getLat);
-        	 
         	System.out.println("출력값확인 "+vo);
         	list.add(vo);
         	

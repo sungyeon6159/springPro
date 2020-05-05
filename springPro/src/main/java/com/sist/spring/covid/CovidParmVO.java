@@ -32,10 +32,14 @@ public class CovidParmVO extends DTO {
 	private String addr;		//약국주소
 	private double lng;			//위도
 	private double lat;			//경도
+	private String remainStat;	//재고량
+	
 	
 	public CovidParmVO() {}
 
-	public CovidParmVO(String memberId, String code, String name, String addr, double lng, double lat) {
+
+	public CovidParmVO(String memberId, String code, String name, String addr, double lng, double lat,
+			String remainStat) {
 		super();
 		this.memberId = memberId;
 		this.code = code;
@@ -43,7 +47,9 @@ public class CovidParmVO extends DTO {
 		this.addr = addr;
 		this.lng = lng;
 		this.lat = lat;
+		this.remainStat = remainStat;
 	}
+
 
 	/**
 	 * @return the memberId
@@ -52,12 +58,14 @@ public class CovidParmVO extends DTO {
 		return memberId;
 	}
 
+
 	/**
 	 * @param memberId the memberId to set
 	 */
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+
 
 	/**
 	 * @return the code
@@ -66,12 +74,14 @@ public class CovidParmVO extends DTO {
 		return code;
 	}
 
+
 	/**
 	 * @param code the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 
 	/**
 	 * @return the name
@@ -80,12 +90,14 @@ public class CovidParmVO extends DTO {
 		return name;
 	}
 
+
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	/**
 	 * @return the addr
@@ -94,12 +106,14 @@ public class CovidParmVO extends DTO {
 		return addr;
 	}
 
+
 	/**
 	 * @param addr the addr to set
 	 */
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+
 
 	/**
 	 * @return the lng
@@ -108,12 +122,14 @@ public class CovidParmVO extends DTO {
 		return lng;
 	}
 
+
 	/**
 	 * @param lng the lng to set
 	 */
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
+
 
 	/**
 	 * @return the lat
@@ -122,6 +138,7 @@ public class CovidParmVO extends DTO {
 		return lat;
 	}
 
+
 	/**
 	 * @param lat the lat to set
 	 */
@@ -129,10 +146,27 @@ public class CovidParmVO extends DTO {
 		this.lat = lat;
 	}
 
+
+	/**
+	 * @return the remainStat
+	 */
+	public String getRemainStat() {
+		return remainStat;
+	}
+
+
+	/**
+	 * @param remainStat the remainStat to set
+	 */
+	public void setRemainStat(String remainStat) {
+		this.remainStat = remainStat;
+	}
+
+
 	@Override
 	public String toString() {
 		return "CovidParmVO [memberId=" + memberId + ", code=" + code + ", name=" + name + ", addr=" + addr + ", lng="
-				+ lng + ", lat=" + lat + ", toString()=" + super.toString() + "]";
+				+ lng + ", lat=" + lat + ", remainStat=" + remainStat + ", toString()=" + super.toString() + "]";
 	}
 
 	
