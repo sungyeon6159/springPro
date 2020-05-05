@@ -32,27 +32,10 @@ public class CommentVO extends DTO {
 	private String cOpen;
 	private String regDt ; 
 	private String modDt; 
+	private String regId; 
 	private String memberId  ; 
 
 	 public CommentVO() {}
-
-	public CommentVO(String memberId, String cNo, String cContent, String cOpen, String regDt, String modDt) {
-		super();
-		this.memberId = memberId;
-		this.cNo = cNo;
-		this.cContent = cContent;
-		this.cOpen = cOpen;
-		this.regDt = regDt;
-		this.modDt = modDt;
-	}
-
-	public String getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
 
 	public String getcNo() {
 		return cNo;
@@ -94,14 +77,40 @@ public class CommentVO extends DTO {
 		this.modDt = modDt;
 	}
 
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public CommentVO(String cNo, String cContent, String cOpen, String regDt, String modDt, String regId,
+			String memberId) {
+		super();
+		this.cNo = cNo;
+		this.cContent = cContent;
+		this.cOpen = cOpen;
+		this.regDt = regDt;
+		this.modDt = modDt;
+		this.regId = regId;
+		this.memberId = memberId;
+	}
+
 	@Override
 	public String toString() {
-		return "CommentVO [memberId=" + memberId + ", cNo=" + cNo + ", cContent=" + cContent + ", cOpen=" + cOpen
-				+ ", regDt=" + regDt + ", modDt=" + modDt + "]";
+		return "CommentVO [cNo=" + cNo + ", cContent=" + cContent + ", cOpen=" + cOpen + ", regDt=" + regDt + ", modDt="
+				+ modDt + ", regId=" + regId + ", memberId=" + memberId + ", toString()=" + super.toString() + "]";
 	}
 
 	
-
-	 
 	 
 }

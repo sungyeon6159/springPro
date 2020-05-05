@@ -32,12 +32,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		@Override
 		public CommentVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CommentVO outData = new CommentVO();
-			outData.setMemberId(rs.getString("memberId"));
 			outData.setcNo(rs.getString("cNo"));
 			outData.setcContent(rs.getString("cContent"));
 			outData.setcOpen(rs.getString("cOpen"));
 			outData.setRegDt(rs.getString("regDt"));
 			outData.setModDt(rs.getString("modDt"));
+			outData.setRegId(rs.getString("regId"));
+			outData.setMemberId(rs.getString("memberId"));
 			
 			return outData;
 		}
@@ -48,12 +49,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		int flag = 0;
 		CommentVO inVO = (CommentVO)dto;
 		StringBuilder sb=new StringBuilder();
-		sb.append("INSERT INTO Comment(  \n");
+		sb.append("INSERT INTO Comments(  \n");
 		sb.append("		     c_no,      \n");
-		sb.append("		     c_content,     \n");
+		sb.append("		     c_cont,     \n");
 		sb.append("		     c_open,       \n");
 		sb.append("		     reg_dt,     \n");
 		sb.append("		     mod_dt,     \n");
+		sb.append("		     reg_id,     \n");
 		sb.append("		     member_id     \n");
 		sb.append(")VALUES(              \n");
 		sb.append("		     ?,          \n");
@@ -76,6 +78,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 							inVO.getcOpen(),
 							inVO.getRegDt(),
 							inVO.getModDt(),
+							inVO.getRegId(),
 							inVO.getMemberId()
 						};
 		flag = this.jdbcTemplate.update(sb.toString(),args);
@@ -91,11 +94,11 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		StringBuilder sb=new StringBuilder();
 		
 		
-		sb.append("UPDATE COMMENT       ");
+		sb.append("UPDATE COMMENTS       ");
 		sb.append("SET                  ");
 		sb.append("    mod_dt = ?    ");
 		sb.append("    ,c_open = ?");
-		sb.append("    ,c_content = ?   ");
+		sb.append("    ,c_cont = ?   ");
 		
 		sb.append("WHERE                ");
 		sb.append("    c_no = ?     ");
@@ -126,13 +129,14 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		sb.append("SELECT               ");
 		sb.append("		     c_no,      \n");
-		sb.append("		     c_content,     \n");
+		sb.append("		     c_cont,     \n");
 		sb.append("		     c_open,       \n");
 		sb.append("		     reg_dt,     \n");
 		sb.append("		     mod_dt,     \n");
+		sb.append("		     reg_id,     \n");
 		sb.append("		     member_id     \n");
 		sb.append("FROM                 ");
-		sb.append("    Comment          ");
+		sb.append("    Comments          ");
 		sb.append("WHERE                ");
 		sb.append("    c_no=?          ");
 		
@@ -160,7 +164,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		CommentVO inVO=(CommentVO) dto;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM Comment   \n");
+		sb.append("DELETE FROM Comments   \n");
 		sb.append("WHERE c_no=? 		 \n");
 		
 		LOG.debug("==================================");
@@ -186,10 +190,11 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("SELECT T1.*,T2.*                                                \n");
 		sb.append("FROM(                                                           \n");
 		sb.append("    SELECT  B.c_no,                                            \n");
-		sb.append("            B.c_content,                                            \n");
+		sb.append("            B.c_cont,                                            \n");
 		sb.append("            B.c_open,                                             \n");
 		sb.append("            B.reg_dt,                                           \n");
 		sb.append("            B.mod_dt,                  \n");
+		sb.append("		       B.reg_id,     \n");
 		sb.append("            B.member_id,                                           \n");
 		sb.append("            rnum                                                \n");		
 		sb.append("    FROM(                                                       \n");
@@ -197,8 +202,8 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("               A.*                                              \n");
 		sb.append("        FROM (                                                  \n");
 		sb.append("            SELECT *                                            \n");
-		sb.append("            FROM Comment                                        \n");
-		sb.append("		   WHERE c_content like '%' || ? ||'%'  					   \n");
+		sb.append("            FROM Comments                                        \n");
+		sb.append("		   WHERE member_id like '%' || ? ||'%'  					   \n");
 		sb.append("        )A --10                                                 \n");
 		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
 		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) \n");
@@ -208,8 +213,8 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("    )T1 CROSS JOIN                                              \n");
 		sb.append("    (                                                           \n");
 		sb.append("    SELECT count(*) total_cnt                                   \n");
-		sb.append("    FROM Comment                                                \n");
-		sb.append("		   WHERE c_content like '%' || ? ||'%'  					   \n");
+		sb.append("    FROM Comments                                                \n");
+		sb.append("		   WHERE member_id like '%' || ? ||'%'  					   \n");
 		sb.append("    )T2                                                         \n");
 		
 		//param 
