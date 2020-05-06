@@ -150,7 +150,7 @@ public class ProjectController {
 		LOG.debug("==================================");
 		LOG.debug("scrapping Method");
 		LOG.debug("==================================");
-			StringBuilder out=new StringBuilder();
+		StringBuilder out=new StringBuilder();
         List<String> companyList=new ArrayList<String>();
 		String url = "http://www.jobkorea.co.kr/Search/?stext=웹개발";    //크롤링할 url지정
         Document doc = null;        //Document에는 페이지의 전체 소스가 저장된다
