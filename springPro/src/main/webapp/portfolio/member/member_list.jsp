@@ -95,12 +95,12 @@
     		<table class="table table-striped table-bordered" id="memberTable">
     		    <!-- hidden-sm hidden-xs 숨기기 -->
     			<thead class="bg-primary">
-    				<th class="text-center col-lg-2 col-md-2 col-sm-3 col-xs-3">사진</th>
-    				<th class="text-center col-lg-2 col-md-2 col-sm-3 col-xs-3">ID</th>
-    				<th class="text-center col-lg-2 col-md-2 col-sm-3 col-xs-3">이름</th>
-    				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs ">생년월일</th>
-    				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs ">이메일</th>
-    				<th class="text-center col-lg-2 col-md-2 hidden-sm hidden-xs ">핸드폰번호</th>
+	    				<th>사진</th>
+	    				<th>ID</th>
+	    				<th>이름</th>
+	    				<th>생년월일</th>
+	    				<th>이메일</th>
+	    				<th>핸드폰번호</th>
     			</thead>
     			<tbody>
     				<!-- Data있는 경우 -->
@@ -108,7 +108,7 @@
     					<c:when test="${list.size()>0 }">
     						<c:forEach var="vo" items="${list }">
 		    					<tr>
-			    					<td class="text-left"><img src="../resources/images/test.jpg" width="100" height="100" /></td>
+			    					<td class="text-center"><img src="../resources/images/person_2.jpg" width="100" height="100" /></td>
 			    					<td class="text-left">${vo.memberId}</td>
 			    					<td class="text-left">${vo.name }</td>
 			    					<td class="text-left hidden-sm hidden-xs">${vo.birth }</td>
@@ -155,7 +155,7 @@
         <form action="${hContext}/member/do_update.do" name="member_edit" method="post" class="form-horizontal">
         	<!-- 아이디 -->
 			<div class="form-group">
-				<label for="u_id" class="col-lg-4 col-sm-4 col-xs-4 control-label">ID</label>
+				<label for="memberId" class="col-lg-4 col-sm-4 col-xs-4 control-label">ID</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
 					<input type="text" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디" disabled="disabled"/>
 				</div>
@@ -171,37 +171,25 @@
 			<!--// 이름 -->
 			<!-- 비번 -->
 			<div class="form-group">
-				<label for="passwd" class="col-lg-4 col-sm-4 col-xs-4 control-label">비밀번호</label>
+				<label for="password" class="col-lg-4 col-sm-4 col-xs-4 control-label">비밀번호</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="password" maxlength="50" class="form-control input-sm" id="passwd" name="passwd" placeholder="비밀번호" />
+					<input type="password" maxlength="50" class="form-control input-sm" id="password" name="password" placeholder="비밀번호" />
 				</div>
 			</div>
 			<!--// 비번 -->
-			<!-- 레벨 -->
-			<div class="form-group">
-				<label for="level" class="col-lg-4 col-sm-4 col-xs-4 control-label">등급</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<select class="form-control input-sm" id="level" name="level">
-						<option value="BASIC">BASIC</option>
-						<option value="SILVER">SILVER</option>
-						<option value="GOLD">GOLD</option>
-					</select>
-				</div>
-			</div>
-			<!--// 레벨 -->
 			<!-- 로그인 횟수-->
 			<div class="form-group">
-				<label for="login" class="col-lg-4 col-sm-4 col-xs-4 control-label">폰번호</label>
+				<label for="phone" class="col-lg-4 col-sm-4 col-xs-4 control-label">폰번호</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="login" name="login" placeholder="로그인" />
+					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="phone" name="phone" placeholder="폰번호" />
 				</div>
 			</div>
 			<!--// 로그인 횟수-->
 			<!-- 추천 횟수-->
 			<div class="form-group">
-				<label for="recommend" class="col-lg-4 col-sm-4 col-xs-4 control-label">생년월일</label>
+				<label for="birth" class="col-lg-4 col-sm-4 col-xs-4 control-label">생년월일</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="recommend" name="recommend" placeholder="추천" />
+					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="birth" name="birth" placeholder="생년월일" />
 				</div>
 			</div>
 			<!--// 추천 횟수-->
@@ -215,9 +203,9 @@
 			<!--// 이메일-->
 			<!-- 등록일-->
 			<div class="form-group">
-				<label for="regDt" class="col-lg-4 col-sm-4 col-xs-4 control-label">등록일</label>
+				<label for="authority" class="col-lg-4 col-sm-4 col-xs-4 control-label">권한</label>
 				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" maxlength="20" class="form-control input-sm" id="regDt" name="regDt" placeholder="등록일" disabled="disabled"/>
+					<input type="text" maxlength="20" class="form-control input-sm" id="authority" name="authority" placeholder="권한" disabled="disabled"/>
 				</div>
 			</div>
 			<!--// 등록일-->
@@ -501,11 +489,11 @@
 
 			      $("#memberId").val(parseData.memberId);
 			      $("#name").val(parseData.name);
-			      $("#passwd").val(parseData.password);
-			      $("#login").val(parseData.phone);
-			      $("#recommend").val(parseData.birth);
+			      $("#password").val(parseData.password);
+			      $("#phone").val(parseData.phone);
+			      $("#birth").val(parseData.birth);
 			      $("#email").val(parseData.email);
-			      $("#regDt").val(parseData.authority);
+			      $("#authority").val(parseData.authority);
 
 			      //버튼제어: 등록, 수정, 삭제(disable)
 				  //enable 등록,$("#u_id")

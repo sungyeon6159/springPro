@@ -62,7 +62,6 @@ public class MemberController {
 		LOG.debug("1.3===================");
 		
 		model.addAttribute("list", list);
-		
 		//총글수
 		int totalCnt = 0;
 		if(null != list && list.size() >0) {
@@ -74,7 +73,7 @@ public class MemberController {
 		
 		
 //		member/member_mng -> /+member/member_mng+.jsp
-		return "portfolio/member/member_mng";
+		return "portfolio/member/member_list";
 	}
 
 	
