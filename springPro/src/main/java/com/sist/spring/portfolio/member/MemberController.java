@@ -129,27 +129,28 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.POST
-			,produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public String doSelectOne(MemberVO user) {
+	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.POST)
+	public String doSelectOne(HttpServletRequest req ,MemberVO user, Model model) {
+		
+		user.setMemberId(req.getParameter("hiddenId")); //frm의 hiddenId 값들 가져와서 set
 		LOG.debug("1===================");
 		LOG.debug("1=user="+user);
 		LOG.debug("1===================");
 		
-		MemberVO outVO = (MemberVO) memberService.doSelectOne(user);
+		MemberVO outVO = (MemberVO) memberService.doSelectOne(user); //selectOne해서 한줄 뽑아옴
 		LOG.debug("1.2===================");
 		LOG.debug("1.2=outVO="+outVO);
 		LOG.debug("1.2===================");
 		
-		Gson gson = new Gson();
-		String json = gson.toJson(outVO);
+		FileMemberVO inVO = new FileMemberVO(); //객체생성
+		inVO.setMemberId(user.getMemberId()); //
 		
-		LOG.debug("1.3===================");
-		LOG.debug("1.3=json="+json);
-		LOG.debug("1.3===================");
+		FileMemberVO fileVO= (FileMemberVO) fmService.doSelectOne(inVO);
 		
-		return json;
+		model.addAttribute("fileVO",fileVO);
+		model.addAttribute("memberVO",outVO);
+		
+		return "portfolio/member/index_test";
 	}
 	
 	

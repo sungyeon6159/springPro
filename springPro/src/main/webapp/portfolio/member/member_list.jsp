@@ -89,7 +89,9 @@
     		</div>
     	</div>
     	<!--// 검색영역 -->
-    	
+    	<form action="${hContext}/portfolio/do_select_one.spring" id="selectOne_frm" name="selectOne_frm" method="post">
+    		<input type="hidden" name="hiddenId" id="hiddenId">
+    	</form>
     	<!-- Grid영역 -->
     	<div class="table-responsive">
     		<table class="table table-striped table-bordered" id="memberTable">
@@ -475,43 +477,11 @@
 			var memberId = tds.eq(1).text();
 			console.log("memberId:"+ memberId);
 
-			//ajax
-			$.ajax({
-			   type:"POST",
-			   url:"${hContext}/portfolio/do_select_one.spring",
-			   dataType:"html", 
-			   data:{"memberId":memberId
-			   },
-			   success:function(data){ //성공
-			      console.log("data:"+data);
-			      var parseData = $.parseJSON(data);
-			      console.log("member_id:"+parseData.memberId);
+			var frm = document.selectOne_frm;
+			frm.hiddenId.value = memberId;
+			
+			frm.submit();
 
-			      $("#memberId").val(parseData.memberId);
-			      $("#name").val(parseData.name);
-			      $("#password").val(parseData.password);
-			      $("#phone").val(parseData.phone);
-			      $("#birth").val(parseData.birth);
-			      $("#email").val(parseData.email);
-			      $("#authority").val(parseData.authority);
-
-			      //버튼제어: 등록, 수정, 삭제(disable)
-				  //enable 등록,$("#u_id")
-				  //수정,삭제(disable)
-				  $("#u_id").prop("disabled",true);
-				  $("#doUpdate").prop("disabled",false);
-				  $("#doDelete").prop("disabled",false);
-				  $("#doInsert").prop("disabled",true);
-			      
-			   },
-			   error:function(xhr,status,error){
-			      alert("error:"+error);
-			   },
-			   complete:function(data){
-			   
-			   }   
-			   
-			});//--ajax
 			
 		});
 
@@ -529,6 +499,8 @@
 			frm.action = "${hContext}/portfolio/do_retrieve.spring";
 			frm.submit();
 		}
+
+		
 		
 		$("#searchWord").on("keydown",function(key) {
 			console.log('searchWord keydown:'+key.keyCode);
