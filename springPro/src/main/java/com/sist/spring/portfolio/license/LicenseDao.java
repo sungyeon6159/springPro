@@ -2,9 +2,7 @@ package com.sist.spring.portfolio.license;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Dao;
-import com.sist.spring.cmn.SearchVO;
 @Repository
 public class LicenseDao implements Dao {
 	
@@ -31,13 +28,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		@Override
 		public LicenseVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			LicenseVO outData = new LicenseVO();
-			outData.setlName(rs.getString("lName"));
-			outData.setlGroup(rs.getString("lGroup"));
-			outData.setlGrade(rs.getString("lGrade"));
-			outData.setlNum(rs.getString("lNum"));
-			outData.setlDate(rs.getString("lDate"));
-			outData.setlOrgan(rs.getString("lOrgan"));
-			outData.setMemberId(rs.getString("memberId"));
+			outData.setlName(rs.getString("l_name"));
+			outData.setlGroup(rs.getString("l_group"));
+			outData.setlGrade(rs.getString("l_grade"));
+			outData.setlNum(rs.getString("l_num"));
+			outData.setlOrgan(rs.getString("l_organ"));
+			outData.setlDate(rs.getString("l_date"));
+			outData.setMemberId(rs.getString("member_id"));
 			
 			return outData;
 		}
@@ -48,24 +45,23 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		int flag = 0;
 		LicenseVO inVO = (LicenseVO)dto;
 		StringBuilder sb=new StringBuilder();
-		sb.append("INSERT INTO License(   \n");
-		sb.append("		     l_name,      \n");
-		sb.append("		     l_group,     \n");
-		sb.append("		     l_grade,     \n");
-		sb.append("		     l_num,       \n");
-		sb.append("		     l_date       \n");
-		sb.append("		     l_organ,     \n");
-		sb.append("		     member_id,   \n");
-		sb.append(")VALUES(               \n");
-		sb.append("		     ?,           \n");
-		sb.append("		     ?,           \n");
-		sb.append("		     ?,           \n");
-		sb.append("		     ?,           \n");
-		sb.append("		     ?,           \n");
-		sb.append("		     ?,           \n");
-		sb.append("		     ?,           \n");
-		sb.append("		     ?            \n");
-		sb.append(")                      \n");
+ 		sb.append("INSERT INTO License(                          \n");
+		sb.append("		     l_name,                             \n");
+		sb.append("		     l_group,                            \n");
+		sb.append("		     l_grade,                            \n");
+		sb.append("		     l_num,                              \n");
+		sb.append("		     l_organ,                            \n");
+		sb.append("		     l_date,                             \n");
+		sb.append("		     member_id                           \n");
+		sb.append(")VALUES(                                      \n");
+		sb.append("		     ?,                                  \n");
+		sb.append("		     ?,                                  \n");
+		sb.append("		     ?,                                  \n");
+		sb.append("		     ?,                                  \n");
+		sb.append("		     ?,                                  \n");
+		sb.append("		     ?,	  	    					     \n");
+		sb.append("		     ?                                   \n");
+		sb.append(")                                             \n");
 		
 		LOG.debug("========================================");
 		LOG.debug("==============doInsert==================");
@@ -77,8 +73,8 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 							inVO.getlGroup(),
 							inVO.getlGrade(),
 							inVO.getlNum(),
-							inVO.getlDate(),
 							inVO.getlOrgan(),
+							inVO.getlDate(),
 							inVO.getMemberId()
 						};
 		flag = this.jdbcTemplate.update(sb.toString(),args);
@@ -140,7 +136,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("    l_num,           \n");
 		sb.append("    l_date,          \n");
 		sb.append("    l_organ,         \n");
-		sb.append("    member_id,       \n");
+		sb.append("    member_id        \n");
 		sb.append("FROM                 \n");
 		sb.append("    License          \n");
 		sb.append("WHERE                \n");
@@ -221,58 +217,36 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public List<?> doRetrieve(DTO dto) {
 		//member_id로만 조회
-		SearchVO  inVO= (SearchVO) dto;
-
+		LicenseVO  inVO= (LicenseVO) dto;
+		
 		StringBuilder sb=new StringBuilder();
-		sb.append("SELECT T1.*,T2.*                                                \n");
-		sb.append("FROM(                                                           \n");
-		sb.append("    SELECT  B.l_name,                                           \n");
-		sb.append("            B.l_group,                                          \n");
-		sb.append("            B.l_grade,                                          \n");
-		sb.append("            B.l_num,                                            \n");
-		sb.append("            TO_CHAR(B.lGet,'YYYY/MM/DD') l_date,                \n");
-		sb.append("            B.member_id,                                        \n");
-		sb.append("            B.l_organ,                                          \n");
-		sb.append("            rnum                                                \n");		
-		sb.append("    FROM(                                                       \n");
-		sb.append("        SELECT ROWNUM rnum,                                     \n");
-		sb.append("               A.*                                              \n");
-		sb.append("        FROM (                                                  \n");
-		sb.append("            SELECT *                                            \n");
-		sb.append("            FROM license                                        \n");
-		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
-		sb.append("        )A --10                                                 \n");
-		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
-		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) \n");
-		sb.append("    )B --1                                                      \n");
-		//sb.append("    WHERE B.RNUM >= (&PAGE_SIZE*(&PAGE_NUM-1)+1)              \n");
-		sb.append("    WHERE B.RNUM >= (?*(?-1)+1)              				   \n");
-		sb.append("    )T1 CROSS JOIN                                              \n");
-		sb.append("    (                                                           \n");
-		sb.append("    SELECT count(*) total_cnt                                   \n");
-		sb.append("    FROM license                                                \n");
-		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
-		sb.append("    )T2                                                         \n");
+		sb.append("SELECT                                    \n");
+		sb.append("    l_name,                               \n");
+		sb.append("    l_group,                              \n");
+		sb.append("    l_grade,                              \n");
+		sb.append("    l_num,                                \n");
+		sb.append("    l_organ,                              \n");
+		sb.append("    TO_CHAR(l_date,'YYYY/MM/DD') l_date,  \n");
+		sb.append("    member_id                             \n");
+		sb.append("FROM                                      \n");
+		sb.append("    license                               \n");
+		sb.append("WHERE member_id=?                         \n");
+		
 		
 		//param 
-		List<Object> listArg = new ArrayList<Object>();
-		listArg.add(inVO.getSearchWord());
-//		listArg.add(inVO.getPageSize());
-//		listArg.add(inVO.getPageNum());
-//		listArg.add(inVO.getPageSize());
-//		listArg.add(inVO.getPageSize());
-//		listArg.add(inVO.getPageNum());				
-		listArg.add(inVO.getSearchWord());
+		Object[] args = {inVO.getMemberId()};
+		
+		//LOG.debug("inVO= "+inVO.getSearchWord());
 		
 		//param set
-		List<LicenseVO> retlist = this.jdbcTemplate.query(sb.toString(), listArg.toArray(), rowMapper);
+		List<LicenseVO> retlist = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
+		
 		LOG.debug("==================================");
 		LOG.debug("============doRetrieve============");
 		LOG.debug("query \n"+sb.toString());
-		LOG.debug("param: "+listArg);
+		LOG.debug("param: "+inVO);
 		LOG.debug("==================================");
 		return retlist;
 	
 	}
-
 }

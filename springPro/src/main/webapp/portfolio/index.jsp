@@ -420,57 +420,40 @@
     
     <!-- License -->
      <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="License-section">
-		<div class="container-fluid px-md-5">
-    		<div class="row justify-content-center py-5 mt-5">
-          		<div class="col-md-12 heading-section text-center ftco-animate">
-           			 <h2 class="mb-4">License</h2>
-					 <div class="row">
-					 	<div class="col-md-4 text-center d-flex ftco-animate">
-					 		<a href="#License-section" class="services-1 shadow">
-					 			<span class="icon">
-					 				<i class="flaticon-analysis"></i>
-					 			</span>
-					 			<div class="desc">
-					 				<h3 class="mb-5">정보처리기사</h3>
-					 				<p>자격 분류:</p>
-					 				<p>자격 종류:</p>
-					 				<p>자격증 번호:</p>
-					 				<p>자격증 취득일:</p>
-					 			</div>
-					 		</a>
-					 	</div>
-					 	<div class="col-md-4 text-center d-flex ftco-animate">
-					 		<a href="#License-section" class="services-1 shadow">
-					 			<span class="icon">
-					 				<i class="flaticon-flasks"></i>
-					 			</span>
-					 			<div class="desc">
-					 				<h3 class="mb-5">컴퓨터 활용 1급</h3>
-									<p>자격 분류:</p>
-					 				<p>자격 종류:</p>
-					 				<p>자격증 번호:</p>
-					 				<p>자격증 취득일:</p>
-					 			</div>
-					 		</a>
-					 	</div>
-					 	<div class="col-md-4 text-center d-flex ftco-animate">
-					 		<a href="#License-section" class="services-1 shadow">
-					 			<span class="icon">
-					 				<i class="flaticon-ideas"></i>
-					 			</span>
-					 			<div class="desc">
-					 				<h3 class="mb-5">컴퓨터 활용 2급</h3>
-					 				<p>자격 분류:</p>
-					 				<p>자격 종류:</p>
-					 				<p>자격증 번호:</p>
-					 				<p>자격증 취득일:</p>
-					 			</div>
-					 		</a>
-					 	</div>
-					 </div>
-           	    </div>
-           	</div>
-        </div>  
+     	<form action="${hContext}/portfolio/do_retrieve2.spring" name="license_frm" method="get" class="form-inline">
+			<div class="container-fluid px-md-5">
+	    		<div class="row justify-content-center py-5 mt-5">
+	          		<div class="col-md-12 heading-section text-center ftco-animate">
+	           			 <h2 class="mb-4">License</h2>
+						 <div class="row">
+						 	<c:choose>
+						 		<c:when test="${list.size()>0 }">
+						 			<c:forEach var="vo" items="${list }">
+									 	<div class="col-md-4 text-center d-flex ftco-animate">
+									 		<a href="#License-section" class="services-1 shadow">
+									 			<span class="icon">
+									 				<i class="flaticon-analysis"></i>
+									 			</span>
+									 			<div class="desc">
+									 				<h3 class="mb-4 text-center"><b>${vo.lName}</b></h3><br/>
+									 				<p class="text-left">자격 분류:${vo.lGroup}</p>
+									 				<p>자격 종류:${vo.lGrade }</p>
+									 				<p>자격증 번호:${vo.lNum }</p>
+									 				<p>자격증 취득일:${vo.lDate }</p>
+									 				<p>발행기관:${vo.lOrgan }</p>
+									 			</div>
+									 		</a>
+									 	</div>
+									 </c:forEach>
+							 	</c:when>
+						 	</c:choose>	
+						 </div>
+	           	    </div>
+	           	</div>
+	           	<button type="button" onclick="javascript:doSelectPage();"
+                     class="btn btn-primary btn-sm">조회</button>
+	        </div>  
+        </form>
      </section>  
     <!-- //License -->
 	
@@ -1111,6 +1094,14 @@
   <script src="${hContext}/resources/js/scrollax.min.js"></script>
   
   <script src="${hContext}/resources/js/main.js"></script>
-    
+  <script type="text/javascript">
+  function doSelectPage(pageNo) {
+      //console.log("doSelectPage");  
+      var frm = document.license_frm;
+      frm.action="${hContext}/portfolio/do_retrieve2.spring";
+      frm.submit();
+   }
+
+  </script> 
   </body>
 </html>
