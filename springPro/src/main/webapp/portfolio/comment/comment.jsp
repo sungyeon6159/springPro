@@ -19,43 +19,75 @@
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set  var="hContext" value="${pageContext.request.contextPath }"></c:set>
+<c:if test="${maxPageNo == null}"><c:set var="maxPageNo" value="1"></c:set></c:if>
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 부트스트랩 -->
+<link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
+
+
+
 <div class="container">
-    <form id="commentForm" name="commentForm" method="post">
-    <br><br>
-        <div>
-            <div>
-                <span><strong>Comments ${hContext} </strong></span> <span id="cCnt"></span>
-            </div>
-            
-            
-	        <!-- Button Area -->
-	        <div class="row">
-	            <div class="col-lg-10 col-sm-10 col-xs-10">
-	                <div class="text-right">
-	                	<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
-	                
-	                </div>
-	            </div>
-	        </div>    
-	        <!--// Button Area -->
+
+	<!-- 검색영역 -->
+    	<div class="row">
+    		<div class="col-md-12 text-right">
+	    		<form action="${hContext}/comment/do_retrieve.spring" name="commentfrm" method="get" class="form-inline">
+	    			<!-- pageNum -->
+	    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
+	    			<div class="form-group">
+	    				<select name="pageSize" id="pageSize" class="form-control input-sm">
+	    					<option value="10"
+	    						<c:if test="${param.pageSize =='10' }"> selected ="selected"</c:if> >10
+	    					</option>
+	    					<option value="20" 
+	    						<c:if test="${param.pageSize =='20' }"> selected ="selected"</c:if> >20
+	    					</option>
+	    					<option value="50" 
+	    						<c:if test="${param.pageSize =='50' }"> selected ="selected"</c:if> >50
+	    					</option>
+	    					<option value="100" 
+	    						<c:if test="${param.pageSize =='100' }"> selected ="selected"</c:if> >100
+	    					</option>
+	    				</select>
+	    				<select name="searchDiv" id="searchDiv" class="form-control input-sm">
+	    					<option value="">전체</option>
+	    					<option value="10"
+	    						<c:if test="${param.searchDiv == '10' }"> selected ="selected"</c:if> >ID
+	    					</option>
+	    					<option value="20"
+	    						<c:if test="${param.searchDiv == '20' }"> selected ="selected"</c:if> >이름
+	    					</option>
+	    				</select>
+	    				<input type="text"  class="form-control input-sm"  
+	    				id="searchWord" value="${param.searchWord }" name="searchWord" placeholder="검색어">
+	    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+	    				<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
+	    						
+	    			</div>
+	    		</form>
+    		</div>
+    	</div>
+    	<!--// 검색영역 -->
             <!-- 입력 From -->
             <div>
                 <table class="table">                    
                     <tr>
                         <td>
-                            <textarea style="width: 1100px" rows="3" cols="30" id="c_content" name="c_content" placeholder="댓글을 입력하세요"></textarea>
-                            <input type="hidden" maxlength="20" class="form-control input-sm" id="member_id" name="member_id" placeholder="아이디" value="mjkim9153" />
+                            <textarea style="width: 1100px" rows="3" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
+                            <input type="hidden" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디"  />
                             <br>
-                            <div>
+                            <div align="right">
                             	<button type="button" class="btn pull-right btn-success" id="doInsert" >등록</button>
-                            	<button type="button" class="btn btn-default btn-sm" id="doUpdate" >수정</button>
-	                	<button type="button" class="btn btn-default btn-sm" id="doDelete" >삭제</button>
+                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" >수정</button>
+	                			<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
                             </div>
                         </td>
                     </tr>
@@ -112,14 +144,13 @@
 
 
 
-
-<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-<script src="${hContext}/resources/js/bootstrap.min.js"></script>
-<!-- page -->
-<script src="${hContext}/resources/js/jquery.bootpag.min.js"></script>
-
+    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="${hContext}/resources/js/bootstrap.min.js"></script>
+    <!-- page -->
+    <script src="${hContext}/resources/js/jquery.bootpag.min.js"></script>
+    
 <script type="text/javascript">
 
 
@@ -147,11 +178,10 @@
 } */
 
  //등록
-$("#doInsert").on("click", function(){
+$("#doInsert").on("click", function() {
 	//console.log("#doUpdate");
-
 	//값  Null check
-	if($("#c_content").val() == "" || $("#c_content").val() == false){
+	if($("#cContent").val() == "" || $("#cContent").val() == false){
 		alert("내용을 입력 하세요.");
 		$("#c_content").focus();
 		return;
@@ -166,15 +196,14 @@ $("#doInsert").on("click", function(){
 	   url:"${hContext}/comment/add.spring",
 	   dataType:"html",
 	   data:{
-		   "c_content": $("#c_content").val(),
-		   "member_id": $("#member_id").val()
+		   "cContent": $("#cContent").val()
 	   },
 	   success:function(data){ //성공
 	      console.log("data:"+data);
 	      var parseData = $.parseJSON(data);
 	      if(parseData.msgId == "1"){
 			 alert(parseData.msgMsg);
-			 doRetrieve();
+			 //doRetrieve();
 		  }else{
 			 alert(parseData.msgMsg);
 		  }
@@ -192,13 +221,13 @@ $("#doInsert").on("click", function(){
 }); 
 
 
-function doRetrieve(){
+   function doRetrieve(){
 	//console.log('doRetrieve');
-	var frm = document.member_frm;
+	var frm = document.commentfrm;
 	frm.pageNum.value = 1;
 	frm.action = "${hContext}/comment/do_retrieve.spring";
 	frm.submit();
-}
+} 
  
 /**
  * 초기 페이지 로딩시 댓글 불러오기

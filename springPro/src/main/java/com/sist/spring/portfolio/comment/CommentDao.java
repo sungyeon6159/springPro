@@ -49,23 +49,24 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		int flag = 0;
 		CommentVO inVO = (CommentVO)dto;
 		StringBuilder sb=new StringBuilder();
-		sb.append("INSERT INTO Comments(  \n");
-		sb.append("		     c_no,      \n");
-		sb.append("		     c_cont,     \n");
-		sb.append("		     c_open,       \n");
-		sb.append("		     reg_dt,     \n");
-		sb.append("		     mod_dt,     \n");
-		sb.append("		     reg_id,     \n");
-		sb.append("		     member_id     \n");
-		sb.append(")VALUES(              \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?,          \n");
-		sb.append("		     ?           \n");
-		sb.append(")                     \n");
-		
+		sb.append("INSERT INTO Comments( 			 \n");
+		sb.append("		     c_no,    				 \n");
+		sb.append("		     c_cont,  				   \n");
+		sb.append("		     c_open,    			   \n");
+		sb.append("		     reg_dt,    			 \n");
+		sb.append("		     mod_dt,    			 \n");
+		sb.append("		     reg_id,    			 \n");
+		sb.append("		     member_id   			  \n");
+		sb.append(")VALUES(             			 \n");
+		sb.append("		     COMMENTS_SEQ.nextval,          \n");
+		sb.append("		     ?,        						  \n");
+		sb.append("		     ?,         						 \n");
+		sb.append("		     TO_CHAR(SYSDATE, 'YYYY-MM-DD'),          \n");
+		sb.append("		     TO_CHAR(SYSDATE, 'YYYY-MM-DD'),          \n");
+		sb.append("		     ?,         								 \n");
+		sb.append("		     ?          							 \n");
+		sb.append(")                     								\n");
+					
 		LOG.debug("========================================");
 		LOG.debug("==============doInsert==================");
 		LOG.debug("Query =\n"+sb.toString());
@@ -73,11 +74,8 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		Object[] args = {
 							
-							inVO.getcNo(),
 							inVO.getcContent(),
 							inVO.getcOpen(),
-							inVO.getRegDt(),
-							inVO.getModDt(),
 							inVO.getRegId(),
 							inVO.getMemberId()
 						};

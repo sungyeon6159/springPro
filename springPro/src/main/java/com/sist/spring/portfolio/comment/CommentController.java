@@ -35,7 +35,7 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 	
-	@RequestMapping(value = "comment/add.spring",method = RequestMethod.POST
+	@RequestMapping(value ="comment/add.spring",method = RequestMethod.POST
 			,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String add(CommentVO user) {
@@ -56,10 +56,10 @@ public class CommentController {
 	message.setMsgId(flag+"");
 	//성공
 	if(flag ==1) {
-		message.setMsgMsg(user.getcNo()+"등록 되었습니다.");
+		message.setMsgMsg(user.getcContent()+"등록 되었습니다.");
 	//실패	
 	}else {
-		message.setMsgMsg(user.getcNo()+"등록 실패.");			
+		message.setMsgMsg(user.getcContent()+"등록 실패.");			
 	}
 	
 	//JSON
