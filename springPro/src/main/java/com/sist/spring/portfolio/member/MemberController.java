@@ -1,5 +1,6 @@
 package com.sist.spring.portfolio.member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
+import com.sist.spring.portfolio.member.file.FileMemberService;
+import com.sist.spring.portfolio.member.file.FileMemberVO;
 
 @Controller
 public class MemberController {
@@ -27,6 +30,8 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	FileMemberService fmService;
 	
 	@RequestMapping(value = "/portfolio/do_retrieve.spring", method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req, SearchVO search, Model model){
@@ -55,13 +60,22 @@ public class MemberController {
 		LOG.debug("1.2===================");
 		
 		List<MemberVO> list = (List<MemberVO>) memberService.doRetrieve(search);
+		List<FileMemberVO> fileList=new ArrayList();
 		LOG.debug("1.3===================");
 		for(MemberVO vo :list) {
+			
+			FileMemberVO inVO=new FileMemberVO();
 			LOG.debug("vo="+vo);
+			inVO.setMemberId(vo.getMemberId());
+			
+			fileList.add((FileMemberVO) fmService.doSelectOne(inVO));
+			
 		}
 		LOG.debug("1.3===================");
 		
 		model.addAttribute("list", list);
+		model.addAttribute("fileList", fileList);
+		
 		//총글수
 		int totalCnt = 0;
 		if(null != list && list.size() >0) {

@@ -106,14 +106,14 @@
     				<!-- Data있는 경우 -->
     				<c:choose>
     					<c:when test="${list.size()>0 }">
-    						<c:forEach var="vo" items="${list }">
+    						<c:forEach var="i" begin="0" end="${list.size()-1}">
 		    					<tr>
-			    					<td class="text-center"><img src="../resources/images/person_2.jpg" width="100" height="100" /></td>
-			    					<td class="text-left">${vo.memberId}</td>
-			    					<td class="text-left">${vo.name }</td>
-			    					<td class="text-left hidden-sm hidden-xs">${vo.birth }</td>
-			    					<td class="text-left hidden-sm hidden-xs">${vo.email }</td>
-			    					<td class="text-center hidden-sm hidden-xs">${vo.phone }</td>
+			    					<td class="text-center"><img src="../resources/images/${fileList.get(i).saveNm}.${fileList.get(i).ext}" width="100" height="100" /></td>
+			    					<td class="text-left">${list.get(i).memberId}</td>
+			    					<td class="text-left">${list.get(i).name }</td>
+			    					<td class="text-left hidden-sm hidden-xs">${list.get(i).birth }</td>
+			    					<td class="text-left hidden-sm hidden-xs">${list.get(i).email }</td>
+			    					<td class="text-center hidden-sm hidden-xs">${list.get(i).phone }</td>
 		    					</tr>
 	    					</c:forEach>
     					</c:when>
