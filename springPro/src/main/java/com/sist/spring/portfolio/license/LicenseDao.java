@@ -168,7 +168,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		LicenseVO inVO=(LicenseVO) dto;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM License   \n");
+		sb.append("DELETE FROM License       \n");
 		sb.append("WHERE member_id=? 		 \n");
 		
 		LOG.debug("==================================");
