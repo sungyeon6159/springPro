@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.sist.spring.cmn.MessageVO;
 
 @Controller
 public class LicenseController {
@@ -45,5 +49,41 @@ public class LicenseController {
 
 		return "portfolio/index2";
 	}
+	
+	//삭제
+	@RequestMapping(value = "portfolio/do_delete_license.spring",method=RequestMethod.GET
+					,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doDeleteLicense(LicenseVO user) {
+		LOG.debug("1===========================");
+		LOG.debug("1 user = "+user);
+		LOG.debug("1===========================");		
+		
+		int flag = 0;
+		flag = licenseService.doDeleteLicense(user);
+		LOG.debug("1.2===========================");
+		LOG.debug("1.2 flag = "+flag);
+		LOG.debug("1.2===========================");
+		
+		MessageVO message = new MessageVO();
+		message.setMsgId(String.valueOf(flag));
+		//성공
+		if(flag==1) {
+			message.setMsgMsg(user.getMemberId()+"님이 삭제 되었습니다.");
+		 //실패	
+		}else {
+			message.setMsgMsg(user.getMemberId()+"님, 삭제 실패했습니다.");			
+		}
+		
+		//JSON
+		Gson gson = new Gson();
+		String json = gson.toJson(message);
+		
+		LOG.debug("1.3===========================");
+		LOG.debug("1.3 json = "+json);
+		LOG.debug("1.3===========================");	
+		
+		return json;
+	}	
 	
 }

@@ -35,6 +35,11 @@ public class LicenseService implements com.sist.spring.cmn.Service{
 		return licenseDao.doDelete(dto);
 	}
 
+	//자격증 개별 삭제
+	public int doDeleteLicense(DTO dto) {
+		return licenseDao.doDeleteLicense(dto);
+	}
+	
 	@Override
 	public List<?> doRetrieve(DTO dto) {
 		return licenseDao.doRetrieve(dto);

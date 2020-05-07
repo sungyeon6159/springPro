@@ -427,20 +427,25 @@
 	           			 <h2 class="mb-4">License</h2>
 						 <div class="row">
 						 	<c:choose>
-						 		<c:when test="${licList.size()>0 }">
-						 			<c:forEach var="vo" items="${licList }">
+						 		<c:when test="${list.size()>0 }">
+						 			<c:forEach var="vo" items="${list }">
 									 	<div class="col-md-4 text-center d-flex ftco-animate">
 									 		<a href="#License-section" class="services-1 shadow">
 									 			<span class="icon">
 									 				<i class="flaticon-analysis"></i>
 									 			</span>
 									 			<div class="desc">
-									 				<h3 class="mb-4 text-center"><b>${vo.lName}</b></h3><br/>
-									 				<p class="text-left">자격 분류:${vo.lGroup}</p>
-									 				<p>자격 종류:${vo.lGrade }</p>
-									 				<p>자격증 번호:${vo.lNum }</p>
-									 				<p>자격증 취득일:${vo.lDate }</p>
-									 				<p>발행기관:${vo.lOrgan }</p>
+									 				<input type="hidden" name="memberId" id="memberId" />
+									 				<p class="text-center"><input  type="text" id="lName" name="lName" value="${vo.lName}"  style="border:none; background:none;"/></p><hr/>
+									 				<p class="text-left"> 자격 분류: <input type="text" value="${vo.lGroup}" style="border:none; background:none;"/></p>
+									 				<p class="text-left"> 자격 종류: <input type="text" value="${vo.lGrade }" style="border:none; background:none;"/></p>
+									 				<p class="text-left"> 자격증 번호: <input type="text" value="${vo.lNum }" style="border:none; background:none;"/></p>
+									 				<p class="text-left"> 자격증 취득일: <input type="text" value="${vo.lDate }" style="border:none; background:none;"/></p>
+									 				<p class="text-left"> 발행기관: <input type="text" value="${vo.lOrgan }" style="border:none; background:none;"/></p>
+									 				<div align="right">
+														<button type="button" class="btn btn-primary" id="licDel" name="licDel">삭제</button>
+														<button type="button" class="btn btn-primary" id="licUpdate" onclick="javascript:doUpdate();">수정</button>
+									 				</div>
 									 			</div>
 									 		</a>
 									 	</div>
@@ -450,8 +455,7 @@
 						 </div>
 	           	    </div>
 	           	</div>
-	           	<button type="button" onclick="javascript:doSelectPage();"
-                     class="btn btn-primary btn-sm">조회</button>
+	           	<button type="button" onclick="javascript:licRetrieve();"class="btn btn-primary btn-sm">조회</button>
 	        </div>  
         </form>
      </section>  
@@ -1095,12 +1099,48 @@
   
   <script src="${hContext}/resources/js/main.js"></script>
   <script type="text/javascript">
-  function doSelectPage(pageNo) {
-      //console.log("doSelectPage");  
+  function licRetrieve() {
       var frm = document.license_frm;
-      frm.action="${hContext}/portfolio/total_retrieve.spring";
+      frm.action="${hContext}/portfolio/do_retrieve2.spring";
       frm.submit();
    }
+
+
+  
+	$("#licDel").on("click",function(){
+		//confirm
+	       if(confirm($("#lName").val()+"을(를) 삭제 하시겠습니까?")==false) return;
+	       
+        //ajax
+        $.ajax({
+         type:"GET",
+         url:"${hContext}/portfolio/do_delete_license.spring",
+         dataType:"html", 
+         data:{ "memberId":"sohyun1234"
+                //"memberId":$("#memberId").val()
+               ,"lName" : $("#lName").val()
+         },
+         success:function(data){ //성공
+          //console.log("data:"+data);  
+          var parseData = $.parseJSON(data);
+			 if(parseData.msgId=="1"){
+					alert(parseData.msgMsg);
+					licRetrieve();
+				 }else{
+					alert(parseData.msgMsg);
+					 }
+
+         },
+         error:function(xhr,status,error){
+           alert("error:"+error);
+         },
+         complete:function(data){
+         
+         }   
+         
+        });//--ajax 
+		
+	});
 
   </script> 
   </body>
