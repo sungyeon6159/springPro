@@ -26,9 +26,9 @@ import com.sist.spring.cmn.StringUtil;
 
 
 @Controller
-public class FilMemberController {
+public class FileMemberController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(FilMemberController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileMemberController.class);
 	
 	private final String UPLOAD_FILE ="D:\\HR_FILE";
 	
