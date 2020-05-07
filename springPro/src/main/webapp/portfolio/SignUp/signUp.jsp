@@ -21,6 +21,7 @@
 <% response.setContentType("text/html; charset=utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,15 +116,6 @@
                         		<tr>
 	                        		<td>
 									Date of Birth : <select name="birth1" id="birth1">
-                        			   <option value="2019">2019</option>
-                        			   <option value="2018">2018</option>
-                        			   <option value="2017">2017</option>
-                        			   <option value="2016">2016</option>
-                        			   <option value="2015">2015</option>
-                        			   <option value="2014">2014</option>
-								       <option value="2013">2013</option>
-								       <option value="2012">2012</option>
-								       <option value="2011">2011</option>
 								       <option value="2010">2010</option>
 								       <option value="2009">2009</option>
 								       <option value="2008">2008</option>
@@ -135,6 +127,17 @@
 								       <option value="2002">2002</option>
 								       <option value="2001">2001</option>
 								       <option value="2000">2000</option>
+								       <option value="1999">1999</option>
+								       <option value="1998">1998</option>
+								       <option value="1997">1997</option>
+								       <option value="1996">1996</option>
+								       <option value="1995">1995</option>
+								       <option value="1994">1994</option>
+								       <option value="1993">1993</option>
+								       <option value="1992">1992</option>
+								       <option value="1991">1991</option>
+								       <option value="1990">1990</option>
+								       <option value="1989">1989</option>
 								     </select>년&nbsp;
 								     <select name="birth2" id="birth2">
 								       <option value="1">1</option>
@@ -210,7 +213,7 @@
 		                        </tr>
 		                        <tr>
 	                        		<td>
-		                            <button type="submit" class="form-control btn btn-primary signupbtn" id="doInsert" disabled="disabled">회원가입</button>
+		                            <button type="submit" class="form-control btn btn-primary signupbtn" id="doInsert">회원가입</button>
 		                        </td>
 		                        </tr>
 		                        </tbody>
@@ -222,150 +225,6 @@
 			</div>
 		</section>
 
-	<!-- License -->
-		<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="#license-section">
-			<div class="container-fluid px-md-5">
-	    		<div class="row justify-content-center py-5 mt-5">
-	          		<div class="col-md-12 heading-section text-center ftco-animate">
-	           			 <h2 class="mb-4">License</h2>
-	           			 <div align="center">
-							<form action="${hContext}/license/doInsert.do" id="license_form" method="post">
-							<table>
-	                        <tbody>
-	                        	<tr>
-	                        		<td>
-		                            <input type="text" class="form-control id" name="memberId" placeholder="Id" oninput="checkId()" id="checkaa" autofocus>
-		                        	</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-		                            <input type="password" class="form-control pass" name="password" placeholder="Password" oninput="checkPwd()">
-		                       	 	</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-		                            <input type="password" class="form-control pass" name="passwordConfirm" placeholder="Confirm Password" id="repwd" oninput="checkPwd()">
-		                        	</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-                            		<input type="text" class="form-control nickname" name="nickName" id="nickname" placeholder="Your Nickname" oninput="checkNick()" autofocus>
-                        			</td>
-		                        </tr>
-                        		<tr>
-	                        		<td>
-                           			<input type="email" class="form-control email" name="email" placeholder="Email" oninput="checkNick()" autofocus>
-                        			</td>
-		                        </tr>
-                        		<tr>
-	                        		<td>
-									Date of Birth : <select name="birth1">
-                        			   <option value="2019">2019</option>
-                        			   <option value="2018">2018</option>
-                        			   <option value="2017">2017</option>
-                        			   <option value="2016">2016</option>
-                        			   <option value="2015">2015</option>
-                        			   <option value="2014">2014</option>
-								       <option value="2013">2013</option>
-								       <option value="2012">2012</option>
-								       <option value="2011">2011</option>
-								       <option value="2010">2010</option>
-								       <option value="2009">2009</option>
-								       <option value="2008">2008</option>
-								       <option value="2007">2007</option>
-								       <option value="2006">2006</option>
-								       <option value="2005">2005</option>
-								       <option value="2004">2004</option>
-								       <option value="2003">2003</option>
-								       <option value="2002">2002</option>
-								       <option value="2001">2001</option>
-								       <option value="2000">2000</option>
-								     </select>년&nbsp;
-								     <select name="birth2">
-								       <option value="1">1</option>
-								       <option value="2">2</option>
-								       <option value="3">3</option>
-								       <option value="4">4</option>
-								       <option value="5">5</option>
-								       <option value="6">6</option>
-								       <option value="7">7</option>
-								       <option value="8">8</option>
-								       <option value="9">9</option>
-								       <option value="10">10</option>
-								       <option value="11">11</option>
-								       <option value="12">12</option>
-								     </select>월
-								     <select name="birth3">
-								       <option value="1">1</option>
-								       <option value="2">2</option>
-								       <option value="3">3</option>
-								       <option value="4">4</option>
-								       <option value="5">5</option>
-								       <option value="6">6</option>
-								       <option value="7">7</option>
-								       <option value="8">8</option>
-								       <option value="9">9</option>
-								       <option value="10">10</option>
-								       <option value="11">11</option>
-								       <option value="12">12</option>
-								       <option value="13">13</option>
-								       <option value="14">14</option>
-								       <option value="15">15</option>
-								       <option value="16">16</option>
-								       <option value="17">17</option>
-								       <option value="18">18</option>
-								       <option value="19">19</option>
-								       <option value="20">20</option>
-								       <option value="21">21</option>
-								       <option value="22">22</option>
-								       <option value="23">23</option>
-								       <option value="24">24</option>
-								       <option value="25">25</option>
-								       <option value="26">26</option>
-								       <option value="27">27</option>
-								       <option value="28">28</option>
-								       <option value="29">29</option>
-								       <option value="30">30</option>
-								       <option value="31">31</option>
-								     </select>일<br><br>
-                        			</td>
-		                        </tr>
-                        		<tr>
-	                        		<td>
-		                        		Phone : <select name="phone">
-									       <option value="010">010</option>
-									       <option value="011">011</option>
-									       <option value="016">016</option>
-									       <option value="017">017</option>
-									       <option value="019">019</option>
-									     </select>
-									     - <input type="text" name="ph2" size="5" maxlength="4"> - <input type="text" name="ph3" size="5" maxlength="4"><br><br>
-                        			</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-				                        <label for="interestPosition">InterestPosition</label>
-								          <select id="interestPosition">
-									         <option>웹개발</option>
-									         <option>앱개발</option>
-									         <option>AI개발</option>
-									         <option>마케팅</option>
-								          </select>
-						        	</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-		                            <button type="submit" id="doInsert" class="form-control btn btn-primary signupbtn" disabled="disabled">회원가입</button>
-		                        </td>
-		                        </tr>
-		                        </tbody>
-	                     		</table>
-                    		</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
 
    <!-- Skills -->
     <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="skills-section">
@@ -539,8 +398,8 @@
 			frm.submit();
 		}
 
-    </script>
-     <script type="text/javascript">
+		
+		//등록
 	     $("#doInsert").on("click", function() {
 			//값 null check
 			if ($("#memberId").val() == "" || $("#memberId").val() == false) {
@@ -553,6 +412,11 @@
                 $("#password").focus();
                 return;
             }
+			if($("password") != $("passwordConfirm")){
+		        alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); 
+		        $("#passwordConfirm").focus();
+		        return; 
+		    }
 			if ($("#name").val() == "" || $("#name").val() == false) {
                 alert("이름을 입력 하세요.");
                 $("#name").focus();
@@ -574,12 +438,11 @@
                     "memberId" : $("#memberId").val(),
                     "password" : $("#password").val(),
                     "name" : $("#name").val(),
-                    "email" : $("#email").val(),
+                    "email" : $("#email").val()
 
                 },
                 success : function(data) { //성공
                     console.log("data:" + data);
-                    //{"msgId":"1","msgMsg":"j_hr0000002님이 삭제 되었습니다.","num":0,"totalCnt":0}   
                     var parseData = $.parseJSON(data);
                     if (parseData.msgId == "1") {
                         alert(parseData.msgMsg);
@@ -599,6 +462,24 @@
             });//--ajax 
 
         });
+
+	   /*   $("#memberTable>tbody").on("click", "tr", function() {
+			 //console.log("#memberTable>tbody");
+			 var trArray =$(this).children();
+			 var orgNm =  trArray.eq(0).text();
+			 //console.log("orgNm:"+orgNm);
+			 var saveNm =  trArray.eq(1).text();
+			 //console.log("saveNm:"+saveNm);
+
+			 var frm = document.fileDown;
+			 frm.orgNm.value = orgNm;
+			 frm.saveNm.value = saveNm;
+			 frm.submit();
+			 //$("#saveFileNm").val(saveFileNm);
+			 
+		}); */
+
+	        
      </script>
     
 </body>

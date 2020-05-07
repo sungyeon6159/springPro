@@ -4,11 +4,11 @@ import com.sist.spring.cmn.DTO;
 
 public class FileMemberVO extends DTO{
 
-	private String saveNm;
-	private String orgNm;
-	private long fileSize;
-	private String ext;
-	private String memberId;
+	private String saveNm; //저장파일명
+	private String orgNm; //원본파일명
+	private long fileSize; //파일사이즈
+	private String ext; //확장자
+	private String memberId; //사용자 아이디
 	
 	public FileMemberVO() {
 	}

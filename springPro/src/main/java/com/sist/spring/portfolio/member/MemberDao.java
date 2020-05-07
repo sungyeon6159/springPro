@@ -39,6 +39,7 @@ public class MemberDao implements Dao {
 			outData.setBirth(rs.getString("birth"));
 			outData.setPhone(rs.getString("phone"));
 			outData.setAuthority(rs.getString("authority"));
+			outData.setInterestOption(rs.getString("interestOption"));
 			outData.setOpen(rs.getString("open"));
 			outData.setNum(rs.getInt("rnum"));
 			outData.setTotalCnt(rs.getInt("total_cnt"));
@@ -59,25 +60,27 @@ public class MemberDao implements Dao {
 		MemberVO inVO = (MemberVO) dto;
 		
 		StringBuilder  sb=new StringBuilder();
-		sb.append(" INSERT INTO MEMBER ( 	\n");
-		sb.append("     member_id,               \n");
-		sb.append("     password,               \n");
-		sb.append("     name,          		   \n");
-		sb.append("     email,          	  \n");
-		sb.append("     birth,              \n");
-		sb.append("     phone,         		 \n");
-		sb.append("     authority,          \n");
-		sb.append("     open          \n");
-		sb.append(" ) VALUES (              \n");
-		sb.append("     ?,                  \n");
-		sb.append("     ?,                  \n");
-		sb.append("     ?,                  \n");
-		sb.append("     ?,                  \n");
-		sb.append("     ?,                  \n");
-		sb.append("     ?,                  \n");
-		sb.append("     ?,                  \n");
-		sb.append("     ?                  \n");
-		sb.append(" )                       \n");	
+		sb.append(" INSERT INTO MEMBER ( 			\n");
+		sb.append("     member_id,               	\n");
+		sb.append("     password,               	\n");
+		sb.append("     name,          		   		\n");
+		sb.append("     email,          	  		\n");
+		sb.append("     birth,              		\n");
+		sb.append("     phone,         		 		\n");
+		sb.append("     authority,          		\n");
+		sb.append("     interestOption,          	\n");
+		sb.append("     open          				\n");
+		sb.append(" ) VALUES (              		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?,                  		\n");
+		sb.append("     ?                  			\n");
+		sb.append(" )                       		\n");	
 		//Query수행
 		LOG.debug("==============================");
 		LOG.debug("=Query=\n"+sb.toString());
@@ -89,6 +92,7 @@ public class MemberDao implements Dao {
 				       ,inVO.getBirth()
 				       ,inVO.getPhone()
 				       ,inVO.getAuthority()
+				       ,inVO.getInterestOption()
 				       ,inVO.getOpen()
 		};
 		flag = this.jdbcTemplate.update(sb.toString(), args);
@@ -104,16 +108,17 @@ public class MemberDao implements Dao {
 		int flag = 0;
 		MemberVO inVO = (MemberVO) dto;
 		StringBuilder sb=new StringBuilder();
-		sb.append(" UPDATE hr_member         \n");
+		sb.append(" UPDATE hr_member         		\n");
 		sb.append(" SET password = ?,               \n");
-		sb.append("     name = ?,          		   \n");
-		sb.append("     email = ?,          	  \n");
-		sb.append("     birth = ?,              \n");
-		sb.append("     phone = ?,         		 \n");
-		sb.append("     authority = ?,          \n");
-		sb.append("     open = ?          \n");
-		sb.append(" WHERE                    \n");
-		sb.append("     member_id = ?             \n");
+		sb.append("     name = ?,          		   	\n");
+		sb.append("     email = ?,          	  	\n");
+		sb.append("     birth = ?,              	\n");
+		sb.append("     phone = ?,         		 	\n");
+		sb.append("     authority = ?,          	\n");
+		sb.append("     interestOption = ?,         \n");
+		sb.append("     open = ?          			\n");
+		sb.append(" WHERE                    		\n");
+		sb.append("     member_id = ?             	\n");
 		
 		LOG.debug("==============================");
 		LOG.debug("=Query=\n"+sb.toString());
@@ -124,6 +129,7 @@ public class MemberDao implements Dao {
 				      ,inVO.getBirth()
 				      ,inVO.getPhone()
 				      ,inVO.getAuthority()
+				      ,inVO.getInterestOption()
 				      ,inVO.getOpen()
 				      ,inVO.getMemberId()};
 		flag = this.jdbcTemplate.update(sb.toString(), args);
@@ -137,20 +143,21 @@ public class MemberDao implements Dao {
 		MemberVO outVO = null;        //return UserVO
 		MemberVO inVO  = (MemberVO) dto;//Param UserVO
 		StringBuilder  sb=new StringBuilder();
-		sb.append(" SELECT                   \n");
-		sb.append("     member_id,             \n");
-		sb.append("     password,           \n");
-		sb.append("     name,          		   \n");
-		sb.append("     email,          	  \n");
-		sb.append("     birth,              \n");
-		sb.append("     phone,         		 \n");
-		sb.append("     authority,          \n");
-		sb.append("     open,          		\n");
-		sb.append("     1 rnum,       		\n"); 
-		sb.append("     1 total_cnt  		 \n");
-		sb.append(" FROM                      \n");
-		sb.append("     member               \n");
-		sb.append(" WHERE member_id = ?       \n");
+		sb.append(" SELECT                   	\n");
+		sb.append("     member_id,             	\n");
+		sb.append("     password,           	\n");
+		sb.append("     name,          		   	\n");
+		sb.append("     email,          	  	\n");
+		sb.append("     birth,              	\n");
+		sb.append("     phone,         		 	\n");
+		sb.append("     authority,          	\n");
+		sb.append("     interestOption,         \n");
+		sb.append("     open,          			\n");
+		sb.append("     1 rnum,       			\n"); 
+		sb.append("     1 total_cnt  		 	\n");
+		sb.append(" FROM                      	\n");
+		sb.append("     member               	\n");
+		sb.append(" WHERE member_id = ?       	\n");
 		
 		//Query수행
 		LOG.debug("==============================");
@@ -172,8 +179,8 @@ public class MemberDao implements Dao {
 		int flag = 0;
 		MemberVO inVO = (MemberVO) dto;
 		StringBuilder  sb=new StringBuilder();
-		sb.append(" DELETE FROM hr_member \n");
-		sb.append(" WHERE member_id = ?        \n");
+		sb.append(" DELETE FROM hr_member 		\n");
+		sb.append(" WHERE member_id = ?        	\n");
 		LOG.debug("==============================");
 		LOG.debug("=Query=\n"+sb.toString());
 		LOG.debug("=Param="+inVO);
@@ -214,6 +221,7 @@ public class MemberDao implements Dao {
 		sb.append("            B.birth,                                          \n");
 		sb.append("            B.phone,                                     	 \n");
 		sb.append("            B.authority,                                      \n");
+		sb.append("            B.interestOption,                                 \n");
 		sb.append("            B.open,          								 \n");
 		sb.append("            rnum                                              \n");		
 		sb.append("    FROM(                                                     \n");
@@ -221,23 +229,23 @@ public class MemberDao implements Dao {
 		sb.append("               A.*                                            \n");
 		sb.append("        FROM (                                                \n");
 		sb.append("            SELECT *                                          \n");
-		sb.append("            FROM member                                    \n");
+		sb.append("            FROM member                                    	 \n");
 		//sb.append("            ORDER BY reg_dt DESC                              \n");
-		sb.append("            --검색조건                                                                                   \n");
+		sb.append("            --검색조건                                                                           \n");
 		//--검색----------------------------------------------------------------------
 		sb.append(whereSb.toString());
 		//--검색----------------------------------------------------------------------				
 		sb.append("        )A --10                                               \n");
 		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
-		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) \n");
+		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) 							 \n");
 		sb.append("    )B --1                                                    \n");
 		//sb.append("    WHERE B.RNUM >= (&PAGE_SIZE*(&PAGE_NUM-1)+1)              \n");
-		sb.append("    WHERE B.RNUM >= (?*(?-1)+1)              \n");
+		sb.append("    WHERE B.RNUM >= (?*(?-1)+1)              				 \n");
 		sb.append("    )T1 CROSS JOIN                                            \n");
 		sb.append("    (                                                         \n");
 		sb.append("    SELECT count(*) total_cnt                                 \n");
-		sb.append("    FROM member                                            \n");
-		sb.append("    --검색조건                                                   \n");
+		sb.append("    FROM member                                            	 \n");
+		sb.append("    --검색조건                                                  						 \n");
 		//--검색----------------------------------------------------------------------
 		sb.append(whereSb.toString());
 		//--검색----------------------------------------------------------------------
