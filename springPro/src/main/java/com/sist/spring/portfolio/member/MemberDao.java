@@ -270,4 +270,6 @@ public class MemberDao implements Dao {
 		return retList;
 	}
 
+	
+	
 }

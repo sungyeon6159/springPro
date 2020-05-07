@@ -192,11 +192,10 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping(value = "member/add.do",method = RequestMethod.POST
+		@RequestMapping(value = "member/doInsert.do",method = RequestMethod.POST
 					,produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public String add(MemberVO user) {
-		String url= "member/member_mng";
+		@ResponseBody
+		public String doInsert(MemberVO user) {
 		LOG.debug("1===================");
 		LOG.debug("1=user="+user);
 		LOG.debug("1===================");
@@ -209,7 +208,7 @@ public class MemberController {
 		
 		//메시지 처리
 		MessageVO message=new MessageVO();
-
+		
 		message.setMsgId(flag+"");
 		//성공
 		if(flag ==1) {
@@ -228,7 +227,7 @@ public class MemberController {
 		
 		
 		return json;
-	}
+		}
 	
 	
 }

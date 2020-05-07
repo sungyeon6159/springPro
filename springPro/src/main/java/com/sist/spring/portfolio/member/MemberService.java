@@ -40,5 +40,6 @@ public class MemberService implements Service {
 	public List<?> doRetrieve(DTO dto) {
 		return this.memberDao.doRetrieve(dto);
 	}
-
+	
+	
 }
