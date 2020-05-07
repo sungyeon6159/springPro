@@ -176,7 +176,7 @@
 		    <hr>
           </div>
 							
-
+			<input type="hidden" id="cntCheck">
       </div><!-- //container -->
    
   
@@ -272,7 +272,8 @@
     <script type="text/javascript">
 	$("#plusInsert").on("click", function(){
 		console.log('This is plus button');
-
+		var cnt=$("#cntCheck").val();
+		console.log(cnt);
 		var html="";
 
 		html+="<tr>                                                                                                                     ";
