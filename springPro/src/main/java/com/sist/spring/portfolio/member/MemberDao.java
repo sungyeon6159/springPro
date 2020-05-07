@@ -247,7 +247,7 @@ public class MemberDao implements Dao {
 		sb.append("    FROM member                                            	 \n");
 		sb.append("    --검색조건                                                  						 \n");
 		//--검색----------------------------------------------------------------------
-		sb.append(whereSb.toString());
+		sb.append(whereSb.toString()); 
 		//--검색----------------------------------------------------------------------
 		sb.append("    )T2                                                       \n");
 

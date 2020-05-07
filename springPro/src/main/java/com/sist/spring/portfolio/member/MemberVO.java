@@ -4,7 +4,7 @@ import com.sist.spring.cmn.DTO;
 
 public class MemberVO extends DTO {
 	
-	/** 아이디 */
+	/** 아이디 */ 
 	private String memberId;
 	/** 비밀번호 */
 	private String password;

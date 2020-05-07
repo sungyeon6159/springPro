@@ -32,7 +32,7 @@ public class FilMemberController {
 	
 	private final String UPLOAD_FILE ="D:\\HR_FILE";
 	
-    @Resource(name = "downloadView")
+    @Resource(name = "downloadView") 
     private View download;
     
 	/**
