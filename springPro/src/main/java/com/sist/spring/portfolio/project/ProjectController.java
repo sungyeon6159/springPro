@@ -99,7 +99,7 @@ public class ProjectController {
 					fileVO.setSaveFileNm(renameFile.getAbsolutePath());
 					fileVO.setExt(ext);
 					dbInVO.setExt(ext);
-					dbInVO.setDivFile(1);
+					dbInVO.setDivFile(1);//1이면 동영상 2이면 사진
 					dbInVO.setFileSize(mFile.getSize());
 					dbInVO.setOrgNm(orgFileName);
 					dbInVO.setSavePNm(saveFileName);
@@ -107,14 +107,19 @@ public class ProjectController {
 //					list.add(fileVO);
 					mFile.transferTo(new File(renameFile.getAbsolutePath()));
 				}
-				dbInVO.setGitAddress(mReg.getParameter("gitAddress"));
+				
+				int hiddenCnt=Integer.parseInt(mReg.getParameter("hiddenCnt"));
+						
+				for(int i=1; i<=hiddenCnt; i++) {
+					
 				dbInVO.setMemberId("iod1124");
 				inVO.setMemberId("iod1124");
-				inVO.setPjtName(mReg.getParameter("pjtName"));
-				inVO.setPjtInfo(mReg.getParameter("pjtInfo"));
-				inVO.setPjtStart(mReg.getParameter("pjtStart"));
-				inVO.setPjtEnd(mReg.getParameter("pjtEnd"));
-				inVO.setGitAddress(mReg.getParameter("gitAddress"));
+				dbInVO.setGitAddress(mReg.getParameter("gitAddress"+i+""));
+				inVO.setPjtName(mReg.getParameter("pjtName"+i+""));
+				inVO.setPjtInfo(mReg.getParameter("pjtInfo"+i+""));
+				inVO.setPjtStart(mReg.getParameter("pjtStart"+i+""));
+				inVO.setPjtEnd(mReg.getParameter("pjtEnd"+i+""));
+				inVO.setGitAddress(mReg.getParameter("gitAddress"+i+""));
 				
 				int flag=pjtFileService.doInsert(dbInVO);
 				int flag2=pjtService.doInsert(inVO);
@@ -125,6 +130,7 @@ public class ProjectController {
 				LOG.debug("File Name: "+dbInVO.toString());
 				LOG.debug("Project Info: "+inVO.toString());
 				LOG.debug("=====================================");
+				}
 				
 				model.addObject("videoFile",dbInVO);
 				model.addObject("projectDb",inVO);

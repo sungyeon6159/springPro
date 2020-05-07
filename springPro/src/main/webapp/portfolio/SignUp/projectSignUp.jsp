@@ -164,20 +164,22 @@
 						<input type="file" id="videoFile" name="videoFile">
 					</td>
 				</tr>
-				
-				<tr>
-					<td colspan=2>
+			</table>
+			<table>
+			<tr>
+				<td colspan=2>
 					<input class="btn btn-outline-primary" type="submit" value="입력"><br/>
 					<button type="button" onclick="javascript:pjtInsert();" class="btn btn-primary btn-sm">검색</button>
-					</td>
-				</tr>
-			</table>
+				</td>
+			</tr>
+			
+		</table>
+			<input type="hidden" id="hiddenCnt">
 		    </form>
 		    <hr>
           </div>
 							
-			<input type="hidden" id="cntCheck">
-      </div><!-- //container -->
+	  </div><!-- //container -->
    
   
 
@@ -270,18 +272,20 @@
 
   <script src="${hContext}/resources/js/main.js"></script>
     <script type="text/javascript">
-	$("#plusInsert").on("click", function(){
+	var cnt=1;
+    $("#plusInsert").on("click", function(){
 		console.log('This is plus button');
-		var cnt=$("#cntCheck").val();
-		console.log(cnt);
+		var frm=document.uploadFrm;
 		var html="";
-
+		cnt+=1;
+		console.log(cnt);
+		html+="<tr><td colspan='2'><hr/><br/></td></tr>																														";
 		html+="<tr>                                                                                                                     ";
 		html+="	<td>                                                                                                                    ";
 		html+="		프로젝트명                                                                                                              ";
 		html+="	</td>                                                                                                                   ";
 		html+="	<td>                                                                                                                    ";
-		html+="		<input type='text' id='pjtName' name='pjtName'>                                                                     ";
+		html+="		<input type='text' id='pjtName"+cnt+"' name='pjtName"+cnt+"'>                                                                     ";
 		html+="	</td>                                                                                                                   ";
 		html+="</tr>                                                                                                                    ";
 		html+="<tr>	                                                                                                                    ";
@@ -289,7 +293,7 @@
 		html+="		<p>프로젝트 설명<p>                                                                                                      ";
 		html+="	</td>                                                                                                                   ";
 		html+="	<td>                                                                                                                    ";
-		html+="		<textarea cols='50' rows='3' id='pjtInfo' name='pjtInfo'></textarea>                                                ";
+		html+="		<textarea cols='50' rows='3' id='pjtInfo"+cnt+"' name='pjtInfo"+cnt+"'></textarea>                                                ";
 		html+="	</td>                                                                                                                   ";
 		html+="</tr>                                                                                                                    ";
 		html+="<tr>	                                                                                                                    ";
@@ -297,7 +301,7 @@
 		html+="		<p>프로젝트 기간 <p>                                                                                                     ";
 		html+="	</td>                                                                                                                   ";
 		html+="	<td>                                                                                                                    ";
-		html+="		<input type='date' id='pjtStart' name='pjtStart'> - <input type='date' id='pjtEnd' name='pjtEnd'>                   ";
+		html+="		<input type='date' id='pjtStart"+cnt+"' name='pjtStart"+cnt+"'> - <input type='date' id='pjtEnd"+cnt+"' name='pjtEnd"+cnt+"'>                   ";
 		html+="	</td>                                                                                                                   ";
 		html+="</tr>                                                                                                                    ";
 		html+="<tr>	                                                                                                                    ";
@@ -305,7 +309,7 @@
 		html+="		<p>프로젝트 깃 주소<p>                                                                                                   ";
 		html+="	</td>                                                                                                                   ";
 		html+="	<td>                                                                                                                    ";
-		html+="		<input type='text' id='gitAddress' name='gitAddress'>                                                               ";
+		html+="		<input type='text' id='gitAddress"+cnt+"' name='gitAddress"+cnt+"'>                                                               ";
 		html+="	</td>                                                                                                                   ";
 		html+="</tr>                                                                                                                    ";
 		html+="<tr>	                                                                                                                    ";
@@ -313,10 +317,9 @@
 		html+="		<p>프로젝트 시연영상<p>                                                                                                   ";
 		html+="	</td>                                                                                                                   ";
 		html+="	<td>                                                                                                                    ";
-		html+="		<input type='file' id='videoFile' name='videoFile'>                                                                 ";
+		html+="		<input type='file' id='videoFile"+cnt+"' name='videoFile"+cnt+"'>                                                                 ";
 		html+="	</td>                                                                                                                   ";
 		html+="</tr>                                                                                                                    ";
-		html+="<tr><td colspan='2'><hr/><br/></td></tr>																														";
 		
 		$("#pjtForm>tbody").append(html);
 		
@@ -338,6 +341,7 @@
 	$("#uploadBtn").on("click", function(){
 		console.log("uploadTest");
 		var frm=document.uploadFrm;
+		frm.hiddenCnt.value=cnt;
 		frm.file01.value=$("#videoFile").value;
 		frm.action = "${hContext}/portfoilo/upload.spring";
 		frm.method="POST"
