@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sist.spring.portfolio.license.LicenseService;
 import com.sist.spring.portfolio.license.LicenseVO;
+import com.sist.spring.portfolio.member.MemberService;
+import com.sist.spring.portfolio.member.MemberVO;
+import com.sist.spring.portfolio.member.file.FileMemberService;
+import com.sist.spring.portfolio.member.file.FileMemberVO;
 import com.sist.spring.portfolio.project.PjtFileService;
 import com.sist.spring.portfolio.project.ProjectService;
 import com.sist.spring.portfolio.project.ProjectVO;
@@ -39,6 +43,11 @@ public class PortController {
 	@Autowired
 	LicenseService licService;
 	
+	@Autowired
+	MemberService memService;
+	
+	@Autowired
+	FileMemberService fileMemService;
 
 	public PortController() {
 		// TODO Auto-generated constructor stub
@@ -49,10 +58,14 @@ public class PortController {
 		public String doRetrieve(HttpServletRequest req, Model model) {
 		ProjectVO pjtVO=new ProjectVO();
 		LicenseVO licVO=new LicenseVO();
+		MemberVO memVO=new MemberVO();
+		FileMemberVO fileMemberInVO=new FileMemberVO();
+		
 		
 		pjtVO.setMemberId("iod1124");
 		licVO.setMemberId("iod1124");
-		
+		memVO.setMemberId("iod1124");
+		fileMemberInVO.setMemberId("iod1124");
 		
 		LOG.debug("==========================");
 		LOG.debug("==ProjectService/doRetrieve");
@@ -61,6 +74,16 @@ public class PortController {
 		
 		List<ProjectVO> pjtList=(List<ProjectVO>)pjtService.doRetrieve(pjtVO);
 		List<LicenseVO> licList=(List<LicenseVO>)licService.doRetrieve(licVO);
+		FileMemberVO fileMemberVO=(FileMemberVO)fileMemService.doSelectOne(fileMemberInVO);
+		
+		for(LicenseVO vo:licList) {
+			LOG.debug("===================================");
+			LOG.debug("License VO");
+			LOG.debug(vo.toString());
+			LOG.debug("===================================");
+		}
+		MemberVO memOutVO=(MemberVO)memService.doSelectOne(memVO);
+		
 		StringBuilder out=new StringBuilder();
         List<String> companyList=new ArrayList<String>();
 		String url = "http://www.jobkorea.co.kr/Search/?stext=웹개발";    //크롤링할 url지정
@@ -96,7 +119,10 @@ public class PortController {
         }
         model.addAttribute("companyList",companyList);
         model.addAttribute("pjtList",pjtList);
-		model.addAttribute("licList", licList);
+        model.addAttribute("licList", licList);
+        model.addAttribute("memberVO", memOutVO);
+        model.addAttribute("fileVO", fileMemberVO);
+		
 
 		
 		return "portfolio/index";

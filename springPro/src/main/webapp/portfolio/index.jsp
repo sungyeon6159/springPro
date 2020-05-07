@@ -99,13 +99,14 @@
 			</div>
     </section>
     <!-- About -->
+  <!-- About -->
     <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="about-section">
     	<div class="container">
     		<div class="row d-flex no-gutters">
     			<div class="col-md-6 col-lg-6 d-flex">
     				<div class="img-about img d-flex align-items-stretch">
     					<div class="overlay"></div>
-	    				<div class="img d-flex align-self-stretch align-items-center" style="background-image:url(${hContext}/resources/images/person_about.jpeg);">
+	    				<div class="img d-flex align-self-stretch align-items-center" style="background-image:url(${hContext}/resources/images/${fileVO.saveNm}.${fileVO.ext });">
 	    				</div>
     				</div>
     			</div>
@@ -115,11 +116,10 @@
 		            <h2 class="mb-4">About Me</h2>
 		            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
 		            <ul class="about-info mt-4 px-md-0 px-2">
-		            	<li class="d-flex"><span>Name:</span> <span>Kim SoHyun</span></li>
-		            	<li class="d-flex"><span>Date of birth:</span> <span>March 7, 1996</span></li>
-		            	<li class="d-flex"><span>Address:</span> <span>Seoul Korea</span></li>
-		            	<li class="d-flex"><span>Email:</span> <span>ronaldo@gmail.com</span></li>
-		            	<li class="d-flex"><span>Phone: </span> <span>010-xxxx-xxxx</span></li>
+		            	<li class="d-flex"><span>Name:</span> <span>${memberVO.name }</span></li>
+		            	<li class="d-flex"><span>Date of birth:</span> <span>${memberVO.birth }</span></li>
+		            	<li class="d-flex"><span>Email:</span> <span>${memberVO.email }</span></li>
+		            	<li class="d-flex"><span>Phone: </span> <span>${memberVO.phone }</span></li>
 		            </ul>
 		          </div>
 		        </div>
@@ -427,8 +427,8 @@
 	           			 <h2 class="mb-4">License</h2>
 						 <div class="row">
 						 	<c:choose>
-						 		<c:when test="${list.size()>0 }">
-						 			<c:forEach var="vo" items="${list }">
+						 		<c:when test="${licList.size()>0 }">
+						 			<c:forEach var="vo" items="${licList }">
 									 	<div class="col-md-4 text-center d-flex ftco-animate">
 									 		<a href="#License-section" class="services-1 shadow">
 									 			<span class="icon">
@@ -1098,7 +1098,7 @@
   function doSelectPage(pageNo) {
       //console.log("doSelectPage");  
       var frm = document.license_frm;
-      frm.action="${hContext}/portfolio/do_retrieve2.spring";
+      frm.action="${hContext}/portfolio/total_retrieve.spring";
       frm.submit();
    }
 

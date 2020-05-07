@@ -81,7 +81,7 @@
 					<table>
 					<tr>
 						<td rowspan="4">
-							<video src="${hContext}/resources/video/sistAir.avi" width='100' controls autoplay></video>
+							<video src="${hContext}/resources/video/20200507151830_c66bf.avi" width='100' controls autoplay></video>
 						</td>
 						<td>
 							프로젝트명
@@ -118,7 +118,12 @@
 					</table>
 					</c:when>
 				</c:choose>
-				<table>
+				<table id="pjtForm">
+				<tr>
+					<td>
+						<img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="plusInsert">
+					</td>
+				</tr>
 				<tr>
 					<td>
 						프로젝트명
@@ -265,6 +270,61 @@
 
   <script src="${hContext}/resources/js/main.js"></script>
     <script type="text/javascript">
+	$("#plusInsert").on("click", function(){
+		console.log('This is plus button');
+
+		var html="";
+
+		html+="<tr>                                                                                                                     ";
+		html+="	<td>                                                                                                                    ";
+		html+="		프로젝트명                                                                                                              ";
+		html+="	</td>                                                                                                                   ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<input type='text' id='pjtName' name='pjtName'>                                                                     ";
+		html+="	</td>                                                                                                                   ";
+		html+="</tr>                                                                                                                    ";
+		html+="<tr>	                                                                                                                    ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<p>프로젝트 설명<p>                                                                                                      ";
+		html+="	</td>                                                                                                                   ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<textarea cols='50' rows='3' id='pjtInfo' name='pjtInfo'></textarea>                                                ";
+		html+="	</td>                                                                                                                   ";
+		html+="</tr>                                                                                                                    ";
+		html+="<tr>	                                                                                                                    ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<p>프로젝트 기간 <p>                                                                                                     ";
+		html+="	</td>                                                                                                                   ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<input type='date' id='pjtStart' name='pjtStart'> - <input type='date' id='pjtEnd' name='pjtEnd'>                   ";
+		html+="	</td>                                                                                                                   ";
+		html+="</tr>                                                                                                                    ";
+		html+="<tr>	                                                                                                                    ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<p>프로젝트 깃 주소<p>                                                                                                   ";
+		html+="	</td>                                                                                                                   ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<input type='text' id='gitAddress' name='gitAddress'>                                                               ";
+		html+="	</td>                                                                                                                   ";
+		html+="</tr>                                                                                                                    ";
+		html+="<tr>	                                                                                                                    ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<p>프로젝트 시연영상<p>                                                                                                   ";
+		html+="	</td>                                                                                                                   ";
+		html+="	<td>                                                                                                                    ";
+		html+="		<input type='file' id='videoFile' name='videoFile'>                                                                 ";
+		html+="	</td>                                                                                                                   ";
+		html+="</tr>                                                                                                                    ";
+		html+="<tr><td colspan='2'><hr/><br/></td></tr>																														";
+		
+		$("#pjtForm>tbody").append(html);
+		
+
+	});
+		
+
+
+    
 		function pjtInsert() {
 			console.log("pjtInsert");
 			//console.log("doRetrieve()");

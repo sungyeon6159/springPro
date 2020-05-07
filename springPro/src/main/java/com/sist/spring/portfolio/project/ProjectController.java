@@ -36,7 +36,7 @@ import com.sist.spring.cmn.StringUtil;
 public class ProjectController {
 	
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
-	private final String UPLOAD_FILE="C:\\Users\\user\\git\\springPro\\springPro\\src\\main\\webapp\\resources\\video";	
+	private final String UPLOAD_FILE="C:\\Users\\sist\\git\\springPro\\springPro\\src\\main\\webapp\\resources\\video";	
 	
 	
 	
