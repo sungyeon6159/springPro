@@ -96,7 +96,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("   ,l_date = ?           \n");
 		sb.append("   ,l_organ = ?          \n");
 		sb.append("WHERE  member_id = ?     \n");
-		sb.append("ANE l_name=? 			\n");
+		sb.append("AND l_name=? 			\n");
 		    
 		//Query 수행
 		LOG.debug("==================================");
@@ -239,14 +239,14 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		//LOG.debug("inVO= "+inVO.getSearchWord());
 		
 		//param set
-		List<LicenseVO> retlist = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
+		List<LicenseVO> licList = this.jdbcTemplate.query(sb.toString(), args, rowMapper);
 		
 		LOG.debug("==================================");
 		LOG.debug("============doRetrieve============");
 		LOG.debug("query \n"+sb.toString());
 		LOG.debug("param: "+inVO);
 		LOG.debug("==================================");
-		return retlist;
-	
+		
+		return licList;
 	}
 }
