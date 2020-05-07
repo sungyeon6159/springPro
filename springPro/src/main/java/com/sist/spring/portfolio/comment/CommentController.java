@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
-import com.sist.spring.portfolio.member.MemberVO;
 
 
 @Controller
@@ -34,6 +33,36 @@ public class CommentController {
 	//@Qualifier("dummyMailSender") : root-context.xml bean id
 	@Autowired
 	CommentService commentService;
+	
+	
+	
+	
+	
+	@RequestMapping(value = "/comment/do_select_one.spring",method = RequestMethod.POST
+			,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doSelectOne(CommentVO user) {
+		LOG.debug("1===================");
+		LOG.debug("1=user="+user);
+		LOG.debug("1===================");
+		
+		CommentVO outVO = (CommentVO) commentService.doSelectOne(user);
+		LOG.debug("1.2===================");
+		LOG.debug("1.2=outVO="+outVO);
+		LOG.debug("1.2===================");
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(outVO);
+		
+		LOG.debug("1.3===================");
+		LOG.debug("1.3=json="+json);
+		LOG.debug("1.3===================");
+		
+		return json;
+	}
+	
+	
+	
 	
 	@RequestMapping(value ="comment/add.spring",method = RequestMethod.POST
 			,produces = "application/json; charset=UTF-8")
@@ -72,6 +101,7 @@ public class CommentController {
 	
 	return json;
 	}
+	
 	
 	
 	@RequestMapping(value = "/comment/do_retrieve.spring", method = RequestMethod.GET)

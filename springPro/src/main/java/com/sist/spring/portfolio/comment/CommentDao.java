@@ -32,13 +32,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		@Override
 		public CommentVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CommentVO outData = new CommentVO();
-			outData.setcNo(rs.getString("cNo"));
-			outData.setcContent(rs.getString("cContent"));
-			outData.setcOpen(rs.getString("cOpen"));
-			outData.setRegDt(rs.getString("regDt"));
-			outData.setModDt(rs.getString("modDt"));
-			outData.setRegId(rs.getString("regId"));
-			outData.setMemberId(rs.getString("memberId"));
+			outData.setcNo(rs.getString("c_No"));
+			outData.setcContent(rs.getString("c_Cont"));
+			outData.setcOpen(rs.getString("c_Open"));
+			outData.setRegDt(rs.getString("reg_Dt"));
+			outData.setModDt(rs.getString("mod_Dt"));
+			outData.setRegId(rs.getString("reg_Id"));
+			outData.setMemberId(rs.getString("member_Id"));
 			
 			return outData;
 		}
@@ -136,11 +136,11 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("FROM                 ");
 		sb.append("    Comments          ");
 		sb.append("WHERE                ");
-		sb.append("    c_no=?          ");
+		sb.append("    member_id=?          ");
 		
 		
 		Object args[] = {
-						  inVO.getcNo()
+						  inVO.getMemberId()
 						};
 		
 		outVO = this.jdbcTemplate.queryForObject(sb.toString(),
@@ -187,42 +187,41 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		StringBuilder sb=new StringBuilder();
 		sb.append("SELECT T1.*,T2.*                                                \n");
 		sb.append("FROM(                                                           \n");
-		sb.append("    SELECT  B.c_no,                                            \n");
-		sb.append("            B.c_cont,                                            \n");
-		sb.append("            B.c_open,                                             \n");
-		sb.append("            B.reg_dt,                                           \n");
-		sb.append("            B.mod_dt,                  \n");
-		sb.append("		       B.reg_id,     \n");
-		sb.append("            B.member_id,                                           \n");
-		sb.append("            rnum                                                \n");		
+		sb.append("    SELECT  B.c_no 	C_NO,                                        \n");
+		sb.append("            B.c_cont C_CONT,                                    \n");
+		sb.append("            B.c_open C_OPEN,                                    \n");
+		sb.append("            B.reg_dt REG_DT,                          	       \n");
+		sb.append("            B.mod_dt MOD_DT,       							   \n");
+		sb.append("		       B.reg_id REG_ID,    									\n");
+		sb.append("            B.member_id MEMBER_ID                              \n");
 		sb.append("    FROM(                                                       \n");
 		sb.append("        SELECT ROWNUM rnum,                                     \n");
 		sb.append("               A.*                                              \n");
 		sb.append("        FROM (                                                  \n");
 		sb.append("            SELECT *                                            \n");
-		sb.append("            FROM Comments                                        \n");
-		sb.append("		   WHERE member_id like '%' || ? ||'%'  					   \n");
+		sb.append("            FROM Comments                                       \n");
+		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
 		sb.append("        )A --10                                                 \n");
 		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
-		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) \n");
+		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) 							   \n");
 		sb.append("    )B --1                                                      \n");
 		//sb.append("    WHERE B.RNUM >= (&PAGE_SIZE*(&PAGE_NUM-1)+1)              \n");
 		sb.append("    WHERE B.RNUM >= (?*(?-1)+1)              				   \n");
 		sb.append("    )T1 CROSS JOIN                                              \n");
 		sb.append("    (                                                           \n");
 		sb.append("    SELECT count(*) total_cnt                                   \n");
-		sb.append("    FROM Comments                                                \n");
-		sb.append("		   WHERE member_id like '%' || ? ||'%'  					   \n");
+		sb.append("    FROM Comments                                               \n");
+		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
 		sb.append("    )T2                                                         \n");
 		
 		//param 
 		List<Object> listArg = new ArrayList<Object>();
 		listArg.add(inVO.getSearchWord());
-//		listArg.add(inVO.getPageSize());
-//		listArg.add(inVO.getPageNum());
-//		listArg.add(inVO.getPageSize());
-//		listArg.add(inVO.getPageSize());
-//		listArg.add(inVO.getPageNum());				
+		listArg.add(inVO.getPageSize());
+		listArg.add(inVO.getPageNum());
+		listArg.add(inVO.getPageSize());
+		listArg.add(inVO.getPageSize());
+		listArg.add(inVO.getPageNum());				
 		listArg.add(inVO.getSearchWord());
 		
 		//param set

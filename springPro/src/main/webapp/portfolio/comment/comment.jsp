@@ -43,29 +43,8 @@
 	    			<!-- pageNum -->
 	    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
 	    			<div class="form-group">
-	    				<select name="pageSize" id="pageSize" class="form-control input-sm">
-	    					<option value="10"
-	    						<c:if test="${param.pageSize =='10' }"> selected ="selected"</c:if> >10
-	    					</option>
-	    					<option value="20" 
-	    						<c:if test="${param.pageSize =='20' }"> selected ="selected"</c:if> >20
-	    					</option>
-	    					<option value="50" 
-	    						<c:if test="${param.pageSize =='50' }"> selected ="selected"</c:if> >50
-	    					</option>
-	    					<option value="100" 
-	    						<c:if test="${param.pageSize =='100' }"> selected ="selected"</c:if> >100
-	    					</option>
-	    				</select>
-	    				<select name="searchDiv" id="searchDiv" class="form-control input-sm">
-	    					<option value="">전체</option>
-	    					<option value="10"
-	    						<c:if test="${param.searchDiv == '10' }"> selected ="selected"</c:if> >ID
-	    					</option>
-	    					<option value="20"
-	    						<c:if test="${param.searchDiv == '20' }"> selected ="selected"</c:if> >이름
-	    					</option>
-	    				</select>
+	    				
+
 	    				<input type="text"  class="form-control input-sm"  
 	    				id="searchWord" value="${param.searchWord }" name="searchWord" placeholder="검색어">
 	    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
@@ -82,12 +61,13 @@
                     <tr>
                         <td>
                             <textarea style="width: 1100px" rows="3" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
-                            <input type="hidden" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디"  />
-                            <br>
+                            <input type="hidden" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디" value="" />
                             <div align="right">
                             	<button type="button" class="btn pull-right btn-success" id="doInsert" >등록</button>
                             	<button type="button" class="btn pull-right btn-success" id="doUpdate" >수정</button>
-	                			<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
+	                            <input type="checkbox"  id="open" name="open"  value="1">비밀댓글
+	                			
+	                			
                             </div>
                         </td>
                     </tr>
@@ -115,19 +95,22 @@
 </div> --%>
 
 	<div class="table-responsive">
-    	<table class="table table-striped table-bordered" id="memberTable">
+    	<table class="table" id="memberTable">
 		<tbody>
  				<!-- Data있는 경우 -->
  				<c:choose>
  					<c:when test="${list.size()>0 }">
  						<c:forEach var="vo" items="${list }">
    					<tr>
-    					<td class="text-left">${vo.cNo}</td>
-    					<td class="text-left">${vo.cContent }</td>
-    					<td class="text-left hidden-sm hidden-xs">${vo.cOpen }</td>
-    					<td class="text-left hidden-sm hidden-xs">${vo.regDt }</td>
-    					<td class="text-center hidden-sm hidden-xs">${vo.modDt }</td>
-    					<td class="text-center hidden-sm hidden-xs">${vo.memberId }</td>
+   						<td>
+   							<div align="left">
+                            	<label>${vo.regId }</label>
+                            </div>
+   							<label style="width: 1100px" rows="3" cols="30">${vo.cContent }</label>
+                            <div align="right">
+                            	<label>${vo.regDt }</label>
+                            </div>
+                        </td>
    					</tr>
   					</c:forEach>
  					</c:when>
