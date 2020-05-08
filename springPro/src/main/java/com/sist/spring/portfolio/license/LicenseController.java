@@ -47,7 +47,7 @@ public class LicenseController {
 		model.addAttribute("totalCnt",totalCnt);
 
 
-		return "portfolio/index2";
+		return "portfolio/index";
 	}
 	
 	//삭제

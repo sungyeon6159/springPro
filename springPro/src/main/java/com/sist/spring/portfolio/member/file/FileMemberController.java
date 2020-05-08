@@ -32,8 +32,6 @@ public class FileMemberController {
 	
 	private final String UPLOAD_FILE ="D:\\HR_FILE";
 	
-    @Resource(name = "downloadView") 
-    private View download;
     
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -45,38 +43,6 @@ public class FileMemberController {
 		return "file/file";
 	}
 	
-		//download.jsp(X) -> 
-		//DownloadView.java extends AbstractView
-		//   DispatcherServlet : 
-		@RequestMapping(value = "file/download.do", method = RequestMethod.POST)
-		public ModelAndView download(HttpServletRequest req,ModelAndView model) {
-			//--------------------------------
-			//file.jsp -> file/download.do
-			//               -download  -> View(downloadView)
-			//                          -> DownloadView.java
-			//                               renderMergedOutputModel()
-			//                               setDownloadFileName()
-			//                               downloadFile()
-			//--------------------------------
-			LOG.debug("========================");
-			LOG.debug("=download=");
-			LOG.debug("========================");	
-			String orgNm = req.getParameter("orgNm");
-			String saveFileNm = req.getParameter("saveFileNm");
-			LOG.debug("========================");
-			LOG.debug("=orgNm="+orgNm);
-			LOG.debug("=saveFileNm="+saveFileNm);
-			LOG.debug("========================");			
-			model.setView(this.download);
-			
-			File   downloadFile =new File(saveFileNm);
-			model.addObject("downloadFile", downloadFile);
-			model.addObject("orgNm", orgNm);
-			
-			
-			return model;
-		}   
-		
 		@RequestMapping(value = "file/do_insert.do", method = RequestMethod.POST)
 		public ModelAndView doInsert(MultipartHttpServletRequest mReg, ModelAndView model) throws IllegalStateException, IOException {
 			

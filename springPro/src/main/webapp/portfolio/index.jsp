@@ -420,7 +420,7 @@
     
     <!-- License -->
      <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="License-section">
-     	<form action="${hContext}/portfolio/do_retrieve2.spring" name="license_frm" method="get" class="form-inline">
+     	<form action="${hContext}/portfolio/total_retrieve.spring" name="license_frm" method="get" class="form-inline">
 			<div class="container-fluid px-md-5">
 	    		<div class="row justify-content-center py-5 mt-5">
 	          		<div class="col-md-12 heading-section text-center ftco-animate">
@@ -1101,7 +1101,7 @@
   <script type="text/javascript">
   function licRetrieve() {
       var frm = document.license_frm;
-      frm.action="${hContext}/portfolio/do_retrieve2.spring";
+      frm.action="${hContext}/portfolio/total_retrieve.spring";
       frm.submit();
    }
 
