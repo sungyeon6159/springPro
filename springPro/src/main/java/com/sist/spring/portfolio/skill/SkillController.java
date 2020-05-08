@@ -27,7 +27,7 @@ public class SkillController {
 	SkillService skillService;
 	
 	
-	@RequestMapping(value="skill/do_retrieve.do",method = RequestMethod.GET
+	@RequestMapping(value="skill/do_retrieve.spring",method = RequestMethod.GET
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doRetrieve(HttpServletRequest req,SkillVO skill,Model model) {
@@ -70,7 +70,7 @@ public class SkillController {
 	}
 
 	
-	@RequestMapping(value = "skill/do_update.do",method = RequestMethod.POST
+	@RequestMapping(value = "skill/do_update.spring",method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doUpdate(SkillVO skill) {
@@ -170,7 +170,7 @@ public class SkillController {
 		
 	}
 	
-	@RequestMapping(value = "skill/add.do",method = RequestMethod.POST
+	@RequestMapping(value = "skill/do_insert.spring",method = RequestMethod.POST
 					,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String add(SkillVO skill) {
