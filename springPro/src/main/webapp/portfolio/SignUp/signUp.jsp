@@ -211,7 +211,7 @@
 		                        </tr>
 		                        <tr>
 	                        		<td>
-		                            <button type="submit" class="form-control btn btn-outline-primary signupbtn" id="doInsertBtn">Sign Up</button>
+		                            <button type="submit" class="form-control btn btn-danger btn-sm" id="doInsertBtn">Sign Up</button>
 		                        </td>
 		                        </tr>
 		                        </tbody>

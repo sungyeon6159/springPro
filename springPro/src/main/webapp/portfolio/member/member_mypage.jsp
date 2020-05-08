@@ -85,7 +85,7 @@
           		<div class="col-md-12 heading-section text-center ftco-animate">
            			 <h2 class="mb-4">Add Skills</h2>
            			 <div align="center">
-           			 	<form action="${hContext}/skill/do_insert.do" name="signUp_skill" method="post">
+           			 	<form action="${hContext}/skill/do_insert.spring" name="skill_add" method="post">
            			 	<!-- SkillController 할때 인서트 부분을 이렇게 하셨으면 좋겠는데 볼수있을까여 민지양이ㅋㅋ-->
 	           			 <table>
 	                        <tbody>
@@ -95,7 +95,7 @@
 									</td>
 									<td>
 										<!-- <input type="text" id="skillName" name="skillName"> -->
-										<select id="skillName" name="skillName">
+										<select id="sName" name="sName">
 											<option value="Java">Java</option>
 											<option value="C">C</option>
 											<option value="Python">Python</option>
@@ -124,7 +124,7 @@
 										<p>Mastership Level</p>
 									</td>
 									<td>
-										<select id="mastery" name="mastery">
+										<select id="sMarstery" name="sMarstery">
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
@@ -143,8 +143,8 @@
 										<p>Activity content</p>
 									</td>
 									<td>
-										<p><textarea rows="10" cols="50"></textarea></p>
-										<p><input type="submit" value="submit"> </p>
+										<p><textarea rows="10" cols="50" name="sContent" id="sContent"></textarea></p>
+										<button type="button" onclick="" class="btn btn-primary btn-sm">Submit</button>
 									</td>
 								</tr>
 	                        </tbody>
@@ -164,7 +164,7 @@
 	          		<div class="col-md-12 heading-section text-center ftco-animate">
 	           			 <h2 class="mb-4">Add License</h2>
 	           			 <div align="center">
-							<form id="" method="">
+							<form action="${hContext}/portfolio/do_insert_license.spring" name="license_add" method="post">
 							<table>
 	                        <tbody>
 	                        	<tr>
@@ -213,7 +213,7 @@
 		                        </tr>
 		                         <tr>
 		                        	<td>
-										<p><input type="submit" value="submit"></p>
+		                        	<button type="button" onclick="" class="btn btn-primary btn-sm">Submit</button>
 									</td>
 									</tr>
 		                        </tbody>
@@ -327,8 +327,8 @@
 							<table>
 							<tr>
 								<td colspan=2>
-									<input class="btn btn-outline-primary" type="submit" value="입력"><br/>
-									<button type="button" onclick="javascript:pjtInsert();" class="btn btn-primary btn-sm">검색</button>
+									<input class="btn btn-outline-primary" type="submit" value="Input"><br/>
+									<button type="button" onclick="javascript:pjtInsert();" class="btn btn-primary btn-sm">Submit</button>
 								</td>
 							</tr>
 							
@@ -432,32 +432,115 @@
 <script src="<c:url value="/resources/js/scrollax.min.js"/>"></script>
 <script src="<c:url value="/resources/js/main.js"/>"></script>
     <script type="text/javascript">
-		function signUp() {
-			//console.log("doRetrieve()");
-			var frm = document.signUp_frm;
-			frm.action = "${hContext}/member/signUp.spring";
+
+	  //ajax - skill
+	    $.ajax({
+	        type : "POST",
+	        url : "${hContext}/skill/do_insert.spring",
+	        dataType : "html",
+	        data : {
+	            "sName" : $("#sName").val(),
+	            "memberId" : $("#memberId").val(),
+	            "sMarstery" : $("#sMarstery").val(),
+	            "sContent" : $("#sContent").val()
+	        },
+	        success : function(data) { //성공
+	            console.log("data:" + data);
+	            var parseData = $.parseJSON(data);
+	            if (parseData.msgId == "1") {
+	                alert(parseData.msgMsg);
+	            } else {
+	                alert(parseData.msgMsg);
+	            }
+	
+	        },
+	        error : function(xhr, status, error) {
+	            alert("error:" + error);
+	        },
+	        complete : function(data) {
+	
+	        }
+	
+	    });//--ajax-skill
+
+		var cnt=1;
+	    $("#plusInsert").on("click", function(){
+			console.log('This is plus button');
+			var frm=document.uploadFrm;
+			var html="";
+			cnt+=1;
+			console.log(cnt);
+			html+="<tr><td colspan='2'><hr/><br/></td></tr>																												";
+			html+="<tr>                                                                                                                     							";
+			html+="	<td>                                                                                                                    							";
+			html+="		Project Name                                                                                                              						";
+			html+="	</td>                                                                                                                   							";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<input type='text' id='pjtName"+cnt+"' name='pjtName"+cnt+"'>                                                                                   ";
+			html+="	</td>                                                                                                                                               ";
+			html+="</tr>                                                                                                                                                ";
+			html+="<tr>	                                                                                                                                                ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<p>Project Description<p>                                                                                                                       ";
+			html+="	</td>                                                                                                                                               ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<textarea cols='50' rows='3' id='pjtInfo"+cnt+"' name='pjtInfo"+cnt+"'></textarea>                                                              ";
+			html+="	</td>                                                                                                                                               ";
+			html+="</tr>                                                                                                                                                ";
+			html+="<tr>	                                                                                                                                                ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<p>Project Period<p>                                                                                                                            ";
+			html+="	</td>                                                                                                                                               ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<input type='date' id='pjtStart"+cnt+"' name='pjtStart"+cnt+"'> - <input type='date' id='pjtEnd"+cnt+"' name='pjtEnd"+cnt+"'>                   ";
+			html+="	</td>                                                                                                                                               ";
+			html+="</tr>                                                                                                                                                ";
+			html+="<tr>	                                                                                                                                                ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<p>Github Address<p>                                                                                                                            ";
+			html+="	</td>                                                                                                                                               ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<input type='text' id='gitAddress"+cnt+"' name='gitAddress"+cnt+"'>                                                                             ";
+			html+="	</td>                                                                                                                                               ";
+			html+="</tr>                                                                                                                                                ";
+			html+="<tr>	                                                                                                                                                ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<p>Project DemonstrationVideo<p>                                                                                                                ";
+			html+="	</td>                                                                                                                                               ";
+			html+="	<td>                                                                                                                                                ";
+			html+="		<input type='file' id='videoFile"+cnt+"' name='videoFile"+cnt+"'>                                                                               ";
+			html+="	</td>                                                                                                                                               ";
+			html+="</tr>                                                                                                                                                ";
+			                                                                                                                                                            
+			$("#pjtForm>tbody").append(html);
+			
+
+		});
+			
+
+
+	    
+			function pjtInsert() {
+				console.log("pjtInsert");
+				//console.log("doRetrieve()");
+				var frm = document.signUp_pjt_frm;
+				frm.action = "${hContext}/portfolio/do_insert.spring";
+				frm.method="GET";
+				frm.submit(); 
+			}
+
+		$("#uploadBtn").on("click", function(){
+			console.log("uploadTest");
+			var frm=document.uploadFrm;
+			frm.hiddenCnt.value=cnt;
+			frm.file01.value=$("#videoFile").value;
+			frm.action = "${hContext}/portfoilo/upload.spring";
+			frm.method="POST"
 			frm.submit();
-		}
+			
+			});
 
-		
 
-        });
-
-	   /*   $("#memberTable>tbody").on("click", "tr", function() {
-			 //console.log("#memberTable>tbody");
-			 var trArray =$(this).children();
-			 var orgNm =  trArray.eq(0).text();
-			 //console.log("orgNm:"+orgNm);
-			 var saveNm =  trArray.eq(1).text();
-			 //console.log("saveNm:"+saveNm);
-
-			 var frm = document.fileDown;
-			 frm.orgNm.value = orgNm;
-			 frm.saveNm.value = saveNm;
-			 frm.submit();
-			 //$("#saveFileNm").val(saveFileNm);
-			 
-		}); */
 
 	        
      </script>
