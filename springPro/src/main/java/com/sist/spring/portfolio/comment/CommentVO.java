@@ -29,7 +29,7 @@ public class CommentVO extends DTO {
 	 
 	private String cNo  ; 
 	private String cContent  ; 
-	private String cOpen;
+	private int cOpen;
 	private String regDt ; 
 	private String modDt; 
 	private String regId; 
@@ -53,11 +53,11 @@ public class CommentVO extends DTO {
 		this.cContent = cContent;
 	}
 
-	public String getcOpen() {
+	public int getcOpen() {
 		return cOpen;
 	}
 
-	public void setcOpen(String cOpen) {
+	public void setcOpen(int cOpen) {
 		this.cOpen = cOpen;
 	}
 
@@ -93,7 +93,9 @@ public class CommentVO extends DTO {
 		this.memberId = memberId;
 	}
 
-	public CommentVO(String cNo, String cContent, String cOpen, String regDt, String modDt, String regId,
+	
+	
+	public CommentVO(String cNo, String cContent, int cOpen, String regDt, String modDt, String regId,
 			String memberId) {
 		super();
 		this.cNo = cNo;
@@ -106,9 +108,67 @@ public class CommentVO extends DTO {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cContent == null) ? 0 : cContent.hashCode());
+		result = prime * result + ((cNo == null) ? 0 : cNo.hashCode());
+		result = prime * result + cOpen;
+		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
+		result = prime * result + ((modDt == null) ? 0 : modDt.hashCode());
+		result = prime * result + ((regDt == null) ? 0 : regDt.hashCode());
+		result = prime * result + ((regId == null) ? 0 : regId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CommentVO other = (CommentVO) obj;
+		if (cContent == null) {
+			if (other.cContent != null)
+				return false;
+		} else if (!cContent.equals(other.cContent))
+			return false;
+		if (cNo == null) {
+			if (other.cNo != null)
+				return false;
+		} else if (!cNo.equals(other.cNo))
+			return false;
+		if (cOpen != other.cOpen)
+			return false;
+		if (memberId == null) {
+			if (other.memberId != null)
+				return false;
+		} else if (!memberId.equals(other.memberId))
+			return false;
+		if (modDt == null) {
+			if (other.modDt != null)
+				return false;
+		} else if (!modDt.equals(other.modDt))
+			return false;
+		if (regDt == null) {
+			if (other.regDt != null)
+				return false;
+		} else if (!regDt.equals(other.regDt))
+			return false;
+		if (regId == null) {
+			if (other.regId != null)
+				return false;
+		} else if (!regId.equals(other.regId))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "CommentVO [cNo=" + cNo + ", cContent=" + cContent + ", cOpen=" + cOpen + ", regDt=" + regDt + ", modDt="
-				+ modDt + ", regId=" + regId + ", memberId=" + memberId + ", toString()=" + super.toString() + "]";
+				+ modDt + ", regId=" + regId + ", memberId=" + memberId + "]";
 	}
 
 	

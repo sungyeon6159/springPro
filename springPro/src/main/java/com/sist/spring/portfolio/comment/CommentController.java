@@ -112,7 +112,7 @@ public class CommentController {
 		   
 		//페이지 사이즈
 		if(search.getPageSize()==0) {
-			search.setPageSize(10);
+			search.setPageSize(20);
 		}
 		//페이지 num
 		if(search.getPageNum()==0) {
@@ -150,7 +150,7 @@ public class CommentController {
 		
 		
 //		member/member_mng -> /+member/member_mng+.jsp
-		return "portfolio/comment/comment";
+		return "portfolio/member/index_test";
 	}
 	
 	

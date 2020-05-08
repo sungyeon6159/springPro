@@ -34,7 +34,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 			CommentVO outData = new CommentVO();
 			outData.setcNo(rs.getString("c_No"));
 			outData.setcContent(rs.getString("c_Cont"));
-			outData.setcOpen(rs.getString("c_Open"));
+			outData.setcOpen(rs.getInt("c_Open"));
 			outData.setRegDt(rs.getString("reg_Dt"));
 			outData.setModDt(rs.getString("mod_Dt"));
 			outData.setRegId(rs.getString("reg_Id"));
@@ -137,10 +137,12 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("    Comments          ");
 		sb.append("WHERE                ");
 		sb.append("    member_id=?          ");
+		sb.append("AND 	reg_id=?          ");
 		
 		
 		Object args[] = {
-						  inVO.getMemberId()
+						  inVO.getMemberId(),
+						  inVO.getRegId()
 						};
 		
 		outVO = this.jdbcTemplate.queryForObject(sb.toString(),

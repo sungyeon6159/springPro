@@ -192,14 +192,16 @@ public class MemberController {
 		
 	}
 	
-		@RequestMapping(value = "member/doInsert.do",method = RequestMethod.POST
+		@RequestMapping(value = "portfolio/SignUp/doInsertMember.spring", method = RequestMethod.GET
 					,produces = "application/json; charset=UTF-8")
 		@ResponseBody
-		public String doInsert(MemberVO user) {
+		public String doInsert(HttpServletRequest req, MemberVO user) {
 		LOG.debug("1===================");
 		LOG.debug("1=user="+user);
 		LOG.debug("1===================");
-		
+		LOG.debug(req.getParameter("birth1"));
+		LOG.debug(req.getParameter("birth2"));
+		LOG.debug(req.getParameter("birth3"));
 		int  flag = memberService.doInsert(user);
 		
 		LOG.debug("1.2===================");
