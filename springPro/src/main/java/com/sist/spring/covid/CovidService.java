@@ -51,11 +51,15 @@ public class CovidService implements Service {
 	@Autowired
 	private CovidDao covidDao;
 	
+	public int doRxInsert(DTO dto) {
+		return covidDao.doRxInsert(dto);
+	}
+	
 	@Override
 	public int doInsert(DTO dto) {
 		return covidDao.doInsert(dto);
 	}
-
+	
 	@Override
 	public int doUpdate(DTO dto) {
 		return covidDao.doUpdate(dto);
@@ -77,14 +81,14 @@ public class CovidService implements Service {
 	}
 	
 	//Json URL 호출 
-		public String readAll(Reader rd) throws IOException {
-	      StringBuilder sb = new StringBuilder();
-	      int cp;
-	      while ((cp = rd.read()) != -1) {
-	        sb.append((char) cp);
-	      }
-	      return sb.toString();
-	    }
+	public String readAll(Reader rd) throws IOException {
+      StringBuilder sb = new StringBuilder();
+      int cp;
+      while ((cp = rd.read()) != -1) {
+        sb.append((char) cp);
+      }
+      return sb.toString();
+    }
 		
 	//호출할 json URL 입력(시작메소드)
     public JSONObject readJsonFromUrl(String url) throws IOException, JSONException {

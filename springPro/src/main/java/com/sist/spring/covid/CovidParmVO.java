@@ -27,27 +27,27 @@ import com.sist.spring.cmn.DTO;
  */
 public class CovidParmVO extends DTO {
 	private String memberId;	//회원아이디
-	private String code;		//일련번호
-	private String name;		//약국명
-	private String addr;		//약국주소
-	private double lng;			//위도
-	private double lat;			//경도
-	private String remainStat;	//재고량
+	private String pCode;		//일련번호
+	private String pName;		//약국명
+	private String pAddr;		//약국주소
+	private double pLng;		//위도
+	private double pLat;		//경도
+	private String pRemainStat;	//재고량
 	
 	
 	public CovidParmVO() {}
 
 
-	public CovidParmVO(String memberId, String code, String name, String addr, double lng, double lat,
-			String remainStat) {
+	public CovidParmVO(String memberId, String pCode, String pName, String pAddr, double pLng, double pLat,
+			String pRemainStat) {
 		super();
 		this.memberId = memberId;
-		this.code = code;
-		this.name = name;
-		this.addr = addr;
-		this.lng = lng;
-		this.lat = lat;
-		this.remainStat = remainStat;
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pAddr = pAddr;
+		this.pLng = pLng;
+		this.pLat = pLat;
+		this.pRemainStat = pRemainStat;
 	}
 
 
@@ -68,107 +68,109 @@ public class CovidParmVO extends DTO {
 
 
 	/**
-	 * @return the code
+	 * @return the pCode
 	 */
-	public String getCode() {
-		return code;
+	public String getpCode() {
+		return pCode;
 	}
 
 
 	/**
-	 * @param code the code to set
+	 * @param pCode the pCode to set
 	 */
-	public void setCode(String code) {
-		this.code = code;
+	public void setpCode(String pCode) {
+		this.pCode = pCode;
 	}
 
 
 	/**
-	 * @return the name
+	 * @return the pName
 	 */
-	public String getName() {
-		return name;
+	public String getpName() {
+		return pName;
 	}
 
 
 	/**
-	 * @param name the name to set
+	 * @param pName the pName to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
 
 
 	/**
-	 * @return the addr
+	 * @return the pAddr
 	 */
-	public String getAddr() {
-		return addr;
+	public String getpAddr() {
+		return pAddr;
 	}
 
 
 	/**
-	 * @param addr the addr to set
+	 * @param pAddr the pAddr to set
 	 */
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setpAddr(String pAddr) {
+		this.pAddr = pAddr;
 	}
 
 
 	/**
-	 * @return the lng
+	 * @return the pLng
 	 */
-	public double getLng() {
-		return lng;
+	public double getpLng() {
+		return pLng;
 	}
 
 
 	/**
-	 * @param lng the lng to set
+	 * @param pLng the pLng to set
 	 */
-	public void setLng(double lng) {
-		this.lng = lng;
+	public void setpLng(double pLng) {
+		this.pLng = pLng;
 	}
 
 
 	/**
-	 * @return the lat
+	 * @return the pLat
 	 */
-	public double getLat() {
-		return lat;
+	public double getpLat() {
+		return pLat;
 	}
 
 
 	/**
-	 * @param lat the lat to set
+	 * @param pLat the pLat to set
 	 */
-	public void setLat(double lat) {
-		this.lat = lat;
+	public void setpLat(double pLat) {
+		this.pLat = pLat;
 	}
 
 
 	/**
-	 * @return the remainStat
+	 * @return the pRemainStat
 	 */
-	public String getRemainStat() {
-		return remainStat;
+	public String getpRemainStat() {
+		return pRemainStat;
 	}
 
 
 	/**
-	 * @param remainStat the remainStat to set
+	 * @param pRemainStat the pRemainStat to set
 	 */
-	public void setRemainStat(String remainStat) {
-		this.remainStat = remainStat;
+	public void setpRemainStat(String pRemainStat) {
+		this.pRemainStat = pRemainStat;
 	}
 
 
 	@Override
 	public String toString() {
-		return "CovidParmVO [memberId=" + memberId + ", code=" + code + ", name=" + name + ", addr=" + addr + ", lng="
-				+ lng + ", lat=" + lat + ", remainStat=" + remainStat + ", toString()=" + super.toString() + "]";
+		return "CovidParmVO [memberId=" + memberId + ", pCode=" + pCode + ", pName=" + pName + ", pAddr=" + pAddr
+				+ ", pLng=" + pLng + ", pLat=" + pLat + ", pRemainStat=" + pRemainStat + ", toString()="
+				+ super.toString() + "]";
 	}
 
+	
 	
 	
 }

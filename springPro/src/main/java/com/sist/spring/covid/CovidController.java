@@ -32,10 +32,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sist.spring.cmn.MessageVO;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 /**
@@ -49,6 +53,7 @@ public class CovidController {
 	@Autowired
 	private CovidService covidService;
 	
+	private List<CovidParmVO> list;
 	
 	/**
 	 * email 보내기전 약국 검색기능
@@ -72,7 +77,7 @@ public class CovidController {
         JsonObject jsonObj=(JsonObject)parser.parse(json1.toString());
         JsonArray memberArray=(JsonArray)jsonObj.get("stores");
         
-        List<CovidParmVO> list = new ArrayList<CovidParmVO>();
+        list = new ArrayList<CovidParmVO>();
         for(int i=0; i<memberArray.size(); i++) {
         	vo = new CovidParmVO();
         	JsonObject object=(JsonObject)memberArray.get(i);
@@ -95,12 +100,12 @@ public class CovidController {
             	
              	//임의로 한명 회원아아디 setting
             	vo.setMemberId("wogns");
-            	vo.setCode(getCode);
-            	vo.setName(getName);
-            	vo.setAddr(getAddr);
-            	vo.setLng(getLng);
-            	vo.setLat(getLat);
-            	vo.setRemainStat("empty");		//또는 empty로 변경, break를 empty로 변경(어차피 없는것이므로
+            	vo.setpCode(getCode);
+            	vo.setpName(getName);
+            	vo.setpAddr(getAddr);
+            	vo.setpLng(getLng);
+            	vo.setpLat(getLat);
+            	vo.setpRemainStat("empty");		//또는 empty로 변경, break를 empty로 변경(어차피 없는것이므로
         	} else {
         		int codeEndpoint= object.get("code").toString().lastIndexOf("\"");
             	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");
@@ -124,12 +129,12 @@ public class CovidController {
             	double getLat = Double.valueOf(object.get("lat").toString());
             	//임의로 한명 회원아아디 setting
             	vo.setMemberId("wogns");
-            	vo.setCode(getCode);
-            	vo.setName(getName);
-            	vo.setAddr(getAddr);
-            	vo.setLng(getLng);
-            	vo.setLat(getLat);
-            	vo.setRemainStat(getRemainStat);
+            	vo.setpCode(getCode);
+            	vo.setpName(getName);
+            	vo.setpAddr(getAddr);
+            	vo.setpLng(getLng);
+            	vo.setpLat(getLat);
+            	vo.setpRemainStat(getRemainStat);
         	}
         	
         	System.out.println("출력값확인 "+vo);
@@ -143,6 +148,63 @@ public class CovidController {
         model.addAttribute("list",list);
 		
 		return url;
+	}
+	
+	@RequestMapping(value = "covid/do_insert.spring",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doSelectOne(HttpServletRequest req, CovidParmVO vo, Model model) {
+		
+		String searchlng = req.getParameter("searchlng");
+		String searchlat = req.getParameter("searchlat");
+		Double lng = Double.valueOf(searchlng);
+		Double lat = Double.valueOf(searchlat);
+		
+		
+		LOG.debug("1===============");
+		LOG.debug("1==============="+ list);
+		LOG.debug("1==============="+ lng);
+		LOG.debug("1==============="+ lat);
+		LOG.debug("1===============");
+		
+		vo = new CovidParmVO();
+		for(int i=0;i<list.size();i++) {
+			if(list.get(i).getpLng() == lng &&  list.get(i).getpLat() == lat) {
+				LOG.debug("관심약국"+list.get(i));
+				vo.setMemberId(list.get(i).getMemberId());
+				vo.setpCode(list.get(i).getpCode());
+				vo.setpName(list.get(i).getpName());
+				vo.setpAddr(list.get(i).getpAddr());
+				vo.setpLng(list.get(i).getpLng());
+				vo.setpLat(list.get(i).getpLat());
+			}
+		}
+		
+		int flag = covidService.doRxInsert(vo);
+		
+		LOG.debug("1.2===============");
+		LOG.debug("1.2=flag=" + flag);
+		LOG.debug("1.2===============");
+		
+		//메시지 처리
+		MessageVO message = new MessageVO();
+		message.setMsgId(flag+""); 	//String으로 변환		msgId아이디에는 flag값만 넣음 
+		//성공
+		if(flag ==1) {
+			message.setMsgMsg(vo.getpName() + "님이 등록되었습니다.");
+		//실패
+		} else {
+			message.setMsgMsg(vo.getpName() + "님 등록 실패.");
+		}
+		
+		
+		Gson gson = new Gson();
+		String json =gson.toJson(message);
+		
+		LOG.debug("1.3===============");
+		LOG.debug("1.3=json=" + json);
+		LOG.debug("1.3===============");
+		
+		return json;
 	}
 	
 	

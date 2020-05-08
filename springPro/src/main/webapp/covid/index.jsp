@@ -38,6 +38,10 @@
 	</form>
 	<input type="hidden" id="result" name="result"/>
 	
+	<form action="${hContext}/covid/do_insert.spring" name="search_frm" method="post">
+		<input type="hidden" id="searchlng" name="searchlng"/>
+		<input type="hidden" id="searchlat" name="searchlat"/>
+	</form>
 	<!-- 지도 -->
 	<div id="map" style="width:90%;height:600px;"></div>
 	
@@ -104,18 +108,18 @@
 	var positions = [
 	<c:forEach var="vo" items="${list}">
 	{
-	    title: '${vo.name}', 
-	    latlng: new kakao.maps.LatLng("${vo.lat}", "${vo.lng}"),
-	    markImg: '${vo.remainStat}'
+	    title: '${vo.pName}', 
+	    latlng: new kakao.maps.LatLng("${vo.pLat}", "${vo.pLng}"),
+	    markImg: '${vo.pRemainStat}',
+	    addr: '${vo.pAddr}'
 	},  
 	</c:forEach>
-	];
+	]; 
 
-
-
+	
 	//마커 이미지의 이미지 주소입니다
 	var imageSrc = ""; 
-
+	
 	for (var i = 0; i < positions.length; i ++) {
 
 		// 마커 이미지의 이미지 크기 입니다
@@ -141,15 +145,55 @@
 		    title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		    image : markerImage // 마커 이미지 
 		});
-
-
-		// 마커에 mouseout 이벤트를 등록합니다
-	    kakao.maps.event.addListener(marker, 'click', function() {
-			console.log("addListener");
-	    });
 		
-	}
+		kakao.maps.event.addListener(marker, 'click', makeOverListener(marker));
+		
+	}//for
 
+	function makeOverListener(marker) {
+	    return function() {
+	       //console.log(marker.mc);
+	       //마커의 위도경도와 api의 위도경도가 같으면 그 vo를 찾아서 db에 insert하면 됨
+	       //console.log(marker);
+	       //console.log(marker.mc);
+		   //console.log(marker.getPosition());
+		   //console.log(marker.getPosition().Ga.toFixed(7));
+		   //console.log(marker.getPosition().Ha.toFixed(7));
+		   
+		   document.getElementById("searchlng").value = marker.getPosition().Ga.toFixed(7);
+		   document.getElementById("searchlat").value = marker.getPosition().Ha.toFixed(7);
+
+
+		 	//ajax
+			$.ajax({
+			   type:"POST",
+			   url:"${hContext}/covid/do_insert.spring",
+			   dataType:"html", 
+			   data:{"searchlng": $("#searchlng").val(),
+				     "searchlat": $("#searchlat").val()
+			   },
+			   success:function(data){ //성공
+			   	   //console.log("data:" + data);
+				   var parseData = $.parseJSON(data);
+			   	   if(parseData.msgId =="1"){
+						alert(parseData.msgMsg);
+						
+				   } else{
+					    alert(parseData.msgMsg);
+				   }
+			   },
+			   error:function(xhr,status,error){
+			       alert("error:"+error);
+			   },
+			   complete:function(data){
+			   
+			   }   
+			   
+			  });//--ajax
+		   
+		   
+	    };
+	}
 	
 </script>	
 </body>
