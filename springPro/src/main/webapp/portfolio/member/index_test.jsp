@@ -1030,18 +1030,150 @@
 
     <footer class="ftco-footer ftco-section">
       <div class="container">
-        <div class="row mb-5">
-     
+        <div >
+	        <!-- 검색영역 -->
+	    	<div class="row">
+	    		<div class="col-md-12 text-right">
+		    		<form action="${hContext}/comment/do_retrieve.spring" name="commentfrm" method="get" class="form-inline">
+		    			<!-- pageNum -->
+		    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
+		    			<div class="form-group">
+		    				<input type="text"  class="form-control input-sm"  
+		    				id="searchWord" value="${param.searchWord }" name="searchWord" placeholder="검색어">
+		    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+		    				<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
+		    			</div>
+		    		</form>
+	    		</div>
+	    	</div>
+	    	<!--// 검색영역 -->
+	    	
+	    	<!-- 입력 From -->
+            <div>
+                <table class="table">                    
+                    <tr>
+                        <td>
+                            <textarea style="width: 1100px" rows="3" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
+                            <input type="hidden" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디" value="sohyun1234" />
+                            <input type="hidden" maxlength="20" class="form-control input-sm" id="regId" name="regId" placeholder="아이디" value="mjkim" />
+                            <div align="right">
+                            	<button type="button" class="btn pull-right btn-success" id="doInsert" >등록</button>
+                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" >수정</button>
+	                            <input type="radio"  id="cOpen" name="cOpen" value="1" checked="checked">비밀댓글
+	                			
+	                			
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        	<!-- 입력 From --> 
         </div>
-        <div class="row">
-          <div class="col-md-12 text-center">
+        
+        
+        <div class="table-responsive">
+    	<table class="table" id="memberTable">
+		<tbody>
+ 				<!-- Data있는 경우 -->
+ 				<c:choose>
+ 					<c:when test="${list.size()>0 }">
+ 						<c:forEach var="vo" items="${list }">
+   					<tr>
+   						<td>
+   							<div align="left">
+                            	<label>${vo.regId }</label>
+                            </div>
+   							<label style="width: 1100px" rows="3" cols="30">${vo.cContent }</label>
+                            <div align="right">
+                            	<label>${vo.regDt }</label>
+                            </div>
+                        </td>
+   					</tr>
+   					</c:forEach>
+ 					</c:when>
+ 					<c:otherwise>
+ 						<tr><td colspan="99">등록된 게시글이 없습니다.</td></tr>
+ 					</c:otherwise>
+ 				</c:choose>
+ 			</tbody>
+ 			</table>
+    	</div>
+    	
+    	
+    	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+	    <script src="${hContext}/resources/js/bootstrap.min.js"></script>
+	    <!-- page -->
+	    <script src="${hContext}/resources/js/jquery.bootpag.min.js"></script>
+	    
+<script type="text/javascript">
+//등록
+$("#doInsert").on("click", function() {
+	//console.log("#doUpdate");
+	//값  Null check
+	if($("#cContent").val() == "" || $("#cContent").val() == false){
+		alert("내용을 입력 하세요.");
+		$("#c_content").focus();
+		return;
+	}
 
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="index.jsp" target="_blank">Bombom</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-          </div>
-        </div>
-      </div>
+	//confirm
+	if(confirm("댓글을 등록 하시겠습니까?")==false)return;
+
+	// name이 같은 체크박스의 값들을 배열에 담는다.
+   
+	
+	//ajax
+	$.ajax({
+	   type:"POST",
+	   url:"${hContext}/comment/add.spring",
+	   dataType:"html",
+	   data:{
+		   "cContent": $("#cContent").val(),
+		   "regId": $("#regId").val(),
+		   "memberId": $("#memberId").val(),
+		   //"cOpen" : $("#cOpen"). val()
+		   "cOpen" : $("input:radio[name='cOpen']:checked"). val()
+	   },
+	   success:function(data){ //성공
+	      console.log("data:"+data);
+	      var parseData = $.parseJSON(data);
+	      if(parseData.msgId == "1"){
+			 alert(parseData.msgMsg);
+			 alert('댓글이 등록되었습니다.')
+			 doRetrieve();
+		  }else{
+			 alert(parseData.msgMsg);
+		  }
+	      
+	   },
+	   error:function(xhr,status,error){
+	      alert("error:"+error);
+	   },
+	   complete:function(data){
+	   
+	   }   
+	   
+	});//--ajax
+	
+}); 
+
+
+   function doRetrieve(){
+	//console.log('doRetrieve');
+	var frm = document.commentfrm;
+	frm.pageNum.value = 1;
+	frm.action = "${hContext}/comment/do_retrieve.spring";
+	frm.submit();
+} 
+
+</script>
+	    
+    	
+        
+        
+       
     </footer>
     
   
