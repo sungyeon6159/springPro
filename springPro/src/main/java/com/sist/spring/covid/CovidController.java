@@ -152,7 +152,7 @@ public class CovidController {
 	
 	@RequestMapping(value = "covid/do_insert.spring",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String doSelectOne(HttpServletRequest req, CovidParmVO vo, Model model) {
+	public String doSelectOne(HttpServletRequest req, RxJoinVO vo, Model model) {
 		
 		String searchlng = req.getParameter("searchlng");
 		String searchlat = req.getParameter("searchlat");
@@ -166,7 +166,7 @@ public class CovidController {
 		LOG.debug("1==============="+ lat);
 		LOG.debug("1===============");
 		
-		vo = new CovidParmVO();
+		vo = new RxJoinVO();
 		for(int i=0;i<list.size();i++) {
 			if(list.get(i).getpLng() == lng &&  list.get(i).getpLat() == lat) {
 				LOG.debug("관심약국"+list.get(i));
@@ -176,11 +176,32 @@ public class CovidController {
 				vo.setpAddr(list.get(i).getpAddr());
 				vo.setpLng(list.get(i).getpLng());
 				vo.setpLat(list.get(i).getpLat());
+				vo.setpRemainStat(list.get(i).getpRemainStat());
+			}
+		}
+		//ID가 wogns이라는 가정하에 진행, 단건 조회한 vo랑 다건조회리스트와 비교
+		List<RxJoinVO> checkCntList= (List<RxJoinVO>) covidService.doRetrieve(vo);
+//		RxJoinVO checkVO = (RxJoinVO) covidService.doSelectOne(vo);
+		int cnt = 0;
+		boolean bool = false;
+		for(int i=0; i<checkCntList.size();i++) {
+			//널은 나중에 제외(회원가입을 하고 들어올것이므로)
+			if((vo.getMemberId() == null || "".equals(vo.getMemberId())) ||
+					(checkCntList.get(i).getMemberId().equals(vo.getMemberId()) && checkCntList.get(i).getpCode().equals(vo.getpCode()))) {
+				bool = true;
+				break;
+			} else if(checkCntList.get(i).getMemberId().equals(vo.getMemberId())) {
+				cnt++;
 			}
 		}
 		
-		int flag = covidService.doRxInsert(vo);
-		
+		int flag = 0;
+		if(cnt<5 && bool == false) {
+			flag = covidService.doRxInsert(vo);
+		} else {
+			flag = 0;
+			bool = true;
+		}
 		LOG.debug("1.2===============");
 		LOG.debug("1.2=flag=" + flag);
 		LOG.debug("1.2===============");
@@ -190,11 +211,14 @@ public class CovidController {
 		message.setMsgId(flag+""); 	//String으로 변환		msgId아이디에는 flag값만 넣음 
 		//성공
 		if(flag ==1) {
-			message.setMsgMsg(vo.getpName() + "님이 등록되었습니다.");
+			message.setMsgMsg(vo.getpName() + "이 관심약국으로 등록되었습니다.");
 		//실패
-		} else {
-			message.setMsgMsg(vo.getpName() + "님 등록 실패.");
+		} else if(bool == true){
+			message.setMsgMsg("이미 등록되어 있는 관심약국입니다.");
 		}
+		else if(cnt<5){
+			message.setMsgMsg("관심약국등록 제한횟수를 초과했습니다.");
+		} 
 		
 		
 		Gson gson = new Gson();

@@ -89,7 +89,7 @@ public class CovidDao implements Dao {
 	 */
 	public int doRxInsert(DTO dto) {
 		int flag = 0;
-		CovidParmVO inVO = (CovidParmVO) dto;
+		RxJoinVO inVO = (RxJoinVO) dto;
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO pharmacy (	\n");
 		sb.append("    member_id,           \n");
