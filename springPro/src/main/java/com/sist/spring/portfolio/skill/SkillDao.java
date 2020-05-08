@@ -203,11 +203,11 @@ public class SkillDao implements Dao {
 		LOG.debug("============================");
 		
 	     sb.append (" SELECT  s_name,s_marstery,s_content,member_id,	 \n");
-	     sb.append("     1 rnum,      							 \n"); 
-		 sb.append("     1 total_cnt   						     \n");
-	     sb.append (" FROM skill                                 \n");
-	     sb.append (" WHERE MEMBER_ID  = ?                       \n");
-	     
+	     sb.append("     1 rnum,      							 		\n"); 
+		 sb.append("     1 total_cnt   						    		 \n");
+	     sb.append (" FROM skill                                 		\n");
+	     sb.append (" WHERE MEMBER_ID  = ?                       		\n");
+	     sb.append (" ORDER BY s_marstery DESC                     		\n");
 	    //param 
         Object[] args = {inVO.getMemberId() };
 //		List<Object> listArg = new ArrayList<Object>();

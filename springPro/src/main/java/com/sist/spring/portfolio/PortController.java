@@ -28,11 +28,16 @@ import com.sist.spring.portfolio.member.file.FileMemberVO;
 import com.sist.spring.portfolio.project.PjtFileService;
 import com.sist.spring.portfolio.project.ProjectService;
 import com.sist.spring.portfolio.project.ProjectVO;
+import com.sist.spring.portfolio.skill.SkillService;
+import com.sist.spring.portfolio.skill.SkillVO;
 
 @Controller
 public class PortController {
 
 	private final Logger LOG=LoggerFactory.getLogger(PortController.class);
+	
+	@Autowired
+	SkillService skillService;
 	
 	@Autowired
 	ProjectService pjtService;
@@ -60,8 +65,9 @@ public class PortController {
 		LicenseVO licVO=new LicenseVO();
 		MemberVO memVO=new MemberVO();
 		FileMemberVO fileMemberInVO=new FileMemberVO();
+		SkillVO skillVO = new SkillVO();
 		
-		
+		skillVO.setMemberId("iod1124");
 		pjtVO.setMemberId("iod1124");
 		licVO.setMemberId("iod1124");
 		memVO.setMemberId("iod1124");
@@ -71,7 +77,7 @@ public class PortController {
 		LOG.debug("==ProjectService/doRetrieve");
 		LOG.debug("==========================");
 		
-		
+		List<SkillVO> skillList=(List<SkillVO>)skillService.doRetrieve(skillVO);
 		List<ProjectVO> pjtList=(List<ProjectVO>)pjtService.doRetrieve(pjtVO);
 		List<LicenseVO> licList=(List<LicenseVO>)licService.doRetrieve(licVO);
 		FileMemberVO fileMemberVO=(FileMemberVO)fileMemService.doSelectOne(fileMemberInVO);
@@ -122,7 +128,7 @@ public class PortController {
         model.addAttribute("licList", licList);
         model.addAttribute("memberVO", memOutVO);
         model.addAttribute("fileVO", fileMemberVO);
-		
+        model.addAttribute("skillList", skillList);
 
 		
 		return "portfolio/index";

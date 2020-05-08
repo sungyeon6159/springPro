@@ -248,15 +248,17 @@
     		<div class="row justify-content-center py-5 mt-5">
           		<div class="col-md-12 heading-section text-center ftco-animate">
            			 <h2 class="mb-4">Skills</h2> 
-					  	<div class="row progress-circle mb-5">
-					  		<div class="col-lg-4 mb-4">
-						      <div class="bg-white rounded-lg shadow p-4">
-						      <c:choose>
-						          <c:when test="${skillList.size() >0} ">
-						              <c:forEach var="vo" items="${skillList}" >
-						                <h2 class="h5 font-weight-bold text-center mb-4">${vo.sName}</h2>
+           			  <div class="row progress-circle mb-5">
+                                        
+					  	      <c:choose>
+						          <c:when test="${skillList.size()>0}">
+						              <c:forEach var="i" begin="0" end="2">
+						               <div class="col-lg-4 mb-4">
+			                              <div class="bg-white rounded-lg shadow p-4">
+                        
+						                <h2 class="h5 font-weight-bold text-center mb-4">${skillList.get(i).sName}</h2>
 		                                <!-- Progress bar 1 -->
-		                                <div class="progress mx-auto" data-value='${vo.sMarstery}'>
+		                                <div class="progress mx-auto" data-value='${skillList.get(i).sMarstery}'>
 		                                    <span class="progress-left">
 		                                         <span class="progress-bar border-primary"></span>
 		                                    </span>
@@ -264,42 +266,50 @@
 		                                        <span class="progress-bar border-primary"></span>
 		                                    </span>
 		                                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-		                                        <div class="h2 font-weight-bold">${vo.sMarstery}<sup class="small">%</sup></div>
+		                                        <div class="h2 font-weight-bold">${skillList.get(i).sMarstery}<sup class="small">%</sup></div>
 		                                    </div>
 		                                </div>
+		                                       <!-- Demo info -->
+			                                <div class="row text-center mt-4">
+			                                  <h4 class="h5 font-weight-bold text-center mb-4">${skillList.get(i).sContent}</h4>
+			                                </div>
+			                                <!-- END -->
+			                              </div>
+			                            </div>
 		                               </c:forEach>
+		                             
+                                       
 						          </c:when>
 						          <c:otherwise>
                                    <h2 class="text-center">등록된 게시글이 없습니다</h2>
                                 </c:otherwise>
-						      </c:choose>
-						      
+                              </c:choose>
+                              </div>
+                              <c:choose><c:when test="${skillList.size()>0}">
+						       <div class="row">
+                                       <c:forEach var="i" begin="0" end="${skillList.size()-1 }">
+                                       
+                                                <div class="col-md-${skillList.size()} animate-box">
+                                                        <div class="progress-wrap ftco-animate">
+                                                            <h3>${skillList.get(i).sName}</h3>
+                                                            <br/>
+                                                            <div class="progress">
+                                                                <div class="progress-bar color-1" role="progressbar" aria-valuenow="${skillList.get(i).sMarstery}"
+                                                                aria-valuemin="0" aria-valuemax="100" style="width:${skillList.get(i).sMarstery}%">
+                                                                <span>${skillList.get(i).sMarstery}%</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                       </c:forEach>
+                                      </div>
 						        <!-- END -->
-
-						        <!-- Demo info -->
-						        <div class="row text-center mt-4">
-						          <h4 class="h5 font-weight-bold text-center mb-4">${skillList.get(0).sContent}</h4>
-						        </div>
-						        <!-- END -->
-						      </div>
-						    </div>
+                                </c:when> 
+                           </c:choose>
+						 </div>
 						   						    
 					  	</div>
 					  	
-					  	<div class="row">
-					  		<div class="col-md-6 animate-box">
-									<div class="progress-wrap ftco-animate">
-										<h3>Photoshop</h3>
-										<div class="progress">
-										 	<div class="progress-bar color-1" role="progressbar" aria-valuenow="90"
-										  	aria-valuemin="0" aria-valuemax="100" style="width:90%">
-										    <span>90%</span>
-										  	</div>
-										</div>
-									</div>
-								</div>
-					
-					  	</div>
            		  </div>
            	 </div>
          </div>    	
