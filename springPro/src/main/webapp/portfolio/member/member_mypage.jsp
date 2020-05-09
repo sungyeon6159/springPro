@@ -234,7 +234,7 @@
            			 <h2 class="mb-4">Add Project</h2>
            			 <div align="center">
            			 
-           			 		<form action="${hContext}/portfoilo/upload.spring" method="post" enctype="multipart/form-data" name="uploadFrm">
+           			 		<form action="${hContext}/portfoilo/upload.spring" method="post" enctype="multipart/form-data" name="projectInsetForm" id="projectInsetForm">
 								<c:choose>
 									<c:when test="${videoFile != null}">
 									<table>
@@ -288,7 +288,7 @@
 										Project Name
 									</td>
 									<td>
-										<input type="text" id="pjtName" name="pjtName">
+										<input type="text" id="pjtName" name="projectList[0].pjtName">
 									</td>
 								</tr>
 								<tr>	
@@ -296,7 +296,7 @@
 										<p>Project Description<p>
 									</td>
 									<td>
-										<textarea cols="50" rows="3" id="pjtInfo" name="pjtInfo"></textarea>
+										<textarea cols="50" rows="3" id="pjtInfo" name="projectList[0].pjtInfo"></textarea>
 									</td>
 								</tr>
 								<tr>	
@@ -304,7 +304,7 @@
 										<p>Project Period<p>
 									</td>
 									<td>
-										<input type="date" id="pjtStart" name="pjtStart"> - <input type="date" id="pjtEnd" name="pjtEnd">
+										<input type="date" id="pjtStart" name="projectList[0].pjtStart"> - <input type="date" id="pjtEnd" name="projectList[0].pjtEnd">
 									</td>
 								</tr>
 								<tr>	
@@ -312,7 +312,7 @@
 										<p>Github Address<p>
 									</td>
 									<td>
-										<input type="text" id="gitAddress" name="gitAddress">
+										<input type="text" id="gitAddress" name="projectList[0].gitAddress">
 									</td>
 								</tr>
 								<tr>	
@@ -320,7 +320,7 @@
 										<p>Project DemonstrationVideo<p>
 									</td>
 									<td>
-										<input type="file" id="videoFile" name="videoFile">
+										<input type="file" id="videoFile" name="projectList[0].videoFile">
 									</td>
 								</tr>
 							</table>
@@ -433,7 +433,7 @@
 <script src="<c:url value="/resources/js/main.js"/>"></script>
     <script type="text/javascript">
 
-	  //ajax - skill
+	  /* //ajax - skill
 	    $.ajax({
 	        type : "POST",
 	        url : "${hContext}/skill/do_insert.spring",
@@ -461,22 +461,23 @@
 	
 	        }
 	
-	    });//--ajax-skill
+	    });//--ajax-skill */
 
-		var cnt=1;
+		var cnt=0;
 	    $("#plusInsert").on("click", function(){
 			console.log('This is plus button');
 			var frm=document.uploadFrm;
 			var html="";
 			cnt+=1;
 			console.log(cnt);
+
 			html+="<tr><td colspan='2'><hr/><br/></td></tr>																												";
 			html+="<tr>                                                                                                                     							";
 			html+="	<td>                                                                                                                    							";
 			html+="		Project Name                                                                                                              						";
 			html+="	</td>                                                                                                                   							";
 			html+="	<td>                                                                                                                                                ";
-			html+="		<input type='text' id='pjtName"+cnt+"' name='pjtName"+cnt+"'>                                                                                   ";
+			html+="		<input type='text' id='pjtName"+cnt+"' name='projectList["+cnt+"].pjtName'>                                                                                   ";
 			html+="	</td>                                                                                                                                               ";
 			html+="</tr>                                                                                                                                                ";
 			html+="<tr>	                                                                                                                                                ";
@@ -484,7 +485,7 @@
 			html+="		<p>Project Description<p>                                                                                                                       ";
 			html+="	</td>                                                                                                                                               ";
 			html+="	<td>                                                                                                                                                ";
-			html+="		<textarea cols='50' rows='3' id='pjtInfo"+cnt+"' name='pjtInfo"+cnt+"'></textarea>                                                              ";
+			html+="		<textarea cols='50' rows='3' id='pjtInfo"+cnt+"' name='projectList["+cnt+"].pjtInfo'></textarea>                                                              ";
 			html+="	</td>                                                                                                                                               ";
 			html+="</tr>                                                                                                                                                ";
 			html+="<tr>	                                                                                                                                                ";
@@ -492,7 +493,7 @@
 			html+="		<p>Project Period<p>                                                                                                                            ";
 			html+="	</td>                                                                                                                                               ";
 			html+="	<td>                                                                                                                                                ";
-			html+="		<input type='date' id='pjtStart"+cnt+"' name='pjtStart"+cnt+"'> - <input type='date' id='pjtEnd"+cnt+"' name='pjtEnd"+cnt+"'>                   ";
+			html+="		<input type='date' id='pjtStart"+cnt+"' name='projectList["+cnt+"].pjtStart'> - <input type='date' id='pjtEnd"+cnt+"' name='projectList["+cnt+"].pjtEnd'>                   ";
 			html+="	</td>                                                                                                                                               ";
 			html+="</tr>                                                                                                                                                ";
 			html+="<tr>	                                                                                                                                                ";
@@ -500,7 +501,7 @@
 			html+="		<p>Github Address<p>                                                                                                                            ";
 			html+="	</td>                                                                                                                                               ";
 			html+="	<td>                                                                                                                                                ";
-			html+="		<input type='text' id='gitAddress"+cnt+"' name='gitAddress"+cnt+"'>                                                                             ";
+			html+="		<input type='text' id='gitAddress"+cnt+"' name='projectList["+cnt+"].gitAddress'>                                                                             ";
 			html+="	</td>                                                                                                                                               ";
 			html+="</tr>                                                                                                                                                ";
 			html+="<tr>	                                                                                                                                                ";
@@ -508,7 +509,7 @@
 			html+="		<p>Project DemonstrationVideo<p>                                                                                                                ";
 			html+="	</td>                                                                                                                                               ";
 			html+="	<td>                                                                                                                                                ";
-			html+="		<input type='file' id='videoFile"+cnt+"' name='videoFile"+cnt+"'>                                                                               ";
+			html+="		<input type='file' id='videoFile"+cnt+"' name='projectList["+cnt+"].videoFile'>                                                                               ";
 			html+="	</td>                                                                                                                                               ";
 			html+="</tr>                                                                                                                                                ";
 			                                                                                                                                                            
@@ -523,9 +524,9 @@
 			function pjtInsert() {
 				console.log("pjtInsert");
 				//console.log("doRetrieve()");
-				var frm = document.signUp_pjt_frm;
+				var frm = document.projectInsetForm;
 				frm.action = "${hContext}/portfolio/do_insert.spring";
-				frm.method="GET";
+				frm.method="POST";
 				frm.submit(); 
 			}
 

@@ -1,5 +1,7 @@
 package com.sist.spring.portfolio.project;
 
+import java.util.List;
+
 import com.sist.spring.cmn.DTO;
 
 public class ProjectVO extends DTO {
@@ -15,8 +17,20 @@ public class ProjectVO extends DTO {
 	private String pjtTool;
 	private String gitAddress;
 	
-	public ProjectVO() {
-		// TODO Auto-generated constructor stub
+	private List<ProjectVO> projectList;
+	
+	/**
+	 * @return the projectList
+	 */
+	public List<ProjectVO> getProjectList() {
+		return projectList;
+	}
+
+	/**
+	 * @param projectList the projectList to set
+	 */
+	public void setProjectList(List<ProjectVO> projectList) {
+		this.projectList = projectList;
 	}
 
 	public String getPjtName() {

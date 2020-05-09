@@ -18,10 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +35,7 @@ import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
 
 @Controller
+@RequestMapping("/portfolio")
 public class ProjectController {
 	
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -50,7 +53,7 @@ public class ProjectController {
 	@Autowired
 	PjtFileService pjtFileService;
 	
-	@RequestMapping(value="portfoilo/upload.spring",method=RequestMethod.POST)
+	@RequestMapping(value="/upload.spring",method=RequestMethod.POST)
 	public ModelAndView doUpload(MultipartHttpServletRequest mReg, ModelAndView model) throws IllegalStateException, IOException {
 			LOG.debug("doUpload 확인");
 			ProjectVO inVO=new ProjectVO();
@@ -139,7 +142,7 @@ public class ProjectController {
 			}	
 	
 	
-	@RequestMapping(value="/portfolio/do_retrieve.spring"
+	@RequestMapping(value="/do_retrieve.spring"
 					,method=RequestMethod.GET
 					,produces ="application/json; charset=UTF-8")
 	public String doRetrieve(HttpServletRequest req, ProjectVO search, Model model) {
@@ -196,7 +199,7 @@ public class ProjectController {
 		return "portfolio/index";
 	}
 	
-	@RequestMapping(value="/portfolio/recommend.spring", method=RequestMethod.GET
+	@RequestMapping(value="/recommend.spring", method=RequestMethod.GET
 							,produces ="application/json; charset=UTF-8")
 	public String scrappingMethod(HttpServletRequest req,Model model) {
 		LOG.debug("==================================");
@@ -243,4 +246,18 @@ public class ProjectController {
 	}
 
 	
-}
+	@RequestMapping(value="/do_insert.spring")
+	public String do_insert( ProjectVO projectVO) {
+		
+		List<ProjectVO> list = projectVO.getProjectList();
+		
+		for(int i=0; i<list.size(); i++) {
+			System.out.println("1111 : " + list.get(i).getPjtName());
+			
+		}
+		
+		
+			return "/portfolio/index";
+		}
+		
+	}
