@@ -78,7 +78,7 @@ public class ProjectController {
 					
 					MultipartFile mFile = mReg.getFile(upFileNm);
 					String orgFileName = mFile.getOriginalFilename();
-					//File 입력이 않된 경우 
+					//File 입력이 안된 경우 
 					if(null == orgFileName || "".equals(orgFileName) )continue;
 					
 					LOG.debug("=^^^^^^=");

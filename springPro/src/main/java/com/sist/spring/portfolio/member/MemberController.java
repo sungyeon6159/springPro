@@ -1,10 +1,17 @@
 package com.sist.spring.portfolio.member;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +80,7 @@ public class MemberController {
 		}
 		LOG.debug("1.3===================");
 		
+		
 		model.addAttribute("list", list);
 		model.addAttribute("fileList", fileList);
 		
@@ -90,6 +98,73 @@ public class MemberController {
 		return "portfolio/member/member_list";
 	}
 
+	@RequestMapping(value="portfolio/doLogin.spring",method = RequestMethod.POST)
+	public String doLogin(HttpServletRequest req, Model model) {
+		LOG.debug("=======================================");
+		LOG.debug("=doLogin/param");
+		LOG.debug("=doLogin/memberId:"+req.getParameter("memberId"));
+		LOG.debug("=doLogin/password:"+req.getParameter("password"));
+		LOG.debug("=======================================");
+		
+		MemberVO inVO=new MemberVO();
+		inVO.setMemberId(req.getParameter("memberId"));
+		inVO.setPassword(req.getParameter("password"));
+		
+		MemberVO outVO=(MemberVO)this.memberService.doLogin(inVO);
+		if(outVO.getMemberId()==null || "".equals(outVO.getMemberId())) {
+			model.addAttribute("loginFailure","아이디와 비밀번호를 확인해주세요.");
+			return "portfolio/member/login";
+		}else {
+			HttpSession session=req.getSession();
+			
+			StringBuilder out=new StringBuilder();
+			List<String> companyList=new ArrayList<String>();
+			List<String> recommendList=new ArrayList<String>();
+			String url = "http://www.jobkorea.co.kr/Search/?stext="+outVO.getInterestOption();    //크롤링할 url지정
+	        Document doc = null;        //Document에는 페이지의 전체 소스가 저장된다
+	 
+	    try {
+	 
+	            doc = Jsoup.connect(url).get();//해당 페이지안에 있는 전체 소스
+	 
+	        } catch (IOException e) {
+	 
+	            e.printStackTrace();
+	 
+	        }
+	    
+	        //select를 이용하여 원하는 태그를 선택한다. select는 원하는 값을 가져오기 위한 중요한 기능이다.
+	        //                               ==>원하는 값들이 들어있는 덩어리를 가져온다
+	    Elements element = doc.select("div.post-list-info"); 
+	    Elements element2 = doc.select("div.post-list-corp"); 
+	      
+	 
+	        System.out.println("============================================================");
+	 
+	        //Iterator을 사용하여 하나씩 값 가져오기
+	        //덩어리안에서 필요한부분만 선택하여 가져올 수 있다.
+	        Iterator<Element> ie1 = element.select("a.title").iterator();
+	        Iterator<Element> ie2 = element2.select("a:href").iterator();
+	        
+	        while (ie1.hasNext()) {
+	            System.out.println(ie1.next().text());
+	            out.append(ie1.next().text()+",");
+	            recommendList.add(ie1.next().text());
+	        }
+	        while (ie2.hasNext()) {
+	            System.out.println(ie2.next().text());
+	            companyList.add(ie2.next().text());
+	        }
+	 
+	        model.addAttribute("memberVO", outVO);
+			model.addAttribute("recommendList",recommendList);
+			model.addAttribute("companyList",companyList);
+	        session.setAttribute("memberId", outVO.getMemberId());
+			
+			return "portfolio/index";
+
+		}
+	}
 	
 	@RequestMapping(value = "member/do_update.do",method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")

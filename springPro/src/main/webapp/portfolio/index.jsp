@@ -14,9 +14,9 @@
   * Copyright (C) 2009 by KandJang  All right reserved.
   */
 --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
-<%@ page contentType="text/html; charset=utf-8" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
@@ -61,8 +61,8 @@
 	          <li class="nav-item"><a href="#Projects-section" class="nav-link"><span>Projects</span></a></li>
 	          <li class="nav-item"><a href="#Skills-section" class="nav-link"><span>Skills</span></a></li>
 	          <li class="nav-item"><a href="#License-section" class="nav-link"><span>License</span></a></li>
-	          <li class="nav-item"><a href="#" class="nav-link"><span>Recommends</span></a></li>
-	          <li class="nav-item"><a href="#" class="nav-link"><span>Others</span></a></li>
+	          <li class="nav-item"><a href="#Recommends-section" class="nav-link"><span>Recommends</span></a></li>
+	          <li class="nav-item"><a href="${hContext}/portfolio/do_retrieve.spring" class="nav-link"><span>Portfolio List</span></a></li>
 	        </ul>
 	      </div>
 	    </div>    
@@ -80,14 +80,15 @@
           <div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-center">
           	<div class="text text-center">
           		<span class="subheading">Hey! I am</span>
-		  				<h1>Bombom</h1>
-			  				<h2> 
-								  <span
-								     class="txt-rotate"
-								     data-period="1000"
-								     data-rotate='[  "Now,", "Let me", "introduce myself"  ]'></span>
-								</h2>
-							</div>
+		  			<h1>Bombom</h1>
+			  			<h2> 
+						  <span
+						     class="txt-rotate"
+						     data-period="1000"
+						     data-rotate='[  "Now,", "Let me", "introduce myself"  ]'>
+						  </span>
+						</h2>
+				</div>
             </div>
           </div>
         </div>
@@ -360,6 +361,46 @@
         </form>
      </section>  
     <!-- //License -->
+	<!-- Recommend -->
+	<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="Recommends-section">
+    	<div class="container-fluid px-md-5">
+    		<div class="row justify-content-center py-5 mt-5">
+          		<div class="col-md-12 heading-section text-center ftco-animate">
+           			 <h2 class="mb-4">Recommend</h2>
+           			 <div align="center">
+	           			 <table>
+	                        <tbody>
+	                        <tr>
+	                        	<td><br/></td>
+	                        </tr>
+	                        <c:choose>
+	                		<%-- data가 있는 경우 --%>
+	                		<c:when test="${recommendList.size()>0}">
+	                			<c:forEach var="i" begin="0" end="${recommendList.size()-1 }">
+		                		<tr>
+	                              <td><h5 class="text-primary" ><b>${companyList.get(i)}</b></h5></td>
+	                           </tr>
+
+		                		<tr>
+	                              <td><h6 class="text-primary" ><b>${recommendList.get(i)}</b></h5></td>
+	                           </tr>
+	                         
+		                	    </c:forEach>
+	                		</c:when>
+	                		<%-- data가 없는 경우 --%>
+	                		<c:otherwise>
+	                			<tr>
+	                				<td colspan="99">등록된 게시글이 없습니다</td>
+	                			</tr>
+	                		</c:otherwise>
+	                	</c:choose>
+	                        </tbody>
+	                     </table>
+           			 </div>
+           		</div>
+           	</div>
+        </div>
+    </section>
 	
 <!--     <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
     	<div class="container">

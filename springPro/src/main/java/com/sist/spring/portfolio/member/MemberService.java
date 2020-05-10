@@ -15,6 +15,11 @@ public class MemberService implements Service {
 	
 	public MemberService() {
 	}
+	
+	public DTO doLogin(DTO dto) {
+		return this.memberDao.doLogin(dto);
+	}
+	
 	@Override
 	public int doInsert(DTO dto) {
 		return this.memberDao.doInsert(dto);
@@ -35,6 +40,7 @@ public class MemberService implements Service {
 	public int doDelete(DTO dto) {
 		return this.memberDao.doDelete(dto);
 	}
+	
 
 	@Override
 	public List<?> doRetrieve(DTO dto) {

@@ -54,6 +54,40 @@ public class MemberDao implements Dao {
 	
 	public MemberDao() {}
 	
+	public DTO doLogin(DTO dto) {
+		MemberVO inVO=(MemberVO)dto;
+		StringBuilder sb=new StringBuilder();
+		
+		sb.append("SELECT                \n");
+		sb.append("    member_id,        \n");
+		sb.append("    password,         \n");
+		sb.append("    name,             \n");
+		sb.append("    email,            \n");
+		sb.append("    birth,            \n");
+		sb.append("    phone,            \n");
+		sb.append("    authority,        \n");
+		sb.append("    interestoption,   \n");
+		sb.append("    open,              \n");
+		sb.append("    1 rnum,            \n");
+		sb.append("    1 total_cnt        \n");
+		sb.append("FROM                  \n");
+		sb.append("    member            \n");
+		sb.append("WHERE                 \n");
+		sb.append("    member_id=?       \n");
+		sb.append("	AND password=?		\n");	
+		Object[]args= {inVO.getMemberId(),
+						inVO.getPassword()};
+		
+		MemberVO outVO = this.jdbcTemplate.queryForObject(sb.toString()
+				,args
+				,rowMapper); 
+		LOG.debug("=outVO=\n"+outVO);
+		LOG.debug("==============================");
+		
+		return outVO;
+		
+	}
+	
 	@Override
 	public int doInsert(DTO dto) {
 		int flag = 0;
