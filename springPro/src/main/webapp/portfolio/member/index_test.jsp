@@ -1037,10 +1037,7 @@
 		    		<form action="${hContext}/comment/do_retrieve.spring" name="commentfrm" method="get" class="form-inline">
 		    			<!-- pageNum -->
 		    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-		    			<div class="form-group">
-		    				<input type="text"  class="form-control input-sm"  
-		    				id="searchWord" value="${param.searchWord }" name="searchWord" placeholder="검색어">
-		    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+		    			<div align="right">
 		    				<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
 		    			</div>
 		    		</form>
@@ -1054,14 +1051,11 @@
                     <tr>
                         <td>
                             <textarea style="width: 1100px" rows="3" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
-                            <input type="hidden" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디" value="sohyun1234" />
-                            <input type="hidden" maxlength="20" class="form-control input-sm" id="regId" name="regId" placeholder="아이디" value="mjkim" />
+                            <input type="hidden" maxlength="20" class="form-control input-sm" id="portfolioId" name="portfolioId" placeholder="아이디" value="sohyun1234" />
+                            <input type="hidden" maxlength="20" class="form-control input-sm" id="regId" name="regId" placeholder="아이디" value="rainisy" />
+                            
                             <div align="right">
                             	<button type="button" class="btn pull-right btn-success" id="doInsert" >등록</button>
-                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" >수정</button>
-	                            <input type="radio"  id="cOpen" name="cOpen" value="1" checked="checked">비밀댓글
-	                			
-	                			
                             </div>
                         </td>
                     </tr>
@@ -1077,7 +1071,7 @@
  				<!-- Data있는 경우 -->
  				<c:choose>
  					<c:when test="${list.size()>0 }">
- 						<c:forEach var="vo" items="${list }">
+					<c:forEach var="vo" items="${list }">
    					<tr>
    						<td>
    							<div align="left">
@@ -1086,6 +1080,13 @@
    							<label style="width: 1100px" rows="3" cols="30">${vo.cContent }</label>
                             <div align="right">
                             	<label>${vo.regDt }</label>
+                           	</div>
+                            <div align="right">
+                            	<c:if test="${vo.regId =='rainisy'}">
+	                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" onclick="javascript:commentUpdate();" >수정</button>
+	                            	<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
+									<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />
+                            	</c:if>
                             </div>
                         </td>
    					</tr>
@@ -1108,16 +1109,20 @@
 	    <script src="${hContext}/resources/js/jquery.bootpag.min.js"></script>
 	    
 <script type="text/javascript">
+
+
 //등록
 $("#doInsert").on("click", function() {
 	//console.log("#doUpdate");
 	//값  Null check
 	if($("#cContent").val() == "" || $("#cContent").val() == false){
 		alert("내용을 입력 하세요.");
-		$("#c_content").focus();
+		$("#cContent").focus();
 		return;
 	}
 
+	console.log("#regId:" + $("#regId").val(), "#cContent:" + $("#cContent").val()  );
+	
 	//confirm
 	if(confirm("댓글을 등록 하시겠습니까?")==false)return;
 
@@ -1132,9 +1137,7 @@ $("#doInsert").on("click", function() {
 	   data:{
 		   "cContent": $("#cContent").val(),
 		   "regId": $("#regId").val(),
-		   "memberId": $("#memberId").val(),
-		   //"cOpen" : $("#cOpen"). val()
-		   "cOpen" : $("input:radio[name='cOpen']:checked"). val()
+		   "portfolioId": $("#portfolioId").val()
 	   },
 	   success:function(data){ //성공
 	      console.log("data:"+data);
@@ -1158,6 +1161,118 @@ $("#doInsert").on("click", function() {
 	});//--ajax
 	
 }); 
+
+
+function commentUpdate(cNo, cContent){
+    var a ='';
+    
+    a += '<div class="input-group">';
+    a += '<input type="text" class="form-control" name="cContent" value="cContent"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc();">수정</button> </span>';
+    a += '</div>';
+    
+    $('cContent').html(a);
+    
+}
+
+
+
+
+//수정
+$("#doUpdate").on("click", function() {
+	//console.log("#doUpdate");
+	//값  Null check
+	if($("#cContent").val() == "" || $("#cContent").val() == false){
+		alert("내용을 입력 하세요.");
+		$("#c_content").focus();
+		return;
+	}
+
+	//confirm
+	if(confirm("댓글을 수정 하시겠습니까?")==false)return;
+
+	// name이 같은 체크박스의 값들을 배열에 담는다.
+   
+	
+	//ajax
+	$.ajax({
+	   type:"POST",
+	   url:"${hContext}/comment/do_update.spring",
+	   dataType:"html",
+	   data:{
+		   "cContent": $("#cContent").val(),
+		   "regDate": $("#regDate").val()
+	   },
+	   success:function(data){ //성공
+	      console.log("data:"+data);
+	      var parseData = $.parseJSON(data);
+	      if(parseData.msgId == "1"){
+			 alert(parseData.msgMsg);
+			 alert('댓글이 수정되었습니다.')
+			 doRetrieve();
+		  }else{
+			 alert(parseData.msgMsg);
+		  }
+	      
+	   },
+	   error:function(xhr,status,error){
+	      alert("error:"+error);
+	   },
+	   complete:function(data){
+	   
+	   }   
+	   
+	});//--ajax
+	
+}); 
+
+
+//삭제
+$("#doDelete").on("click", function() {
+	//console.log("#doDelete");
+
+	//u_id null check
+	console.log("#cNo:" + $("#cNo").val()  );
+	if ($("#cNo").val() == "" || $("#cNo").val() == false) {
+		alert("삭제 데이터를 선택 하세요.");
+		return;
+	} 
+
+	//confirm
+	if (confirm("삭제 하시겠습니까?") == false)
+		return;
+
+	//ajax
+	$.ajax({
+		type : "POST",
+		url : "${hContext}/comment/do_delete.spring",
+		dataType : "html",
+		data : {
+			"cNo" : $("#cNo").val()
+		},
+		success : function(data) { //성공
+			console.log("data:" + data);
+			//{"msgId":"1","msgMsg":"j_hr0000002님이 삭제 되었습니다.","num":0,"totalCnt":0}   
+			var parseData = $.parseJSON(data);
+			if (parseData.msgId == "1") {
+				alert(parseData.msgMsg);
+				doRetrieve();
+			} else {
+				alert(parseData.msgMsg);
+			}
+
+		},
+		error : function(xhr, status, error) {
+			alert("error:" + error);
+		},
+		complete : function(data) {
+
+		}
+
+	});//--ajax 
+
+});
+
 
 
    function doRetrieve(){

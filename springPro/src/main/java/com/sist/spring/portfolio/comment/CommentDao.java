@@ -32,13 +32,12 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		@Override
 		public CommentVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CommentVO outData = new CommentVO();
-			outData.setcNo(rs.getString("c_No"));
+			outData.setcNo(rs.getInt("c_No"));
 			outData.setcContent(rs.getString("c_Cont"));
-			outData.setcOpen(rs.getInt("c_Open"));
 			outData.setRegDt(rs.getString("reg_Dt"));
 			outData.setModDt(rs.getString("mod_Dt"));
 			outData.setRegId(rs.getString("reg_Id"));
-			outData.setMemberId(rs.getString("member_Id"));
+			outData.setPortfolioId(rs.getString("portfolio_Id"));
 			
 			return outData;
 		}
@@ -52,15 +51,13 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("INSERT INTO Comments( 			 \n");
 		sb.append("		     c_no,    				 \n");
 		sb.append("		     c_cont,  				   \n");
-		sb.append("		     c_open,    			   \n");
 		sb.append("		     reg_dt,    			 \n");
 		sb.append("		     mod_dt,    			 \n");
 		sb.append("		     reg_id,    			 \n");
-		sb.append("		     member_id   			  \n");
+		sb.append("		     portfolio_id   			  \n");
 		sb.append(")VALUES(             			 \n");
 		sb.append("		     COMMENTS_SEQ.nextval,          \n");
 		sb.append("		     ?,        						  \n");
-		sb.append("		     ?,         						 \n");
 		sb.append("		     TO_CHAR(SYSDATE, 'YYYY-MM-DD'),          \n");
 		sb.append("		     TO_CHAR(SYSDATE, 'YYYY-MM-DD'),          \n");
 		sb.append("		     ?,         								 \n");
@@ -75,9 +72,8 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		Object[] args = {
 							
 							inVO.getcContent(),
-							inVO.getcOpen(),
 							inVO.getRegId(),
-							inVO.getMemberId()
+							inVO.getPortfolioId()
 						};
 		flag = this.jdbcTemplate.update(sb.toString(),args);
 		LOG.debug("flag = "+flag);
@@ -94,8 +90,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		sb.append("UPDATE COMMENTS       ");
 		sb.append("SET                  ");
-		sb.append("    mod_dt = ?    ");
-		sb.append("    ,c_open = ?");
+		sb.append("    mod_dt =  TO_CHAR(SYSDATE, 'YYYY-MM-DD')    ");
 		sb.append("    ,c_cont = ?   ");
 		
 		sb.append("WHERE                ");
@@ -105,9 +100,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		LOG.debug("=Param= "+inVO.toString());
 		
 		
-		Object[] args= {inVO.getModDt()
-						,inVO.getcOpen()
-						,inVO.getcContent()
+		Object[] args= {inVO.getcContent()
 						,inVO.getcNo()
 						
 					};
@@ -128,20 +121,19 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("SELECT               ");
 		sb.append("		     c_no,      \n");
 		sb.append("		     c_cont,     \n");
-		sb.append("		     c_open,       \n");
 		sb.append("		     reg_dt,     \n");
 		sb.append("		     mod_dt,     \n");
 		sb.append("		     reg_id,     \n");
-		sb.append("		     member_id     \n");
+		sb.append("		     portfolio_Id     \n");
 		sb.append("FROM                 ");
 		sb.append("    Comments          ");
 		sb.append("WHERE                ");
-		sb.append("    member_id=?          ");
+		sb.append("    portfolio_Id=?          ");
 		sb.append("AND 	reg_id=?          ");
 		
 		
 		Object args[] = {
-						  inVO.getMemberId(),
+						  inVO.getPortfolioId(),
 						  inVO.getRegId()
 						};
 		
@@ -191,18 +183,17 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("FROM(                                                           \n");
 		sb.append("    SELECT  B.c_no 	C_NO,                                        \n");
 		sb.append("            B.c_cont C_CONT,                                    \n");
-		sb.append("            B.c_open C_OPEN,                                    \n");
 		sb.append("            B.reg_dt REG_DT,                          	       \n");
 		sb.append("            B.mod_dt MOD_DT,       							   \n");
 		sb.append("		       B.reg_id REG_ID,    									\n");
-		sb.append("            B.member_id MEMBER_ID                              \n");
+		sb.append("            B.portfolio_Id PORTFOLIO_ID                          \n");
 		sb.append("    FROM(                                                       \n");
 		sb.append("        SELECT ROWNUM rnum,                                     \n");
 		sb.append("               A.*                                              \n");
 		sb.append("        FROM (                                                  \n");
 		sb.append("            SELECT *                                            \n");
 		sb.append("            FROM Comments                                       \n");
-		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
+		sb.append("		   WHERE portfolio_Id like '%' || ? ||'%'  				   \n");
 		sb.append("        )A --10                                                 \n");
 		//sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
 		sb.append("        WHERE ROWNUM <= (?*(?-1)+?) 							   \n");
@@ -213,7 +204,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("    (                                                           \n");
 		sb.append("    SELECT count(*) total_cnt                                   \n");
 		sb.append("    FROM Comments                                               \n");
-		sb.append("		   WHERE member_id like '%' || ? ||'%'  				   \n");
+		sb.append("		   WHERE portfolio_Id like '%' || ? ||'%'  				   \n");
 		sb.append("    )T2                                                         \n");
 		
 		//param 
