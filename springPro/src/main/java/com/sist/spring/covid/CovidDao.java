@@ -169,23 +169,24 @@ public class CovidDao implements Dao {
 		RxJoinVO inVO = (RxJoinVO) dto;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT t1.member_id,					  \n");
-		sb.append("       t1.p_code,                      \n");
-		sb.append("       t1.p_name,                      \n");
-		sb.append("       t1.p_addr,                      \n");
-		sb.append("       t1.p_lng,                       \n");
-		sb.append("       t1.p_lat,                       \n");
-		sb.append("       t2.email                        \n");
-		sb.append("FROM pharmacy t1, COVID_USER t2        \n");
-		sb.append("WHERE t1.member_id = t2.member_id      \n");
-		sb.append("AND t1.member_id = ?                   \n");
+		sb.append("SELECT t1.member_id,					\n");
+		sb.append("       t1.p_code,                    \n");
+		sb.append("       t1.p_name,                    \n");
+		sb.append("       t1.p_addr,                    \n");
+		sb.append("       t1.p_lng,                     \n");
+		sb.append("       t1.p_lat,                     \n");
+		sb.append("       t2.email                      \n");
+		sb.append("FROM pharmacy t1, COVID_USER t2      \n");
+		sb.append("WHERE t1.member_id = t2.member_id    \n");
+		sb.append("AND t1.member_id = ?                 \n");
+		sb.append("AND t1.p_code = ?                    \n");
 		
 		LOG.debug("=====================");
 		LOG.debug("Query:" + sb.toString());
 		LOG.debug("Param:" + inVO.toString());
 		LOG.debug("=====================");
 		
-		Object[] args = {inVO.getMemberId()};
+		Object[] args = {inVO.getMemberId(),inVO.getpCode()};
 		
 		outVO = this.jdbcTemplate.queryForObject(sb.toString(), args, rowMapper);
 		
@@ -231,8 +232,24 @@ public class CovidDao implements Dao {
 	
 	@Override
 	public int doDelete(DTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int flag = 0;
+		CovidParmVO inVO = (CovidParmVO) dto;
+		StringBuilder sb = new StringBuilder();
+		sb.append("DELETE FROM pharmacy					\n");
+		sb.append("WHERE member_id = ?                  \n");
+		sb.append("AND p_code = ?                       \n");
+		
+		LOG.debug("=====================");
+		LOG.debug("Query:" + sb.toString());
+		LOG.debug("Param:" + inVO.toString());
+		LOG.debug("=====================");
+		
+		Object[] args = {inVO.getMemberId(),
+						inVO.getpCode()
+		};
+		flag = jdbcTemplate.update(sb.toString(), args);
+		
+		return flag;
 	}
 
 }
