@@ -58,10 +58,10 @@ public class CommentController {
 	LOG.debug("1.2===================");
 	//성공
 	if(flag == 1) {
-		message.setMsgMsg(user.getcNo()+"번이 삭제 되었습니다.");
+		message.setMsgMsg("삭제 되었습니다.");
 	//실패
 	}else {
-		message.setMsgMsg(user.getcNo()+"번 삭제 실패.");
+		message.setMsgMsg("삭제 실패.");
 	}
 	
 	//JSON

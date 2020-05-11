@@ -1079,11 +1079,11 @@
                             </div>
    							<label style="width: 1100px" rows="3" cols="30">${vo.cContent }</label>
                             <div align="right">
-                            	<label>${vo.regDt }</label>
+                            	<label>${vo.regDt}</label>
                            	</div>
                             <div align="right">
                             	<c:if test="${vo.regId =='rainisy'}">
-	                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" onclick="javascript:commentUpdate();" >수정</button>
+	                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" OnClick="change($(this).parent().parent().parent().parent());" >수정</button>
 	                            	<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
 									<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />
                             	</c:if>
@@ -1163,23 +1163,70 @@ $("#doInsert").on("click", function() {
 }); 
 
 
-function commentUpdate(cNo, cContent){
-    var a ='';
+function change(param){//수정버튼클릭시 텍스트필드로변환
+    var removeTd01 = $("#cContent").val()
+    var removeTd02 =param.children().eq(2);
+    removeTd01.remove();
+    removeTd02.remove();
     
-    a += '<div class="input-group">';
-    a += '<input type="text" class="form-control" name="cContent" value="cContent"/>';
-    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc();">수정</button> </span>';
-    a += '</div>';
+    param.append("<td><textarea style='width: 1100px' rows='3' name='message' id='message' placeholder='Message' value = ''></textarea></td><td><div align='right'><button class='btn pull-right btn-success' OnClick='mod1($(this).parent().parent().parent().parent());' id='modcom'>수정완료</button><button class='noUpdate' id='noUpdate'>수정취소</button></div></td>");	
     
-    $('cContent').html(a);
-    
+
 }
 
+$(document).on("click",".noUpdate",function(){//수정취소버튼
+	
+	event.preventDefault();
+	doRetrieve();
+}); 
+
+/* $("#noUpdate").on("click", function() {
+	event.preventDefault();
+	doRetrieve();
+});
+ */
 
 
 
+ $(document).on("click",".modcom",function(){//댓글수정완료버튼
+     //seq
+    
+     event.preventDefault();
+     var cNo1 = ($(this).parent().parent().parent().parent()).children().eq(4).text();
+     var regId1 = ($(this).parent().parent().parent().parent()).children().eq(1).text();
+     var regDt1 = ($(this).parent().parent().parent().parent()).children().eq(2).text();
+     var cContent1 = $("#message").val();
+    
+     //ajax
+     
+     $.ajax({
+       type:"POST",
+       url:"/MAL_A/roxandrea/comments.do",
+       dataType:"html",
+       data:{
+             "cNo":cNo1,
+             "regId":regId1,
+             "cContent":cContent1
+       },
+       success:function(data){ //성공
+    	   doRetrieve();
+         
+       },
+       error:function(xhr,status,error){
+        alert("error:"+error);
+       },
+       complete:function(data){
+       
+       }   
+     
+     });//--ajax   
+     
+ });  
+
+ 
+ 
 //수정
-$("#doUpdate").on("click", function() {
+/* $("#doUpdate").on("click", function() {
 	//console.log("#doUpdate");
 	//값  Null check
 	if($("#cContent").val() == "" || $("#cContent").val() == false){
@@ -1224,7 +1271,7 @@ $("#doUpdate").on("click", function() {
 	   
 	});//--ajax
 	
-}); 
+});  */
 
 
 //삭제
