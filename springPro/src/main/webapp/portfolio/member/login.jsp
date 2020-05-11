@@ -61,17 +61,6 @@
 	      </div>
 	    </div>
 	  </nav>
-	 <%--  <div class="overlay"></div>
-      <div class="container center">
-      <br/><br/><br/><br/>
-      	<form action="${hContext}/portfolio/doLogin.spring" method="post">
-	      <label for="memberId"> 아이디: </label>
-	      	<input type="text" name="memberId"><br>
-	      <label for="password"> 비밀번호: </label>
-	      	<input type="password" name="password">
-	      <input type="submit" value="로그인">
-     	</form>
-      </div> --%>
     
 	<section class="hero-wrap js-fullheight">
       <div class="overlay"></div>

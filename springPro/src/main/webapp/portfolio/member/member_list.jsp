@@ -24,98 +24,99 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>회원관리</title>
-    
-	<link rel="shortcut icon" type="image/x-icon" href="${hContext}/resources/img/main/favicon.ico">
-    <!-- 부트스트랩 -->  
-    <link href="${hContext}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <title>Bombom</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/animate.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/owl.carousel.min.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/owl.theme.default.min.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/magnific-popup.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/aos.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/ionicons.min.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/flaticon.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/icomoon.css">
+  <link rel="stylesheet" type="text/css" href="${hContext}/resources/css/style.css">
+</head>
 
-    <!-- IE8 에서 HTML5 요소와 미디어 쿼리를 위한 HTML5 shim 와 Respond.js -->
-    <!-- WARNING: Respond.js 는 당신이 file:// 을 통해 페이지를 볼 때는 동작하지 않습니다. -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.jsp"><span>B</span>ombom</a>
+	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+         <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav nav ml-auto">
+	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
+	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
+	          <li class="nav-item"><a href="#License-section" class="nav-link"><span>License</span></a></li>
+	          <li class="nav-item"><a href="#Skills-section" class="nav-link"><span>Skills</span></a></li>
+	          <li class="nav-item"><a href="#Projects-section" class="nav-link"><span>Projects</span></a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+	  
+	  <br/><br/><br/>
+	  
   	<!-- div container -->
   	<div class="container">
   	    <!-- div title -->
   	    <div class="page-header">
-  	    	<h1>회원관리</h1>
+  	    	<h1>Portfolio List</h1>
   	    </div>
-  	    <!--// div title -->
-  	    <!-- 검색영역 -->
-    	<div class="row">
-    		<div class="col-md-12 text-right">
-	    		<form action="${hContext}/member/do_retrieve.do" name="member_frm" method="get" class="form-inline">
-	    			<!-- pageNum -->
-	    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-	    			<div class="form-group">
-	    				<select name="pageSize" id="pageSize" class="form-control input-sm">
-	    					<option value="10"
-	    						<c:if test="${param.pageSize =='10' }"> selected ="selected"</c:if> >10
-	    					</option>
-	    					<option value="20" 
-	    						<c:if test="${param.pageSize =='20' }"> selected ="selected"</c:if> >20
-	    					</option>
-	    					<option value="50" 
-	    						<c:if test="${param.pageSize =='50' }"> selected ="selected"</c:if> >50
-	    					</option>
-	    					<option value="100" 
-	    						<c:if test="${param.pageSize =='100' }"> selected ="selected"</c:if> >100
-	    					</option>
-	    				</select>
-	    				<select name="searchDiv" id="searchDiv" class="form-control input-sm">
-	    					<option value="">전체</option>
-	    					<option value="10"
-	    						<c:if test="${param.searchDiv == '10' }"> selected ="selected"</c:if> >ID
-	    					</option>
-	    					<option value="20"
-	    						<c:if test="${param.searchDiv == '20' }"> selected ="selected"</c:if> >이름
-	    					</option>
-	    				</select>
-	    				<input type="text"  class="form-control input-sm"  
-	    				id="searchWord" value="${param.searchWord }" name="searchWord" placeholder="검색어">
-	    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
-	    				<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
-	    				<button type="button" class="btn btn-primary btn-sm">등록</button> 				
-	    			</div>
-	    		</form>
-    		</div>
-    	</div>
-    	<!--// 검색영역 -->
     	<form action="${hContext}/portfolio/do_select_one.spring" id="selectOne_frm" name="selectOne_frm" method="post">
     		<input type="hidden" name="hiddenId" id="hiddenId">
     	</form>
     	<!-- Grid영역 -->
     	<div class="table-responsive">
-    		<table class="table table-striped table-bordered" id="memberTable">
+    		<table class="table table-hover" id="memberTable">
     		    <!-- hidden-sm hidden-xs 숨기기 -->
     			<thead class="bg-primary">
-	    				<th>사진</th>
-	    				<th>ID</th>
-	    				<th>이름</th>
-	    				<th>생년월일</th>
-	    				<th>이메일</th>
-	    				<th>핸드폰번호</th>
     			</thead>
     			<tbody>
     				<!-- Data있는 경우 -->
     				<c:choose>
     					<c:when test="${list.size()>0 }">
     						<c:forEach var="i" begin="0" end="${list.size()-1}">
-		    					<tr>
-			    					<td class="text-center"><img src="../resources/images/${fileList.get(i).saveNm}.${fileList.get(i).ext}" width="100" height="100" /></td>
-			    					<td class="text-left">${list.get(i).memberId}</td>
-			    					<td class="text-left">${list.get(i).name }</td>
-			    					<td class="text-left hidden-sm hidden-xs">${list.get(i).birth }</td>
-			    					<td class="text-left hidden-sm hidden-xs">${list.get(i).email }</td>
-			    					<td class="text-center hidden-sm hidden-xs">${list.get(i).phone }</td>
+    							<tr>
+			    					<td class="text-center"><img src="../resources/images/${fileList.get(i).saveNm}.${fileList.get(i).ext}" width="180" height="200" /></td>
+			    					<td class="text-left" style="display:none;">${list.get(i).memberId}</td>
+			    					<td class="text-left col-sm-12">
+			    					<table>
+			    						<tr>
+			    							<td>
+			    								<h6 class="mb-4"><b>Name</b></h6>
+			    							</td>
+			    							<td>
+			    								<span>${list.get(i).name }</span>
+			    							</td>
+			    							<td>
+			    								<h6><b>Birth</h5>
+			    							</td>
+			    							<td>
+			    								${list.get(i).birth }
+			    							</td>
+			    						</tr>
+			    						<tr>
+			    							<td>
+			    								<h6><b>Email</b></h6>
+			    							</td>
+			    							<td>
+			    								${list.get(i).email }
+			    							</td>
+			    							<td>
+			    								<h6><b>Phone</b></h6>
+			    							</td>
+			    							<td>
+			    								${list.get(i).phone }
+			    							</td>
+			    						</tr>
+			    					
+			    					</table>
+			    					</td>
 		    					</tr>
 	    					</c:forEach>
     					</c:when>
@@ -127,353 +128,106 @@
     		</table>
     	</div>
     	<!--// Grid영역 -->    	
-      <!-- pagenation -->
-           <div id="content">Dynamic Content goes here</div>
-    		<div id="page-selection" class="text-center">Pagination goes here</div>
-      <!--// pagenation -->    	
     </div>
     <!--// div container -->
     
-    <!-- 입력 form -->
-    <div class="container">
-        <div class="col-lg-12"></div>
-        <div class="col-lg-12"></div>
-        <div class="panel panel-default"></div>
-        
-        <!-- Button Area -->
-        <div class="row">
-            <div class="col-lg-10 col-sm-10 col-xs-10">
-                <div class="text-right">
-                    <button type="button" class="btn btn-default btn-sm" id="doInit" >초기화</button>
-                	<button type="button" class="btn btn-default btn-sm" id="doInsert" >등록</button>
-                	<button type="button" class="btn btn-default btn-sm" id="doUpdate" >수정</button>
-                	<button type="button" class="btn btn-default btn-sm" id="doDelete" >삭제</button>
-                </div>
+    
+    
+    <footer class="ftco-footer ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">About</h2>
+              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
             </div>
-        </div>    
-        <!--// Button Area -->
-        ${hContext}
-        <!-- 입력 From -->
-        <form action="${hContext}/member/do_update.do" name="member_edit" method="post" class="form-horizontal">
-        	<!-- 아이디 -->
-			<div class="form-group">
-				<label for="memberId" class="col-lg-4 col-sm-4 col-xs-4 control-label">ID</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" maxlength="20" class="form-control input-sm" id="memberId" name="memberId" placeholder="아이디" disabled="disabled"/>
-				</div>
-			</div>
-			<!--// 아이디 -->
-			<!-- 이름 -->
-			<div class="form-group">
-				<label for="name" class="col-lg-4 col-sm-4 col-xs-4 control-label">이름</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" maxlength="50" class="form-control input-sm" id="name" name="name" placeholder="이름" />
-				</div>
-			</div>
-			<!--// 이름 -->
-			<!-- 비번 -->
-			<div class="form-group">
-				<label for="password" class="col-lg-4 col-sm-4 col-xs-4 control-label">비밀번호</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="password" maxlength="50" class="form-control input-sm" id="password" name="password" placeholder="비밀번호" />
-				</div>
-			</div>
-			<!--// 비번 -->
-			<!-- 로그인 횟수-->
-			<div class="form-group">
-				<label for="phone" class="col-lg-4 col-sm-4 col-xs-4 control-label">폰번호</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="phone" name="phone" placeholder="폰번호" />
-				</div>
-			</div>
-			<!--// 로그인 횟수-->
-			<!-- 추천 횟수-->
-			<div class="form-group">
-				<label for="birth" class="col-lg-4 col-sm-4 col-xs-4 control-label">생년월일</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" numberOnly maxlength="7" class="form-control input-sm" id="birth" name="birth" placeholder="생년월일" />
-				</div>
-			</div>
-			<!--// 추천 횟수-->
-			<!-- 이메일-->
-			<div class="form-group">
-				<label for="email" class="col-lg-4 col-sm-4 col-xs-4 control-label">이메일</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" maxlength="350" class="form-control input-sm" id="email" name="email" placeholder="이메일" />
-				</div>
-			</div>
-			<!--// 이메일-->
-			<!-- 등록일-->
-			<div class="form-group">
-				<label for="authority" class="col-lg-4 col-sm-4 col-xs-4 control-label">권한</label>
-				<div class="col-lg-6 col-sm-6 col-xs-6">
-					<input type="text" maxlength="20" class="form-control input-sm" id="authority" name="authority" placeholder="권한" disabled="disabled"/>
-				</div>
-			</div>
-			<!--// 등록일-->
-			
-        </form>
-        <!--// 입력 From -->
-        
-        
-    </div>
-    <!--// 입력 form -->
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Home</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>About</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Services</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Projects</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Services</h2>
+              <ul class="list-unstyled">
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Web Design</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Web Development</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Business Strategy</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Data Analysis</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Graphic Design</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
     
-    
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <script src="${hContext}/resources/js/bootstrap.min.js"></script>
-    <!-- page -->
-    <script src="${hContext}/resources/js/jquery.bootpag.min.js"></script>
-    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="${hContext}/resources/js/jquery.min.js"></script>
+  <script src="${hContext}/resources/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="${hContext}/resources/js/popper.min.js"></script>
+  <script src="${hContext}/resources/js/bootstrap.min.js"></script>
+  <script src="${hContext}/resources/js/jquery.easing.1.3.js"></script>
+  <script src="${hContext}/resources/js/jquery.waypoints.min.js"></script>
+  <script src="${hContext}/resources/js/jquery.stellar.min.js"></script>
+  <script src="${hContext}/resources/js/owl.carousel.min.js"></script>
+  <script src="${hContext}/resources/js/jquery.magnific-popup.min.js"></script>
+  <script src="${hContext}/resources/js/aos.js"></script>
+  <script src="${hContext}/resources/js/jquery.animateNumber.min.js"></script>
+  <script src="${hContext}/resources/js/scrollax.min.js"></script>
+  <script src="${hContext}/resources/js/main.js"></script>
+
+
     <script type="text/javascript">
 		
-		// init bootpag
-	    $('#page-selection').bootpag({
-	        total: ${maxPageNo}, <!-- total pages -->
-	        page: $("#pageNum").val(),	 <!-- current pages -->
-	        maxVisible: 5,		 <!-- bottom pages -->
-	        leaps: true,		 
-	        firstLastUse: true,
-	        first: '←',
-	        last: '→',
-	        wrapClass: 'pagination',
-	        activeClass: 'active',
-	        disabledClass: 'disabled',
-	        nextClass: 'next',
-	        prevClass: 'prev',
-	        lastClass: 'last',
-	        firstClass: 'first'
-	    }).on("page", function(event, num){
-	        alert("Page " + num); // or some ajax content loading...
-	        doSelectPage(num);
-	    });
-
-		//등록
-		$("#doInsert").on("click", function(){
-			//console.log("#doUpdate");
-
-			//값  Null check
-			if($("#u_id").val() == "" || $("#u_id").val() == false){
-				alert("아아디를 입력 하세요.");
-				$("#u_id").focus();
-				return;
-			}
-
-			if($("#name").val() == "" || $("#name").val() == false){
-				alert("이름을 입력 하세요.");
-				$("#name").focus();
-				return;
-			}
-
-			if($("#passwd").val() == "" || $("#passwd").val() == false){
-				alert("비밀번호를 입력 하세요.");
-				$("#passwd").focus();
-				return;
-			}
-
-			if($("#login").val() == "" || $("#login").val() == false){
-				alert("로그인 횟수를 입력 하세요.");
-				$("#login").focus();
-				return;
-			}
-
-			if($("#recommend").val() == "" || $("#recommend").val() == false){
-				alert("추천 횟수를 입력 하세요.");
-				$("#recommend").focus();
-				return;
-			}
-			
-			//confirm
-			if(confirm("수정 하시겠습니까?")==false)return;
-			
-			//ajax
-			$.ajax({
-			   type:"POST",
-			   url:"${hContext}/member/add.do",
-			   dataType:"html",
-			   data:{
-				   "u_id": $("#u_id").val(),
-				   "name": $("#name").val(),
-				   "passwd": $("#passwd").val(),
-				   "login": $("#login").val(),
-				   "level": $("#level").val(),
-				   "recommend": $("#recommend").val(),
-				   "email": $("#email").val()
-			   },
-			   success:function(data){ //성공
-			      console.log("data:"+data);
-			      var parseData = $.parseJSON(data);
-			      if(parseData.msgId == "1"){
-					 alert(parseData.msgMsg);
-					 doRetrieve();
-				  }else{
-					 alert(parseData.msgMsg);
-				  }
-			      
-			   },
-			   error:function(xhr,status,error){
-			      alert("error:"+error);
-			   },
-			   complete:function(data){
-			   
-			   }   
-			   
-			});//--ajax
-			
-		});
-	
-		//초기화
-    	$("#doInit").on("click", function(){
-			console.log("doInit");
-			//contorll 초기화: ""
-			$("#u_id").val("");
-			$("#name").val("");
-			$("#passwd").val("");
-			$("#login").val("");
-			$("#level").val("BASIC");
-			$("#recommend").val("");
-			$("#email").val("");
-			
-			//버튼제어: 등록, 수정, 삭제(disable)
-			//enable 등록,$("#u_id")
-			//수정,삭제(disable)
-			$("#u_id").prop("disabled",false);
-			$("#doUpdate").prop("disabled",true);
-			$("#doDelete").prop("disabled",true);
-			$("#doInsert").prop("disabled",false);
-			
-			
-        });
-        	
 		//숫자만 입력:text numberOnly    
 	    $("input:text[numberOnly]").on("keyup", function() {
 	        $(this).val($(this).val().replace(/[^0-9]/g,""));
 	    });
 
-		//수정
-		$("#doUpdate").on("click",function(){
-			console.log("#doUpdate");
-
-			//값  Null check
-			if($("#u_id").val() == "" || $("#u_id").val() == false){
-				alert("삭제 데이터를 선택 하세요.");
-				$("#u_id").focus();
-				return;
-			}
-
-			if($("#name").val() == "" || $("#name").val() == false){
-				alert("이름을 입력 하세요.");
-				$("#name").focus();
-				return;
-			}
-
-			if($("#passwd").val() == "" || $("#passwd").val() == false){
-				alert("비밀번호를 입력 하세요.");
-				$("#passwd").focus();
-				return;
-			}
-
-			if($("#login").val() == "" || $("#login").val() == false){
-				alert("로그인 횟수를 입력 하세요.");
-				$("#login").focus();
-				return;
-			}
-
-			if($("#recommend").val() == "" || $("#recommend").val() == false){
-				alert("추천 횟수를 입력 하세요.");
-				$("#recommend").focus();
-				return;
-			}
-			
-			//confirm
-			if(confirm("수정 하시겠습니까?")==false)return;
-			
-			//ajax
-			$.ajax({
-			   type:"POST",
-			   url:"${hContext}/member/do_update.do",
-			   dataType:"html",
-			   data:{
-				   "u_id": $("#u_id").val(),
-				   "name": $("#name").val(),
-				   "passwd": $("#passwd").val(),
-				   "login": $("#login").val(),
-				   "level": $("#level").val(),
-				   "recommend": $("#recommend").val(),
-				   "email": $("#email").val()
-			   },
-			   success:function(data){ //성공
-			      console.log("data:"+data);
-			      var parseData = $.parseJSON(data);
-			      if(parseData.msgId == "1"){
-					 alert(parseData.msgMsg);
-					 doRetrieve();
-				  }else{
-					 alert(parseData.msgMsg);
-				  }
-			      
-			   },
-			   error:function(xhr,status,error){
-			      alert("error:"+error);
-			   },
-			   complete:function(data){
-			   
-			   }   
-			   
-			});//--ajax
-			
-		});
-    
-    	//삭제
-    	$("#doDelete").on("click", function(){
-			//console.log("#doDelete");
-
-			//u_id null chect
-			console.log("#u_id"+$("#u_id").val());
-			if($("#u_id").val() == "" || $("#u_id").val() == false){
-				alert("삭제 데이터를 선택 하세요.");
-				return;
-			}
-
-			//confirm
-			if(confirm("삭제 하시겠습니까?")==false)return;
-			
-			//ajax
-			$.ajax({
-			   type:"POST",
-			   url:"${hContext}/member/do_delete.do",
-			   dataType:"html", 
-			   data:{
-				   "u_id": $("#u_id").val()
-			   },
-			   success:function(data){ //성공
-			      console.log("data:"+data);
-			      var parseData = $.parseJSON(data);
-			      if(parseData.msgId == "1"){
-					 alert(parseData.msgMsg);
-					 doRetrieve();
-				  }else{
-					 alert(parseData.msgMsg);
-				  }
-			      
-			   },
-			   error:function(xhr,status,error){
-			      alert("error:"+error);
-			   },
-			   complete:function(data){
-			   
-			   }   
-			   
-			});//--ajax
-			
-        });
 		//그리드 click: ID값을 서버로 ajax 전송:/member/do_select_one.do
 		$("#memberTable>tbody").on("click","tr", function(){
 			console.log("#memberTable>tbody"+ $(this));
 			var tds = $(this).children();
-			//console.log("tds:"+ tds.text());
+			console.log("tds:"+ tds.text());
 			var memberId = tds.eq(1).text();
 			console.log("memberId:"+ memberId);
 
@@ -485,13 +239,6 @@
 			
 		});
 
-		function doSelectPage(pageNo){
-			var frm = document.member_frm;
-			frm.pageNum.value = pageNo;
-			frm.action = "${hContext}/member/do_retrieve.do";
-			frm.submit();
-		}
-    	
 		function doRetrieve(){
 			//console.log('doRetrieve');
 			var frm = document.member_frm;
