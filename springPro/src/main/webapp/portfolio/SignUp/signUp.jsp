@@ -75,6 +75,9 @@
 		<br/>
 		<br/>
 	</div>  
+	
+	<section class="hero-wrap js-fullheight">
+      <div class="overlay"></div>
 	<!-- Sign Up -->
 		<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="signup-section">
 			<div class="container-fluid px-md-5">
@@ -222,7 +225,7 @@
 				</div>
 			</div>
 		</section>
-
+	</section>
 
 
     <footer class="ftco-footer ftco-section">
