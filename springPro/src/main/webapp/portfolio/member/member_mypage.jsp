@@ -85,10 +85,15 @@
                 <div class="col-md-12 heading-section text-center ftco-animate">
                      <h2 class="mb-4">Add Skills</h2>
                      <div align="center">
-                        <form action="${hContext}/skill/do_insert.spring" name="skill_add" method="post">
+                        <form action="${hContext}/skill/do_insert.spring" name="skillInsertForm" id="skillInsertForm" method="post">
                         <!-- SkillController 할때 인서트 부분을 이렇게 하셨으면 좋겠는데 볼수있을까여 민지양이ㅋㅋ-->
-                        <table>
-                           <tbody>
+                        <table id="skillForm">
+                        <tbody>
+                        <tr>
+                           <td>
+                              <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="skillPlusInsert">
+                           </td>
+                        </tr>
                               <tr>
                            <td>
                               <p>Programming Language</p>
@@ -144,11 +149,17 @@
                            </td>
                            <td>
                               <p><textarea rows="10" cols="50" name="sContent" id="sContent"></textarea></p>
-                              <button type="button" onclick="" class="btn btn-primary btn-sm">Submit</button>
                            </td>
                         </tr>
-                           </tbody>
+                        </tbody>
                         </table>
+                        <table>
+                     		<tr>
+                        		<td colspan=2>
+                           			<button type="button" onclick="javascript:skillInsert();" class="btn btn-primary btn-sm">Submit</button>
+                        		</td>
+                     		</tr>
+                  		</table>
                         </form>
                      </div>
                  </div>
@@ -164,18 +175,22 @@
                    <div class="col-md-12 heading-section text-center ftco-animate">
                         <h2 class="mb-4">Add License</h2>
                         <div align="center">
-                     <form action="${hContext}/portfolio/do_insert_license.spring" name="license_add" method="post">
-                     <table>
-                           <tbody>
-                              <tr>
-                              
-                                 <td>
-                                  <input  type="text" class="form-control lName" name="lName" id="lName" placeholder="Qualification Name"   autofocus>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <label for="Qualification classification">Qualification classification</label>
+                     <form action="${hContext}/portfolio/do_insert_license.spring" name="licensePlusInsert" id="licensePlusInsert" method="post">
+                     <table id="licenseForm">
+                     <tr>
+                     	<td>
+                        <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="licensePlusInsert">
+                        </td>
+                     </tr>
+                        <tbody>
+                           <tr>
+                              <td>
+                               <input  type="text" class="form-control lName" name="lName" id="lName" placeholder="Qualification Name"   autofocus>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <label for="Qualification classification">Qualification classification</label>
                                   <select id="lGroup">
                                     <option value="국가기술자격">National Technical qualification</option>
                                     <option value="국가전문자격">National Professional qualification</option>
@@ -211,13 +226,15 @@
                                     <input type="text" class="form-control lOrgan" name="lOrgan" id="lOrgan" placeholder="Issuing Agency"  autofocus>
                                  </td>
                               </tr>
-                               <tr>
-                                 <td>
-                                 <button type="button" onclick="" class="btn btn-primary btn-sm">Submit</button>
-                           </td>
-                           </tr>
                               </tbody>
                               </table>
+                              <table>
+                     				<tr>
+                        				<td colspan=2>
+                           			<button type="button" onclick="javascript:licenseInsert();" class="btn btn-primary btn-sm">Submit</button>
+                        				</td>
+                     				</tr>
+                  			</table>
                           </form>
                   </div>
                </div>
@@ -280,7 +297,7 @@
                         <table id="pjtForm">
                         <tr>
                            <td>
-                              <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="plusInsert">
+                              <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="pjtPlusInsert">
                            </td>
                         </tr>
                         <tr>
@@ -331,7 +348,6 @@
                            <button type="button" onclick="javascript:pjtInsert();" class="btn btn-primary btn-sm">Submit</button>
                         </td>
                      </tr>
-                     
                   </table>
                      <input type="hidden" id="hiddenCnt">
                       </form>
@@ -431,40 +447,138 @@
 <script src="<c:url value="/resources/js/jquery.animateNumber.min.js"/>"></script>
 <script src="<c:url value="/resources/js/scrollax.min.js"/>"></script>
 <script src="<c:url value="/resources/js/main.js"/>"></script>
+   
+   
     <script type="text/javascript">
 
-     /* //ajax - skill
-       $.ajax({
-           type : "POST",
-           url : "${hContext}/skill/do_insert.spring",
-           dataType : "html",
-           data : {
-               "sName" : $("#sName").val(),
-               "memberId" : $("#memberId").val(),
-               "sMarstery" : $("#sMarstery").val(),
-               "sContent" : $("#sContent").val()
-           },
-           success : function(data) { //성공
-               console.log("data:" + data);
-               var parseData = $.parseJSON(data);
-               if (parseData.msgId == "1") {
-                   alert(parseData.msgMsg);
-               } else {
-                   alert(parseData.msgMsg);
-               }
-   
-           },
-           error : function(xhr, status, error) {
-               alert("error:" + error);
-           },
-           complete : function(data) {
-   
-           }
-   
-       });//--ajax-skill */
+       var skillCnt = 0;
+       $("#skillPlusInsert").on("click" , function(){
+		console.log('this is plus button');
+		var frm = document.uploadFrm;
+		var html = '';
+		skillCnt+=1;
+		console.log(skillCnt);
+
+		html+='<tr><td colspan="2"><hr/><br/></td></tr>                                                                                ';
+		html+='          <tr>                                                                                                          ';
+		html+='       <td>                                                                                                             ';
+		html+='          <p>Programming Language</p>                                                                                   ';
+		html+='       </td>                                                                                                            ';
+		html+='       <td>                                                                                                             ';
+		html+='          <!-- <input type="text" id="skillName" name="skillName"> -->                                                  ';
+		html+='          <select id="sName'+skillCnt+'" name="skillList['+cnt+'].sName">                                               ';
+		html+='             <option value="Java">Java</option>                                                                         ';
+		html+='             <option value="C">C</option>                                                                               ';
+		html+='             <option value="Python">Python</option>                                                                     ';
+		html+='             <option value="C++">C++</option>                                                                           ';
+		html+='             <option value="C#">C#</option>                                                                             ';
+		html+='             <option value="Visual Basic.NET">Visual Basic.NET</option>                                                 ';
+		html+='             <option value="JavaScript">JavaScript</option>                                                             ';
+		html+='             <option value="PHP">PHP</option>                                                                           ';
+		html+='             <option value="SQL">SQL</option>                                                                           ';
+		html+='             <option value="R">R</option>                                                                               ';
+		html+='             <option value="Swift">Swift</option>                                                                       ';
+		html+='             <option value="Go">Go</option>                                                                             ';
+		html+='             <option value="Ruby">Ruby</option>                                                                         ';
+		html+='             <option value="Assmbler">Assmbler</option>                                                                 ';
+		html+='             <option value="PL/SQL">PL/SQL</option>                                                                     ';
+		html+='             <option value="Perl">Perl</option>                                                                         ';
+		html+='             <option value="Objective-C">Objective-C</option>                                                           ';
+		html+='             <option value="MATLAB">MATLAB</option>                                                                     ';
+		html+='             <option value="Visual Basic">Visual Basic</option>                                                         ';
+		html+='             <option value="Scratch">Scratch</option>                                                                   ';
+		html+='          </select>                                                                                                     ';
+		html+='       </td>                                                                                                            ';
+		html+='    </tr>                                                                                                               ';
+		html+='    <tr>                                                                                                                ';
+		html+='       <td>                                                                                                             ';
+		html+='          <p>Mastership Level</p>                                                                                       ';
+		html+='       </td>                                                                                                            ';
+		html+='       <td>                                                                                                             ';
+		html+='          <select id="sMarstery'+skillCnt+'" name="skillList['+cnt+'].sMarstery">                                       ';
+		html+='             <option value="1">1</option>                                                                               ';
+		html+='             <option value="2">2</option>                                                                               ';
+		html+='             <option value="3">3</option>                                                                               ';
+		html+='             <option value="4">4</option>                                                                               ';
+		html+='             <option value="5">5</option>                                                                               ';
+		html+='             <option value="6">6</option>                                                                               ';
+		html+='             <option value="7">7</option>                                                                               ';
+		html+='             <option value="8">8</option>                                                                               ';
+		html+='             <option value="9">9</option>                                                                               ';
+		html+='             <option value="10">10</option>                                                                             ';
+		html+='          </select>                                                                                                     ';
+		html+='       </td>                                                                                                            ';
+		html+='    </tr>                                                                                                               ';
+		html+='    <tr>                                                                                                                ';
+		html+='       <td>                                                                                                             ';
+		html+='          <p>Activity content</p>                                                                                       ';
+		html+='       </td>                                                                                                            ';
+		html+='       <td>                                                                                                             ';
+		html+='          <p><textarea rows="10" cols="50" name="skillList['+cnt+'].sContent" id="sContent'+skillCnt+'"></textarea></p> ';
+		html+='       </td>                                                                                                            ';
+		html+='    </tr>                                                                                                               ';
+		$("#skillForm>tbody").append(html);
+
+           });
+
+       var licenseCnt = 0;
+       $("#licensePlusInsert").on("click" , function(){
+		console.log('this is plus button');
+		var frm = document.uploadFrm;
+		var html = '';
+		licenseCnt+=1;
+		console.log(licenseCnt);
+
+		html+='  <tr><td colspan="2"><hr/><br/></td></tr>                                                                                                      ';
+		html+='  <tr>                                                                                                                                          ';
+		html+='      <td>                                                                                                                                      ';
+		html+='       <input  type="text" class="form-control lName" name="lName" id="lName" placeholder="Qualification Name"   autofocus>                     ';
+		html+='      </td>                                                                                                                                     ';
+		html+='   </tr>                                                                                                                                        ';
+		html+='   <tr>                                                                                                                                         ';
+		html+='      <td>                                                                                                                                      ';
+		html+='         <label for="Qualification classification">Qualification classification</label>                                                         ';
+		html+='          <select id="lGroup">                                                                                                                  ';
+		html+='            <option value="국가기술자격">National Technical qualification</option>                                                                   ';
+		html+='            <option value="국가전문자격">National Professional qualification</option>                                                                ';
+		html+='            <option value="민간자격">Private qualification</option>                                                                                ';
+		html+='            <option value="해외자격">Overseas qualification</option>                                                                               ';
+		html+='          </select>                                                                                                                             ';
+		html+='     </td>                                                                                                                                      ';
+		html+='      </tr>                                                                                                                                     ';
+		html+='      <tr>                                                                                                                                      ';
+		html+='         <td>                                                                                                                                   ';
+		html+='            <label for="TypeOfLicense">Type of license</label>                                                                                  ';
+		html+='          <select id="lGrade">                                                                                                                  ';
+		html+='            <option value="기사">기사</option>                                                                                                     ';
+		html+='            <option value="기능사">기능사</option>                                                                                                   ';
+		html+='            <option value="1급">1급</option>                                                                                                      ';
+		html+='            <option value="2급">2급</option>                                                                                                      ';
+		html+='            <option value="기타">기타</option>                                                                                                     ';
+		html+='          </select>                                                                                                                             ';
+		html+='     </td>                                                                                                                                      ';
+		html+='      </tr>                                                                                                                                     ';
+		html+='      <tr>                                                                                                                                      ';
+		html+='         <td>                                                                                                                                   ';
+		html+='          <input type="text" class="form-control lNum" name="lNum" id="lNum" placeholder="License Number"  autofocus>                           ';
+		html+='         </td>                                                                                                                                  ';
+		html+='      </tr>                                                                                                                                     ';
+		html+='      <tr>                                                                                                                                      ';
+		html+='         <td>                                                                                                                                   ';
+		html+='            <input type="text" class="form-control lDate" name="lDate" id="lDate" placeholder="Date of Acquisition(yyyymmdd)"  autofocus>       ';
+		html+='         </td>                                                                                                                                  ';
+		html+='      </tr>                                                                                                                                     ';
+		html+='      <tr>                                                                                                                                      ';
+		html+='         <td>                                                                                                                                   ';
+		html+='            <input type="text" class="form-control lOrgan" name="lOrgan" id="lOrgan" placeholder="Issuing Agency"  autofocus>                   ';
+		html+='         </td>                                                                                                                                  ';
+		html+='      </tr>                                                                                                                                     ';
+		$("#licenseForm>tbody").append(html);
+
+       });
 
       var cnt=0;
-       $("#plusInsert").on("click", function(){
+       $("#pjtPlusInsert").on("click", function(){
          console.log('This is plus button');
          var frm=document.uploadFrm;
          var html="";
@@ -518,18 +632,24 @@
 
       });
          
-
+     function skillInsert() {
+           console.log("skillInsert");
+           var frm = document.skillInsertForm;
+           frm.action = "${hContext}/skill/do_insert.spring";
+           frm.method="POST";
+           frm.submit(); 
+           
+      }
 
        
-         function pjtInsert() {
-            console.log("pjtInsert");
-            var frm = document.projectInsetForm;
-            frm.action = "${hContext}/portfolio/do_insert.spring";
-            frm.method="POST";
-            frm.submit(); 
-
-            
-         }
+      function pjtInsert() {
+         console.log("pjtInsert");
+         var frm = document.projectInsetForm;
+         frm.action = "${hContext}/portfolio/do_insert.spring";
+         frm.method="POST";
+         frm.submit(); 
+         
+      }
 
       $("#uploadBtn").on("click", function(){
          console.log("uploadTest");

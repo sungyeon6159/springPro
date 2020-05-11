@@ -289,9 +289,9 @@ public class ProjectController {
             dbInVO.setFileSize(mFile.getSize());
             dbInVO.setOrgNm(orgFileName);
             dbInVO.setSavePNm(saveFileName);
-            
+            dbInVO.setMemberId("iod1124");
             pjtFileService.doInsert(dbInVO);
-//            list.add(fileVO);
+            
             try {
 				mFile.transferTo(new File(renameFile.getAbsolutePath()));
 			} catch (IllegalStateException | IOException e) {

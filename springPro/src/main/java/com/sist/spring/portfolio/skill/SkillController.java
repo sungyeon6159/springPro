@@ -23,6 +23,9 @@ import com.sist.spring.cmn.StringUtil;
 public class SkillController {
 	private final Logger LOG = LoggerFactory.getLogger(SkillController.class);
 	
+	public SkillController() {}
+	
+	
 	@Autowired
 	SkillService skillService;
 	
@@ -170,20 +173,32 @@ public class SkillController {
 		
 	}
 	
-	@RequestMapping(value = "skill/do_insert.spring",method = RequestMethod.POST
+	@RequestMapping(value = "/skill/do_insert.spring",method = RequestMethod.POST
 					,produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String add(SkillVO skill) {
-		String url= "member/member_mng";
-		LOG.debug("1===================");
-		LOG.debug("1=skill="+skill);
-		LOG.debug("1===================");
+	public String add(SkillVO skillVO, HttpServletRequest req, Model model) {
 		
-		int  flag = skillService.doInsert(skill);
+		List<SkillVO> list = skillVO.getSkillList();
 		
-		LOG.debug("1.2===================");
-		LOG.debug("1.2=flag="+flag); 
-		LOG.debug("1.2===================");
+		for(int i=0;i<list.size(); i++) {
+			
+			list.get(i).setMemberId("iod1124");
+			
+			LOG.debug("1111 : " + list.get(i).getsName());
+			LOG.debug("2222 : " + list.get(i).getMemberId());
+			LOG.debug("3333 : " + list.get(i).getsMarstery());
+			LOG.debug("4444 : " + list.get(i).getsContent());
+			
+			
+		}
+		
+		int  flag=0;
+	      for(int i=0; i<list.size(); i++) {
+	      	flag = skillService.doInsert(list.get(i));
+	      	LOG.debug("1.2===================");
+			LOG.debug("1.2=flag="+flag); 
+			LOG.debug("1.2===================");
+	    }
 		
 		//메시지 처리
 		MessageVO message=new MessageVO();
@@ -191,10 +206,10 @@ public class SkillController {
 		message.setMsgId(flag+"");
 		//성공
 		if(flag ==1) {
-			message.setMsgMsg(skill.getsContent()+"님이 등록 되었습니다.");
+			message.setMsgMsg(skillVO.getsName()+"님이 등록 되었습니다.");
 		//실패	
 		}else {
-			message.setMsgMsg(skill.getsContent()+"님 등록 실패.");			
+			message.setMsgMsg(skillVO.getsName()+"님 등록 실패.");			
 		}
 		
 		//JSON
@@ -205,7 +220,7 @@ public class SkillController {
 		LOG.debug("1.3===================");
 		
 		
-		return json;
+		return "/portfolio/index" ;
 	}
 	
 	

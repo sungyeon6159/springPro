@@ -66,7 +66,11 @@ public class SkillDao implements Dao {
 		LOG.debug("==============================");
 		LOG.debug("=Query=\n" + sb.toString());
 		LOG.debug("=Param=\n" + inVO.toString());
-		Object[] args = { inVO.getsName(), inVO.getMemberId(), inVO.getsMarstery(), inVO.getsContent() };
+		Object[] args = { inVO.getsName()
+						, inVO.getMemberId()
+						, inVO.getsMarstery()
+						, inVO.getsContent() 
+						};
 		flag = this.jdbcTemplate.update(sb.toString(), args);
 
 		LOG.debug("==============================");

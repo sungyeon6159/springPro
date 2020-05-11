@@ -1,5 +1,7 @@
 package com.sist.spring.portfolio.skill;
 
+import java.util.List;
+
 import com.sist.spring.cmn.DTO;
 
 public class SkillVO extends DTO {
@@ -12,6 +14,24 @@ public class SkillVO extends DTO {
 	private int sMarstery;
 	/** 활용내용 */
 	private String sContent;
+	
+	private List<SkillVO> skillList;
+	
+	
+
+	/**
+	 * @return the skillList
+	 */
+	public List<SkillVO> getSkillList() {
+		return skillList;
+	}
+
+	/**
+	 * @param skillList the skillList to set
+	 */
+	public void setSkillList(List<SkillVO> skillList) {
+		this.skillList = skillList;
+	}
 
 	public SkillVO() {}
 
