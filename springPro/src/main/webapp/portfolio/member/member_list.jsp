@@ -94,7 +94,7 @@
 			    								<span>${list.get(i).name }</span>
 			    							</td>
 			    							<td>
-			    								<h6><b>Birth</h5>
+			    								<h6><b>Birth</b></h6>
 			    							</td>
 			    							<td>
 			    								${list.get(i).birth }
