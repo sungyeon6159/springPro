@@ -61,19 +61,66 @@
 	      </div>
 	    </div>
 	  </nav>
-	  <div class="overlay"></div>
-      <div class="container">
+	 <%--  <div class="overlay"></div>
+      <div class="container center">
       <br/><br/><br/><br/>
-      <form action="${hContext}/portfolio/doLogin.spring" method="post">
-      <label for="memberId"> 아이디: </label>
-      	<input type="text" name="memberId"><br>
-      <label for="password"> 비밀번호: </label>
-      	<input type="password" name="password">
-      <input type="submit" value="로그인">
-      </form>
+      	<form action="${hContext}/portfolio/doLogin.spring" method="post">
+	      <label for="memberId"> 아이디: </label>
+	      	<input type="text" name="memberId"><br>
+	      <label for="password"> 비밀번호: </label>
+	      	<input type="password" name="password">
+	      <input type="submit" value="로그인">
+     	</form>
+      </div> --%>
+    
+	<section class="hero-wrap js-fullheight">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
+          <div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-center">
+			
+	<!-- login form -->
+	<div class="container center">
+		<div class="row justify-content-center">
+		
+		<form class="form-horizontal" action="${hContext}/portfolio/doLogin.spring" method="post">
+		
+		  <div align="center"><h2>LOGIN</h2><br/></div>
+		  <div class="form-group">
+		    <label for="memberId" class="col-sm-6 control-label">ID</label>
+		    <div class="col-sm-12">
+		      	<input type="text" class="form-control" name="memberId" placeholder="ID">
+		    </div>
+		  </div>
+		  <div class="form-group" >
+		    <label for="password" class="col-sm-6 control-label">Password</label>
+		    <div class="col-sm-12">
+		      <input type="password" class="form-control" name="password" placeholder="PW">
+		    </div>
+		  </div>
+		  <div class="form-group" >
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <div class="checkbox">
+		        <label>
+		          <input type="checkbox"> Remember me
+		        </label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="form-group" align="center" >
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-primary btn-lg">로그인</button>&nbsp;&nbsp;
+		      <button type="submit" class="btn btn-primary btn-lg">회원가입</button>
+		    </div>
+		  </div>
+		</form>
+		</div>
+	</div>
+  	<!--// login form -->
+          </div>
+        </div>
       </div>
-	
-  
+    </section>
 
     <footer class="ftco-footer ftco-section">
       <div class="container">
