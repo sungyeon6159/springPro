@@ -26,8 +26,16 @@ import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
+import com.sist.spring.portfolio.license.LicenseService;
+import com.sist.spring.portfolio.license.LicenseVO;
 import com.sist.spring.portfolio.member.file.FileMemberService;
 import com.sist.spring.portfolio.member.file.FileMemberVO;
+import com.sist.spring.portfolio.project.PjtFileService;
+import com.sist.spring.portfolio.project.PjtFileVO;
+import com.sist.spring.portfolio.project.ProjectService;
+import com.sist.spring.portfolio.project.ProjectVO;
+import com.sist.spring.portfolio.skill.SkillService;
+import com.sist.spring.portfolio.skill.SkillVO;
 
 @Controller
 public class MemberController {
@@ -39,6 +47,19 @@ public class MemberController {
 	
 	@Autowired
 	FileMemberService fmService;
+	
+	@Autowired
+	SkillService skillService;
+	
+	@Autowired
+	ProjectService pjtService;
+	
+	@Autowired
+	PjtFileService pjtFileService;
+	
+	@Autowired
+	LicenseService licService;
+	
 	
 	@RequestMapping(value = "/portfolio/do_retrieve.spring", method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req, SearchVO search, Model model){
@@ -115,11 +136,37 @@ public class MemberController {
 			model.addAttribute("loginFailure","아이디와 비밀번호를 확인해주세요.");
 			return "portfolio/member/login";
 		}else {
+			PjtFileVO pjtFileVO=new PjtFileVO();
+			ProjectVO pjtVO=new ProjectVO();
+			LicenseVO licVO=new LicenseVO();
+			MemberVO memVO=new MemberVO();
+			FileMemberVO fileMemberInVO=new FileMemberVO();
+			SkillVO skillVO = new SkillVO();
+			
+			pjtFileVO.setMemberId(outVO.getMemberId());
+			skillVO.setMemberId(outVO.getMemberId());
+			pjtVO.setMemberId(outVO.getMemberId());
+			licVO.setMemberId(outVO.getMemberId());
+			memVO.setMemberId(outVO.getMemberId());
+			fileMemberInVO.setMemberId(outVO.getMemberId());
+			
+			LOG.debug("==========================");
+			LOG.debug("==ProjectService/doRetrieve");
+			LOG.debug("==========================");
+			
+			List<SkillVO> skillList=(List<SkillVO>)skillService.doRetrieve(skillVO);
+			List<ProjectVO> pjtList=(List<ProjectVO>)pjtService.doRetrieve(pjtVO);
+			List<LicenseVO> licList=(List<LicenseVO>)licService.doRetrieve(licVO);
+			FileMemberVO fileMemberVO=(FileMemberVO)fmService.doSelectOne(fileMemberInVO);
+			List<PjtFileVO> pjtFileList =(List<PjtFileVO>)pjtFileService.doRetrieve(pjtFileVO);
+			
+			
 			HttpSession session=req.getSession();
 			
 			StringBuilder out=new StringBuilder();
 			List<String> companyList=new ArrayList<String>();
 			List<String> recommendList=new ArrayList<String>();
+			List<String> urlList=new ArrayList<String>();
 			String url = "http://www.jobkorea.co.kr/Search/?stext="+outVO.getInterestOption();    //크롤링할 url지정
 	        Document doc = null;        //Document에는 페이지의 전체 소스가 저장된다
 	 
@@ -137,30 +184,40 @@ public class MemberController {
 	        //                               ==>원하는 값들이 들어있는 덩어리를 가져온다
 	    Elements element = doc.select("div.post-list-info"); 
 	    Elements element2 = doc.select("div.post-list-corp"); 
-	      
-	 
+	     
 	        System.out.println("============================================================");
 	 
 	        //Iterator을 사용하여 하나씩 값 가져오기
 	        //덩어리안에서 필요한부분만 선택하여 가져올 수 있다.
 	        Iterator<Element> ie1 = element.select("a.title").iterator();
-	        Iterator<Element> ie2 = element2.select("a:href").iterator();
-	        
-	        while (ie1.hasNext()) {
-	            System.out.println(ie1.next().text());
-	            out.append(ie1.next().text()+",");
+	        Iterator<Element> ie2 = element2.select("a.name").iterator();
+	        Iterator<Element> ie3 = element2.select("a.name").iterator();
+	        LOG.debug("Crawling test1href ");
+	        while (ie1.hasNext()) {	
+	        	out.append(ie1.next().text()+",");
 	            recommendList.add(ie1.next().text());
 	        }
 	        while (ie2.hasNext()) {
-	            System.out.println(ie2.next().text());
-	            companyList.add(ie2.next().text());
+	        	String temp=ie2.next().attr("abs:href");
+	            urlList.add(temp);
 	        }
-	 
+	        while (ie3.hasNext()) {
+	        	companyList.add(ie3.next().text());
+	        }
+	       
 	        model.addAttribute("memberVO", outVO);
 			model.addAttribute("recommendList",recommendList);
 			model.addAttribute("companyList",companyList);
+	        model.addAttribute("pjtList",pjtList);
+	        model.addAttribute("licList", licList);
+	        model.addAttribute("fileVO", fileMemberVO);
+	        model.addAttribute("skillList", skillList);
+	        model.addAttribute("urlList", urlList);
+	        model.addAttribute("pjtFileList", pjtFileList);
+	        
 	        session.setAttribute("memberId", outVO.getMemberId());
-			
+
+	        
 			return "portfolio/index";
 
 		}

@@ -38,7 +38,7 @@ public class PjtFileDao implements Dao {
 			outData.setMemberId(rs.getString("member_id"));
 			outData.setExt(rs.getString("ext"));
 			outData.setFileSize(rs.getLong("file_size"));
-			outData.setGitAddress(rs.getString("git_address"));
+			outData.setGitAddress(rs.getString("git_adress"));
 			outData.setOrgNm(rs.getString("org_nm"));
 			outData.setSavePNm(rs.getString("save_pnm"));
 			

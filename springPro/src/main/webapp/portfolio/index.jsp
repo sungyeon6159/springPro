@@ -178,8 +178,8 @@
 	                           </tr>
 	                           <tr>
 	                              <td rowspan="4">
-	                                  <a href="https://github.com/shkim9019/eHRGit0101">
-	                                 	<img src="${hContext}/resources/images/image_1.jpg" width="170" height="170" align="top">
+	                                  <a href="${vo.gitAddress }">
+	                                 	<video src="${hContext}/resources/video/20200507151830_c66bf.avi" width="170" height="170" align="top"/>
 	                                 </a>  
 	                              </td>
 	                              <td>
@@ -219,7 +219,7 @@
 	                           	      <a href="${vo.gitAddress}">
 	                           	      	<input type="button" class="btn btn-outline-primary" value="소스보기"/>
 	                           	      </a> &nbsp;&nbsp;
-	                           	  	  <input type="button" class="btn btn-outline-primary" value="영상보기"/>  
+	                           	  	  <input type="button" onclick="javascript:popup('${vo.gitAddress}');" class="btn btn-outline-primary" value="영상보기"/>  
 	                           	  </td>
 	                           </tr>
 	                           <tr>
@@ -373,18 +373,30 @@
 	                        <tr>
 	                        	<td><br/></td>
 	                        </tr>
+	                         <tr>
+	                        	<td><hr/></td>
+	                        </tr>
 	                        <c:choose>
 	                		<%-- data가 있는 경우 --%>
 	                		<c:when test="${recommendList.size()>0}">
 	                			<c:forEach var="i" begin="0" end="${recommendList.size()-1 }">
+	                		
 		                		<tr>
-	                              <td><h5 class="text-primary" ><b>${companyList.get(i)}</b></h5></td>
+		                		  <td>
+	                              	<h5 class="text-primary" >
+	                              	<a href="${urlList.get(i)}">
+	                              			<b>${companyList.get(i)}</b>
+	                              	</a>
+	                              	</h5>
+	                              </td>
 	                           </tr>
 
 		                		<tr>
-	                              <td><h6 class="text-primary" ><b>${recommendList.get(i)}</b></h5></td>
+	                              <td><h6><b>${recommendList.get(i)}</b></h5></td>
 	                           </tr>
-	                         
+	                           <tr>
+	                              <td><hr/></td>
+	                           </tr>
 		                	    </c:forEach>
 	                		</c:when>
 	                		<%-- data가 없는 경우 --%>
@@ -1046,7 +1058,13 @@
       frm.submit();
    }
 
-
+  function popup(gitAddress){
+	  
+      var url = "${hContext}/portfolio/videoPopup.jsp";
+      var name = "popup test";
+      var option = "width = 500, height = 500, top = 200, left = 200, location = no"
+      window.open(url, name, option);
+  }
   
 	$("#licDel").on("click",function(){
 		//confirm
