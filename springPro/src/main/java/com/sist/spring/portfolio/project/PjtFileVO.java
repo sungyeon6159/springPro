@@ -1,11 +1,13 @@
 package com.sist.spring.portfolio.project;
 
+import java.util.List;
+
 import com.sist.spring.cmn.DTO;
 
 public class PjtFileVO extends DTO {
-	private String savePNm;
-	private String orgNm;
-	private long fileSize;
+	private String savePNm;//저장이름
+	private String orgNm;//원본이름
+	private long fileSize;//
 	private String ext;
 	/**
 	 * divFile 파일 구분
@@ -16,6 +18,25 @@ public class PjtFileVO extends DTO {
 	private String gitAddress;
 	private String memberId;
 	
+	private List<PjtFileVO> projectList;
+	
+	
+	/**
+	 * @return the projectList
+	 */
+	public List<PjtFileVO> getProjectList() {
+		return projectList;
+	}
+
+
+	/**
+	 * @param projectList the projectList to set
+	 */
+	public void setProjectList(List<PjtFileVO> projectList) {
+		this.projectList = projectList;
+	}
+
+
 	public PjtFileVO() {
 	}
 	

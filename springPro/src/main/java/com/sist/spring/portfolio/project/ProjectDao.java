@@ -39,8 +39,6 @@ public class ProjectDao implements Dao {
 			outData.setPjtInfo(rs.getString("pjt_info"));
 			outData.setPjtStart(rs.getString("pjt_start"));
 			outData.setPjtEnd(rs.getString("pjt_end"));
-			outData.setPjtLanguage(rs.getString("pjt_language"));
-			outData.setPjtTool(rs.getString("pjt_tool"));
 			outData.setGitAddress(rs.getString("git_address"));
 			
 //			if(rs.getInt("rnum")==0) {
@@ -230,6 +228,51 @@ public class ProjectDao implements Dao {
 		LOG.debug("==============================");
 		
 		return outList;
+	}
+	
+	public int springInsert(DTO dto) {
+		int flag=0;
+		ProjectVO inVO=(ProjectVO)dto;
+		LOG.debug("================================");
+		LOG.debug("springInsert/springInsert");
+		LOG.debug(inVO.toString());
+		LOG.debug(inVO.getGitAddress());
+		LOG.debug("================================");
+		
+		StringBuilder sb=new StringBuilder();
+		sb.append("INSERT INTO projects (    ");
+		sb.append("    pjt_name,             ");
+		sb.append("    member_id,            ");
+		sb.append("    pjt_info,             ");
+		sb.append("    pjt_start,            ");
+		sb.append("    pjt_end,        		");
+		sb.append("    git_adress           ");
+		sb.append(") VALUES (               ");
+		sb.append("    ?,                   ");
+		sb.append("    ?,                   ");
+		sb.append("    ?,                   ");
+		sb.append("    ?,                   ");
+		sb.append("    ?,                   ");
+		sb.append("    ?                    ");
+		sb.append(")						");
+
+		LOG.debug("==============================");
+		LOG.debug("=Query=\n"+sb.toString());
+		LOG.debug("=Param=\n"+inVO.toString());
+		Object[] args= {inVO.getPjtName()
+						,inVO.getMemberId()
+						,inVO.getPjtInfo()
+						,inVO.getPjtStart()
+						,inVO.getPjtEnd()
+						,inVO.getGitAddress()
+						};
+		
+		flag=this.jdbcTemplate.update(sb.toString(),args);
+		LOG.debug("==============================");
+		LOG.debug("=flag: "+flag);
+		LOG.debug("==============================");
+		
+		return flag;
 	}
 
 }

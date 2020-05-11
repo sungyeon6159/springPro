@@ -49,5 +49,9 @@ public class ProjectService implements Service {
 		return this.pjtDao.doRetrieve(dto);
 
 	}
+	
+	public int springInsert(DTO dto) {
+		return this.pjtDao.springInsert(dto);
+	}
 
 }
