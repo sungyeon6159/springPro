@@ -26,66 +26,129 @@ public class LicenseController {
 	@Autowired
 	LicenseService licenseService;
 	
-	@RequestMapping(value="/portfolio/do_retrieve2.spring",method =RequestMethod.GET)
-	public String doRetrieve(HttpServletRequest req,Model model) {
-
-		LicenseVO inVO=new LicenseVO();
-		inVO.setMemberId("sohyun1234");
-		
-		List<LicenseVO> list = (List<LicenseVO>) licenseService.doRetrieve(inVO);
-		LOG.debug("1.3===========================");
-		for(LicenseVO vo:list) {
-			LOG.debug("1.3 vo = "+vo);
-		}
-		LOG.debug("1.3===========================");		
-		model.addAttribute("list",list);
-		
-		//총글수
-		int totalCnt = 0;
-		if(list!=null && list.size()>0) {
-			totalCnt =list.get(0).getTotalCnt();
-		}
-		model.addAttribute("totalCnt",totalCnt);
-
-
-		return "portfolio/index";
+	//to update
+	@RequestMapping(value="/portfolio/go_update.spring",method =RequestMethod.GET
+			,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String goUpdate(LicenseVO license) {
+	LOG.debug("1===========================");
+	LOG.debug("1 license = "+license);
+	LOG.debug("1===========================");	
+	
+	LicenseVO outVO=(LicenseVO) licenseService.doSelectOne(license);
+	LOG.debug("1.2===========================");
+	LOG.debug("1.2 outVO = "+outVO);
+	LOG.debug("1.2===========================");		
+	
+	Gson gson = new Gson();
+	String json = gson.toJson(outVO);
+	LOG.debug("1.3===========================");
+	LOG.debug("1.3 json = "+json);
+	LOG.debug("1.3===========================");
+	
+	return json;
 	}
 	
+	//다건조회
+	@RequestMapping(value="/portfolio/do_retrieve_lic.spring",method = RequestMethod.GET)
+	public String doRetrieve(HttpServletRequest req, Model model) {
+	
+	LicenseVO inVO=new LicenseVO();
+	inVO.setMemberId("iod1124");
+	
+	List<LicenseVO> list = (List<LicenseVO>) licenseService.doRetrieve(inVO);
+	LOG.debug("1.3===========================");
+	for(LicenseVO vo:list) {
+		LOG.debug("1.3 vo = "+vo);
+	}
+	LOG.debug("1.3===========================");		
+	model.addAttribute("list",list);
+	
+	//총글수
+	int totalCnt = 0;
+	if(list!=null && list.size()>0) {
+		totalCnt =list.get(0).getTotalCnt();
+	}
+	model.addAttribute("totalCnt",totalCnt);
+	
+	return "portfolio/index";
+	}
+	
+	
 	//삭제
-	@RequestMapping(value = "portfolio/do_delete_license.spring",method=RequestMethod.GET
-					,produces = "application/json; charset=UTF-8")
+	@RequestMapping(value = "portfolio/do_delete_license.spring",method=RequestMethod.POST
+		,produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String doDeleteLicense(LicenseVO user) {
-		LOG.debug("1===========================");
-		LOG.debug("1 user = "+user);
-		LOG.debug("1===========================");		
-		
-		int flag = 0;
-		flag = licenseService.doDeleteLicense(user);
-		LOG.debug("1.2===========================");
-		LOG.debug("1.2 flag = "+flag);
-		LOG.debug("1.2===========================");
-		
-		MessageVO message = new MessageVO();
-		message.setMsgId(String.valueOf(flag));
-		//성공
-		if(flag==1) {
-			message.setMsgMsg(user.getMemberId()+"님이 삭제 되었습니다.");
-		//실패	
-		}else {
-			message.setMsgMsg(user.getMemberId()+"님, 삭제 실패했습니다.");			
-		}
-		
-		//JSON
-		Gson gson = new Gson();
-		String json = gson.toJson(message);
-		
-		LOG.debug("1.3===========================");
-		LOG.debug("1.3 json = "+json);
-		LOG.debug("1.3===========================");	
-		
-		return json;
+	public String doDeleteLicense(LicenseVO license) {
+	LOG.debug("1===========================");
+	LOG.debug("1 user = "+license);
+	LOG.debug("1===========================");	
+	
+	int flag = licenseService.doDeleteLicense(license);
+	LOG.debug("1.2===========================");
+	LOG.debug("1.2 flag = "+flag);
+	LOG.debug("1.2===========================");
+	
+	MessageVO message = new MessageVO();
+	message.setMsgId(String.valueOf(flag));
+	
+	if(flag==1) {
+		message.setMsgMsg(license.getlName()+"이(가) 삭제되었습니다.");
+	}else {
+		message.setMsgMsg(license.getlName()+"의 삭제 실패했습니다.");
+	}
+	
+	Gson gson = new Gson();
+	String json = gson.toJson(message);
+	LOG.debug("1.3===========================");
+	LOG.debug("1.3 json = "+json);
+	LOG.debug("1.3===========================");
+	
+	return json;
+	
 	}	
+	
+	
+	//수정
+	@RequestMapping(value ="portfolio/do_update.spring",method=RequestMethod.POST) 
+	public String doUpdate(HttpServletRequest req,Model model) {
+	LOG.debug("============doUpdate==============");
+	
+	LicenseVO inVO=new LicenseVO();
+	
+	String memberId = req.getParameter("memberId");
+	inVO.setMemberId(memberId);
+	model.addAttribute("memberId",memberId);
+	
+	String lName = req.getParameter("lName");
+	inVO.setlName(lName);
+	model.addAttribute("lName",lName);
+	
+	String lGroup = req.getParameter("lGroup");
+	inVO.setlGroup(lGroup);
+	model.addAttribute("lGroup",lGroup);
+	
+	String lGrade = req.getParameter("lGrade");
+	inVO.setlGrade(lGrade);
+	model.addAttribute("lGrade",lGrade);
+	
+	String lNum = req.getParameter("lNum");
+	inVO.setlNum(lNum);
+	model.addAttribute("lNum",lNum);
+	
+	String lDate = req.getParameter("lDate");
+	inVO.setlDate(lDate);
+	model.addAttribute("lDate",lDate);
+	
+	String lOrgan = req.getParameter("lOrgan");
+	inVO.setlOrgan(lOrgan);
+	model.addAttribute("lOrgan",lOrgan);
+	
+	model.addAttribute("vo",inVO);
+	
+			
+	return "portfolio/index";
+	}
 	
 	//등록
 	@RequestMapping(value = "portfolio/license_insert.spring",method=RequestMethod.POST

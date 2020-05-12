@@ -317,50 +317,81 @@
     </section>
     <!-- //Skills -->	
     
-    
-    
     <!-- License -->
      <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="License-section">
-     	<form action="${hContext}/portfolio/total_retrieve.spring" name="license_frm" method="get" class="form-inline">
-			<div class="container-fluid px-md-5">
+     	<form action="${hContext}/portfolio/do_retrieve_lic.spring"  name="license_frm" method="GET" class="form-inline">
+			<div class="container-fluid px-md-3">
 	    		<div class="row justify-content-center py-5 mt-5">
-	          		<div class="col-md-12 heading-section text-center ftco-animate">
+	          		<div class="col-md-10 heading-section text-center ftco-animate">
 	           			 <h2 class="mb-4">License</h2>
 						 <div class="row">
 						 	<c:choose>
-						 		<c:when test="${list.size()>0 }">
-						 			<c:forEach var="vo" items="${list }">
+						 		<c:when test="${licList.size()>0 }">
+						 			<c:forEach var="vo" items="${licList}" >
 									 	<div class="col-md-4 text-center d-flex ftco-animate">
-									 		<a href="#License-section" class="services-1 shadow">
+									 		<div class="services-1 shadow">
 									 			<span class="icon">
 									 				<i class="flaticon-analysis"></i>
 									 			</span>
 									 			<div class="desc">
-									 				<input type="hidden" name="memberId" id="memberId" />
-									 				<p class="text-center"><input  type="text" id="lName" name="lName" value="${vo.lName}"  style="border:none; background:none;"/></p><hr/>
-									 				<p class="text-left"> 자격 분류: <input type="text" value="${vo.lGroup}" style="border:none; background:none;"/></p>
-									 				<p class="text-left"> 자격 종류: <input type="text" value="${vo.lGrade }" style="border:none; background:none;"/></p>
-									 				<p class="text-left"> 자격증 번호: <input type="text" value="${vo.lNum }" style="border:none; background:none;"/></p>
-									 				<p class="text-left"> 자격증 취득일: <input type="text" value="${vo.lDate }" style="border:none; background:none;"/></p>
-									 				<p class="text-left"> 발행기관: <input type="text" value="${vo.lOrgan }" style="border:none; background:none;"/></p>
-									 				<div align="right">
-														<button type="button" class="btn btn-primary" id="licDel" name="licDel">삭제</button>
-														<button type="button" class="btn btn-primary" id="licUpdate" onclick="javascript:doUpdate();">수정</button>
-									 				</div>
+									 				<input type="hidden" name="memberId" id="memberId" value="${vo.memberId}" />
+									 				<table id="licFrm">
+									 					<tbody>
+															<tr>
+									 						    <td rowspan="2"><input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/>
+									 							</td> 
+									 						</tr>
+									 						<tr>
+									 							<td name="lName" value="${vo.lName }"  style="width: 40"><c:out value="${vo.lName }" /><hr/></td>
+									 						</tr>
+									 						<tr>
+									 							<td id="lGroup" value="${vo.lGroup}" >자격분류: </td>
+									 							<td  name="lGroup"><c:out value="${vo.lGroup}" /></td>
+									 						</tr>
+									 						<tr>
+									 							<td>자격등급: </td>
+									 							<td id="lGrade" name="lGrade"><c:out value="${vo.lGrade}" /></td>
+									 						</tr>
+									 						<tr>
+									 							<td>자격번호: </td>
+									 							<td id="lNum" name="lNum"><c:out value="${vo.lNum }"  /></td>
+									 						</tr>
+									 						<tr>
+									 							<td>취득일자: </td>
+									 							<td id="lDate" name="lDate"><c:out value="${vo.lDate }" /></td>
+									 						</tr>
+									 						<tr>
+									 							<td>발행기관: </td>
+									 							<td id="lOrgan" name="lOrgan"><c:out value="${vo.lOrgan }" /></td>
+									 						</tr>
+									 						<tr>
+									 							<td colspan="2">
+  			 						 								<!-- <button type="button" onclick="javascript:doDel();" class="licDelBtn" id="licDel" name="licDel" >삭제</button> -->
+  			 						 								<button type="button"  class="licDelBtn btn btn-primary" id="licDel" name="licDel" >삭제</button>
+ 																	<!-- <button type="button" class="licUpdate btn btn-primary" id="licUpdate" name="licUpdate" onclick="javascript:goUpdate();">수정</button>-->
+									 							    <button type="button" class="licUpdate btn btn-primary" id="licUpdate" name="licUpdate" >수정</button> 
+									 							</td>
+									 						</tr>
+									 					</tbody>
+									 				</table>
 									 			</div>
-									 		</a>
+									 		</div>
 									 	</div>
 									 </c:forEach>
 							 	</c:when>
 						 	</c:choose>	
+						 	<div>
+						 		<button type="button" onclick="javascript:licRetrieve();"class="btn btn-primary btn-sm">조회</button>
+						 	</div>
 						 </div>
 	           	    </div>
 	           	</div>
-	           	<button type="button" onclick="javascript:licRetrieve();"class="btn btn-primary btn-sm">조회</button>
+	           	<!-- <button type="button" id="retrieveLic" onclick="javascript:licRetrieve();"class="btn btn-primary btn-sm">조회</button> -->
 	        </div>  
         </form>
      </section>  
     <!-- //License -->
+
 	<!-- Recommend -->
 	<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="Recommends-section">
     	<div class="container-fluid px-md-5">
@@ -1052,6 +1083,8 @@
   
   <script src="${hContext}/resources/js/main.js"></script>
   <script type="text/javascript">
+
+  //조회버튼 클릭 시
   function licRetrieve() {
       var frm = document.license_frm;
       frm.action="${hContext}/portfolio/total_retrieve.spring";
@@ -1066,40 +1099,175 @@
       window.open(url, name, option);
   }
   
-	$("#licDel").on("click",function(){
-		//confirm
-	       if(confirm($("#lName").val()+"을(를) 삭제 하시겠습니까?")==false) return;
-	       
-        //ajax
-        $.ajax({
-         type:"GET",
-         url:"${hContext}/portfolio/do_delete_license.spring",
-         dataType:"html", 
-         data:{ "memberId":"sohyun1234"
-                //"memberId":$("#memberId").val()
-               ,"lName" : $("#lName").val()
-         },
-         success:function(data){ //성공
-          //console.log("data:"+data);  
-          var parseData = $.parseJSON(data);
-			 if(parseData.msgId=="1"){
-					alert(parseData.msgMsg);
-					licRetrieve();
-				 }else{
-					alert(parseData.msgMsg);
-					 }
-
-         },
-         error:function(xhr,status,error){
-           alert("error:"+error);
-         },
-         complete:function(data){
-         
-         }   
-         
-        });//--ajax 
+//License------------------------------
+	//수정
+	 $(".licUpdate").on("click",function(event){
+		 console.log("수정");
+		 var licUpdate = $(this);
+	     var tdArr = new Array();
+	
+	     licUpdate.each(function(i){
+				 var tr = licUpdate.parent().parent().parent().eq(i);
+		         var td = tr.children().children();
+		         var lName = td.eq(1).text();
+			     var lGroup = td.eq(3).text();
+			     var lGrade = td.eq(5).text();
+			     var lNum = td.eq(7).text();
+			     var lDate = td.eq(9).text();
+			     var lOrgan=td.eq(11).text();
+	
+			     tdArr.push(lName);
+			     tdArr.push(lGroup);
+			     tdArr.push(lGrade);
+			     tdArr.push(lNum);
+			     tdArr.push(lDate);
+			     tdArr.push(lOrgan);
+	      }); //--raio.each
+	
+	     var lName = tdArr[0];
+	     var lGroup = tdArr[1]; 
+	     var lGrade = tdArr[2]; 
+	     var lNum = tdArr[3];
+	     var lDate = tdArr[4];
+	     var lOrgan= tdArr[5];
 		
-	});
+     //ajax
+     $.ajax({
+      type:"GET",
+      url:"${hContext}/portfolio/go_update.spring",
+      dataType:"html", 
+      data:{ //"memberId":"sohyun1234"
+             "memberId":$("#memberId").val(),
+             "lName" : lName.trim(),
+             "lGroup": lGroup.trim(),
+             "lGrade": lGrade.trim(),
+             "lNum": lNum.trim(),
+             "lDate": lDate.trim(),
+             "lOrgan": lOrgan.trim() 
+      },
+      success:function(data){ //성공
+	          console.log("data:"+data);  
+	          var html = "";
+	          var tr = licUpdate.parent().parent().parent();
+		      var td = tr.children().children();
+
+		      var removeTr01 = tr.eq(0);
+	          var removeTr02 = tr.eq(1);
+	          var removeTr03 = tr.eq(2);
+	          var removeTr04 = tr.eq(3);
+	          var removeTr05 = tr.eq(4);
+	          var removeTr06 = tr.eq(5);
+	          var removeTr07 = tr.eq(6);
+	          event.preventDefault(); 
+	
+	          removeTr01.remove();
+	          removeTr02.remove();
+	          removeTr03.remove();
+	          removeTr04.remove();
+	          removeTr05.remove();
+	          removeTr06.remove();
+	          removeTr07.remove();  
+	          
+	          html +='<tr>                                                                                                '  ;
+	       	  html +='    <td rowspan="2"><input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/></td>'  ;
+	       	  html +='</tr>                                                                                               '  ;
+	       	  html +='<tr>                                                                                                '  ;
+	       	  html +='	<td name="lName" value="${vo.lName }"  style="width: 40"><c:out value="${vo.lName }" /><hr/></td>'   ;
+	       	  html +='</tr>                                                                                               '  ;
+	       	  html +='<tr>                                                                                                '  ;
+	       	  html +='	<td id="lGroup" value="${vo.lGroup}" >자격분류: </td>                                               ';
+	       	  html +='	<td  name="lGroup"><c:out value="${vo.lGroup}" /></td>                                           '   ;
+	       	  html +='</tr>                                                                                               '  ;
+	       	  html +='<tr>                                                                                                '  ;
+	       	  html +='	<td>자격등급: </td>                                                                                 ';
+	       	  html +='	<td id="lGrade" name="lGrade"><c:out value="${vo.lGrade}" /></td>                                '   ;
+	       	  html +='</tr>                                                                                               '  ;
+	       	  html +='<tr>                                                                                                '  ;
+	       	  html +='	<td>자격번호: </td>                                                                                 ';
+	       	  html +='	<td id="lNum" name="lNum"><c:out value="${vo.lNum }"  /></td>                                    '   ;
+	       	  html +='</tr>                                                                                               '  ;
+	       	  html +='<tr>                                                                                                '  ;
+	       	  html +='	<td>취득일자: </td>                                                                                 ';
+	       	  html +='	<td id="lDate" name="lDate"><c:out value="${vo.lDate }" /></td>                                  '   ;
+	       	  html +='</tr>                                                                                               '  ;
+	       	  html +='<tr>                                                                                                '  ;
+	       	  html +='	<td>발행기관: </td>                                                                                 ';
+	       	  html +='	<td id="lOrgan" name="lOrgan"><c:out value="${vo.lOrgan }" /></td>                               '   ;
+	       	  html +='</tr>                                                                                               '  ;
+	       	  html +='<tr>                                                                                                '  ;
+	       	  html +='	<td colspan="2">                                                                                 '   ;
+	       	  html +='   		<button type="button"  class="licDelBtn btn btn-primary">수정완료</button>                  ';
+	       	  html +='	 <button type="button" class="licUpdate btn btn-primary">수정취소</button>                          ';
+	       	  html +='	</td>                                                                                            '   ;
+	       	  html +='</tr>                                                                                               '  ;
+	          
+   		  	  //tr.parent().append(html); 																							
+      },
+      error:function(xhr,status,error){
+        alert("error:"+error);
+      },
+      complete:function(data){
+      
+      }   
+      
+     });//--ajax 
+
+     
+	  });//--수정 
+
+
+ 	//삭제
+	 $(".licDelBtn").on("click",function(){
+		 console.log("삭제");
+		 var rowData = new Array();	 
+		 var tdArr = new Array();	// 배열 선언
+		 var licDelBtn = $(this);
+
+		 var tr = licDelBtn.parent().parent().parent();
+      	 var td = tr.children().children();
+     	 rowData.push(tr.text());
+
+	      var lName = td.eq(1).text();
+	      console.log("lName="+lName);
+	      tdArr.push(lName);
+
+		  //confirm
+     	  if(confirm(lName+"을(를) 삭제 하시겠습니까?")==false) return;
+	       
+		   //ajax
+		   $.ajax({
+		    type:"POST",
+		    url:"${hContext}/portfolio/do_delete_license.spring",
+		    dataType:"html", 
+		    data:{ //"memberId":"sohyun1234"
+		           "memberId":$("#memberId").val()
+		          ,"lName" : lName.trim()
+		    },
+		    success:function(data){ //성공
+		     //console.log("data:"+data);  
+		     var parseData = $.parseJSON(data);
+					 if(parseData.msgId=="1"){
+							alert(parseData.msgMsg);
+							//licRetrieve();
+							history.go(0);
+						 }else{
+							alert(parseData.msgMsg);
+							 }
+		
+		    },
+		    error:function(xhr,status,error){
+		      alert("error:"+error);
+		    },
+		    complete:function(data){
+		    
+		    }   
+		    
+		   });//--ajax 
+		    
+
+		 });	
+	
+//--License----------------------------
 
   </script> 
   </body>
