@@ -14,6 +14,7 @@
   * Copyright (C) 2009 by KandJang  All right reserved.
   */
 --%>
+<%@page import="com.sist.spring.cmn.SearchVO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=utf-8" %>
@@ -21,6 +22,26 @@
 <% response.setContentType("text/html; charset=utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	//페이지 사이즈
+	String pageSize="20";
+	//페이지 num
+	String pageNum="1";
+	//검색구분
+	String searchDiv="";
+	//검색어
+	String searchWord="";
+
+	SearchVO search = (SearchVO) request.getAttribute("param");
+	if(null != search){
+		pageSize = String.valueOf(search.getPageSize());
+		pageNum = String.valueOf(search.getPageNum());
+		searchDiv = String.valueOf(search.getSearchDiv());
+		searchWord = String.valueOf(search.getSearchWord());
+	}
+	
+
+%>
 <c:set var="hContext" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html lang="en">
@@ -1037,7 +1058,8 @@
 		    		<form action="${hContext}/comment/do_retrieve.spring" name="commentfrm" method="get" class="form-inline">
 		    			<!-- pageNum -->
 		    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-		    			<div align="right">
+		    			<input type="hidden" maxlength="20" class="form-control input-sm" id="searchWord" name="searchWord" placeholder="아이디" value="${sohyunkim }" />
+                        <div align="right">
 		    				<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
 		    			</div>
 		    		</form>
@@ -1083,7 +1105,7 @@
                            	</div>
                             <div align="right">
                             	<c:if test="${vo.regId =='rainisy'}">
-	                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" OnClick="change($(this).parent().parent().parent().parent());" >수정</button>
+	                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" OnClick="change($(this).parent().parent().parent());" >수정</button>
 	                            	<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
 									<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />
                             	</c:if>
@@ -1164,12 +1186,13 @@ $("#doInsert").on("click", function() {
 
 
 function change(param){//수정버튼클릭시 텍스트필드로변환
-    var removeTd01 = $("#cContent").val()
-    var removeTd02 =param.children().eq(2);
+    //var removeTd01 = $("#cContent").val()
+    var removeTd01 =param.children().children().eq(1);
+   // var removeTd02 =param.children().children().eq(2);
     removeTd01.remove();
-    removeTd02.remove();
+   // removeTd02.remove();
     
-    param.append("<td><textarea style='width: 1100px' rows='3' name='message' id='message' placeholder='Message' value = ''></textarea></td><td><div align='right'><button class='btn pull-right btn-success' OnClick='mod1($(this).parent().parent().parent().parent());' id='modcom'>수정완료</button><button class='noUpdate' id='noUpdate'>수정취소</button></div></td>");	
+    param.append("<td><textarea style='width: 1100px' rows='3' name='message' id='message' placeholder='Message' value = ''></textarea></td><td><div align='right'><button class='modcom' OnClick='mod1($(this).parent().parent().parent());' >수정완료</button><button class='noUpdate' id='noUpdate'>수정취소</button></div></td>");	
     
 
 }
@@ -1191,20 +1214,18 @@ $(document).on("click",".noUpdate",function(){//수정취소버튼
  $(document).on("click",".modcom",function(){//댓글수정완료버튼
      //seq
     
-     event.preventDefault();
-     var cNo1 = ($(this).parent().parent().parent().parent()).children().eq(4).text();
-     var regId1 = ($(this).parent().parent().parent().parent()).children().eq(1).text();
-     var regDt1 = ($(this).parent().parent().parent().parent()).children().eq(2).text();
-     var cContent1 = $("#message").val();
+     //event.preventDefault();
+    // var regDt1 = ($(this).parent().parent().parent().children().children().eq(2).text()
+     //var cContent1 = $("#message").val()
     
      //ajax
      
      $.ajax({
        type:"POST",
-       url:"/MAL_A/roxandrea/comments.do",
+       url:"${hContext}/comment/do_update.spring",
        dataType:"html",
        data:{
-             "cNo":cNo1,
+             //"cNo":cNo1,
              "regId":regId1,
              "cContent":cContent1
        },

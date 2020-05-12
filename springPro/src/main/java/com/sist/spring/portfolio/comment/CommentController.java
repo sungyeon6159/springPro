@@ -77,7 +77,7 @@ public class CommentController {
 	}
 	
 	
-	@RequestMapping(value = "comment/do_update.do",method = RequestMethod.POST
+	@RequestMapping(value = "comment/do_update.spring",method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doUpdate(CommentVO user) {
@@ -201,6 +201,7 @@ public class CommentController {
 		
 		//검색어
 		search.setSearchWord(StringUtil.nvl(search.getSearchWord()));
+		
 		model.addAttribute("param",search);
 		
 		LOG.debug("1.2===================");

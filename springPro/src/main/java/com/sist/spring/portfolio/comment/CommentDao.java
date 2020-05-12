@@ -205,6 +205,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		sb.append("    SELECT count(*) total_cnt                                   \n");
 		sb.append("    FROM Comments                                               \n");
 		sb.append("		   WHERE portfolio_Id like '%' || ? ||'%'  				   \n");
+		//sb.append("		   WHERE portfolio_Id like '%' || ? ||'%'  				   \n");
 		sb.append("    )T2                                                         \n");
 		
 		//param 
