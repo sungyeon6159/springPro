@@ -19,6 +19,8 @@
  */
 package com.sist.spring.portfolio.license;
 
+import java.util.List;
+
 import com.sist.spring.cmn.DTO;
 
 /**
@@ -33,6 +35,24 @@ public class LicenseVO extends DTO {
 	private String lDate  ; /**취득일 */
 	private String lOrgan; /**발행기관 */
 	private String memberId; /**회원ID */
+	
+	private List<LicenseVO> licenseList;
+	
+	
+
+	/**
+	 * @return the licenseList
+	 */
+	public List<LicenseVO> getLicenseList() {
+		return licenseList;
+	}
+
+	/**
+	 * @param licenseList the licenseList to set
+	 */
+	public void setLicenseList(List<LicenseVO> licenseList) {
+		this.licenseList = licenseList;
+	}
 
 	public LicenseVO() {}
 
