@@ -18,7 +18,7 @@ public class SkillService implements Service {
 	}
 	
 	@Autowired
-	SkillDao skillDao;
+	SkillDaoImple skillDao;
 	
 	
 	public int doInsert(DTO dto) {

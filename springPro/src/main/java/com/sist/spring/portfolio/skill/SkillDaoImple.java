@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +18,21 @@ import com.sist.spring.cmn.Dao;
 import com.sist.spring.portfolio.member.MemberVO;
 import com.sist.spring.portfolio.project.ProjectVO;
 
-@Repository("dao01")
-public class SkillDao implements Dao {
+@Repository("dao")
+public class SkillDaoImple implements Dao {
 	// Logger
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	RowMapper<SkillVO> rowMapper = new RowMapper<SkillVO>() {
-
-		public SkillVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			SkillVO outData = new SkillVO();
-			outData.setsName(rs.getString("s_name"));
-			outData.setMemberId(rs.getString("member_id"));
-			outData.setsMarstery(rs.getInt("s_marstery"));
-			outData.setsContent(rs.getString("s_content"));
-			outData.setNum(rs.getInt("rnum"));
-			outData.setTotalCnt(rs.getInt("total_cnt"));
-			return outData;
-		}
-
-	};
+	@Autowired
+	//SqlSessionTemplate sqlSessionTemplate;
+	
+	private final String NAMESPACE= "com.sist.spring.portfolio";
 
 	// JDBCTemplate
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public SkillDao() {
+	public SkillDaoImple() {
 	}
 
 	@Override
@@ -131,10 +122,6 @@ public class SkillDao implements Dao {
 		LOG.debug("=Query=\n" + sb.toString());
 		LOG.debug("=Param=\n" + inVO.getMemberId());
 
-		Object[] args = { inVO.getMemberId(), inVO.getsName() };
-		outVO = this.jdbcTemplate.queryForObject(sb.toString(), args, rowMapper);
-		LOG.debug("=outVO=\n" + outVO);
-		LOG.debug("==============================");
 
 		return outVO;
 
@@ -192,40 +179,26 @@ public class SkillDao implements Dao {
 
 	
 	public List<?> doRetrieve(DTO dto) {
-		
-		LOG.debug("============================");
-		LOG.debug("=doRetrieve/SkillDao");
-		LOG.debug("============================");
-		
-		
-		SkillVO inVO=(SkillVO)dto;
-		List<SkillVO> outList=new ArrayList<SkillVO>();
-		StringBuilder sb=new StringBuilder();
-		
-		LOG.debug("============================");
-		LOG.debug("=doRetrieve/param"+inVO);
-		LOG.debug("============================");
-		
-	     sb.append (" SELECT  s_name,s_marstery,s_content,member_id,	 \n");
-	     sb.append("     1 rnum,      							 		\n"); 
-		 sb.append("     1 total_cnt   						    		 \n");
-	     sb.append (" FROM skill                                 		\n");
-	     sb.append (" WHERE MEMBER_ID  = ?                       		\n");
-	     sb.append (" ORDER BY s_marstery DESC                     		\n");
-	    //param 
-        Object[] args = {inVO.getMemberId() };
-//		List<Object> listArg = new ArrayList<Object>();
-
-		
-		//param set
-		//List<SkillVO> retList = this.jdbcTemplate.query(sb.toString(), listArg.toArray(), rowMapper);
-      		outList = this.jdbcTemplate.query(sb.toString(),args,this.rowMapper);
-				LOG.debug("==================================");
-				LOG.debug("============doRetrieve============"+args);
-				LOG.debug("query \n"+sb.toString());
-				LOG.debug("param: "+outList);
-				LOG.debug("==================================");
-				return outList;
+//		SkillVO inVO=(SkillVO)dto;
+//		
+//		LOG.debug("1==============================");
+//		LOG.debug("1=inVO="+inVO);
+//		LOG.debug("1==============================");
+//		
+//		// namespace+id = com.sist.ehr.board.doInsert 
+//		String statement = NAMESPACE+".doRetrieve";
+//		
+//		LOG.debug("2==============================");
+//		LOG.debug("2=statement="+statement);
+//		LOG.debug("2==============================");	
+//		
+//		List<SkillVO> outList = this.sqlSessionTemplate.selectList(statement, inVO);
+//		LOG.debug("3==============================");
+//		LOG.debug("3=outList="+outList);
+//		LOG.debug("3==============================");			
+//		
+//		return outList;
+		return null;
 	}
 
 }
