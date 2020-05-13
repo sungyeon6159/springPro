@@ -61,6 +61,8 @@
 	  
 	  <br/><br/><br/>
 	  
+	  
+	  
   	<!-- div container -->
   	<div class="container">
   	    <!-- div title -->
@@ -68,6 +70,7 @@
   	    	<h1>Portfolio List</h1>
   	    </div>
     	<form action="${hContext}/portfolio/do_select_one.spring" id="selectOne_frm" name="selectOne_frm" method="post">
+                   
     		<input type="hidden" name="hiddenId" id="hiddenId">
     	</form>
     	<!-- Grid영역 -->
@@ -89,7 +92,7 @@
 			    						<tr>
 			    							<td>
 			    								<h6 class="mb-4"><b>Name</b></h6>
-			    							</td>
+			    							</td>	
 			    							<td>
 			    								<span>${list.get(i).name }</span>
 			    							</td>
@@ -233,16 +236,16 @@
 
 			var frm = document.selectOne_frm;
 			frm.hiddenId.value = memberId;
-			
 			frm.submit();
-
 			
+
 		});
 
 		function doRetrieve(){
 			//console.log('doRetrieve');
 			var frm = document.member_frm;
 			frm.pageNum.value = 1;
+			frm.memberId.value =memberId;
 			frm.action = "${hContext}/portfolio/do_retrieve.spring";
 			frm.submit();
 		}

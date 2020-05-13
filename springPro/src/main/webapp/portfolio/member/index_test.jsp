@@ -1058,7 +1058,7 @@
 		    		<form action="${hContext}/comment/do_retrieve.spring" name="commentfrm" method="get" class="form-inline">
 		    			<!-- pageNum -->
 		    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-		    			<input type="hidden" maxlength="20" class="form-control input-sm" id="searchWord" name="searchWord" placeholder="아이디" value="${sohyunkim }" />
+		    			<input type="hidden" id="searchWord" name="searchWord" value="${param.searchWord }" />
                         <div align="right">
 		    				<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
 		    			</div>
@@ -1072,13 +1072,12 @@
                 <table class="table">                    
                     <tr>
                         <td>
-                            <textarea style="width: 1100px" rows="3" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
+                            <textarea style="width: 1000px" rows="2" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
                             <input type="hidden" maxlength="20" class="form-control input-sm" id="portfolioId" name="portfolioId" placeholder="아이디" value="sohyun1234" />
                             <input type="hidden" maxlength="20" class="form-control input-sm" id="regId" name="regId" placeholder="아이디" value="rainisy" />
-                            
-                            <div align="right">
-                            	<button type="button" class="btn pull-right btn-success" id="doInsert" >등록</button>
-                            </div>
+                        </td>
+                        <td align="left">
+                        	<button type="button" class="btn pull-right btn-success" id="doInsert" >등록</button>
                         </td>
                     </tr>
                 </table>
@@ -1088,31 +1087,30 @@
         
         
         <div class="table-responsive">
-    	<table class="table" id="memberTable">
+    	<table class="" id="memberTable" style="width: 1100px;" >
 		<tbody>
  				<!-- Data있는 경우 -->
  				<c:choose>
  					<c:when test="${list.size()>0 }">
 					<c:forEach var="vo" items="${list }">
-   					<tr>
-   						<td>
-   							<div align="left">
-                            	<label>${vo.regId }</label>
-                            </div>
-   							<label style="width: 1100px" rows="3" cols="30">${vo.cContent }</label>
-                            <div align="right">
-                            	<label>${vo.regDt}</label>
-                           	</div>
-                            <div align="right">
-                            	<c:if test="${vo.regId =='rainisy'}">
-	                            	<button type="button" class="btn pull-right btn-success" id="doUpdate" OnClick="change($(this).parent().parent().parent());" >수정</button>
-	                            	<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
-									<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />
-                            	</c:if>
-                            </div>
-                        </td>
-   					</tr>
-   					</c:forEach>
+					<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />
+						<tr style="border-top: 5px; margin-top: 5px;">
+							<td><c:out value="${vo.regId }"></c:out></td><td></td>
+						</tr>
+						<tr>
+							<td><c:out value="${vo.cContent }"></c:out></td>
+							<td align="right"><c:out value="${vo.regDt }"></c:out></td>
+						</tr>
+						<c:if test="${vo.regId =='rainisy'}">
+						<tr style="border-bottom: 1px; margin-bottom: 5px;">
+                           	<td colspan="2" align="right">
+	                           	<button type="button" class="btn pull-right btn-success" id="doUpdate" OnClick="change($(this).parent().parent().parent());" >수정</button>
+	                           	<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
+                           	</td>
+                       	</tr>
+                       	
+                       	</c:if> 
+					</c:forEach>
  					</c:when>
  					<c:otherwise>
  						<tr><td colspan="99">등록된 게시글이 없습니다.</td></tr>
@@ -1187,12 +1185,12 @@ $("#doInsert").on("click", function() {
 
 function change(param){//수정버튼클릭시 텍스트필드로변환
     //var removeTd01 = $("#cContent").val()
-    var removeTd01 =param.children().children().eq(1);
-   // var removeTd02 =param.children().children().eq(2);
+    var removeTd01 =param.children().eq(1);
+   // var removeTd02 =param.chil  dren().children().eq(2);
     removeTd01.remove();
    // removeTd02.remove();
     
-    param.append("<td><textarea style='width: 1100px' rows='3' name='message' id='message' placeholder='Message' value = ''></textarea></td><td><div align='right'><button class='modcom' OnClick='mod1($(this).parent().parent().parent());' >수정완료</button><button class='noUpdate' id='noUpdate'>수정취소</button></div></td>");	
+    param.append("<td><textarea style='width: 900px' rows='2' name='message' id='message' placeholder='Message' value = ''></textarea></td><td><div align='right'><button class='modcom btn pull-right btn-success' OnClick='mod1($(this).parent().parent().parent());' >수정완료</button><button class='noUpdate btn pull-right btn-success' id='noUpdate'>수정취소</button></div></td>");	
     
 
 }
@@ -1245,54 +1243,7 @@ $(document).on("click",".noUpdate",function(){//수정취소버튼
  });  
 
  
- 
-//수정
-/* $("#doUpdate").on("click", function() {
-	//console.log("#doUpdate");
-	//값  Null check
-	if($("#cContent").val() == "" || $("#cContent").val() == false){
-		alert("내용을 입력 하세요.");
-		$("#c_content").focus();
-		return;
-	}
-
-	//confirm
-	if(confirm("댓글을 수정 하시겠습니까?")==false)return;
-
-	// name이 같은 체크박스의 값들을 배열에 담는다.
    
-	
-	//ajax
-	$.ajax({
-	   type:"POST",
-	   url:"${hContext}/comment/do_update.spring",
-	   dataType:"html",
-	   data:{
-		   "cContent": $("#cContent").val(),
-		   "regDate": $("#regDate").val()
-	   },
-	   success:function(data){ //성공
-	      console.log("data:"+data);
-	      var parseData = $.parseJSON(data);
-	      if(parseData.msgId == "1"){
-			 alert(parseData.msgMsg);
-			 alert('댓글이 수정되었습니다.')
-			 doRetrieve();
-		  }else{
-			 alert(parseData.msgMsg);
-		  }
-	      
-	   },
-	   error:function(xhr,status,error){
-	      alert("error:"+error);
-	   },
-	   complete:function(data){
-	   
-	   }   
-	   
-	});//--ajax
-	
-});  */
 
 
 //삭제
@@ -1347,6 +1298,7 @@ $("#doDelete").on("click", function() {
 	//console.log('doRetrieve');
 	var frm = document.commentfrm;
 	frm.pageNum.value = 1;
+	frm.searchWord.value= "";
 	frm.action = "${hContext}/comment/do_retrieve.spring";
 	frm.submit();
 } 
