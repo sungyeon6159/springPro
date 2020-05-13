@@ -26,6 +26,8 @@ import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
+import com.sist.spring.portfolio.comment.CommentService;
+import com.sist.spring.portfolio.comment.CommentVO;
 import com.sist.spring.portfolio.license.LicenseService;
 import com.sist.spring.portfolio.license.LicenseVO;
 import com.sist.spring.portfolio.member.file.FileMemberService;
@@ -60,6 +62,8 @@ public class MemberController {
 	@Autowired
 	LicenseService licService;
 	
+	@Autowired
+	CommentService commentService;
 	
 	@RequestMapping(value = "/portfolio/do_retrieve.spring", method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req, SearchVO search, Model model){
@@ -261,8 +265,8 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.POST)
-	public String doSelectOne(HttpServletRequest req ,MemberVO user, Model model) {
+	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.GET)
+	public String doSelectOne(HttpServletRequest req ,MemberVO user,SearchVO search, Model model) {
 		
 		user.setMemberId(req.getParameter("hiddenId")); //frm의 hiddenId 값들 가져와서 set
 		LOG.debug("1===================");
@@ -281,6 +285,51 @@ public class MemberController {
 		
 		model.addAttribute("fileVO",fileVO);
 		model.addAttribute("memberVO",outVO);
+		
+		
+		LOG.debug("1===================");
+		LOG.debug("1=search="+search);
+		LOG.debug("1===================");
+		   
+		//페이지 사이즈
+		if(search.getPageSize()==0) {
+			search.setPageSize(20);
+		}
+		//페이지 num
+		if(search.getPageNum()==0) {
+			search.setPageNum(1);
+		}
+		
+		//검색구분
+		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv()));
+		
+		//검색어
+		search.setSearchWord(StringUtil.nvl(search.getSearchWord()));
+		
+		model.addAttribute("param",search);
+		
+		LOG.debug("1.2===================");
+		LOG.debug("1.2=search="+search);
+		LOG.debug("1.2===================");
+		
+		List<CommentVO> list = (List<CommentVO>) commentService.doRetrieve(search);
+		LOG.debug("1.3===================");
+		for(CommentVO vo :list) {
+			LOG.debug("vo="+vo);
+		}
+		LOG.debug("1.3===================");
+		
+		model.addAttribute("list", list);
+		
+		//총글수
+		int totalCnt = 0;
+		if(null != list && list.size() >0) {
+			totalCnt = list.get(0).getTotalCnt();
+		}
+		model.addAttribute("totalCnt", totalCnt);
+		int maxPageNo = ((totalCnt - 1) / 10) + 1;
+		model.addAttribute("maxPageNo",maxPageNo);
+		
 		
 		return "portfolio/member/index_test";
 	}

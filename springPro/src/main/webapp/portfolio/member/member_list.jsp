@@ -69,8 +69,9 @@
   	    <div class="page-header">
   	    	<h1>Portfolio List</h1>
   	    </div>
-    	<form action="${hContext}/portfolio/do_select_one.spring" id="selectOne_frm" name="selectOne_frm" method="post">
-                   
+    	<form action="${hContext}/portfolio/do_select_one.spring" id="selectOne_frm" name="selectOne_frm" method="get">
+            <input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
+   			<input type="hidden" id="searchWord" name="searchWord" value="${param.searchWord }" />      
     		<input type="hidden" name="hiddenId" id="hiddenId">
     	</form>
     	<!-- Grid영역 -->
@@ -236,6 +237,8 @@
 
 			var frm = document.selectOne_frm;
 			frm.hiddenId.value = memberId;
+			frm.pageNum.value = 1;
+			frm.searchWord.value= memberId;
 			frm.submit();
 			
 

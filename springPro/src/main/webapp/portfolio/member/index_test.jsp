@@ -1052,24 +1052,10 @@
     <footer class="ftco-footer ftco-section">
       <div class="container">
         <div >
-	        <!-- 검색영역 -->
-	    	<div class="row">
-	    		<div class="col-md-12 text-right">
-		    		<form action="${hContext}/comment/do_retrieve.spring" name="commentfrm" method="get" class="form-inline">
-		    			<!-- pageNum -->
-		    			<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-		    			<input type="hidden" id="searchWord" name="searchWord" value="${param.searchWord }" />
-                        <div align="right">
-		    				<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button> 
-		    			</div>
-		    		</form>
-	    		</div>
-	    	</div>
-	    	<!--// 검색영역 -->
 	    	
 	    	<!-- 입력 From -->
             <div>
-                <table class="table">                    
+                <table class="table" id="portfolioTable">                    
                     <tr>
                         <td>
                             <textarea style="width: 1000px" rows="2" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
@@ -1130,6 +1116,18 @@
 	    
 <script type="text/javascript">
 
+
+
+function doRetrieve(){
+	//console.log('doRetrieve');
+	
+	
+	var frm = document.commentfrm;
+	frm.pageNum.value = 1;
+	frm.searchWord.value= "";
+	frm.action = "${hContext}/comment/do_retrieve.spring";
+	frm.submit();
+} 
 
 //등록
 $("#doInsert").on("click", function() {
@@ -1293,15 +1291,6 @@ $("#doDelete").on("click", function() {
 });
 
 
-
-   function doRetrieve(){
-	//console.log('doRetrieve');
-	var frm = document.commentfrm;
-	frm.pageNum.value = 1;
-	frm.searchWord.value= "";
-	frm.action = "${hContext}/comment/do_retrieve.spring";
-	frm.submit();
-} 
 
 </script>
 	    
