@@ -39,6 +39,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sist.spring.cmn.MessageVO;
+import com.sist.spring.cmn.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,15 +98,15 @@ public class CovidController {
 		
 	}
 	
-	@RequestMapping(value = "covid/do_mail.spring", method = RequestMethod.POST)
+	@RequestMapping(value = "covid/do_mail.spring", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	@ResponseBody
 	public String doMail(HttpServletRequest req, RxJoinVO vo, Model model) {
-		String url = "covid/covid_mail";
 		String parmName = req.getParameter("parmName");
 		String parmCode= req.getParameter("parmCode");
 		//session아이디 값 wogns 가정, pcode필요
 		
-		LOG.debug("1111111111111" + parmName);
-		LOG.debug("1111111111111" + parmCode);
+//		LOG.debug("1111111111111" + parmName);
+//		LOG.debug("1111111111111" + parmCode);
 		vo = new RxJoinVO();
 		vo.setMemberId("wogns");
 		vo.setpName(parmName);
@@ -130,9 +131,43 @@ public class CovidController {
 		}
 		
 		LOG.debug("mailVO" + mailVO);
-		model.addAttribute("mailVO", mailVO);
+		//mail send
+		String mailMessage = covidService.sendEmail(mailVO);
+		LOG.debug("ssss"+mailMessage);
 		
-		return url;
+		int index = mailMessage.indexOf("님");
+		String mailId = mailMessage.substring(0, index);
+		LOG.debug(mailId);
+		
+		
+		int flag = 0;
+		//약국에게서 메일을 제대로 받은경우
+		if(mailId.equals(mailVO.getMemberId())) {
+			flag = 1;
+		} 
+		
+		//메시지 처리
+		MessageVO message = new MessageVO();
+		message.setMsgId(flag+""); 	//String으로 변환		msgId아이디에는 flag값만 넣음 
+		//성공
+		if(flag ==1) {
+			message.setMsgMsg(vo.getMemberId() +"님 메일로 " + vo.getpName() + "의 재고 현황을 전송했습니다.");
+		//실패
+		} else {
+			message.setMsgMsg(vo.getMemberId() +"님메일로 " + vo.getpName() + "의 재고 현황을  전송실패했습니다.");
+		}
+		
+		//Json은 결국 toString을 형식에 맞게 변환시킨것(라이브러리는 로직이 검증된것임)
+		//JSON:자바스크립트 오브젝트 생성규칙		(자기페이지에서 변화시키기 위한것임 @ResponseBody produces = "application/json; charset=UTF-8" 필요)
+		Gson gson = new Gson();
+		String json =gson.toJson(message);
+		
+		LOG.debug("1.3===============");
+		LOG.debug("1.3=json=" + json);
+		LOG.debug("1.3===============");
+		
+		return json;
+		
 	}
 	
 	@RequestMapping(value = "covid/go_mypage.spring", method = RequestMethod.POST)
@@ -168,28 +203,43 @@ public class CovidController {
 	
 //		String currentLat="37.544169";	//나중에 주소 api검색시 값을 받아 저장 default=쌍용 
 //		String currentLng="127.049948";
-		JSONObject json1 = covidService.readJsonFromUrl("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+currentLat+"&lng="+currentLng+"&m=1000");
+		JSONObject json1 = covidService.readJsonFromUrl("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+currentLat+"&lng="+currentLng+"&m=10000");
 		JsonParser parser=new JsonParser();
         JsonObject jsonObj=(JsonObject)parser.parse(json1.toString());
         JsonArray memberArray=(JsonArray)jsonObj.get("stores");
+        
+        
         
         list = new ArrayList<CovidParmVO>();
         for(int i=0; i<memberArray.size(); i++) {
         	vo = new CovidParmVO();
         	JsonObject object=(JsonObject)memberArray.get(i);
+        
+        	//null을 문자로 만들어서 check용
+        	String remainStatNull = String.valueOf(object.get("remain_stat"));//현재 null들어옴
+        	String stockAtNull =  String.valueOf(object.get("stock_at"));//현재 null들어옴
+        	String codeNull = String.valueOf(object.get("code"));
+        	String nameNull = String.valueOf(object.get("name"));
+        	String addrNull = String.valueOf(object.get("addr"));
+        	String lngNull = String.valueOf(object.get("lng"));
+        	String latNull = String.valueOf(object.get("lat"));
         	
-        	if(object.get("remain_stat").isJsonNull()) {
-        		int codeEndpoint= object.get("code").toString().lastIndexOf("\"");	//api 뿌려지는 value값이  ""로 싸여있므로 짜름
-            	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");
+        	if(remainStatNull.equals("null") || stockAtNull.equals("null") || codeNull.equals("null") || nameNull.equals("null") ||
+        			addrNull.equals("null") || lngNull.equals("null") || latNull.equals("null") ){
+        		String getCode ="";
+        		if(String.valueOf(object.get("code").toString().charAt(0)).equals("\"")) {
+        			int codeEndpoint= object.get("code").toString().lastIndexOf("\"");
+        				getCode = object.get("code").toString().substring(1, codeEndpoint);
+        		} else {
+        				getCode = object.get("code").toString();
+        		}
+        		
+            	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");//api 뿌려지는 value값이  ""로 싸여있므로 짜름
             	int addrEndpoint= object.get("addr").toString().lastIndexOf("\"");
             	int typeEndpoint= object.get("type").toString().lastIndexOf("\"");
-            	
-            	
-            	String getCode = object.get("code").toString().substring(1, codeEndpoint);
             	String getName = object.get("name").toString().substring(1, nameEndpoint);
-
             	String getAddr = object.get("addr").toString().substring(1, addrEndpoint);
-            	String getType = object.get("type").toString().substring(1, typeEndpoint);
+            	//String getType = object.get("type").toString().substring(1, typeEndpoint); 약국이면 "01"
 
             	double getLng = Double.valueOf(object.get("lng").toString());
             	double getLat = Double.valueOf(object.get("lat").toString());
@@ -203,23 +253,29 @@ public class CovidController {
             	vo.setpLat(getLat);
             	vo.setpRemainStat("empty");		//또는 empty로 변경, break를 empty로 변경(어차피 없는것이므로
         	} else {
-        		int codeEndpoint= object.get("code").toString().lastIndexOf("\"");
+        		//api에서 뿌려주는 code값이 ""으로 쌓여있을때도 있고 아닐때도 있으므로 null check
+        		String getCode ="";
+        		if(String.valueOf(object.get("code").toString().charAt(0)).equals("\"")) {
+        			int codeEndpoint= object.get("code").toString().lastIndexOf("\"");
+        				getCode = object.get("code").toString().substring(1, codeEndpoint);
+        		} else {
+        				getCode = object.get("code").toString();
+        		}
             	int nameEndpoint= object.get("name").toString().lastIndexOf("\"");
             	
             	//나중에 필요하면 null체크하고 쓰면됨
 //            	int stockAtEndpoint= object.get("stock_at").toString().lastIndexOf("\"");
 //            	int createdAtEndpoint= object.get("created_at").toString().lastIndexOf("\"");
             	int addrEndpoint= object.get("addr").toString().lastIndexOf("\"");
-            	int typeEndpoint= object.get("type").toString().lastIndexOf("\"");
+            	//int typeEndpoint= object.get("type").toString().lastIndexOf("\""); 
             	int remainStatEndpoint= object.get("remain_stat").toString().lastIndexOf("\"");
             	
             	
-            	String getCode = object.get("code").toString().substring(1, codeEndpoint);
             	String getName = object.get("name").toString().substring(1, nameEndpoint);
 //            	String getStockAt = object.get("stock_at").toString().substring(1, stockAtEndpoint);
 //            	String getCreatedAt = object.get("created_at").toString().substring(1, createdAtEndpoint);
             	String getAddr = object.get("addr").toString().substring(1, addrEndpoint);
-            	String getType = object.get("type").toString().substring(1, typeEndpoint);
+            	//String getType = object.get("type").toString().substring(1, typeEndpoint);
             	String getRemainStat = object.get("remain_stat").toString().substring(1, remainStatEndpoint);
             	double getLng = Double.valueOf(object.get("lng").toString());
             	double getLat = Double.valueOf(object.get("lat").toString());
