@@ -18,14 +18,11 @@ import com.sist.spring.cmn.Dao;
 import com.sist.spring.portfolio.member.MemberVO;
 import com.sist.spring.portfolio.project.ProjectVO;
 
-@Repository("dao")
+@Repository
 public class SkillDaoImple implements Dao {
 	// Logger
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired
-	//SqlSessionTemplate sqlSessionTemplate;
-	
 	private final String NAMESPACE= "com.sist.spring.portfolio";
 
 	// JDBCTemplate
@@ -152,7 +149,7 @@ public class SkillDaoImple implements Dao {
 		return flag;
 	}
 	
-	public void doDeleteAll( ) {
+	public int doDeleteAll( ) {
 		
 		LOG.debug("1==============================");
 		LOG.debug("1=doDeleteAll");
@@ -174,6 +171,7 @@ public class SkillDaoImple implements Dao {
 		LOG.debug("3==============================");
 		LOG.debug("3=flag="+flag);		
 		LOG.debug("3==============================");	
+		return flag;
 		
 	}
 

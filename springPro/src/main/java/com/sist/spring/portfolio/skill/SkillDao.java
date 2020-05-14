@@ -17,7 +17,7 @@ import com.sist.spring.cmn.Dao;
 import com.sist.spring.portfolio.member.MemberVO;
 import com.sist.spring.portfolio.project.ProjectVO;
 
-@Repository("dao01")
+@Repository
 public class SkillDao implements Dao {
 	// Logger
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -44,6 +44,33 @@ public class SkillDao implements Dao {
 	public SkillDao() {
 	}
 
+	
+	public int doDeleteAll() {
+		
+		LOG.debug("1==============================");
+		LOG.debug("1=doDeleteAll");
+		LOG.debug("1==============================");
+		
+		int flag = 0;
+	
+		StringBuilder  sb=new StringBuilder();
+		sb.append(" DELETE FROM skill 			\n");
+		
+		LOG.debug("==============================");
+		LOG.debug("=2.Query=\n"+sb.toString());
+		
+		
+		
+		flag = jdbcTemplate.update(sb.toString());
+		
+
+		LOG.debug("3==============================");
+		LOG.debug("3=flag="+flag);		
+		LOG.debug("3==============================");	
+		return flag;
+		
+	}
+	
 	@Override
 	public int doInsert(DTO dto) {
 		int flag = 0;
@@ -165,30 +192,7 @@ public class SkillDao implements Dao {
 		return flag;
 	}
 	
-	public void doDeleteAll( ) {
-		
-		LOG.debug("1==============================");
-		LOG.debug("1=doDeleteAll");
-		LOG.debug("1==============================");
-		
-		int flag = 0;
-	
-		StringBuilder  sb=new StringBuilder();
-		sb.append(" DELETE FROM skill 			\n");
-		
-		LOG.debug("==============================");
-		LOG.debug("=2.Query=\n"+sb.toString());
-		
-		
-		
-		flag = jdbcTemplate.update(sb.toString());
-		
 
-		LOG.debug("3==============================");
-		LOG.debug("3=flag="+flag);		
-		LOG.debug("3==============================");	
-		
-	}
 
 	
 	public List<?> doRetrieve(DTO dto) {

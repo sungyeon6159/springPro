@@ -398,6 +398,7 @@
     		<div class="row justify-content-center py-5 mt-5">
           		<div class="col-md-12 heading-section text-center ftco-animate">
            			 <h2 class="mb-4">Recommend</h2>
+           			  <h4 class="mb-4">${memberVO.name}님의 관심분야: '<b>${memberVO.interestOption}</b>'<h4>
            			 <div align="center">
 	           			 <table>
 	                        <tbody>

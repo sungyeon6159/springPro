@@ -6,10 +6,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.sist.spring.cmn.DTO;
+import com.sist.spring.cmn.Service;
 
-@Service
+@org.springframework.stereotype.Service
 public class SkillService implements Service {
 
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -18,8 +18,12 @@ public class SkillService implements Service {
 	}
 	
 	@Autowired
-	SkillDaoImple skillDao;
+	SkillDao skillDao;
 	
+	public int doDeleteAll() {
+		
+		return this.skillDao.doDeleteAll();
+	}
 	
 	public int doInsert(DTO dto) {
 		return this.skillDao.doInsert(dto);

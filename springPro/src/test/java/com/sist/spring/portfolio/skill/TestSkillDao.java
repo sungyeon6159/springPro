@@ -38,7 +38,7 @@ public class TestSkillDao {
 	SkillVO skill04;
 	
 	@Autowired
-	SkillDaoImple  dao;
+	SkillService dao;
 	
 	@Test
 	public void doRetrieve() {
@@ -144,7 +144,6 @@ public class TestSkillDao {
 		skill01 = new SkillVO("Oracle",	"j_hr001",	90	,"내용001");   
 		skill02 = new SkillVO("JAVA",	"j_hr002",	80	,"내용002");   
 		skill03 = new SkillVO("CSS",	"j_hr003",	50	,"내용003"); 
-		
 		skill04 = new SkillVO("Spring",	"j_hr001",	70	,"내용004"); 
 				
 		

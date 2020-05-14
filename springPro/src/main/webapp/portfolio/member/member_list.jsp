@@ -49,7 +49,7 @@
 	      </button>
          <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav nav ml-auto">
-	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
+	          <li class="nav-item"><a href="${hContext}/portfolio/toHome.spring" class="nav-link"><span>Home</span></a></li>
 	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
 	          <li class="nav-item"><a href="#License-section" class="nav-link"><span>License</span></a></li>
 	          <li class="nav-item"><a href="#Skills-section" class="nav-link"><span>Skills</span></a></li>
