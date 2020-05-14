@@ -394,8 +394,10 @@ public class MemberController {
 	
 	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.GET)
 	public String doSelectOne(HttpServletRequest req ,MemberVO user,SearchVO search, Model model) {
-		
+		HttpSession session =req.getSession();
+		MemberVO sessionVO=(MemberVO) session.getAttribute("loginMember");
 		user.setMemberId(req.getParameter("hiddenId")); //frm의 hiddenId 값들 가져와서 set
+		
 		LOG.debug("1===================");
 		LOG.debug("1=user="+user);
 		LOG.debug("1===================");
@@ -456,11 +458,10 @@ public class MemberController {
 		model.addAttribute("totalCnt", totalCnt);
 		int maxPageNo = ((totalCnt - 1) / 10) + 1;
 		model.addAttribute("maxPageNo",maxPageNo);
-		
+		model.addAttribute("sessionVO",sessionVO);
 		
 		return "portfolio/member/index_test";
 	}
-	
 	
 	
 	@RequestMapping(value = "member/do_delete.do",method = RequestMethod.POST
