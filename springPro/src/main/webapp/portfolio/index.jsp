@@ -63,6 +63,7 @@
 	          <li class="nav-item"><a href="#License-section" class="nav-link"><span>License</span></a></li>
 	          <li class="nav-item"><a href="#Recommends-section" class="nav-link"><span>Recommends</span></a></li>
 	          <li class="nav-item"><a href="${hContext}/portfolio/do_retrieve.spring" class="nav-link"><span>Portfolio List</span></a></li>
+	       	  <li class="nav-item"><a href="${hContext }/portfolio/logout.spring" class="nav-link"><span>LogOut</span></a></li>
 	        </ul>
 	      </div>
 	    </div>    
