@@ -22,6 +22,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+
+em.error {
+        color:#FF0000;
+     font:100% arial,helvetica,clean,sans-serif;
+     font-size:15px;
+     font-weight:bold;  
+    }
+</style>
   <title>Bombom</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
