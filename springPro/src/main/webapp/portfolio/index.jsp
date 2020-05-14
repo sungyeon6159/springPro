@@ -367,9 +367,7 @@
 									 						</tr>
 									 						<tr>
 									 							<td colspan="2">
-  			 						 								<!-- <button type="button" onclick="javascript:doDel();" class="licDelBtn" id="licDel" name="licDel" >삭제</button> -->
   			 						 								<button type="button"  class="licDelBtn btn btn-primary" id="licDel" name="licDel" >삭제</button>
- 																	<!-- <button type="button" class="licUpdate btn btn-primary" id="licUpdate" name="licUpdate" onclick="javascript:goUpdate();">수정</button>-->
 									 							    <button type="button" class="licUpdate btn btn-primary" id="licUpdate" name="licUpdate" >수정</button> 
 									 							</td>
 									 						</tr>
@@ -633,8 +631,8 @@
   }
   
 //License------------------------------
-	//수정
-	 $(".licUpdate").on("click",function(event){
+ 	//수정
+	  $(".licUpdate").on("click",function(event){
 		 console.log("수정");
 		 var licUpdate = $(this);
 	     var tdArr = new Array();
@@ -681,60 +679,29 @@
       success:function(data){ //성공
 	          console.log("data:"+data);  
 	          var html = "";
-	          var tr = licUpdate.parent().parent().parent();
-		      var td = tr.children().children();
-
-		      var removeTr01 = tr.eq(0);
-	          var removeTr02 = tr.eq(1);
-	          var removeTr03 = tr.eq(2);
-	          var removeTr04 = tr.eq(3);
-	          var removeTr05 = tr.eq(4);
-	          var removeTr06 = tr.eq(5);
-	          var removeTr07 = tr.eq(6);
-	          event.preventDefault(); 
-	
-	          removeTr01.remove();
-	          removeTr02.remove();
-	          removeTr03.remove();
-	          removeTr04.remove();
-	          removeTr05.remove();
-	          removeTr06.remove();
-	          removeTr07.remove();  
-	          
-	          html +='<tr>                                                                                                '  ;
-	       	  html +='    <td rowspan="2"><input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/></td>'  ;
-	       	  html +='</tr>                                                                                               '  ;
-	       	  html +='<tr>                                                                                                '  ;
-	       	  html +='	<td name="lName" value="${vo.lName }"  style="width: 40"><c:out value="${vo.lName }" /><hr/></td>'   ;
-	       	  html +='</tr>                                                                                               '  ;
-	       	  html +='<tr>                                                                                                '  ;
-	       	  html +='	<td id="lGroup" value="${vo.lGroup}" >자격분류: </td>                                               ';
-	       	  html +='	<td  name="lGroup"><c:out value="${vo.lGroup}" /></td>                                           '   ;
-	       	  html +='</tr>                                                                                               '  ;
-	       	  html +='<tr>                                                                                                '  ;
-	       	  html +='	<td>자격등급: </td>                                                                                 ';
-	       	  html +='	<td id="lGrade" name="lGrade"><c:out value="${vo.lGrade}" /></td>                                '   ;
-	       	  html +='</tr>                                                                                               '  ;
-	       	  html +='<tr>                                                                                                '  ;
-	       	  html +='	<td>자격번호: </td>                                                                                 ';
-	       	  html +='	<td id="lNum" name="lNum"><c:out value="${vo.lNum }"  /></td>                                    '   ;
-	       	  html +='</tr>                                                                                               '  ;
-	       	  html +='<tr>                                                                                                '  ;
-	       	  html +='	<td>취득일자: </td>                                                                                 ';
-	       	  html +='	<td id="lDate" name="lDate"><c:out value="${vo.lDate }" /></td>                                  '   ;
-	       	  html +='</tr>                                                                                               '  ;
-	       	  html +='<tr>                                                                                                '  ;
-	       	  html +='	<td>발행기관: </td>                                                                                 ';
-	       	  html +='	<td id="lOrgan" name="lOrgan"><c:out value="${vo.lOrgan }" /></td>                               '   ;
-	       	  html +='</tr>                                                                                               '  ;
-	       	  html +='<tr>                                                                                                '  ;
-	       	  html +='	<td colspan="2">                                                                                 '   ;
-	       	  html +='   		<button type="button"  class="licDelBtn btn btn-primary">수정완료</button>                  ';
-	       	  html +='	 <button type="button" class="licUpdate btn btn-primary">수정취소</button>                          ';
-	       	  html +='	</td>                                                                                            '   ;
-	       	  html +='</tr>                                                                                               '  ;
-	          
-   		  	  //tr.parent().append(html); 																							
+	          var tbody = licUpdate.parent().parent().parent();
+	          var removeTbody = tbody.eq(0);
+		      removeTbody.empty();
+		      
+		      html+='<tbody><tr><td rowspan="2"><input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/></td></tr>';
+		      html+='<tr><td name="lName" value="${vo.lName }"  style="width: 40">									  ';
+		      html+= lName.trim()																					   ;
+		      html+='<hr/></td></tr><tr><td id="lGroup" value="${vo.lGroup}" >자격분류: </td>                           ';
+		      html+='<td><input type="text"  size="30"  maxlength="9" value="';
+		      html+= lGroup.trim()																				       ;
+		      html+='"/></td></tr><tr><td>자격등급: </td><td><input type="text" maxlength="9" size="30" value="';
+		      html+=lGrade.trim()																					   ;
+		      html+='"/></td></tr><tr><td>자격번호: </td><td><input type="lNum" maxlength="10" size="30" value="';
+		      html+= lNum.trim()																					   ;
+		      html+='"/></td</tr><tr><td>취득일자: </td><td><input type="lDate" size="30" value="';
+		      html+=lDate.trim()																					   ;
+		      html+='"/></td></tr><tr><td>발행기관: </td><td><input type="lOrgan" maxlength="24" size="30" value="';
+		      html+=lOrgan.trim();
+		      html+='"/></td></tr><tr><td colspan="2">                                                                 ';
+		      html+='	    <button type="button"  class="licDelBtn btn btn-primary" id="licCan" name="licCan" >수정취소</button>       ';
+		      html+='		<button type="button" class="licUpdate btn btn-primary" id="doUpdate" name="doUpdate" >수정완료</button>      ';
+		      html+='	</td></tr></tbody>                                                                                                                                                              ';
+		      tbody.append(html); 																							
       },
       error:function(xhr,status,error){
         alert("error:"+error);
@@ -746,7 +713,7 @@
      });//--ajax 
 
      
-	  });//--수정 
+	  });//--수정  
 
 
  	//삭제
