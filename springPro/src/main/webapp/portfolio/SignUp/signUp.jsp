@@ -205,11 +205,15 @@
 	                        		<td>
 				                        <label for="interestPosition">InterestPosition</label>
 								          <select id="interestPosition">
-									         <option value="웹개발">웹개발</option>
-									         <option value="앱개발">앱개발</option>
 									         <option value="AI개발">AI개발</option>
 									         <option value="마케팅">마케팅</option>
-								          </select>
+								       		 <option value="웹개발">영업</option>
+									         <option value="웹개발">기술지원</option>
+									         <option value="웹개발">인사</option>
+									         <option value="웹개발">회계</option>
+									         <option value="웹개발">웹개발</option>
+									         <option value="앱개발">앱개발</option>
+									      </select>
 						        	</td>
 		                        </tr>
 		                        <tr>

@@ -268,12 +268,35 @@
 			document.getElementById("parmName").value = data.substring(0,index+1);
 			document.getElementById("parmCode").value = data.substring(codeIndex+1,codeIndex+9);
 			if(confirm(data.substring(0,index+1) + "에 메일을 보내시겠습니까?")==false) return;
-			
-			var frm = document.mail_frm;
-			frm.parmName.value = document.getElementById("parmName").value;
-			frm.parmCode.value = document.getElementById("parmCode").value;
-			frm.action = "${hContext}/covid/do_mail.spring";
-			frm.submit();
+
+
+			//ajax
+			$.ajax({
+			   type:"POST",
+			   url:"${hContext}/covid/do_mail.spring",
+			   dataType:"html", 
+			   data:{"parmName": document.getElementById("parmName").value,
+				     "parmCode": document.getElementById("parmCode").value
+			},
+			success:function(data){ //성공
+			   	   console.log("data:" + data);		//지금은 그냥 문자열일뿐임
+			  	   var parseData = $.parseJSON(data);
+			   	   if(parseData.msgId =="1"){
+						alert(parseData.msgMsg);
+						goMypage();
+			   	   }
+			   },
+			   error:function(xhr,status,error){
+			       alert("error:"+error);
+			   },
+			   complete:function(data){
+			   
+			   }   
+			   
+			});//--ajax
+
+
+
         });	
 
     	function goMypage(){

@@ -81,7 +81,7 @@
 				<form action="${hContext}/covid/do_retrieve.spring" name="addr_frm" method="get" class="bg-light p-4 p-md-5 contact-form">
 					<div class="form-group">
 						<h3>공적마스크 약국검색</h3>
-						<input type="text" id="address" name="address" class="col-lg-5 col-sm-5 col-xs-5 form-control" readonly="readonly" style="display:inline-block" /> 
+						<input type="text" id="address" name="address" class="col-lg-5 col-sm-5 col-xs-5 form-control" readonly="readonly" style="display:inline-block"/> 
 						<input type="button" onclick="searchKakaoAddress();" class="col-lg-3 col-sm-3 col-xs-3 btn btn-primary btn-lg" value="주소검색" />
 						<input type="button" onclick="javascript:doRetrieve();" class="col-lg-3 col-sm-3 col-xs-3 btn btn-primary btn-lg" value="조회하기" " >
 					</div>

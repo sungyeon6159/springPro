@@ -124,6 +124,15 @@ public class MemberController {
 		return "portfolio/member/member_list";
 	}
 
+
+	@RequestMapping(value="/portfolio/logout.spring", method = RequestMethod.GET)
+	public String logout(HttpServletRequest req, Model model) {
+		
+		HttpSession session=req.getSession();
+		session.invalidate();
+		
+		return "portfolio/member/login";
+	}
 	
 	@RequestMapping(value="/portfolio/searchVideo.spring", method = RequestMethod.GET)
 	public String searchVideo(HttpServletRequest req, Model model) {
