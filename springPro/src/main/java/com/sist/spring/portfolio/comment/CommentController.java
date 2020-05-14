@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.slf4j.Logger;
@@ -24,7 +25,9 @@ import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
+import com.sist.spring.portfolio.member.MemberService;
 import com.sist.spring.portfolio.member.MemberVO;
+import com.sist.spring.portfolio.member.file.FileMemberVO;
 
 
 @Controller
@@ -35,6 +38,8 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 	
+	@Autowired
+	MemberService memberService;
 	
 	
 	
@@ -145,7 +150,9 @@ public class CommentController {
 	@RequestMapping(value ="comment/add.spring", method = RequestMethod.POST
 			,produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String doInsert(CommentVO user) {
+	public String doInsert(HttpServletRequest req, CommentVO user) {
+	
+	user.setPortfolioId(req.getParameter("portfolioId")); 		
 	LOG.debug("1===================");
 	LOG.debug("1=user="+user);
 	LOG.debug("1===================");
@@ -182,7 +189,15 @@ public class CommentController {
 	
 	
 	@RequestMapping(value = "/comment/do_retrieve.spring", method = RequestMethod.GET)
-	public String doRetrieve(HttpServletRequest req, SearchVO search, Model model){
+	public String doRetrieve(HttpServletRequest req, SearchVO search, MemberVO user, Model model){
+		
+		HttpSession session =req.getSession();
+		MemberVO sessionVO=(MemberVO) session.getAttribute("loginMember");
+		
+	
+		
+		
+		
 		LOG.debug("1===================");
 		LOG.debug("1=search="+search);
 		LOG.debug("1===================");
@@ -225,7 +240,7 @@ public class CommentController {
 		model.addAttribute("totalCnt", totalCnt);
 		int maxPageNo = ((totalCnt - 1) / 10) + 1;
 		model.addAttribute("maxPageNo",maxPageNo);
-		
+		model.addAttribute("sessionVO",sessionVO);
 		
 //		member/member_mng -> /+member/member_mng+.jsp
 		return "portfolio/member/index_test";

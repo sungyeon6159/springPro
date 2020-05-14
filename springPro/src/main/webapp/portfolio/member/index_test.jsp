@@ -1050,25 +1050,30 @@
 		
 
     <footer class="ftco-footer ftco-section">
+    <!-- commentfrm -->
+   	<form id="commentfrm" name="commentfrm" >
       <div class="container">
         <div >
-	    	
 	    	<!-- 입력 From -->
             <div>
                 <table class="table" id="portfolioTable">                    
                     <tr>
                         <td>
                             <textarea style="width: 1000px" rows="2" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
-                            <input type="hidden" maxlength="20" class="form-control input-sm" id="portfolioId" name="portfolioId" placeholder="아이디" value="sohyun1234" />
-                            <input type="hidden" maxlength="20" class="form-control input-sm" id="regId" name="regId" placeholder="아이디" value="rainisy" />
+                            <input type="hidden" id="portfolioId" name="portfolioId" placeholder="아이디" value="${memberVO.memberId}" />
+                            <input type="hidden" id="regId" name="regId" placeholder="아이디" value="${sessionVO.memberId}" />
+                            <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
+                            <input type="hidden" id="searchWord" name="searchWord" value="${memberVO.memberId}">
+						
                         </td>
                         <td align="left">
-                        	<button type="button" class="btn pull-right btn-success" id="doInsert" >등록</button>
+                        	<button type="button" class="btn pull-right btn-primary" id="doInsert"  >등록</button>
                         </td>
                     </tr>
                 </table>
             </div>
         	<!-- 입력 From --> 
+        	
         </div>
         
         
@@ -1087,11 +1092,11 @@
 							<td><c:out value="${vo.cContent }"></c:out></td>
 							<td align="right"><c:out value="${vo.regDt }"></c:out></td>
 						</tr>
-						<c:if test="${vo.regId =='rainisy'}">
+						<c:if test="${vo.regId == sessionVO.memberId}">
 						<tr style="border-bottom: 1px; margin-bottom: 5px;">
                            	<td colspan="2" align="right">
-	                           	<button type="button" class="btn pull-right btn-success" id="doUpdate" OnClick="change($(this).parent().parent().parent());" >수정</button>
-	                           	<button type="button" class="btn pull-right btn-success" id="doDelete" >삭제</button>
+	                           	<button type="button" class="btn pull-right btn-primary modbtn" id="doUpdate" OnClick="change($(this).parent().parent().parent());" >수정</button>
+	                           	<button type="button" class="btn pull-right btn-primary delbtn" id="doDelete" >삭제</button>
                            	</td>
                        	</tr>
                        	
@@ -1105,6 +1110,8 @@
  			</tbody>
  			</table>
     	</div>
+    	</form>
+    	<!-- comment frm -->
     	
     	
     	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
@@ -1121,10 +1128,11 @@
 function doRetrieve(){
 	//console.log('doRetrieve');
 	
-	
 	var frm = document.commentfrm;
 	frm.pageNum.value = 1;
-	frm.searchWord.value= "";
+	frm.searchWord.value=$("#searchWord").val();
+	frm.portfolioId.value=$("#portfolioId").val();
+	frm.regId.value=$("#regId").val();
 	frm.action = "${hContext}/comment/do_retrieve.spring";
 	frm.submit();
 } 
@@ -1182,14 +1190,16 @@ $("#doInsert").on("click", function() {
 
 
 function change(param){//수정버튼클릭시 텍스트필드로변환
-    //var removeTd01 = $("#cContent").val()
-    var removeTd01 =param.children().eq(1);
-   // var removeTd02 =param.chil  dren().children().eq(2);
-    removeTd01.remove();
-   // removeTd02.remove();
+    var removeTd01 =param.children().children().eq(2);
+    var removeTd02 =param.children().children().eq(3);
+    var removeTd03 =param.children().children().eq(4);
+    var removeTd04 =param.children().children().eq(5);
+    removeTd01.empty();
+    removeTd02.empty();
+    removeTd03.empty();
+    removeTd04.empty();
     
-    param.append("<td><textarea style='width: 900px' rows='2' name='message' id='message' placeholder='Message' value = ''></textarea></td><td><div align='right'><button class='modcom btn pull-right btn-success' OnClick='mod1($(this).parent().parent().parent());' >수정완료</button><button class='noUpdate btn pull-right btn-success' id='noUpdate'>수정취소</button></div></td>");	
-    
+   
 
 }
 
@@ -1245,7 +1255,7 @@ $(document).on("click",".noUpdate",function(){//수정취소버튼
 
 
 //삭제
-$("#doDelete").on("click", function() {
+$(".delbtn").on("click", function() {
 	//console.log("#doDelete");
 
 	//u_id null check
