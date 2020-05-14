@@ -99,7 +99,7 @@
 		  <div class="form-group" align="center" >
 		    <div class="col-sm-offset-2 col-sm-10">
 		      <button type="submit" class="btn btn-primary btn-lg">로그인</button>&nbsp;&nbsp;
-		      <button type="submit" class="btn btn-primary btn-lg">회원가입</button>
+		      <input type="button" onclick="javascript:goSignUp();" class="btn btn-primary btn-lg" value="회원가입">
 		    </div>
 		  </div>
 		</form>
@@ -196,6 +196,14 @@
   <script src="${hContext}/resources/js/jquery.animateNumber.min.js"></script>
   <script src="${hContext}/resources/js/scrollax.min.js"></script>
   <script src="${hContext}/resources/js/main.js"></script>
+	<script type="text/javascript">
 
+	 function goSignUp(){
+		console.log('확인');
+		alert('회원가입페이지로 이동합니다.');
+		location.href="${hContext}/portfolio/SignUp/signUp.jsp";
+
+		};
+	</script>
 </body>
 </html>

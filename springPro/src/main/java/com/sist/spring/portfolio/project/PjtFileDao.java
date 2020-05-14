@@ -140,7 +140,41 @@ public class PjtFileDao implements Dao {
 		return flag;
 	
 	}
-
+	public DTO doSearchVideo(DTO dto) {
+		
+		LOG.debug("=============================================");
+		LOG.debug("PjtFileDao");
+		LOG.debug("doSearchVideo");
+		LOG.debug("=============================================");
+		
+		
+		PjtFileVO inVO=(PjtFileVO)dto;
+		PjtFileVO outVO=new PjtFileVO();
+		StringBuilder sb=new StringBuilder();
+		sb.append("SELECT               \n");
+		sb.append("    save_pnm,        \n");
+		sb.append("    org_nm,          \n");
+		sb.append("    file_size,       \n");
+		sb.append("    ext,             \n");
+		sb.append("    div_file,        \n");
+		sb.append("    git_adress,      \n");
+		sb.append("    member_id        \n");
+		sb.append("FROM                 \n");
+		sb.append("    file_project     \n");
+		sb.append("WHERE                \n");
+		sb.append("	git_adress=?		\n");
+		
+		Object args[]= {
+					inVO.getGitAddress()
+						};
+		outVO=this.jdbcTemplate.queryForObject(sb.toString()
+										, args
+										, rowMapper);
+		LOG.debug("=outVO=\n"+outVO);
+		LOG.debug("==============================");
+		return outVO;
+	}
+	
 	@Override
 	public DTO doSelectOne(DTO dto) {
 		PjtFileVO inVO=(PjtFileVO)dto;

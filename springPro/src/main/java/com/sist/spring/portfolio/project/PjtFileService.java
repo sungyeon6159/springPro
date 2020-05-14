@@ -33,7 +33,11 @@ public class PjtFileService implements Service {
 	public int doUpdate(DTO dto) {
 		return this.pjtFileDao.doUpdate(dto);
 	}
-
+	
+	public DTO doSearchVideo(DTO dto) {
+		return this.pjtFileDao.doSearchVideo(dto);
+	}
+	
 	@Override
 	public DTO doSelectOne(DTO dto) {
 		return this.pjtFileDao.doSelectOne(dto);

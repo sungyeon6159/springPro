@@ -14,6 +14,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<video src="${hContext}/resources/video/20200507151830_c66bf.avi" width="500" height="400" align="center" controls autoplay/>
+	<c:choose>
+		<c:when test="${EmptyData==null}">
+			<video src="${hContext}/resources/video/${pjtFileVO.savePNm}.${pjtFileVO.ext}" width="500" height="400" align="center" controls autoplay/>
+		</c:when>
+		<c:otherwise>
+			<img src="${hContext}/resources/images/noVideo.png" width="500" height="400" align="center"/>
+		</c:otherwise>
+	</c:choose>
+	
 </body>
 </html>
