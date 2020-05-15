@@ -3,6 +3,7 @@ package com.sist.spring.portfolio.skill;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
+import com.sist.spring.portfolio.member.MemberVO;
 
 @Controller
 public class SkillController {
@@ -177,12 +179,15 @@ public class SkillController {
 					,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInsert(SkillVO skillVO, HttpServletRequest req, Model model) {
+		HttpSession session= req.getSession();
+		MemberVO sessionVO=(MemberVO)session.getAttribute("member");
+		
 		
 		List<SkillVO> list = skillVO.getSkillList();
 		
 		for(int i=0;i<list.size(); i++) {
 			
-			list.get(i).setMemberId("iod1124");
+			list.get(i).setMemberId(sessionVO.getMemberId());
 			
 			LOG.debug("1111 : " + list.get(i).getsName());
 			LOG.debug("2222 : " + list.get(i).getMemberId());

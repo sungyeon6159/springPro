@@ -346,7 +346,7 @@ public class MemberController {
 	        model.addAttribute("urlList", urlList);
 	        model.addAttribute("pjtFileList", pjtFileList);
 	        
-	        session.setAttribute("memberId", outVO.getMemberId());
+	        session.setAttribute("member", outVO);
 
 	        
 			return "portfolio/index";

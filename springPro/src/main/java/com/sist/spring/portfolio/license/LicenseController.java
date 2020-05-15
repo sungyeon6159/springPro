@@ -2,6 +2,8 @@ package com.sist.spring.portfolio.license;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
+import com.sist.spring.portfolio.member.MemberVO;
 import com.sist.spring.portfolio.skill.SkillVO;
 
 @Controller
@@ -155,12 +158,14 @@ public class LicenseController {
 				,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInsert(LicenseVO licenseVO, HttpServletRequest req, Model model) {
-	
+		HttpSession session= req.getSession();
+		MemberVO sessionVO=(MemberVO)session.getAttribute("member");
+		
 		List<LicenseVO> list = licenseVO.getLicenseList();
 		
 		for(int i=0;i<list.size(); i++) {
 			
-			list.get(i).setMemberId("iod1124");
+			list.get(i).setMemberId(sessionVO.getMemberId());
 			
 			LOG.debug("1111 : " + list.get(i).getlName());
 			LOG.debug("2222 : " + list.get(i).getlGroup());
@@ -186,10 +191,10 @@ public class LicenseController {
 		message.setMsgId(flag+"");
 		//성공
 		if(flag ==1) {
-			message.setMsgMsg(licenseVO.getlName()+"님이 등록 되었습니다.");
+			message.setMsgMsg(licenseVO.getMemberId()+"님이 등록 되었습니다.");
 		//실패	
 		}else {
-			message.setMsgMsg(licenseVO.getlName()+"님 등록 실패.");			
+			message.setMsgMsg(licenseVO.getMemberId()+"님 등록 실패.");			
 		}
 		
 		//JSON

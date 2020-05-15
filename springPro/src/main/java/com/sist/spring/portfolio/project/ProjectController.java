@@ -9,6 +9,7 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,6 +35,7 @@ import com.sist.spring.cmn.FileVO;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
+import com.sist.spring.portfolio.member.MemberVO;
 
 @Controller
 public class ProjectController {    
@@ -248,6 +250,9 @@ public class ProjectController {
    
    @RequestMapping(value="project/do_insert.spring", method=RequestMethod.POST)
    public String do_insert(MultipartHttpServletRequest mReg,ProjectVO projectVO ,  HttpServletRequest req, Model model) {
+	   HttpSession session= req.getSession();
+	   MemberVO sessionVO=(MemberVO)session.getAttribute("member");
+		
 	   String datePath = this.UPLOAD_FILE;
        PjtFileVO dbInVO=new PjtFileVO();
 	   Iterator<String> files =mReg.getFileNames();
@@ -287,7 +292,7 @@ public class ProjectController {
             dbInVO.setFileSize(mFile.getSize());
             dbInVO.setOrgNm(orgFileName);
             dbInVO.setSavePNm(saveFileName);
-            dbInVO.setMemberId("iod1124");
+            dbInVO.setMemberId(sessionVO.getMemberId());
             pjtFileService.doInsert(dbInVO);
             
             try {
@@ -302,7 +307,7 @@ public class ProjectController {
       
       for(int i=0; i<list.size(); i++) {
            
-    	  list.get(i).setMemberId("iod1124");
+    	  list.get(i).setMemberId(sessionVO.getMemberId());
     	  
          LOG.debug("1111 : " + list.get(i).getPjtName());
          LOG.debug("2222 : " + list.get(i).getPjtInfo());
@@ -315,7 +320,8 @@ public class ProjectController {
       
       int  flag=0;
       for(int i=0; i<list.size(); i++) {
-      	flag = pjtService.springInsert(list.get(i));
+    	list.get(i).setMemberId(sessionVO.getMemberId());
+     	flag = pjtService.springInsert(list.get(i));
       	LOG.debug("1.2===================");
 		LOG.debug("1.2=flag="+flag); 
 		LOG.debug("1.2===================");

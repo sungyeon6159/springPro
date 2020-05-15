@@ -64,6 +64,7 @@
 	          <li class="nav-item"><a href="#Recommends-section" class="nav-link"><span>Recommends</span></a></li>
 	          <li class="nav-item"><a href="${hContext}/portfolio/do_retrieve.spring" class="nav-link"><span>Portfolio List</span></a></li>
 	       	  <li class="nav-item"><a href="${hContext }/portfolio/logout.spring" class="nav-link"><span>LogOut</span></a></li>
+	        <li class="nav-item"><a href="${hContext }/portfolio/member/member_mypage.jsp" class="nav-link"><span>MYPage</span></a></li>
 	        </ul>
 	      </div>
 	    </div>    
@@ -175,7 +176,7 @@
 	                		<c:when test="${pjtList.size()>0}">
 	                			<c:forEach var="vo" items="${pjtList}">
 		                		<tr>
-	                              <td><h5 class="text-primary" ><b>1차 프로젝트</b></h5></td>
+	                              <td><h5 class="text-primary" ><b>프로젝트 목록</b></h5></td>
 	                           </tr>
 	                           <tr>
 	                              <td rowspan="4">
