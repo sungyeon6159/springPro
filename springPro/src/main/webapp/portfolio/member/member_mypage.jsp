@@ -131,19 +131,9 @@
 				                              <p>Mastership Level</p>
 				                           </td>
 				                           <td>
-				                              <select id="sMarstery" name="skillList[0].sMarstery">
-				                                 <option value="1">1</option>
-				                                 <option value="2">2</option>
-				                                 <option value="3">3</option>
-				                                 <option value="4">4</option>
-				                                 <option value="5">5</option>
-				                                 <option value="6">6</option>
-				                                 <option value="7">7</option>
-				                                 <option value="8">8</option>
-				                                 <option value="9">9</option>
-				                                 <option value="10">10</option>
-				                              </select>
-				                           </td>
+				                           	 <input type="range" id="sMarstery" name="skillList[0].sMarstery" name="points" step="1" value="0" oninput="document.getElementById('checkMastery0').innerHTML=this.value;">
+        								   	 &nbsp&nbsp<b><span id="checkMastery0"></span>%</b>
+        								   </td>
 				                        </tr>
 				                        <tr>   
 				                           <td>
@@ -487,18 +477,8 @@
 		html+='          <p>Mastership Level</p>                                                                                                    ';
 		html+='       </td>                                                                                                                         ';
 		html+='       <td>                                                                                                                          ';
-		html+='          <select id="sMarstery'+skillCnt+'" name="skillList['+skillCnt+'].sMarstery">                                               ';
-		html+='             <option value="1">1</option>                                                                                            ';
-		html+='             <option value="2">2</option>                                                                                            ';
-		html+='             <option value="3">3</option>                                                                                            ';
-		html+='             <option value="4">4</option>                                                                                            ';
-		html+='             <option value="5">5</option>                                                                                            ';
-		html+='             <option value="6">6</option>                                                                                            ';
-		html+='             <option value="7">7</option>                                                                                            ';
-		html+='             <option value="8">8</option>                                                                                            ';
-		html+='             <option value="9">9</option>                                                                                            ';
-		html+='             <option value="10">10</option>                                                                                          ';
-		html+='          </select>                                                                                                                  ';
+		html+='			<input type="range" id="sMarstery'+skillCnt+'" name="skillList['+skillCnt+'].sMarstery" step="1" value="0" oninput="document.getElementById(\'checkMastery'+skillCnt+'\').innerHTML=this.value;">     ';
+		html+='			&nbsp&nbsp<b><span id="checkMastery'+skillCnt+'"></span>%</b>																													';
 		html+='       </td>                                                                                                                         ';
 		html+='    </tr>                                                                                                                            ';
 		html+='    <tr>                                                                                                               ';
