@@ -39,7 +39,7 @@ public class ProjectDao implements Dao {
 			outData.setPjtInfo(rs.getString("pjt_info"));
 			outData.setPjtStart(rs.getString("pjt_start"));
 			outData.setPjtEnd(rs.getString("pjt_end"));
-			outData.setGitAddress(rs.getString("git_address"));
+			outData.setGitAddress(rs.getString("git_adress"));
 			
 //			if(rs.getInt("rnum")==0) {
 //				outData.setNum(1);
@@ -59,15 +59,13 @@ public class ProjectDao implements Dao {
 		int flag=0;
 		ProjectVO inVO=(ProjectVO)dto;
 		StringBuilder sb=new StringBuilder();
-		sb.append("INSERT INTO project (    ");
+		sb.append("INSERT INTO projects (    ");
 		sb.append("    pjt_name,            ");
 		sb.append("    member_id,           ");
 		sb.append("    pjt_info,            ");
-		sb.append("    pjt_tool,            ");
-		sb.append("    pjt_language,        ");
 		sb.append("    pjt_start,           ");
 		sb.append("    pjt_end,             ");
-		sb.append("    git_address          ");
+		sb.append("    git_adress          ");
 		sb.append(") VALUES (               ");
 		sb.append("    ?,                   ");
 		sb.append("    ?,                   ");
@@ -107,14 +105,12 @@ public class ProjectDao implements Dao {
 		StringBuilder sb=new StringBuilder();
 		
 		
-		sb.append("UPDATE project       ");
+		sb.append("UPDATE projects       ");
 		sb.append("SET                  ");
 		sb.append("    pjt_info = ?     ");
-		sb.append("    ,pjt_tool = ?    ");
-		sb.append("    ,pjt_language = ?");
 		sb.append("    ,pjt_start = ?   ");
 		sb.append("    ,pjt_end = ?     ");
-		sb.append("    ,git_address = ? ");
+		sb.append("    ,git_adress = ? ");
 		sb.append("WHERE                ");
 		sb.append("    pjt_name = ?     ");
 		sb.append("    AND member_id = ?");
@@ -152,13 +148,11 @@ public class ProjectDao implements Dao {
 		sb.append("    pjt_name,        ");
 		sb.append("    member_id,       ");
 		sb.append("    pjt_info,        ");
-		sb.append("    pjt_tool,        ");
-		sb.append("    pjt_language,    ");
 		sb.append("    pjt_start,       ");
 		sb.append("    pjt_end,         ");
-		sb.append("    git_address      ");
+		sb.append("    git_adress      ");
 		sb.append("FROM                 ");
-		sb.append("    project          ");
+		sb.append("    projects          ");
 		sb.append("WHERE                ");
 		sb.append("    pjt_name=?       ");
 		sb.append("    AND member_id= ? ");
@@ -205,13 +199,11 @@ public class ProjectDao implements Dao {
 		sb.append("    pjt_name,        ");
 		sb.append("    member_id,       ");
 		sb.append("    pjt_info,        ");
-		sb.append("    pjt_tool,        ");
-		sb.append("    pjt_language,    ");
 		sb.append("    pjt_start,       ");
 		sb.append("    pjt_end,         ");
-		sb.append("    git_address      ");
+		sb.append("    git_adress      ");
 		sb.append("FROM                 ");
-		sb.append("    project          ");
+		sb.append("    projects          ");
 		sb.append("WHERE                ");
 		sb.append("    member_id=?      ");
 //		Object args[]= {inVO.getMemberId()};

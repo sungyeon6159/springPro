@@ -57,7 +57,10 @@ public class ProjectController {
    
    @RequestMapping(value="/upload.spring",method=RequestMethod.POST)
    public ModelAndView doUpload(MultipartHttpServletRequest mReg, ModelAndView model) throws IllegalStateException, IOException {
-         LOG.debug("doUpload 확인");
+	   HttpSession session= mReg.getSession();
+	   MemberVO sessionVO=(MemberVO)session.getAttribute("member");
+		
+	   LOG.debug("doUpload 확인");
          ProjectVO inVO=new ProjectVO();
       //RootDir생성
          List<PjtFileVO> fileList =new ArrayList<PjtFileVO>();
@@ -117,8 +120,8 @@ public class ProjectController {
                   
             for(int i=1; i<=hiddenCnt; i++) {
                
-            dbInVO.setMemberId("iod1124");
-            inVO.setMemberId("iod1124");
+            dbInVO.setMemberId(sessionVO.getMemberId());
+            inVO.setMemberId(sessionVO.getMemberId());
             dbInVO.setGitAddress(mReg.getParameter("gitAddress"+i+""));
             inVO.setPjtName(mReg.getParameter("pjtName"+i+""));
             inVO.setPjtInfo(mReg.getParameter("pjtInfo"+i+""));
