@@ -151,7 +151,7 @@ public class LicenseController {
 	}
 	
 	//등록
-	@RequestMapping(value = "portfolio/license_insert.spring",method=RequestMethod.POST
+	@RequestMapping(value = "license/do_insert.spring",method=RequestMethod.POST
 				,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInsert(LicenseVO licenseVO, HttpServletRequest req, Model model) {

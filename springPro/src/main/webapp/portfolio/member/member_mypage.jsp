@@ -272,7 +272,8 @@
                   <h2 class="mb-4">Add Project</h2>
                     <div align="center">
                       <form action="${hContext}/portfoilo/upload.spring" method="post" enctype="multipart/form-data" name="projectInsetForm" id="projectInsetForm">
-                        <table id="pjtForm">
+                      <input type="hidden" id="hiddenCnt" name="hiddenCnt">
+                       <table id="pjtForm">
                         <tr>
                         	<td>
                         		<table>
@@ -319,7 +320,7 @@
 			                              <p>Project DemonstrationVideo<p>
 			                           </td>
 			                           <td>
-			                              <input type="file" id="videoFile">
+			                              <input type="file" id="videoFile" name="file01">
 			                           </td>
 			                        </tr>
 			                        
@@ -702,21 +703,22 @@
      }
        
       function pjtInsert() {
+
     	  console.log("licenseInsert");
           var licFrm = document.licenseInsertForm;
-          licFrm.action = "${hContext}/portfolio/license_insert.spring";
+          licFrm.action = "${hContext}/license/do_insert.spring";
           licFrm.method="POST";
           licFrm.submit(); 
           
-    	  var skillFrm = document.skillInsertForm;
-    	  skillFrm.action = "${hContext}/skill/do_insert.spring";
-    	  skillFrm.method="POST";
-    	  skillFrm.submit(); 
-
+         var skillFrm = document.skillInsertForm;
+         skillFrm.action = "${hContext}/skill/do_insert.spring";
+         skillFrm.method="POST";
+         skillFrm.submit(); 
           
          console.log("pjtInsert");
          var pjtFrm = document.projectInsetForm;
-         pjtFrm.action = "${hContext}/portfolio/do_insert.spring";
+         pjtFrm.action = "${hContext}/project/do_insert.spring";
+         pjtFrm.hiddenCnt.value=projectCnt;
          pjtFrm.method="POST";
          pjtFrm.submit(); 
          

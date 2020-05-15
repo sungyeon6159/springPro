@@ -36,7 +36,6 @@ import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
 
 @Controller
-@RequestMapping("/portfolio")
 public class ProjectController {    
    
    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
@@ -247,14 +246,13 @@ public class ProjectController {
    }
 
    
-   @RequestMapping(value="/do_insert.spring", method=RequestMethod.POST
-           ,produces ="application/json; charset=UTF-8")
+   @RequestMapping(value="project/do_insert.spring", method=RequestMethod.POST)
    public String do_insert(MultipartHttpServletRequest mReg,ProjectVO projectVO ,  HttpServletRequest req, Model model) {
 	   String datePath = this.UPLOAD_FILE;
        PjtFileVO dbInVO=new PjtFileVO();
-	   
 	   Iterator<String> files =mReg.getFileNames();
-         while(files.hasNext()) {
+	   LOG.debug("files.hasNext()"+files.hasNext());
+	   while(files.hasNext()) {
             FileVO  fileVO=new FileVO();
             String upFileNm = files.next();
             LOG.debug("=upFileNm="+upFileNm);
@@ -322,27 +320,7 @@ public class ProjectController {
 		LOG.debug("1.2=flag="+flag); 
 		LOG.debug("1.2===================");
       }
-		
-		//메시지 처리
-		MessageVO message=new MessageVO();
-		
-		message.setMsgId(flag+"");
-		//성공
-		if(flag ==1) {
-			message.setMsgMsg(projectVO.getPjtName()+"님이 등록 되었습니다.");
-		//실패	
-		}else {
-			message.setMsgMsg(projectVO.getPjtName()+"님 등록 실패.");			
-		}
-		
-		//JSON
-		Gson gson = new Gson();
-		String json = gson.toJson(message);
-		LOG.debug("1.3===================");
-		LOG.debug("1.3=json="+json); 
-		LOG.debug("1.3===================");
-      
-      
+	  
          return "/portfolio/index";
       }
       
