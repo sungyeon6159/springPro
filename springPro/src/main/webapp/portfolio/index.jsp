@@ -254,7 +254,7 @@
                                         
 					  	      <c:choose>
 						          <c:when test="${skillList.size()>0}">
-						              <c:forEach var="i" begin="0" end="2">
+						              <c:forEach var="i" begin="0" end="${skillList.size()-1 }">
 						               <div class="col-lg-4 mb-4">
 			                              <div class="bg-white rounded-lg shadow p-4">
                         
