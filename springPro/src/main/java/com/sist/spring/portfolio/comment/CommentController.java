@@ -189,11 +189,11 @@ public class CommentController {
 	
 	
 	@RequestMapping(value = "/comment/do_retrieve.spring", method = RequestMethod.GET)
-	public String doRetrieve(HttpServletRequest req, SearchVO search, MemberVO user, Model model){
+	public String doRetrieve(HttpServletRequest req, SearchVO search,CommentVO cmtuser, MemberVO user, Model model){
 		
 		HttpSession session =req.getSession();
 		MemberVO sessionVO=(MemberVO) session.getAttribute("loginMember");
-		
+		cmtuser.setPortfolioId(req.getParameter("portfolioId"));
 	
 		
 		

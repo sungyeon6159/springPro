@@ -1095,8 +1095,8 @@
 						<c:if test="${vo.regId == sessionVO.memberId}">
 						<tr style="border-bottom: 1px; margin-bottom: 5px;">
                            	<td colspan="2" align="right">
-	                           	<button type="button" class="btn pull-right btn-primary modbtn" id="doUpdate" OnClick="change($(this).parent().parent().parent());" >수정</button>
-	                           	<button type="button" class="btn pull-right btn-primary delbtn" id="doDelete" >삭제</button>
+	                           	<button type="button" class="btn pull-right btn-primary doUpdate" id="doUpdate" >수정</button>
+	                           	<button type="button" class="btn pull-right btn-primary doDelete" id="doDelete" >삭제</button>
                            	</td>
                        	</tr>
                        	
@@ -1189,19 +1189,82 @@ $("#doInsert").on("click", function() {
 }); 
 
 
-function change(param){//수정버튼클릭시 텍스트필드로변환
-    var removeTd01 =param.children().children().eq(2);
-    var removeTd02 =param.children().children().eq(3);
-    var removeTd03 =param.children().children().eq(4);
-    var removeTd04 =param.children().children().eq(5);
-    removeTd01.empty();
-    removeTd02.empty();
-    removeTd03.empty();
-    removeTd04.empty();
-    
-   
+$(".doUpdate").on("click",function(event){
+	 console.log("수정");
+	 var doUpdate = $(this);
+    var tdArr = new Array();
 
-}
+    doUpdate.each(function(i){
+			 var tr = doUpdate.parent().parent().parent().eq(i);
+	         var td = tr.children().children();
+	         var regId = td.eq(1).text();
+		     var cContent = td.eq(3).text();
+		     var regDt = td.eq(4).text();
+		     var btnarea = td.eq(5).text();
+
+		     tdArr.push(regId);
+		     tdArr.push(cContent);
+		     tdArr.push(regDt);
+		     tdArr.push(btnarea);
+		     
+     }); //--raio.each
+
+    var regId = tdArr[0];
+    var cContent = tdArr[1]; 
+    var regDt = tdArr[2]; 
+    
+	
+//ajax
+$.ajax({
+ type:"GET",
+ url:"${hContext}/comment/do_update.spring",
+ dataType:"html", 
+ data:{ //"memberId":"sohyun1234"
+		 "cNo": $("#cNo").val(),
+		 "regId": regId.trim(),
+        "cContent" : cContent.trim(),
+        "regDt": regDt.trim(),
+		 "portfolioId": $("#portfolioId").val()
+        
+ },
+ success:function(data){ //성공
+         console.log("data:"+data);  
+         var html = "";
+         var tbody = doUpdate.parent().parent().parent();
+         var removeTbody = tbody.eq(0);
+	      removeTbody.empty();
+	      
+	    html += '<tbody>
+		html += '<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />				';
+		html += '	<tr style="border-top: 5px; margin-top: 5px;">                                                                      ';
+		html += '		<td><c:out value="${vo.regId }"></c:out></td><td></td>                                                          ';
+		html += '	</tr>                                                                                                               ';
+		html += '	<tr>                                                                                                                ';
+		html += '		<textarea name="message" id="message" placeholder="Message"  ></textarea>                                       ';
+		html += '	</tr>                                                                                                               ';
+		html += '	<tr style="border-bottom: 1px; margin-bottom: 5px;">                                                                ';
+		html += '		<td colspan="2" align="right">                                                                                  ';
+		html += '			<button type="button"  class="noUpdate btn btn-primary" id="noUpdate" name="noUpdate" >수정취소</button>       ';
+		html += '			<button type="button" class="modCom btn btn-primary" id="modCom" name="modCom" >수정완료</button>       		 ';
+		html += '		</td>                                                                                                           ';
+		html += '	</tr>	                                                                                                            ';
+		html += '</tbody>	                                                                                                            ';                                                           ';
+	    tbody.append(html); 																							
+ },
+ error:function(xhr,status,error){
+   alert("error:"+error);
+ },
+ complete:function(data){
+ 
+ }   
+ 
+});//--ajax 
+
+
+ });//--수정  
+ 
+
+
 
 $(document).on("click",".noUpdate",function(){//수정취소버튼
 	
@@ -1217,7 +1280,7 @@ $(document).on("click",".noUpdate",function(){//수정취소버튼
 
 
 
- $(document).on("click",".modcom",function(){//댓글수정완료버튼
+ $(document).on("click",".modCom",function(){//댓글수정완료버튼
      //seq
     
      //event.preventDefault();
@@ -1255,7 +1318,7 @@ $(document).on("click",".noUpdate",function(){//수정취소버튼
 
 
 //삭제
-$(".delbtn").on("click", function() {
+$(".doDelete").on("click", function() {
 	//console.log("#doDelete");
 
 	//u_id null check
