@@ -174,21 +174,21 @@
 	                        <c:choose>
 	                		<%-- data가 있는 경우 --%>
 	                		<c:when test="${pjtList.size()>0}">
-	                			<c:forEach var="vo" items="${pjtList}">
+	                			<c:forEach var="i" begin="0" end="${pjtList.size()-1}" >
 		                		<tr>
 	                              <td><h5 class="text-primary" ><b>프로젝트 목록</b></h5></td>
 	                           </tr>
 	                           <tr>
 	                              <td rowspan="4">
-	                                  <a href="${vo.gitAddress }">
-	                                 	<video src="${hContext}/resources/video/20200507151830_c66bf.avi" width="170" height="170" align="top"/>
+	                                  <a href="${pjtList.get(i).gitAddress }">
+	                                 	<video src="${hContext}/resources/video/${pjtFileList.get(i).savePNm}.${pjtFileList.get(i).ext}" width="170" height="170" align="top"/>
 	                                 </a>  
 	                              </td>
 	                              <td>
 	                              	<p><b> subject:</b></p>
 	                              </td>
 	                              <td>
-	                              	<p> ${vo.pjtName}</p>
+	                              	<p> ${pjtList.get(i).pjtName}</p>
 	                              </td>
 	                           </tr>
 	                           <tr>
@@ -196,7 +196,7 @@
 	                           	  	<p><b> 설명:</b></p>
 	                           	  </td>
 	                           	  <td>
-	                           	  	<p>${vo.pjtInfo}</p>
+	                           	  	<p>${pjtList.get(i).pjtInfo}</p>
 	                           	  </td>
 	                           </tr>
 	                           <tr>
@@ -204,7 +204,7 @@
 	                           	  	<p><b> 사용 툴:</b></p>
 	                           	  </td>
 	                           	  <td>
-	                           	  	<p>${vo.pjtTool}</p>
+	                           	  	<p>${pjtList.get(i).pjtTool}</p>
 	                           	  </td>
 	                           </tr>
 	                           
@@ -213,15 +213,15 @@
 	                           	  	<p><b>프로젝트 기간</b></p>
 	                           	  </td>
 	                           	  <td>
-	                           	  	<p>${vo.pjtStart}-${vo.pjtEnd}</p>
+	                           	  	<p>${pjtList.get(i).pjtStart}-${pjtList.get(i).pjtEnd}</p>
 	                           	  </td>
 	                           </tr>
 	                           <tr>
 	                           	  <td colspan="2" align="center">
-	                           	      <a href="${vo.gitAddress}">
+	                           	      <a href="${pjtList.get(i).gitAddress}">
 	                           	      	<input type="button" class="btn btn-outline-primary" value="소스보기"/>
 	                           	      </a> &nbsp;&nbsp;
-	                           	  	  <input type="button" onclick="javascript:popup('${vo.gitAddress}');" class="btn btn-outline-primary" value="영상보기"/>  
+	                           	  	  <input type="button" onclick="javascript:popup('${pjtList.get(i).gitAddress}');" class="btn btn-outline-primary" value="영상보기"/>  
 	                           	  </td>
 	                           </tr>
 	                           <tr>

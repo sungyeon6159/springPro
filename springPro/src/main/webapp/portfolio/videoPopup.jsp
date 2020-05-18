@@ -16,7 +16,7 @@
 <body>
 	<c:choose>
 		<c:when test="${EmptyData==null}">
-			<video src="${hContext}/resources/video/sistAir.avi" width="500" height="400" align="center" controls autoplay/>
+			<video src="${hContext}/resources/video/${pjtFileVO.savePNm}.${pjtFileVO.ext}" width="500" height="400" align="center" controls autoplay/>
 		</c:when>
 		<c:otherwise>
 			<img src="${hContext}/resources/images/noVideo.png" width="500" height="400" align="center"/>
