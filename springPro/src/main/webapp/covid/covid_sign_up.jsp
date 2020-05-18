@@ -22,6 +22,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+
+em.error {
+        color:#FF0000;
+     font:100% arial,helvetica,clean,sans-serif;
+     font-size:15px;
+     font-weight:bold;  
+    }
+</style>
   <title>Bombom</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -63,63 +72,66 @@
         <br/>
         <br/>
     </div>   
-	<!-- Sign Up -->
-		<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="signup-section">
-			<div class="container-fluid px-md-5">
-	    		<div class="row justify-content-center py-5 mt-5">
-	          		<div class="col-md-12 heading-section text-center ftco-animate">
-	           			 <h2 class="mb-4">COVID-19: User Sign Up</h2>
-	           			 <div align="center">
-							<form action="" name="signUp_form" method="get">
-							<table>
-	                        <tbody>
-	                        	<tr>
-	                        	
-	                        		<td>
-		                            <input  type="text" class="form-control id" name="memberId" id="memberId" placeholder="Id"  maxlength="15" autofocus>
-		                        	</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-		                            <input type="password" class="form-control pass" name="password" id="password" placeholder="Password">
-		                       	 	</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-		                            <input type="password" class="form-control pass" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password" >
-		                        	</td>
-		                        </tr>
-                        		<tr>
-	                        		<td>
-                           			<input type="email" class="form-control email" name="email" id="email" placeholder="Email"  autofocus>
-                        			</td>
-		                        </tr>
-                        		<tr>
-	                        		<td>
-		                        		Phone : <select name="phone1" id="phone1">
-									       <option value="010">010</option>
-									       <option value="011">011</option>
-									       <option value="016">016</option>
-									       <option value="017">017</option>
-									       <option value="019">019</option>
-									     </select>
-									     - <input type="text" name="phone2" id="phone2" size="5" maxlength="4"> - <input type="text" name="phone3" id="phone3" size="5" maxlength="4"><br><br>
-                        			</td>
-		                        </tr>
-		                        <tr>
-	                        		<td>
-		                            <button type="submit" class="form-control btn btn-danger btn-sm" id="doInsertBtn"  >Sign Up</button>
-		                        </td>
-		                        </tr>
-		                        </tbody>
-	                     		</table>
-                    		</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
+    <!-- Sign Up -->
+	    <section class="hero-wrap js-fullheight"> <!-- 파란배경 -->
+	      <div class="overlay"></div>
+            <div class="container-fluid px-md-5">
+                <div class="row justify-content-center py-5 mt-5">
+                    <div class="col-md-12 heading-section text-center ftco-animate">
+                         <h2 class="mb-4">COVID-19: User Sign Up</h2>
+                         <div align="center">
+                            <form action="${hContext}/covid/do_sign_up.spring" id="registerForm" name="registerForm" method="get">
+	                           	<table>
+		                            <tbody>
+		                                <tr>
+		                                    <td>
+		                                    <input  type="text" class="form-control id" name="memberId" id="memberId" placeholder="Id"  maxlength="15" autofocus>
+		                                    </td>
+		                                </tr>
+		                                <tr>
+		                                    <td>
+		                                    <input type="password" class="form-control pass" name="password" id="password" placeholder="Password">
+		                                    </td>
+		                                </tr>
+		                                <tr>
+		                                    <td>
+		                                    <input type="password" class="form-control pass" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password" >
+		                                    </td>
+		                                </tr>
+		                                <tr>
+		                                    <td>
+		                                    <input type="email" class="form-control email" name="email" id="email" placeholder="Email"  autofocus>
+		                                    </td>
+		                                </tr>
+		                                <tr>
+		                                    <td>
+		                                        Phone : <select name="phone1" id="phone1">
+		                                           <option value="010">010</option>
+		                                           <option value="011">011</option>
+		                                           <option value="016">016</option>
+		                                           <option value="017">017</option>
+		                                           <option value="019">019</option>
+		                                         </select>-
+		                                         <input type="text" name="phone2" id="phone2" size="5" maxlength="4">
+		                                         -
+		                                         <input type="text" name="phone3" id="phone3" size="5" maxlength="4"><br><br>
+		                                    </td>
+		                                </tr>
+		                                <tr>
+                          				  <td>
+                            				<input  type="submit" onclick="javascipt:doInsert()" name="to_list_btn" class="form-control btn btn-danger btn-sm"  value="회원가입" id="to_list_btn" />
+                            			 </td>
+                            			</tr>
+		                              </tbody>
+	                                </table>
+                            </form>
+                            
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!--// 파란배경 -->
 
 
     <footer class="ftco-footer ftco-section">
@@ -162,14 +174,14 @@
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-	              </ul>
-	            </div>
+                <h2 class="ftco-heading-2">Have a Questions?</h2>
+                <div class="block-23 mb-3">
+                  <ul>
+                    <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                    <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                    <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                  </ul>
+                </div>
             </div>
           </div>
         </div>
@@ -206,121 +218,200 @@
 <script src="<c:url value="/resources/js/jquery.animateNumber.min.js"/>"></script>
 <script src="<c:url value="/resources/js/scrollax.min.js"/>"></script>
 <script src="<c:url value="/resources/js/main.js"/>"></script>
-    
+<script src="<c:url value="/resources/js/jquery-3.2.1.min.js"/>"></script>
+    <!-- jQuery validator -->
+<script src="<c:url value="/resources/js/jquery.validate.js"/>"></script>
+
+
     <script type="text/javascript">
-		/* function signUp() {
-			console.log("signUp()");
-			//var frm = document.signUp_frm;
-			//frm.action = "${hContext}/member/signUp.spring";
-			//frm.submit();
-		} */
+         function bindEventHandler(){
+             $("#registerForm").validate({
+                 onfocus: true,
+                 //서버전송여부
+                 debug: false,
+                  
+                 rules: {
+                	 memberId:{
+                        //필수값
+                        required: true,
+                        //최소길이
+                        minlength: 3
+                     },password:{
+                         //필수값
+                         required: true,
+                         //범위
+                         rangelength: [5,12]
+                     },passwordConfirm:{
+                         //필수값
+                         required: true,
+                         //범위
+                         rangelength: [5,12],
+
+                         equalTo:"#password"
+                     },email:{
+                         //필수값
+                         required: true,
+                         //이메일형식
+                         email: true
+                     },phone1:{
+                         //필수값
+                         required: true,
+                         //이메일형식
+                         rangelength: [1,4]
+                     },phone2:{
+                         //필수값
+                         required: true,
+                         //이메일형식
+                         rangelength: [3,4]
+                     },phone3:{
+                         //필수값
+                         required: true,
+                         //이메일형식
+                         rangelength: [3,4]
+                     }
+
+                 },messages: {
+                     //message
+                     memberId:{
+                        //필수값 
+                        required: "아이디는 필수값 입니다.",
+                        //최소길이
+                        minlength: $.validator.format('{0}자 이상 입력하세요.')
+                     },password:{
+                         //필수값 
+                         required: "비밀번호는 필수값 입니다.",
+                         //최소길이
+                         rangelength: $.validator.format('비밀번호는 {0}이상~{1}이하로 입력하세요.')
+                     },passwordConfirm:{
+                          //필수값 
+                          required: "비밀번호확인을 입력하세요.",
+                          //최소길이
+                          rangelength: $.validator.format('비밀번호확인는 {0}이상~{1}이하로 입력하세요.'),
+                          //pass==confirm_pass 
+                          equalTo:"비밀번호 항목과 일치하지 않습니다."
+                     },email:{
+                         //필수값
+                         required: "이메일은 필수값 입니다.",
+                         //이메일형식
+                         email:  "올바른 이메일 형식이 아닙니다."
+                     },phone1:{
+                    	 required: "<br>핸드폰번호는 필수값 입니다.",
+                         //이메일형식
+                         rangelength: $.validator.format('핸드폰를 형식에 맞게 입력해주세요.')
+                     },phone2:{
+                    	 required: "",
+                         //이메일형식
+                         rangelength: $.validator.format('')
+                     },phone3:{
+                    	 required: "<br>핸드폰번호는 필수값 입니다.",
+                         //이메일형식
+                         rangelength: $.validator.format('<br>핸드폰를 형식에 맞게 입력해주세요.')
+                     }
+                 },errorElement: "em"
+                 ,errorPlacement: function ( error, element ) {
+                     // Add the `help-block` class to the error element
+                     error.addClass( "help-block" );
+
+                     if ( element.prop( "type" ) === "checkbox" ) {
+                         error.insertAfter( element.parent( "label" ) );
+                     } else {
+                         error.insertAfter( element );
+                     }
+                 },
+                 highlight: function ( element, errorClass, validClass ) {
+                     $( element ).parents(".col-lg-5").addClass( "has-error" ).removeClass( "has-success" );
+                 },
+                 unhighlight: function (element, errorClass, validClass) {
+                     $( element ).parents(".col-lg-5").addClass( "has-success" ).removeClass( "has-error" );
+                 }
+
+
+          });
+
+         }
+    
+         $(document).ready(function(){
+             //input validation
+             bindEventHandler();
+                
+         });
 
 		
-		//등록
-	     $("#doInsertBtn").on("click", function() {
-
-
-	    	 var idRex = /^[a-z0-9]{6,20}$/ // 영문 소문자, 숫자 6~20자
-		     var pwdRex = /^[a-zA-z0-9]{4,20}$/;
-		     var emailregExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;	
-
-		     
-	    	 console.log("doInsertBtn()");
-			//값 null check
-		 	if ($("#memberId").val() == "" || $("#memberId").val() == false) {
-                alert("아이디를 입력 하세요.");
+		function doInsert(){
+			if($("#memberId").val() == "" || $("#memberId").val() == false){
                 $("#memberId").focus();
                 return;
             }
-            
-            if(!idRex.test($("#memberId").val())){
-            	alert("아이디는 영문 소문자 또는 숫자 포함 6~20자리 입니다.");
-            	return;
-            }
-			if ($("#password").val() == "" || $("#password").val() == false) {
-                alert("패스워드를 입력 하세요.");
+			if($("#password").val() == "" || $("#password").val() == false){
                 $("#password").focus();
                 return;
-            } 
-			 if(!pwdRex.test($("#password").val())){
-	            	alert("비밀번호는 영문 소문자 또는 숫자 포함 4~20자리 입니다.");
-	            	return;
-	            }
-            
-			/* if($("password") != $("passwordConfirm")){
-		        alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); 
-		        $("#passwordConfirm").focus();
-		        return; 
-		    } */
-			 if ($("#email").val() == "" || $("#email").val() == false) {
-                alert("이메일을 입력 하세요.");
+            }
+			if($("#email").val() == "" || $("#email").val() == false){
                 $("#email").focus();
                 return;
             }
-			 if(!idRex.test($("#emailregExp").val())){
-	            	alert("이메일 형식이 맞지 않습니다.");
-	            	return;
-	            }
-				
+			console.log("#phone2");
+			if($("#phone2").val() === "" || $("#phone2").val() == false){
+                $("#phone2").focus();
+			console.log("#phone2");
+                return;
+            }
+			console.log("#phone3");
+			if($("#phone3").val() === "" || $("#phone3").val() == false){
+                $("#phone3").focus();
+			console.log("#phone3");
+                return;
+            }
+			//ajax
+			$.ajax({
+			   type:"GET",
+			   url:"${hContext}/covid/do_sign_up.spring",
+			   dataType:"html", 
+			   data:{"memberId": $("#memberId").val(),
+				     "password": $("#password").val(),
+				     "email": $("#email").val(),
+				     "phone1": $("#phone1").val(),
+				     "phone2": $("#phone2").val(),
+				     "phone3": $("#phone3").val()
+			   },
+			   success:function(data){ //성공
+			   	   //console.log("data:" + data);
+				   var parseData = $.parseJSON(data);
+				   if(parseData.msgId =="1"){
+						alert(parseData.msgMsg);
+						goLogin();
+			   	   }
+				   
+			   },
+			   error:function(xhr,status,error){
+			      
+			   },
+			   complete:function(data){
+			   
+			   }   
+			   
+			  });//--ajax
+		}
 
-            
-			//confirm
-            if (confirm("등록 하시겠습니까?") == false)return; 
 
-             //ajax
-            $.ajax({
-                type : "GET",
-               // url : "${hContext}/portfolio/SignUp/doInsertMember.spring",
-                dataType : "html",
-                data : {
-                    "memberId" : $("#memberId").val(),
-                    "password" : $("#password").val(),
-                    "name" : $("#name").val(),
-                    "email" : $("#email").val(),
-                    "phone": $("#phone1").val()+$("#phone2").val()+$("#phone3").val(),
-                    "authority" : "1",
-                    "interestOption" : $("#interestPosition").val(),
-                    "open" : "1"
-                },
-                success : function(data) { //성공
-                    console.log("data:" + data);
-                    var parseData = $.parseJSON(data);
-                    if (parseData.msgId == "1") {
-                        alert(parseData.msgMsg);
-                    } else {
-                        alert(parseData.msgMsg);
-                    }
-
-                },
-                error : function(xhr, status, error) {
-                    alert("error:" + error);
-                },
-                complete : function(data) {
-
-                }
-
-            });//--ajax 
-
-        });
-
-	   /*   $("#memberTable>tbody").on("click", "tr", function() {
-			 //console.log("#memberTable>tbody");
-			 var trArray =$(this).children();
-			 var orgNm =  trArray.eq(0).text();
-			 //console.log("orgNm:"+orgNm);
-			 var saveNm =  trArray.eq(1).text();
-			 //console.log("saveNm:"+saveNm);
-
-			 var frm = document.fileDown;
-			 frm.orgNm.value = orgNm;
-			 frm.saveNm.value = saveNm;
-			 frm.submit();
-			 //$("#saveFileNm").val(saveFileNm);
-			 
-		}); */
-
-	        
-     </script>
-    
-</body>
+		function goLogin(){
+			//console.log('확인');
+			alert('로그인 페이지로 이동합니다.');
+			location.href="${hContext}/covid/covid_login.jsp";
+		 };
+        
+    </script>
+  </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

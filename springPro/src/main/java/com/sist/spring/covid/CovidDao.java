@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -45,6 +46,47 @@ public class CovidDao implements Dao {
 	
 	
 	
+	public DTO doSelectOneUser(DTO dto) {
+		CovidUserVO outVO = null;
+		CovidUserVO inVO = (CovidUserVO) dto;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT				\n");
+		sb.append("    member_id,       \n");
+		sb.append("    password,        \n");
+		sb.append("    email,           \n");
+		sb.append("    phone            \n");
+		sb.append("FROM  covid_user     \n");
+		sb.append("WHERE member_id = ?  \n");
+		
+		LOG.debug("=====================");
+		LOG.debug("Query:" + sb.toString());
+		LOG.debug("Param:" + inVO.toString());
+		LOG.debug("=====================");
+		
+		Object[] args = {inVO.getMemberId()};
+		try {
+		outVO = this.jdbcTemplate.queryForObject(sb.toString(), args, new RowMapper<CovidUserVO>() {
+			@Override
+			public CovidUserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				CovidUserVO outData = new CovidUserVO();
+				outData.setMemberId(rs.getString("member_id"));
+				outData.setPassWord(rs.getString("password"));
+				outData.setEmail(rs.getString("email"));
+				outData.setPhone(rs.getString("phone"));
+				
+				return outData;
+			}
+		});
+		} catch (EmptyResultDataAccessException e) {
+			return outVO;
+		}
+		
+		LOG.debug("outVO:" + outVO);
+		LOG.debug("=====================");
+		
+		return outVO;
+	}
 	
 	/**
 	 * Covid User 회원등록
@@ -59,7 +101,7 @@ public class CovidDao implements Dao {
 		sb.append("    member_id,           \n");
 		sb.append("    password,            \n");
 		sb.append("    email,               \n");
-		sb.append("    mobile_phone         \n");
+		sb.append("    phone		        \n");
 		sb.append(") VALUES (               \n");
 		sb.append("    ?,                   \n");
 		sb.append("    ?,                   \n");
@@ -75,7 +117,7 @@ public class CovidDao implements Dao {
 		Object[] args = {inVO.getMemberId(),
 				inVO.getPassWord(),
 				inVO.getEmail(),
-				inVO.getMobilePhone()
+				inVO.getPhone()
 		};
 		
 		flag = this.jdbcTemplate.update(sb.toString(), args);

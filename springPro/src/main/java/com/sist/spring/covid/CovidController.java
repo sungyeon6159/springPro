@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,9 +57,101 @@ public class CovidController {
 	
 	private List<CovidParmVO> list;
 	
+	@RequestMapping(value = "covid/do_login.spring", method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doLogin(HttpServletRequest req, CovidUserVO vo, Model model) {
+		//String url = "covid/covid_login";
+		String memberId = req.getParameter("memberId");
+		String password = req.getParameter("password");
+		//session아이디 값 wogns 가정
+		vo = new CovidUserVO();
+		vo.setMemberId(memberId);
+		vo.setPassWord(password);
+		
+		int flag = 0;
+		CovidUserVO sessionVO = (CovidUserVO) covidService.doSelectOneUser(vo);
+		
+		if(sessionVO == null || sessionVO.equals("")) {
+			flag = 0;
+		} else {
+			if(sessionVO.getMemberId().equals(memberId) && sessionVO.getPassWord().equals(password)) {
+				HttpSession session = req.getSession();
+				session.setAttribute("login", sessionVO.getMemberId());
+				flag = 1;
+			} 
+		}
+		//메시지 처리
+		MessageVO message = new MessageVO();
+		message.setMsgId(flag+""); 	//String으로 변환		msgId아이디에는 flag값만 넣음 
+		//성공
+		if(flag ==1) {
+			message.setMsgMsg("로그인에 성공하였습니다.");
+		//실패
+		} else {
+			message.setMsgMsg("로그인에 실패하였습니다.");
+		}
+		
+		//Json은 결국 toString을 형식에 맞게 변환시킨것(라이브러리는 로직이 검증된것임)
+		//JSON:자바스크립트 오브젝트 생성규칙		(자기페이지에서 변화시키기 위한것임 @ResponseBody produces = "application/json; charset=UTF-8" 필요)
+		Gson gson = new Gson();
+		String json =gson.toJson(message);
+		
+		LOG.debug("1.3===============");
+		LOG.debug("1.3=json=" + json);
+		LOG.debug("1.3===============");
+		
+		return json;
+	}
+	
+	@RequestMapping(value = "covid/do_sign_up.spring", method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doSignUp(HttpServletRequest req, CovidUserVO vo, Model model) {
+		//String url = "covid/covid_login";
+		String memberId = req.getParameter("memberId");
+		String password = req.getParameter("password");
+		String email = req.getParameter("email");
+		String phone1 = req.getParameter("phone1");
+		String phone2 = req.getParameter("phone2");
+		String phone3 = req.getParameter("phone3");
+		String phone = phone1 + "-" + phone2 + "-" + phone3;
+		
+		//session아이디 값 wogns 가정
+		vo = new CovidUserVO();
+		vo.setMemberId(memberId);
+		vo.setPassWord(password);
+		vo.setEmail(email);
+		vo.setPhone(phone);
+		
+		int flag = covidService.doInsert(vo);
+		
+		//메시지 처리
+		MessageVO message = new MessageVO();
+		message.setMsgId(flag+""); 	//String으로 변환		msgId아이디에는 flag값만 넣음 
+		//성공
+		if(flag ==1) {
+			message.setMsgMsg("회원가입에 성공하였습니다.");
+		//실패
+		} else {
+			message.setMsgMsg("회원가입에 실패하였습니다.");
+		}
+		
+		//Json은 결국 toString을 형식에 맞게 변환시킨것(라이브러리는 로직이 검증된것임)
+		//JSON:자바스크립트 오브젝트 생성규칙		(자기페이지에서 변화시키기 위한것임 @ResponseBody produces = "application/json; charset=UTF-8" 필요)
+		Gson gson = new Gson();
+		String json =gson.toJson(message);
+		
+		LOG.debug("1.3===============");
+		LOG.debug("1.3=json=" + json);
+		LOG.debug("1.3===============");
+		
+		return json;
+	}
+	
 	@RequestMapping(value = "covid/do_delete.spring", method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doDelete(HttpServletRequest req, CovidParmVO vo, Model model) {
+		HttpSession session=req.getSession();
+		String id = (String) session.getAttribute("login");
 		
 		String deleteName = req.getParameter("deleteName");
 		String deleteCode= req.getParameter("deleteCode");
@@ -67,7 +160,7 @@ public class CovidController {
 		LOG.debug("====" + deleteName);
 		LOG.debug("====" + deleteCode);
 		vo = new CovidParmVO();
-		vo.setMemberId("wogns");
+		vo.setMemberId(id);
 		vo.setpName(deleteName);
 		vo.setpCode(deleteCode);
 		
@@ -101,6 +194,9 @@ public class CovidController {
 	@RequestMapping(value = "covid/do_mail.spring", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doMail(HttpServletRequest req, RxJoinVO vo, Model model) {
+		HttpSession session=req.getSession();
+		String id = (String) session.getAttribute("login");
+		
 		String parmName = req.getParameter("parmName");
 		String parmCode= req.getParameter("parmCode");
 		//session아이디 값 wogns 가정, pcode필요
@@ -108,7 +204,7 @@ public class CovidController {
 //		LOG.debug("1111111111111" + parmName);
 //		LOG.debug("1111111111111" + parmCode);
 		vo = new RxJoinVO();
-		vo.setMemberId("wogns");
+		vo.setMemberId(id);
 		vo.setpName(parmName);
 		vo.setpCode(parmCode);
 		
@@ -172,11 +268,14 @@ public class CovidController {
 	
 	@RequestMapping(value = "covid/go_mypage.spring", method = RequestMethod.POST)
 	public String goMypage(HttpServletRequest req, RxJoinVO vo, Model model) {
+		HttpSession session=req.getSession();
+		String id = (String) session.getAttribute("login");
+		
 		String url = "covid/covid_mypage";
 		
 		//session아이디 값 wogns 가정
 		vo = new RxJoinVO();
-		vo.setMemberId("wogns");
+		vo.setMemberId(id);
 		List<RxJoinVO> pList = (List<RxJoinVO>) covidService.doRetrieve(vo);
 		
 		model.addAttribute("pList", pList);
@@ -196,6 +295,9 @@ public class CovidController {
 	 */
 	@RequestMapping(value = "covid/do_retrieve.spring",method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req, CovidParmVO vo, Model model) throws JSONException, IOException {
+		HttpSession session=req.getSession();
+		String id = (String) session.getAttribute("login");
+		
 		String url = "covid/index";
 		
 		String currentLng = req.getParameter("lng");
@@ -245,7 +347,7 @@ public class CovidController {
             	double getLat = Double.valueOf(object.get("lat").toString());
             	
              	//임의로 한명 회원아아디 setting
-            	vo.setMemberId("wogns");
+            	vo.setMemberId(id);
             	vo.setpCode(getCode);
             	vo.setpName(getName);
             	vo.setpAddr(getAddr);
@@ -280,7 +382,7 @@ public class CovidController {
             	double getLng = Double.valueOf(object.get("lng").toString());
             	double getLat = Double.valueOf(object.get("lat").toString());
             	//임의로 한명 회원아아디 setting
-            	vo.setMemberId("wogns");
+            	vo.setMemberId(id);
             	vo.setpCode(getCode);
             	vo.setpName(getName);
             	vo.setpAddr(getAddr);

@@ -72,7 +72,7 @@
 	<div class="container center">
 		<div class="row justify-content-center">
 		
-		<form class="form-horizontal" action="${hContext}/portfolio/doLogin.spring" method="post">
+		<form class="form-horizontal" action="${hContext}/covid/do_login.spring" method="post">
 		
 		  <div align="center"><h2>LOGIN</h2><br/></div>
 		  <div class="form-group">
@@ -91,14 +91,14 @@
 		    <div class="col-sm-offset-2 col-sm-10">
 		      <div class="checkbox">
 		        <label>
-		          <input type="checkbox" id="idSaveCheck"> Remember me
+		          <input type="checkbox"> Remember me
 		        </label>
 		      </div>
 		    </div>
 		  </div>
 		  <div class="form-group" align="center" >
 		    <div class="col-sm-offset-2 col-sm-10">
-		      <button type="submit" class="btn btn-primary btn-lg">로그인</button>&nbsp;&nbsp;
+		      <input type="button" id="loginBtn" name="loginBtn" class="btn btn-primary btn-lg" value="로그인" />&nbsp;&nbsp;
 		      <input type="button" onclick="javascript:goSignUp();" class="btn btn-primary btn-lg" value="회원가입">
 		    </div>
 		  </div>
@@ -196,71 +196,45 @@
   <script src="${hContext}/resources/js/jquery.animateNumber.min.js"></script>
   <script src="${hContext}/resources/js/scrollax.min.js"></script>
   <script src="${hContext}/resources/js/main.js"></script>
-	<script type="text/javascript">
+  <script type="text/javascript">
+  
 
-	 function goSignUp(){
-		console.log('확인');
+  	$("#loginBtn").on("click",function(){
+		console.log("loginBtn");
+		//ajax
+		$.ajax({
+		   type:"POST",
+		   url:"${hContext}/covid/do_login.spring",
+		   dataType:"html", 
+		   data:{"memberId": $("#memberId").val(),
+			     "password": $("#password").val()
+		   },
+		   success:function(data){ //성공
+			   var parseData = $.parseJSON(data);
+		   	   if(parseData.msgId =="1"){
+					alert(parseData.msgMsg);
+					location.href="${hContext}/covid/index.jsp";
+			   } else{
+				    alert(parseData.msgMsg);
+			   }
+			   
+		   },
+		   error:function(xhr,status,error){
+		      
+		   },
+		   complete:function(data){
+		   
+		   }   
+		   
+		  });//--ajax
+  	});
+	
+	function goSignUp(){
+		//console.log('확인');
 		alert('회원가입페이지로 이동합니다.');
-		location.href="${hContext}/portfolio/SignUp/signUp.jsp";
-
-		};
-
-		//아이디 저장하기
-		$(document).ready(function(){
-			 
-		    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-		    var key = getCookie("key");
-		    $("#memberId").val(key); 
-		     
-		    if($("#memberId").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-		        $("#idSaveCheck").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
-		    }
-		     
-		    $("#idSaveCheck").change(function(){ // 체크박스에 변화가 있다면,
-		        if($("#idSaveCheck").is(":checked")){ // ID 저장하기 체크했을 때,
-		            setCookie("key", $("#memberId").val(), 7); // 7일 동안 쿠키 보관
-		        }else{ // ID 저장하기 체크 해제 시,
-		            deleteCookie("key");
-		        }
-		    });
-		     
-		    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-		    $("#memberId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-		        if($("#idSaveCheck").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-		            setCookie("key", $("#memberId").val(), 7); // 7일 동안 쿠키 보관
-		        }
-		    });
-		});
-		 
-		function setCookie(cookieName, value, exdays){
-		    var exdate = new Date();
-		    exdate.setDate(exdate.getDate() + exdays);
-		    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
-		    document.cookie = cookieName + "=" + cookieValue;
-		}
-		 
-		function deleteCookie(cookieName){
-		    var expireDate = new Date();
-		    expireDate.setDate(expireDate.getDate() - 1);
-		    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-		}
-		 
-		function getCookie(cookieName) {
-		    cookieName = cookieName + '=';
-		    var cookieData = document.cookie;
-		    var start = cookieData.indexOf(cookieName);
-		    var cookieValue = '';
-		    if(start != -1){
-		        start += cookieName.length;
-		        var end = cookieData.indexOf(';', start);
-		        if(end == -1)end = cookieData.length;
-		        cookieValue = cookieData.substring(start, end);
-		    }
-		    return unescape(cookieValue);
-		}
-
-		//--아이디 저장하기
-		
+		location.href="${hContext}/covid/covid_sign_up.jsp";
+	};
+	 
 	</script>
 </body>
 </html>
