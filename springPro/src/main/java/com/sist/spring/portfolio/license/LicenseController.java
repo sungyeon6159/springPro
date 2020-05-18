@@ -2,8 +2,6 @@ package com.sist.spring.portfolio.license;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
-import com.sist.spring.portfolio.member.MemberVO;
 import com.sist.spring.portfolio.skill.SkillVO;
 
 @Controller
@@ -111,61 +108,122 @@ public class LicenseController {
 	
 	}	
 	
+	//전체삭제
+	@RequestMapping(value = "portfolio/do_delete_all.spring",method=RequestMethod.POST
+		,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doDeleteAll(LicenseVO license) {
+	LOG.debug("1===========================");
+	LOG.debug("1 user = "+license);
+	LOG.debug("1===========================");	
 	
-	//수정
-	@RequestMapping(value ="portfolio/do_update.spring",method=RequestMethod.POST) 
-	public String doUpdate(HttpServletRequest req,Model model) {
-	LOG.debug("============doUpdate==============");
+	int flag = licenseService.doDelete(license);
+	LOG.debug("1.2===========================");
+	LOG.debug("1.2 flag = "+flag);
+	LOG.debug("1.2===========================");
 	
-	LicenseVO inVO=new LicenseVO();
+	MessageVO message = new MessageVO();
+	message.setMsgId(String.valueOf(flag));
 	
-	String memberId = req.getParameter("memberId");
-	inVO.setMemberId(memberId);
-	model.addAttribute("memberId",memberId);
-	
-	String lName = req.getParameter("lName");
-	inVO.setlName(lName);
-	model.addAttribute("lName",lName);
-	
-	String lGroup = req.getParameter("lGroup");
-	inVO.setlGroup(lGroup);
-	model.addAttribute("lGroup",lGroup);
-	
-	String lGrade = req.getParameter("lGrade");
-	inVO.setlGrade(lGrade);
-	model.addAttribute("lGrade",lGrade);
-	
-	String lNum = req.getParameter("lNum");
-	inVO.setlNum(lNum);
-	model.addAttribute("lNum",lNum);
-	
-	String lDate = req.getParameter("lDate");
-	inVO.setlDate(lDate);
-	model.addAttribute("lDate",lDate);
-	
-	String lOrgan = req.getParameter("lOrgan");
-	inVO.setlOrgan(lOrgan);
-	model.addAttribute("lOrgan",lOrgan);
-	
-	model.addAttribute("vo",inVO);
-	
-			
-	return "portfolio/index";
+	if(flag==1) {
+		message.setMsgMsg(license.getMemberId()+"의 정보가 삭제되었습니다.");
+	}else {
+		message.setMsgMsg(license.getMemberId()+"의 정보가 삭제 실패했습니다.");
 	}
 	
+	Gson gson = new Gson();
+	String json = gson.toJson(message);
+	LOG.debug("1.3===========================");
+	LOG.debug("1.3 json = "+json);
+	LOG.debug("1.3===========================");
+	
+	return json;
+	
+	}	
+	
+	//수정
+	@RequestMapping(value ="portfolio/do_update.spring",method=RequestMethod.POST
+			,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doUpdate(LicenseVO license) {
+		
+		LOG.debug("1=================");
+		LOG.debug("1=param="+license);
+		LOG.debug("1=================");
+		
+		int flag = this.licenseService.doUpdate(license);
+		LOG.debug("1.2===================");
+		LOG.debug("1.2=flag="+flag); 
+		LOG.debug("1.2===================");
+
+		//메시지 처리
+		MessageVO message=new MessageVO();
+
+		message.setMsgId(flag+"");
+		//성공
+		if(flag ==1) {
+			message.setMsgMsg(license.getlName()+"이(가) 수정 되었습니다.");
+		//실패	
+		}else {
+			message.setMsgMsg(license.getlName()+"의 수정 실패.");			
+		}		
+
+		//JSON
+		Gson gson=new Gson();
+		String json = gson.toJson(message);
+
+		LOG.debug("1.3===================");
+		LOG.debug("1.3=json="+json); 
+		LOG.debug("1.3===================");		
+
+		return json;
+	
+		
+	}
+	
+		
+	
+	
 	//등록
-	@RequestMapping(value = "license/do_insert.spring",method=RequestMethod.POST
+	@RequestMapping(value = "portfolio/license_insert_test.spring",method=RequestMethod.POST
+				,produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doInsert(LicenseVO lic) {
+		LOG.debug("1=================");
+		LOG.debug("1=param="+lic);
+		LOG.debug("1=================");
+	
+		int flag = this.licenseService.doInsert(lic);
+		
+MessageVO message=new MessageVO();
+		
+		if(flag>0) {
+			message.setMsgId(String.valueOf(flag));
+			message.setMsgMsg("등록 성공.");
+		}else {
+			message.setMsgId(String.valueOf(flag));
+			message.setMsgMsg("등록 실패.");			
+		}
+		
+		Gson gson=new Gson();
+		String jsonStr = gson.toJson(message);
+		LOG.debug("1.2=================");
+		LOG.debug("1.2=jsonStr="+jsonStr);
+		LOG.debug("1.2=================");		
+		return jsonStr;
+	}	
+	
+	//등록
+	@RequestMapping(value = "portfolio/license_insert.spring",method=RequestMethod.POST
 				,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInsert(LicenseVO licenseVO, HttpServletRequest req, Model model) {
-		HttpSession session= req.getSession();
-		MemberVO sessionVO=(MemberVO)session.getAttribute("member");
-		
+	
 		List<LicenseVO> list = licenseVO.getLicenseList();
 		
 		for(int i=0;i<list.size(); i++) {
 			
-			list.get(i).setMemberId(sessionVO.getMemberId());
+			list.get(i).setMemberId("iod1124");
 			
 			LOG.debug("1111 : " + list.get(i).getlName());
 			LOG.debug("2222 : " + list.get(i).getlGroup());
@@ -191,10 +249,10 @@ public class LicenseController {
 		message.setMsgId(flag+"");
 		//성공
 		if(flag ==1) {
-			message.setMsgMsg(licenseVO.getMemberId()+"님이 등록 되었습니다.");
+			message.setMsgMsg(licenseVO.getlName()+"님이 등록 되었습니다.");
 		//실패	
 		}else {
-			message.setMsgMsg(licenseVO.getMemberId()+"님 등록 실패.");			
+			message.setMsgMsg(licenseVO.getlName()+"님 등록 실패.");			
 		}
 		
 		//JSON
