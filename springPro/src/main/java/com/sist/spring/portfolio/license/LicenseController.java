@@ -54,7 +54,7 @@ public class LicenseController {
 	public String doRetrieve(HttpServletRequest req, Model model) {
 	
 	LicenseVO inVO=new LicenseVO();
-	inVO.setMemberId("iod1124");
+	inVO.setMemberId(inVO.getMemberId());
 	
 	List<LicenseVO> list = (List<LicenseVO>) licenseService.doRetrieve(inVO);
 	LOG.debug("1.3===========================");
