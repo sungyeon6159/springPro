@@ -657,64 +657,200 @@
 	      }); //--raio.each
 	
 	     var lName = tdArr[0];
-	     var lGroup = tdArr[1]; 
+	     
+	     var lGroup = tdArr[1];
 	     var lGrade = tdArr[2]; 
 	     var lNum = tdArr[3];
 	     var lDate = tdArr[4];
 	     var lOrgan= tdArr[5];
 		
-     //ajax
-     $.ajax({
-      type:"GET",
-      url:"${hContext}/portfolio/go_update.spring",
-      dataType:"html", 
-      data:{ //"memberId":"sohyun1234"
-             "memberId":$("#memberId").val(),
-             "lName" : lName.trim(),
-             "lGroup": lGroup.trim(),
-             "lGrade": lGrade.trim(),
-             "lNum": lNum.trim(),
-             "lDate": lDate.trim(),
-             "lOrgan": lOrgan.trim() 
-      },
-      success:function(data){ //성공
-	          console.log("data:"+data);  
-	          var html = "";
-	          var tbody = licUpdate.parent().parent().parent();
-	          var removeTbody = tbody.eq(0);
-		      removeTbody.empty();
-		      
-		      html+='<tbody><tr><td rowspan="2"><input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/></td></tr>';
-		      html+='<tr><td name="lName" value="${vo.lName }"  style="width: 40">									  ';
-		      html+= lName.trim()																					   ;
-		      html+='<hr/></td></tr><tr><td id="lGroup" value="${vo.lGroup}" >자격분류: </td>                           ';
-		      html+='<td><input type="text"  size="30"  maxlength="9" value="';
-		      html+= lGroup.trim()																				       ;
-		      html+='"/></td></tr><tr><td>자격등급: </td><td><input type="text" maxlength="9" size="30" value="';
-		      html+=lGrade.trim()																					   ;
-		      html+='"/></td></tr><tr><td>자격번호: </td><td><input type="lNum" maxlength="10" size="30" value="';
-		      html+= lNum.trim()																					   ;
-		      html+='"/></td</tr><tr><td>취득일자: </td><td><input type="lDate" size="30" value="';
-		      html+=lDate.trim()																					   ;
-		      html+='"/></td></tr><tr><td>발행기관: </td><td><input type="lOrgan" maxlength="24" size="30" value="';
-		      html+=lOrgan.trim();
-		      html+='"/></td></tr><tr><td colspan="2">                                                                 ';
-		      html+='	    <button type="button"  class="licDelBtn btn btn-primary" id="licCan" name="licCan" >수정취소</button>       ';
-		      html+='		<button type="button" class="licUpdate btn btn-primary" id="doUpdate" name="doUpdate" >수정완료</button>      ';
-		      html+='	</td></tr></tbody>                                                                                                                                                              ';
-		      tbody.append(html); 																							
-      },
-      error:function(xhr,status,error){
-        alert("error:"+error);
-      },
-      complete:function(data){
-      
-      }   
-      
-     });//--ajax 
+	     //ajax
+	     $.ajax({
+	      type:"GET",
+	      url:"${hContext}/portfolio/go_update.spring",
+	      dataType:"html", 
+	      data:{ //"memberId":"sohyun1234"
+	             "memberId":$("#memberId").val(),
+	             "lName" : lName.trim(),
+	             "lGroup": lGroup.trim(),
+	             "lGrade": lGrade.trim(),
+	             "lNum": lNum.trim(),
+	             "lDate": lDate.trim(),
+	             "lOrgan": lOrgan.trim() 
+	      },
+	      success:function(data){ //성공
+		          console.log("data:"+data);  
+		          var html = "";
+		          var tbody = licUpdate.parent().parent().parent();
+		          var removeTbody = tbody.eq(0);
+			      removeTbody.empty();
+			      
+			      html+='<tbody>                                                                                                                    ';
+			      html+='	<tr>                                                                                                                      ';
+			      html+='		<td rowspan="2">                                                                                                      ';
+			      html+='			<input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/>                                       ';
+			      html+='		</td>                                                                                                                 ';
+			      html+='	</tr>                                                                                                                     ';
+			      html+='	<tr>';  
+			      html+='		<td><input type="text" id="lNameU" name="lGroupz" size="30"  maxlength="10" readonly="readonly" value="';
+				  html+= lName;
+				  html+='"/>';
+			      html+='<hr/>                                                                                                 ';
+			      html+='		</td>                                                                                                                 ';
+			      html+='	</tr>                                                                                                                     ';
+			      html+='	<tr>                                                                                                                      ';
+			      html+='		<td id="lGroup" value="${vo.lGroup}" >자격분류: </td>                                                                    ';
+			      html+='		<td>                                                                                                                  ';
+				  html+='			<input type="text" id="lGroupU" name="lGroupz" size="30"  maxlength="10" value="';
+				  html+=lGroup;
+				  html+='"/>	';
+			      html+='		</td>                                                                                                                 ';
+			      html+='	</tr>                                                                                                                     ';
+			      html+='	<tr>                                                                                                                      ';
+			      html+='		<td>자격등급: </td>                                                                                                      ';
+			      html+='		<td>                                                                                                                  ';
+			      html+='			<input type="text" id="lGradeU" name="lGrade" size="30"  maxlength="10" value="';
+				  html+=lGrade;
+				  html+='"/>	';
+			      html+='		</td>                                                                                                                 ';
+			      html+='		</tr>                                                                                                                 ';
+			      html+='	<tr>                                                                                                                      ';
+			      html+='		<td>자격번호: </td>                                                                                                      ';
+			      html+='		<td>                                                                                                                  ';
+			      html+='			<input type="text" id="lNumU" name="lNum" size="30"  maxlength="10" value="';
+				  html+=lNum;
+				  html+='"/>	';
+			      html+='		</td>                                                                                                                 ';
+			      html+='	</tr>                                                                                                                     ';
+			      html+='	<tr>                                                                                                                      ';
+			      html+='		<td>취득일자: </td>                                                                                                      ';
+			      html+='		<td>                                                                                                                  ';
+			      html+='			<input type="text" id="lDateU" name="lDate" size="30"  maxlength="10" value="';
+				  html+=lDate;
+				  html+='"/>	';
+				  html+='		</td>                                                                                                                 ';
+			      html+='	</tr>                                                                                                                     ';
+			      html+='	<tr>                                                                                                                      ';
+			      html+='		<td>발행기관: </td>                                                                                                      ';
+			      html+='		<td>                                                                                                                  ';
+			      html+='			<input type="text" id="lOrganU" name="lOrgan" size="30"  maxlength="10" value="';
+				  html+=lOrgan;
+				  html+='"/>	';
+			      html+='		</td>                                                                                                                 ';
+			      html+='	</tr>                                                                                                                     ';
+			      html+='	<tr>                                                                                                                      ';
+			      html+='		<td colspan="2">                                                                                                      ';
+			      html+='			<button type="button"  class="licCan btn btn-primary" id="licCan" name="licCan" >수정취소</button>                   ';
+			      html+='			<button type="button" class="doUpdate btn btn-primary" id="doUpdate" name="doUpdate" >수정완료</button>              ';
+			      html+='		</td>                                                                                                                 ';
+			      html+='	</tr>                                                                                                                     ';
+			      html+='</tbody>                                                                                                                   ';                                                                                                                                                            
+			      tbody.append(html); 																							
+	      },
+	      error:function(xhr,status,error){
+	        alert("error:"+error);
+	      },
+	      complete:function(data){
+	      
+	      }   
+	      
+	     });//--ajax 
 
      
 	  });//--수정  
+
+	  //수정취소버튼
+	  $(document).on("click",".licCan",function(){
+	    	history.go(0);
+	    });
+
+	  //수정완료버튼
+	  $(document).on("click",".doUpdate",function(){//댓글수정완료버튼
+		     var lName = $("#lNameU").val();
+		     var lGroup = $("#lGroupU").val();
+		     var lGrade = $("#lGradeU").val(); 
+		     var lNum = $("#lNumU").val();
+		     var lDate = $("#lDateU").val();
+		     var lOrgan= $("#lOrganU").val();   
+
+			 console.log("수정전------------------")
+		     console.log("lName: "+lName);
+		     console.log("lGroup: "+lGroup);
+		     console.log("lGrade: "+lGrade);
+		     console.log("lNum: "+lNum);
+		     console.log("lDate: "+lDate);
+		     console.log("lOrgan: "+lOrgan);
+		     console.log("//수정전------------------")
+		      
+
+		     if($("#lGroupU").val()==null || $("#lGroupU").val().length<=0 ||$("#lGroupU").val()=='undefined'){
+					$("#lGroupU").focus();
+					alert("자격분류를 입력하세요.");
+					return;
+				}
+
+		     if($("#lGradeU").val()==null || $("#lGradeU").val().length<=0 || $("#lGradeU").val()=='undefined'){
+					$("#lGradeU").focus();
+					alert("자격등급을 입력하세요.");
+					return;
+				}
+
+		     if($("#lNumU").val()==null || $("#lNumU").val().length<=0 ||  $("#lNumU").val()=='undefined'){
+					$("#lNumU").focus();
+					alert("자격번호 입력하세요.");
+					return;
+				}
+				
+		     if( $("#lDateU").val()==null ||  $("#lDateU").val().length<=0|| $("#lDateU").val()=='undefined'){
+					$("#lDateU").focus();
+					alert("취득일을 입력하세요.");
+					return;
+				}
+
+		     if($("#lOrganU").val()==null || $("#lOrganU").val().length<=0|| $("#lOrganU").val()=='undefined'){
+					$("#lOrganU").focus();
+					alert("발행기관을 입력하세요.");
+					return;
+				}
+
+		     if(confirm("수정 하시겠습니까?")==false) return;
+			
+		     //ajax
+		     $.ajax({
+		      type:"POST",
+		      url:"${hContext}/portfolio/do_update.spring",
+		      dataType:"html", 
+		      data:{ //"memberId":"sohyun1234"
+		             "memberId":$("#memberId").val(),
+		             "lName" : lName.trim(),
+		             "lGroup": lGroup.trim(),
+		             "lGrade": lGrade.trim(),
+		             "lNum": lNum.trim(),
+		             "lDate": lDate.trim(),
+		             "lOrgan": lOrgan.trim() 
+		      },
+		      success:function(data){ //성공
+			      console.log("수정성공후우우우우");
+			      console.log("lName: "+lName.trim());
+			      console.log("lGroup: "+lGroup.trim());
+				     console.log("lGrade: "+lGrade);
+				     console.log("lNum: "+lNum);
+				     console.log("lDate: "+lDate);
+				     console.log("lOrgan: "+lOrgan);
+		    	  alert("수정되었습니다.");
+		    	  licRetrieve();
+		      },
+		      error:function(xhr,status,error){
+		        alert("error:"+error);
+		      },
+		      complete:function(data){
+		      
+		      }   
+		      
+		     });//--ajax
+			  
+		  });
+		//--수정완료버튼
 
 
  	//삭제
