@@ -280,12 +280,14 @@ public class ProjectController {
    public String do_insert(MultipartHttpServletRequest mReg,ProjectVO projectVO ,  HttpServletRequest req, Model model) {
 	   HttpSession session= req.getSession();
 	   MemberVO sessionVO=(MemberVO)session.getAttribute("member");
-		
+	   List<ProjectVO> list = projectVO.getProjectList();
+	     
 	   String datePath = this.UPLOAD_FILE;
        PjtFileVO dbInVO=new PjtFileVO();
 	   Iterator<String> files =mReg.getFileNames();
 	   LOG.debug("files.hasNext()"+files.hasNext());
 	   while(files.hasNext()) {
+		   int i=0;
             FileVO  fileVO=new FileVO();
             String upFileNm = files.next();
             LOG.debug("=upFileNm="+upFileNm);
@@ -308,30 +310,34 @@ public class ProjectController {
             if(orgFileName.indexOf(".")>-1) {
                ext = orgFileName.substring(orgFileName.indexOf(".")+1);
             }
-            saveFileName+="."+ext;
-            //Rename
-            File renameFile=new File(datePath,saveFileName);
             
             
-            fileVO.setSaveFileNm(renameFile.getAbsolutePath());
-            fileVO.setExt(ext);
             dbInVO.setExt(ext);
             dbInVO.setDivFile(1);//1이면 동영상 2이면 사진
             dbInVO.setFileSize(mFile.getSize());
             dbInVO.setOrgNm(orgFileName);
             dbInVO.setSavePNm(saveFileName);
             dbInVO.setMemberId(sessionVO.getMemberId());
+            dbInVO.setGitAddress(list.get(i).getGitAddress());
+            LOG.debug("Test!: "+list.get(i).getGitAddress());
             pjtFileService.doInsert(dbInVO);
+            
+            
+            saveFileName+="."+ext;
+            //Rename
+            File renameFile=new File(datePath,saveFileName);
+            fileVO.setSaveFileNm(renameFile.getAbsolutePath());
+            fileVO.setExt(ext);
             
             try {
 				mFile.transferTo(new File(renameFile.getAbsolutePath()));
+				i++;
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
          }
          
-      List<ProjectVO> list = projectVO.getProjectList();
       
       for(int i=0; i<list.size(); i++) {
            
