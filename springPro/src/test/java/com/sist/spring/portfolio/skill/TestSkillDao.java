@@ -46,18 +46,18 @@ public class TestSkillDao {
 		//2.추가:3건
 		//3.목록조회:3건
 //		
-//		dao.doDeleteAll();	
-//		
+//    	dao.doDeleteAll();	
+//	
 //		int flag = dao.doInsert(skill01);
 //		flag += dao.doInsert(skill02);
 //		flag += dao.doInsert(skill03);
 //		flag += dao.doInsert(skill04);
 //		assertThat(flag, is(4));
 		
-		SkillVO  searchVO=new SkillVO("",	"j_hr001",	20	,"");
+		SkillVO  searchVO=new SkillVO("",	"psj1234",	20	,"");
 		List<SkillVO> list =   (List<SkillVO>) dao.doRetrieve(searchVO);
 		
-		assertThat(list.size(), is(2));
+		assertThat(list.size(), is(3));
 		for(SkillVO vo: list) {
 			LOG.debug(vo.toString());
 		}
@@ -91,7 +91,6 @@ public class TestSkillDao {
 	}
 	
 	@Test
-	@Ignore
 	public void addAndGet() {
 		//1.전체 삭제		
 		//2.추가		
@@ -141,10 +140,10 @@ public class TestSkillDao {
 		LOG.debug("^^^^^^^^^^^");
 		LOG.debug("^WebApplicationContext^"+webApplicationContext);
 		LOG.debug("^^^^^^^^^^^");
-		skill01 = new SkillVO("Oracle",	"j_hr001",	90	,"내용001");   
-		skill02 = new SkillVO("JAVA",	"j_hr002",	80	,"내용002");   
-		skill03 = new SkillVO("CSS",	"j_hr003",	50	,"내용003"); 
-		skill04 = new SkillVO("Spring",	"j_hr001",	70	,"내용004"); 
+		skill01 = new SkillVO("C#",	"psj1234",	90	,"afadfdfafsd");   
+		skill02 = new SkillVO("Java",	"psj1234",	83	,"추상화, 다형성 이해");   
+		skill03 = new SkillVO("SQL",	"psj1234",	50	,"DDL, DML, DCL 활용 가능"); 
+		skill04 = new SkillVO("Spring",	"psy",	70	,"내용004"); 
 				
 		
 		
