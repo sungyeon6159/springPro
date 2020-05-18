@@ -1,5 +1,8 @@
 package com.sist.spring.portfolio.license;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.List;
 
 import org.junit.Before;
@@ -66,7 +69,6 @@ public class LicenseDaoTest {
 	}
 	
 	@Test
-	@Ignore
 	public void doRetrieve() {
 		//삭제
 		dao.doDelete(this.lic01);
@@ -80,12 +82,11 @@ public class LicenseDaoTest {
 		//assertThat(flag,is(3));
 		
 		//검색
-		SearchVO inVO = new SearchVO(10,1,"","so");
-		List<LicenseVO> list = (List<LicenseVO>) dao.doRetrieve(inVO);
+		List<LicenseVO> list = (List<LicenseVO>) dao.doRetrieve(lic01);
 		
 		for(LicenseVO outVO: list) {
 			LOG.debug(outVO.toString());
+			assertThat(flag,is(3));
 		}
-		//assertThat(list.size(),is(3));
 	}
 }
