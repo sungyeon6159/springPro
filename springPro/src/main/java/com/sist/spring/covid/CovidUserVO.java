@@ -29,16 +29,16 @@ public class CovidUserVO extends DTO {
 	private String memberId;			//회원아이디
 	private String passWord;		//비밀번호
 	private String email;			//이메일
-	private String mobilePhone;		//핸드폰번호
+	private String phone;		//핸드폰번호
 	
 	public CovidUserVO() {}
 
-	public CovidUserVO(String memberId, String passWord, String email, String mobilePhone) {
+	public CovidUserVO(String memberId, String passWord, String email, String phone) {
 		super();
 		this.memberId = memberId;
 		this.passWord = passWord;
 		this.email = email;
-		this.mobilePhone = mobilePhone;
+		this.phone = phone;
 	}
 
 	/**
@@ -84,25 +84,26 @@ public class CovidUserVO extends DTO {
 	}
 
 	/**
-	 * @return the mobilePhone
+	 * @return the phone
 	 */
-	public String getMobilePhone() {
-		return mobilePhone;
+	public String getPhone() {
+		return phone;
 	}
 
 	/**
-	 * @param mobilePhone the mobilePhone to set
+	 * @param phone the phone to set
 	 */
-	public void setMobilePhone(String mobilePhone) {
-		this.mobilePhone = mobilePhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Override
 	public String toString() {
-		return "CovidUserVO [memberId=" + memberId + ", passWord=" + passWord + ", email=" + email + ", mobilePhone="
-				+ mobilePhone + ", toString()=" + super.toString() + "]";
+		return "CovidUserVO [memberId=" + memberId + ", passWord=" + passWord + ", email=" + email + ", phone=" + phone
+				+ ", toString()=" + super.toString() + "]";
 	}
 
+	
 	
 	
 	

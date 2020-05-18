@@ -58,6 +58,11 @@ public class CovidService implements Service {
 	@Qualifier("mailSender")		//root-context.xml의 bean의 id값을 주면 그 객체 사용하는것임(dummyMailSender주면 그거 작동)
 	private MailSender mailSender;
 	
+	
+	public DTO doSelectOneUser(DTO dto) {
+		return covidDao.doSelectOneUser(dto);
+	}
+	
 	public int doRxInsert(DTO dto) {
 		return covidDao.doRxInsert(dto);
 	}
