@@ -175,12 +175,12 @@
            			 	<c:choose>
            			 		<c:when test="${pjtList.size()>0}">
            			 			<c:forEach var="i" begin="0" end="${pjtList.size()-1}" >
-           			 				<div class="row col-lg-4 mb-4  shadow">
+           			 				<div class="row col-lg-4 mb-4  ml-lg-2  py-lg-2 shadow ">
            			 					<h5 class="text-primary" ><b>${i+1}차 프로젝트</b></h5>
 	       			 					<a href="${pjtList.get(i).gitAddress }">
 	                                		<video src="${hContext}/resources/video/${pjtFileList.get(i).savePNm}.${pjtFileList.get(i).ext}" width="250" height="250" ></video>
 	                                    </a>
-	                                    <table>
+	                                    <table >
 	                                    	<tbody>
 	                                    		<tr>
 	                                    			<td align="left"><b>subject</b></td>
