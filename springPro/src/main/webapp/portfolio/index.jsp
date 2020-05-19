@@ -856,22 +856,7 @@
 		//do_retieve 
 		function mypage() {
 
-    	  /* console.log("licenseInsert");
-          var licFrm = document.licenseInsertForm;
-          licFrm.action = "${hContext}/portfolio/license_insert.spring";
-          licFrm.method="POST";
-          licFrm.submit();  */
-
-         console.log("skillDoretrieve");
          location.href="${hContext}/portfolio/mypage_retrieve.spring";
-
-          
-         /* console.log("pjtInsert");
-         var pjtFrm = document.projectInsetForm;
-         pjtFrm.action = "${hContext}/project/do_.spring";
-         pjtFrm.hiddenCnt.value=projectCnt;
-         pjtFrm.method="POST";
-         pjtFrm.submit();  */
          
       }
 	      

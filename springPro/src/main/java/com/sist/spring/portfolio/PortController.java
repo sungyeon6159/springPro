@@ -89,9 +89,9 @@ public class PortController {
 			LOG.debug("vo="+vo);
 		}
 		LOG.debug("1.3===================");
-		model.addAttribute("list", skillList);
-		model.addAttribute("list", licenseList);
-		model.addAttribute("list", projectList);
+		model.addAttribute("list1", skillList);
+		model.addAttribute("list2", licenseList);
+		model.addAttribute("list3", projectList);
 		
 		
 		

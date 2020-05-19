@@ -83,48 +83,46 @@
        <div class="container-fluid px-md-5">
           <div class="row d-md-flex align-items-center">
            								
-           								<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-								            <div class="block-18 shadow">
-								               <div class="page-header">
-										  	    	<h2>Skill List</h2>
-										  	    		<form action="${hContext}/portfolio/skill/do_retrieve.spring" id="skillRetrieve_frm" name="skillRetrieve_frm" method="get">
-												            <input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-												   			<input type="hidden" id="searchWord" name="searchWord" value="${param.searchWord }" />      
-												    		<input type="hidden" name="hiddenId" id="hiddenId">
-												    	</form>
-												    		<!-- Grid영역 -->
-														    	<div class="table-responsive">
-														    		<table class="table table-hover" id="memberTable">
-														    		    <!-- hidden-sm hidden-xs 숨기기 -->
-														    			<thead class="bg-primary">
-														    			</thead>
-														    			<tbody>
+           	<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+			    <div class="block-18 shadow">
+			       <div class="page-header">
+			  	    	<h2>Skill List</h2>
+			  	    		<form action="${hContext}/portfolio/mypage_retrieve.spring" id="skillRetrieve_frm" name="skillRetrieve_frm" method="get">
+					    		<input type="hidden" name="hiddenId" id="hiddenId">
+					    	</form>
+					    		<!-- Grid영역 -->
+							    	<div class="table-responsive">
+							    		<table class="table table-hover" id="memberTable">
+							    		    <!-- hidden-sm hidden-xs 숨기기 -->
+							    			<thead class="bg-primary">
+							    			</thead>
+							    			<tbody>
 										  	    		<!-- Data있는 경우 -->
 										    				<c:choose>
-										    					<c:when test="${list.size()>0 }">
-										    						<c:forEach var="i" begin="0" end="${list.size()-1}">
+										    					<c:when test="${list1.size()>0 }">
+										    						<c:forEach var="i" begin="0" end="${list1.size()-1}">
 										    							<tr>
-													    					<td class="text-left" style="display:none;">${list.get(i).memberId}</td>
+													    					<td class="text-left" style="display:none;">${list1.get(i).memberId}</td>
 													    					<td class="text-left col-sm-12">
 													    					<table>
 													    						<tr>
 													    							<td>
-													    								<h6 class="mb-4"><b>Skill Name</b></h6>
+													    								<h7 class="mb-4"><b>Skill Name</b></h7>
 													    							</td>	
 													    							<td>
-													    								<span>${list.get(i).sName }</span>
+													    								<span>${list1.get(i).sName }</span>
 													    							</td>
 													    							<td>
-													    								<h6><b>Marstery</b></h6>
+													    								<h7><b>Marstery</b></h7>
 													    							</td>
 													    							<td>
-													    								${list.get(i).sMarstery }
+													    								${list1.get(i).sMarstery } %
 													    							</td>
 													    							<td>
-													    								<h6><b>Activity History</b></h6>
+													    								<h7><b>Activity History</b></h7>
 													    							</td>
 													    							<td>
-													    								${list.get(i).sContent }
+													    								${list1.get(i).sContent }
 													    							</td>
 													    						</tr>
 													    					
@@ -133,17 +131,15 @@
 												    					</tr>
 											    					</c:forEach>
 										    					</c:when>
-										    					<c:otherwise>
-										    						<tr><td colspan="99">등록된 스킬이 없습니다.</td></tr>
-										    					</c:otherwise>
-										    				</c:choose>
+											    					<c:otherwise>
+											    						<tr><td colspan="99">등록된 스킬이 없습니다.</td></tr>
+											    					</c:otherwise>
+											    			</c:choose>
 										  	    	
 										  	    	</tbody>
 									    		</table>
 									    	</div>
 									    	<!--// Grid영역 -->    
-										  	    	
-										  	    	
 										  	    	
 								              </div>
 								            </div>
@@ -209,7 +205,7 @@
 				                              <p><textarea rows="10" cols="50" name="skillList[0].sContent" id="sContent"></textarea></p>
 				                           </td>
 				                        </tr>
-                        				<tr >                                                                                                             
+                        				<tr>                                                                                                             
 										   <td>                                                                                                                        
 												<img alt="삭제입력폼" align="left" width="20" height="20" src="${hContext}/resources/images/minus.png" onClick="skillbtnMinus(\'tr_1'+skillCnt+'\');">			
 										   </td>                                                                                                                      
@@ -224,7 +220,7 @@
                         
 	                        <tbody id="skillbody">
 	                        </tbody>
-                        </table>
+                        	</table>
                         <table>
                      		<tr>
                         		<td colspan=2>
@@ -242,10 +238,93 @@
    <!--// Skills -->
    
    <!-- license -->
-      <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="license-section">
+      <section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="license-section">
          <div class="container-fluid px-md-5">
-             <div class="row justify-content-center py-5 mt-5">
-                   <div class="col-md-12 heading-section text-center ftco-animate">
+          <div class="row d-md-flex align-items-center">
+             
+             <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+			    <div class="block-18 shadow">
+			       <div class="page-header">
+					    	<h2>License List</h2>
+					    		<form action="${hContext}/portfolio/mypage_retrieve.spring" id="licenseRetrieve_frm" name="licenseRetrieve_frm" method="get">
+						    		<input type="hidden" name="hiddenId" id="hiddenId">
+						    	</form>
+						    		<!-- Grid영역 -->
+								    	<div class="table-responsive">
+								    		<table class="table table-hover" id="memberTable">
+								    		    <!-- hidden-sm hidden-xs 숨기기 -->
+								    			<thead class="bg-primary">
+								    			</thead>
+								    			<tbody>
+										  	    		<!-- Data있는 경우 -->
+										    				<c:choose>
+										    					<c:when test="${list2.size()>0 }">
+										    						<c:forEach var="i" begin="0" end="${list2.size()-1}">
+										    							<tr>
+													    					<td class="text-left" style="display:none;">${list2.get(i).memberId}</td>
+													    					<td class="text-left col-sm-12">
+													    					<table>
+													    						<tr>
+													    							<td>
+													    								<h7 class="mb-4"><b>License Name</b></h7>
+													    								<br>${list2.get(i).lName }
+													    							</td>
+													    							<td>
+													    								${list2.get(i).lName }
+													    							</td>	
+													    							<td>
+													    								<h7><b>License Classification</b></h7>
+													    							</td>
+													    							<td>
+													    								${list2.get(i).lGroup }
+													    							</td>
+													    							<td>
+													    								<h7><b>Type of License</b></h7>
+													    							</td>
+													    							<td>
+													    								${list2.get(i).lGrade }
+													    							</td>
+													    							<td>
+													    								<h7><b>License Number</b></h7>
+													    							</td>
+													    							<td>
+													    								${list2.get(i).lNum }
+													    							</td>
+													    							<td>
+													    								<h7><b>Date of Acquisition</b></h7>
+													    							</td>
+													    							<td>
+													    								${list2.get(i).lDate }
+													    							</td>
+													    							<td>
+													    								<h7><b>Issuing Agency</b></h7>
+													    							</td>
+													    							<td>
+													    								${list2.get(i).lOrgan }
+													    							</td>
+													    						</tr>
+													    					
+													    					</table>
+													    					</td>
+												    					</tr>
+											    					</c:forEach>
+										    					</c:when>
+										    					<c:otherwise>
+										    						<tr><td colspan="99">등록된 자격증이 없습니다.</td></tr>
+										    					</c:otherwise>
+										    				</c:choose>
+										  	    	
+										  	    	</tbody>
+									    		</table>
+									    	</div>
+									    	<!--// Grid영역 -->    
+										  	    	
+								              </div>
+								            </div>
+								          </div>
+             
+               <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 shadow">
                         <h2 class="mb-4">Add License</h2>
                         <div align="center">
                      <form action="${hContext}/portfolio/do_insert_license.spring" name="licenseInsertForm" id="licenseInsertForm" method="post">
@@ -253,7 +332,6 @@
                      	<tr>
                         	<td>
                         		<table>
-                        		
 				                     <tr>
 				                     	<td>
 				                        <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="licensePlusInsert">
@@ -302,6 +380,11 @@
 				                                    <input type="text" class="form-control lOrgan" name="licenseList[0].lOrgan" id="lOrgan" placeholder="Issuing Agency"  >
 				                                 </td>
 				                              </tr>
+				                              <tr>                                                                                                             
+												 <td>                                                                                                                        
+														<img alt="삭제입력폼" align="left" width="20" height="20" src="${hContext}/resources/images/minus.png" onClick="skillbtnMinus(\'tr_1'+skillCnt+'\');">			
+												 </td>                                                                                                                      
+											  </tr>  
 				                              
 				                              
 				                              		</table>
@@ -311,6 +394,7 @@
                         					
 				                  			<tbody id="licensebody">
 					                       </tbody>
+					                       </table>
 								         <table>
 							             	<tr>
 							             		<td colspan=2>
@@ -318,8 +402,8 @@
 							             		</td>
 							             	</tr>
 							             </table>
-				         </table>         			
-                      </form>
+                      	</form>
+                     </div>
                   </div>
                </div>
             </div>
@@ -328,63 +412,143 @@
    <!--// license --> 
    
     <!-- Project -->
-    <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="Projects-section">
+    <section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="Projects-section">
        <div class="container-fluid px-md-5">
-          <div class="row justify-content-center py-5 mt-5">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                  <h2 class="mb-4">Add Project</h2>
-                    <div align="center">
-                      <form action="${hContext}/portfoilo/upload.spring" method="post" enctype="multipart/form-data" name="projectInsetForm" id="projectInsetForm">
-                        <table id="pjtForm">
-                        <tr>
-                        	<td>
-                        		<table>
-                        		
-			                        <tr>
-			                           <td>
-			                              <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="pjtPlusInsert">
-			                           </td>
-			                        </tr>
-			                        <tr>
-			                           <td>
-			                              Project Name
-			                           </td>
-			                           <td>
-			                              <input type="text" id="pjtName" name="projectList[0].pjtName">
-			                           </td>
-			                        </tr>
-			                        <tr>   
-			                           <td>
-			                              <p>Project Description<p>
-			                           </td>
-			                           <td>
-			                              <textarea cols="50" rows="3" id="pjtInfo" name="projectList[0].pjtInfo"></textarea>
-			                           </td>
-			                        </tr>
-			                        <tr>   
-			                           <td>
-			                              <p>Project Period<p>
-			                           </td>
-			                           <td>
-			                              <input type="date" id="pjtStart" name="projectList[0].pjtStart"> - <input type="date" id="pjtEnd" name="projectList[0].pjtEnd">
-			                           </td>
-			                        </tr>
-			                        <tr>   
-			                           <td>
-			                              <p>Github Address<p>
-			                           </td>
-			                           <td>
-			                              <input type="text" id="gitAddress" name="projectList[0].gitAddress">
-			                           </td>
-			                        </tr>
-			                        <tr>   
-			                           <td>
-			                              <p>Project DemonstrationVideo<p>
-			                           </td>
-			                           <td>
-			                              <input type="file" id="videoFile">
-			                           </td>
-			                        </tr>
+          <div class="row d-md-flex align-items-center">
+          	
+          	<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+			    <div class="block-18 shadow">
+			       <div class="page-header">
+					    	<h2>Project List</h2>
+					    		<form action="${hContext}/portfolio/mypage_retrieve.spring" id="projectRetrieve_frm" name="projectRetrieve_frm" method="get">
+						    		<input type="hidden" name="hiddenId" id="hiddenId">
+						    	</form>
+						    		<!-- Grid영역 -->
+								    	<div class="table-responsive">
+								    		<table class="table table-hover" id="memberTable">
+								    		    <!-- hidden-sm hidden-xs 숨기기 -->
+								    			<thead class="bg-primary">
+								    			</thead>
+								    			<tbody>
+										  	    		<!-- Data있는 경우 -->
+										    				<c:choose>
+										    					<c:when test="${list3.size()>0 }">
+										    						<c:forEach var="i" begin="0" end="${list3.size()-1}">
+										    							<tr>
+													    					<td class="text-left" style="display:none;">${list3.get(i).memberId}</td>
+													    					<td class="text-left col-sm-12">
+													    					<table>
+													    						<tr>
+													    							<td>
+													    								<h7 class="mb-4"><b>Project Name</b></h7>
+													    							</td>	
+													    							<td>
+													    								<span>${list3.get(i).pjtName }</span>
+													    							</td>
+													    							<td>
+													    								<h7><b>Project Description</b></h7>
+													    							</td>
+													    							<td>
+													    								${list3.get(i).pjtInfo }
+													    							</td>
+													    							<td>
+													    								<h7><b>Project Period</b></h7>
+													    							</td>
+													    							<td>
+													    								${list3.get(i).pjtStart } - ${list3.get(i).pjtEnd }
+													    							</td>
+													    							<td>
+													    								<h7><b>Github Address</b></h7>
+													    							</td>
+													    							<td>
+													    								${list3.get(i).gitAddress }
+													    							</td>
+													    							<%-- <td>
+													    								<h7><b>Project DemonstrationVideo</b></h7>
+													    							</td>
+													    							<td>
+													    								${list3.get(i).lDate }
+													    							</td> --%>
+													    						</tr>
+													    					
+													    					</table>
+													    					</td>
+												    					</tr>
+											    					</c:forEach>
+										    					</c:when>
+										    					<c:otherwise>
+										    						<tr><td colspan="99">등록된 자격증이 없습니다.</td></tr>
+										    					</c:otherwise>
+										    				</c:choose>
+										  	    	
+										  	    	</tbody>
+									    		</table>
+									    	</div>
+									    	<!--// Grid영역 -->    
+										  	    	
+								              </div>
+								            </div>
+								          </div>
+          
+                <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                	<div class="block-18 shadow">
+                  		<h2 class="mb-4">Add Project</h2>
+                    	<div align="center">
+                      		<form action="${hContext}/portfoilo/upload.spring" method="post" enctype="multipart/form-data" name="projectInsetForm" id="projectInsetForm">
+                        	<table id="pjtForm">
+		                        <tr>
+		                        	<td>
+		                        		<table>
+					                        <tr>
+					                           <td>
+					                              <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="pjtPlusInsert">
+					                           </td>
+					                        </tr>
+					                        <tr>
+					                           <td>
+					                              Project Name
+					                           </td>
+					                           <td>
+					                              <input type="text" id="pjtName" name="projectList[0].pjtName">
+					                           </td>
+					                        </tr>
+					                        <tr>   
+					                           <td>
+					                              <p>Project Description<p>
+					                           </td>
+					                           <td>
+					                              <textarea cols="50" rows="3" id="pjtInfo" name="projectList[0].pjtInfo"></textarea>
+					                           </td>
+					                        </tr>
+					                        <tr>   
+					                           <td>
+					                              <p>Project Period<p>
+					                           </td>
+					                           <td>
+					                              <input type="date" id="pjtStart" name="projectList[0].pjtStart"> - <input type="date" id="pjtEnd" name="projectList[0].pjtEnd">
+					                           </td>
+					                        </tr>
+					                        <tr>   
+					                           <td>
+					                              <p>Github Address<p>
+					                           </td>
+					                           <td>
+					                              <input type="text" id="gitAddress" name="projectList[0].gitAddress">
+					                           </td>
+					                        </tr>
+					                        <tr>   
+					                           <td>
+					                              <p>Project DemonstrationVideo<p>
+					                           </td>
+					                           <td>
+					                              <input type="file" id="videoFile">
+					                           </td>
+					                        </tr>
+					                        <tr>                                                                                                             
+											   <td>                                                                                                                        
+													<img alt="삭제입력폼" align="left" width="20" height="20" src="${hContext}/resources/images/minus.png" onClick="skillbtnMinus(\'tr_1'+skillCnt+'\');">			
+											   </td>                                                                                                                      
+											</tr> 
 			                        
 			                        
 			                      </table>
@@ -393,7 +557,7 @@
                         	
 			                     <tbody id="projectbody">
 					             </tbody>
-					             
+					             </table>
 		                     <table>
 		                     <tr>
 		                        <td colspan=2>
@@ -401,11 +565,11 @@
 		                        </td>
 		                     </tr>
 		                  </table>
-                     </table>
                     </form>
                    </div>
                  </div>
               </div>
+            </div>
         </div>
     </section>
    <!--// Project -->
