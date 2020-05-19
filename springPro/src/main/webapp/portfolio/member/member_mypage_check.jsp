@@ -79,24 +79,90 @@
    </div>  
 
    <!-- Skills -->
-    <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="skills-section">
+    <section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="skills-section">
        <div class="container-fluid px-md-5">
-          <div class="row justify-content-center py-5 mt-5">
-                <div class="col-md-12 heading-section text-center ftco-animate">
+          <div class="row d-md-flex align-items-center">
+           								
+           								<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+								            <div class="block-18 shadow">
+								               <div class="page-header">
+										  	    	<h2>Skill List</h2>
+										  	    		<form action="${hContext}/portfolio/skill/do_retrieve.spring" id="skillRetrieve_frm" name="skillRetrieve_frm" method="get">
+												            <input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
+												   			<input type="hidden" id="searchWord" name="searchWord" value="${param.searchWord }" />      
+												    		<input type="hidden" name="hiddenId" id="hiddenId">
+												    	</form>
+												    		<!-- Grid영역 -->
+														    	<div class="table-responsive">
+														    		<table class="table table-hover" id="memberTable">
+														    		    <!-- hidden-sm hidden-xs 숨기기 -->
+														    			<thead class="bg-primary">
+														    			</thead>
+														    			<tbody>
+										  	    		<!-- Data있는 경우 -->
+										    				<c:choose>
+										    					<c:when test="${list.size()>0 }">
+										    						<c:forEach var="i" begin="0" end="${list.size()-1}">
+										    							<tr>
+													    					<td class="text-left" style="display:none;">${list.get(i).memberId}</td>
+													    					<td class="text-left col-sm-12">
+													    					<table>
+													    						<tr>
+													    							<td>
+													    								<h6 class="mb-4"><b>Skill Name</b></h6>
+													    							</td>	
+													    							<td>
+													    								<span>${list.get(i).sName }</span>
+													    							</td>
+													    							<td>
+													    								<h6><b>Marstery</b></h6>
+													    							</td>
+													    							<td>
+													    								${list.get(i).sMarstery }
+													    							</td>
+													    							<td>
+													    								<h6><b>Activity History</b></h6>
+													    							</td>
+													    							<td>
+													    								${list.get(i).sContent }
+													    							</td>
+													    						</tr>
+													    					
+													    					</table>
+													    					</td>
+												    					</tr>
+											    					</c:forEach>
+										    					</c:when>
+										    					<c:otherwise>
+										    						<tr><td colspan="99">등록된 스킬이 없습니다.</td></tr>
+										    					</c:otherwise>
+										    				</c:choose>
+										  	    	
+										  	    	</tbody>
+									    		</table>
+									    	</div>
+									    	<!--// Grid영역 -->    
+										  	    	
+										  	    	
+										  	    	
+								              </div>
+								            </div>
+								          </div>
+								          
+          	<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 shadow">
                      <h2 class="mb-4">Add Skills</h2>
                      <div align="center">
                         <form action="${hContext}/skill/do_insert.spring" name="skillInsertForm" id="skillInsertForm" method="post">
-                        <!-- SkillController 할때 인서트 부분을 이렇게 하셨으면 좋겠는데 볼수있을까여 민지양이ㅋㅋ-->
-                        <table id="skillForm">
+                        <table id="skillForm" >
                         	<tr>
                         		<td>
                         			<table>
-                        			
                         				<tr>
-				                           <td>
-				                              <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="skillPlusInsert">
-				                           </td>
-				                        </tr>
+								          <td>
+								             <img alt="추가입력폼" width="20" height="20" src="${hContext}/resources/images/plus.png" id="skillPlusInsert">
+								          </td>
+								        </tr>
 				                              <tr>
 				                           <td>
 				                              <p>Programming Language</p>
@@ -131,19 +197,9 @@
 				                              <p>Mastership Level</p>
 				                           </td>
 				                           <td>
-				                              <select id="sMarstery" name="skillList[0].sMarstery">
-				                                 <option value="1">1</option>
-				                                 <option value="2">2</option>
-				                                 <option value="3">3</option>
-				                                 <option value="4">4</option>
-				                                 <option value="5">5</option>
-				                                 <option value="6">6</option>
-				                                 <option value="7">7</option>
-				                                 <option value="8">8</option>
-				                                 <option value="9">9</option>
-				                                 <option value="10">10</option>
-				                              </select>
-				                           </td>
+				                           	 <input type="range" id="sMarstery" name="skillList[0].sMarstery" name="points" step="1" value="0" oninput="document.getElementById('checkMastery0').innerHTML=this.value;">
+        								   	 &nbsp&nbsp<b><span id="checkMastery0"></span>%</b>
+        								   </td>
 				                        </tr>
 				                        <tr>   
 				                           <td>
@@ -153,6 +209,12 @@
 				                              <p><textarea rows="10" cols="50" name="skillList[0].sContent" id="sContent"></textarea></p>
 				                           </td>
 				                        </tr>
+                        				<tr >                                                                                                             
+										   <td>                                                                                                                        
+												<img alt="삭제입력폼" align="left" width="20" height="20" src="${hContext}/resources/images/minus.png" onClick="skillbtnMinus(\'tr_1'+skillCnt+'\');">			
+										   </td>                                                                                                                      
+										</tr>  
+                        			
                         			
                         			
                         			</table>
@@ -174,6 +236,7 @@
                      </div>
                  </div>
               </div>
+            </div>  
         </div>
     </section>
    <!--// Skills -->
@@ -262,7 +325,7 @@
             </div>
          </div>
       </section>
-   <!--// license -->
+   <!--// license --> 
    
     <!-- Project -->
     <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="Projects-section">
@@ -435,6 +498,25 @@
    
    
     <script type="text/javascript">
+
+	 //그리드 click: ID값을 서버로 ajax 전송:/member/do_select_one.do
+		$("#memberTable>tbody").on("click","tr", function(){
+			console.log("#memberTable>tbody"+ $(this));
+			var tds = $(this).children();
+			console.log("tds:"+ tds.text());
+			var memberId = tds.eq(1).text();
+			console.log("memberId:"+ memberId);
+	
+			var frm = document.skillRetrieve_frm;
+			frm.hiddenId.value = memberId;
+			frm.pageNum.value = 1;
+			frm.searchWord.value= memberId;
+			frm.submit();
+			
+	
+		});
+
+    
 
         var skillCnt = 0;
 		var html='';
