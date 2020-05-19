@@ -286,9 +286,9 @@ public class ProjectController {
        PjtFileVO dbInVO=new PjtFileVO();
 	   Iterator<String> files =mReg.getFileNames();
 	   LOG.debug("files.hasNext()"+files.hasNext());
-	   while(files.hasNext()) {
-		   int i=0;
-            FileVO  fileVO=new FileVO();
+	   int j=0;
+       while(files.hasNext()) {
+		    FileVO  fileVO=new FileVO();
             String upFileNm = files.next();
             LOG.debug("=upFileNm="+upFileNm);
             
@@ -318,8 +318,9 @@ public class ProjectController {
             dbInVO.setOrgNm(orgFileName);
             dbInVO.setSavePNm(saveFileName);
             dbInVO.setMemberId(sessionVO.getMemberId());
-            dbInVO.setGitAddress(list.get(i).getGitAddress());
-            LOG.debug("Test!: "+list.get(i).getGitAddress());
+            dbInVO.setGitAddress(list.get(j).getGitAddress());
+            LOG.debug("Test!: "+list.get(j).getGitAddress());
+            j+=1;
             pjtFileService.doInsert(dbInVO);
             
             
@@ -331,7 +332,7 @@ public class ProjectController {
             
             try {
 				mFile.transferTo(new File(renameFile.getAbsolutePath()));
-				i++;
+				
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
