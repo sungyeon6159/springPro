@@ -51,7 +51,21 @@
 	  
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.jsp"><span>B</span>ombom</a>
+	      <div>
+	     	 <a class="navbar-brand" href="index.jsp"><span>B</span>ombom</a>
+	     	  <div align="left"> 
+		      	<table> 
+		        	<tbody>
+		        		<tr>
+		        			<td>phone:&nbsp; ${memberVO.phone}</td>
+		        		</tr>
+		        		<tr>
+		        			<td>mail: &nbsp;${memberVO.email}</td>
+		        		</tr>
+		        	</tbody>
+		        </table>
+	    	  </div> 
+	      </div>
 	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -68,12 +82,6 @@
 	        </ul>
 	      </div>
 	    </div>    
-	      <div class="row" align="left"> 
-	      	<ol>
-	      		<li> phone: ${pageContext.request.contextPath }</li>
-	      		<li> Email: abcdefg@naver.com</li>
-	      	</ol>
-	      </div>
 	  </nav>
 	  <section class="hero-wrap js-fullheight">
       <div class="overlay"></div>
@@ -82,7 +90,7 @@
           <div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-center">
           	<div class="text text-center">
           		<span class="subheading">Hey! I am</span>
-		  			<h1>Bombom</h1>
+		  			<h1>${memberVO.name}</h1>
 			  			<h2> 
 						  <span
 						     class="txt-rotate"
@@ -96,7 +104,7 @@
         </div>
       </div>
       <div class="mouse">
-				<a href="#" class="mouse-icon">
+				<a href="#about-section" class="mouse-icon">
 					<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
 				</a>
 			</div>
@@ -158,9 +166,55 @@
     <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="Projects-section">
     	<div class="container-fluid px-md-5">
     		<div class="row justify-content-center py-5 mt-5">
-          		<div class="col-md-12 heading-section text-center ftco-animate">
+          		<div class="col-md-10 heading-section text-center ftco-animate">
            			 <h2 class="mb-4">Projects</h2>
            			 <div align="center">
+           				 <p>이 곳에서는 그동안 배우고 적용한 프로젝트를 볼 수 있는 곳입니다. 해당하는 버튼을 클릭하면 소스와,시연영상을 보실 수 있습니다.</p>
+           			 </div>
+           			 <div class="row col-md-12">
+           			 	<c:choose>
+           			 		<c:when test="${pjtList.size()>0}">
+           			 			<c:forEach var="i" begin="0" end="${pjtList.size()-1}" >
+           			 				<div class="row col-lg-4 mb-4  shadow">
+           			 					<h5 class="text-primary" ><b>${i+1}차 프로젝트</b></h5>
+	       			 					<a href="${pjtList.get(i).gitAddress }">
+	                                		<video src="${hContext}/resources/video/${pjtFileList.get(i).savePNm}.${pjtFileList.get(i).ext}" width="250" height="250" ></video>
+	                                    </a>
+	                                    <table>
+	                                    	<tbody>
+	                                    		<tr>
+	                                    			<td align="left"><b>subject</b></td>
+	                                    			<td align="left">${pjtList.get(i).pjtName}</td>
+	                                    		</tr>
+	                                    		<tr>
+	                                    			<td align="left"><b>설명</b></td>
+	                                    			<td align="left">${pjtList.get(i).pjtInfo}</td>
+	                                    		</tr>
+	                                    		<tr>
+	                                    			<td align="left"><b>사용 툴</b></td>
+	                                    			<td align="left">${pjtList.get(i).pjtTool}</td>
+	                                    		</tr>
+	                                    		<tr>
+	                                    			<td align="left"><b>프로젝트 기간</b></td>
+	                                    			<td align="left">${pjtList.get(i).pjtStart}-${pjtList.get(i).pjtEnd}</td>
+	                                    		</tr>
+	                                    		 <tr>
+					                           	    <td colspan="2" align="right">
+					                           	        <a href="${pjtList.get(i).gitAddress}">
+					                           	      	  <input type="button" class="btn btn-outline-primary" value="소스보기"/>
+					                           	        </a> &nbsp;&nbsp;
+					                           	  	  <input type="button" onclick="javascript:popup('${pjtList.get(i).gitAddress}');" class="btn btn-outline-primary" value="영상보기"/>  
+					                           	    </td>
+					                             </tr>
+	                                    	</tbody>
+	                                    </table>
+	                                </div>  
+           			 			</c:forEach>
+           			 		</c:when>
+           			 	</c:choose>
+           			 </div>
+           			 
+<%--            			 <div align="center">
 	           			 <table>
 	                        <tbody>
 	                        <tr>
@@ -172,7 +226,7 @@
 	                        	<td><br/></td>
 	                        </tr>
 	                        <c:choose>
-	                		<%-- data가 있는 경우 --%>
+	                		data가 있는 경우
 	                		<c:when test="${pjtList.size()>0}">
 	                			<c:forEach var="i" begin="0" end="${pjtList.size()-1}" >
 		                		<tr>
@@ -229,7 +283,7 @@
 	                        	</tr>
 		                	    </c:forEach>
 	                		</c:when>
-	                		<%-- data가 없는 경우 --%>
+	                		data가 없는 경우
 	                		<c:otherwise>
 	                			<tr>
 	                				<td colspan="99">등록된 게시글이 없습니다</td>
@@ -238,7 +292,7 @@
 	                	</c:choose>
 	                        </tbody>
 	                     </table>
-           			 </div>
+           			 </div> --%>
            		</div>
            	</div>
         </div>
@@ -249,17 +303,17 @@
      <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="Skills-section">
 		<div class="container-fluid px-md-5">
     		<div class="row justify-content-center py-5 mt-5">
-          		<div class="col-md-12 heading-section text-center ftco-animate">
+          		<div class="col-md-10 heading-section text-center ftco-animate">
            			 <h2 class="mb-4">Skills</h2> 
            			  <div class="row progress-circle mb-5">
                                         
 					  	      <c:choose>
 						          <c:when test="${skillList.size()>0}">
 						              <c:forEach var="i" begin="0" end="${skillList.size()-1 }">
-						               <div class="col-lg-4 mb-4">
-			                              <div class="bg-white rounded-lg shadow p-4">
+						               <div class="col-lg-3 mb-3">
+			                              <div class="bg-white rounded-lg shadow p-3">
                         
-						                <h2 class="h5 font-weight-bold text-center mb-4">${skillList.get(i).sName}</h2>
+						                <h2 class="h5 font-weight-bold text-center mb-3">${skillList.get(i).sName}</h2>
 		                                <!-- Progress bar 1 -->
 		                                <div class="progress mx-auto" data-value='${skillList.get(i).sMarstery}'>
 		                                    <span class="progress-left">
@@ -273,8 +327,8 @@
 		                                    </div>
 		                                </div>
 		                                       <!-- Demo info -->
-			                                <div class="row text-center mt-4">
-			                                  <h4 class="h5 font-weight-bold text-center mb-4">${skillList.get(i).sContent}</h4>
+			                                <div class="row text-center mt-3">
+			                                  <h4 class="h5 font-weight-bold text-center mb-3">${skillList.get(i).sContent}</h4>
 			                                </div>
 			                                <!-- END -->
 			                              </div>
@@ -289,7 +343,7 @@
                               </c:choose>
                               </div>
                               <c:choose><c:when test="${skillList.size()>0}">
-						       <div class="row">
+						       <div class="row col-lg-14 mb-14">
                                        <c:forEach var="i" begin="0" end="${skillList.size()-1 }">
                                        
                                                 <div class="col-md-${skillList.size()} animate-box">
@@ -322,7 +376,7 @@
     <!-- License -->
      <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="License-section">
      	<form action="${hContext}/portfolio/do_retrieve_lic.spring"  name="license_frm" method="GET" class="form-inline">
-			<div class="container-fluid px-md-3">
+			<div class="container-fluid px-md-5">
 	    		<div class="row justify-content-center py-5 mt-5">
 	          		<div class="col-md-10 heading-section text-center ftco-animate">
 	           			 <h2 class="mb-4">License</h2>
@@ -330,44 +384,47 @@
 						 	<c:choose>
 						 		<c:when test="${licList.size()>0 }">
 						 			<c:forEach var="vo" items="${licList}" >
-									 	<div class="col-md-4 text-center d-flex ftco-animate">
-									 		<div class="services-1 shadow">
+									 	<div class="col-md-3 text-center d-flex ftco-animate">
+									 		<div class="services-1 shadow" style="padding: 10;margin: 10">
 									 			<span class="icon">
 									 				<i class="flaticon-analysis"></i>
 									 			</span>
-									 			<div class="desc">
+									 			<div class="desc px-md-3 " >
 									 				<input type="hidden" name="memberId" id="memberId" value="${vo.memberId}" />
 									 				<table id="licFrm">
 									 					<tbody>
 															<tr>
-									 						    <td rowspan="2"><input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/>
+									 						    <td colspan="2"><input type="hidden" name="memberId" id="memberId" value="${vo.memberId}"/>
 									 							</td> 
 									 						</tr>
-									 						<tr>
-									 							<td name="lName" value="${vo.lName }"  style="width: 40"><c:out value="${vo.lName }" /><hr/></td>
+									 						<tr align="center" >
+									 							<td colspan="2" name="lName" value="${vo.lName }" >
+									 								<h3><b><c:out value="${vo.lName }" /></b></h3><br>
+									 							</td>
 									 						</tr>
 									 						<tr>
-									 							<td id="lGroup" value="${vo.lGroup}" >자격분류: </td>
-									 							<td  name="lGroup"><c:out value="${vo.lGroup}" /></td>
+									 							<td width="80"><b>자격분류: </b></td>
+									 							<td width="150" id="lGroup" name="lGroup"><c:out value="${vo.lGroup}" /></td>
 									 						</tr>
 									 						<tr>
-									 							<td>자격등급: </td>
+									 							<td><b>자격등급: </b></td>
 									 							<td id="lGrade" name="lGrade"><c:out value="${vo.lGrade}" /></td>
 									 						</tr>
 									 						<tr>
-									 							<td>자격번호: </td>
+									 							<td><b>자격번호: </b></td>
 									 							<td id="lNum" name="lNum"><c:out value="${vo.lNum }"  /></td>
 									 						</tr>
 									 						<tr>
-									 							<td>취득일자: </td>
+									 							<td><b>취득일자: </b></td>
 									 							<td id="lDate" name="lDate"><c:out value="${vo.lDate }" /></td>
 									 						</tr>
 									 						<tr>
-									 							<td>발행기관: </td>
+									 							<td><b>발행기관:</b> </td>
 									 							<td id="lOrgan" name="lOrgan"><c:out value="${vo.lOrgan }" /></td>
 									 						</tr>
 									 						<tr>
-									 							<td colspan="2">
+									 							<td colspan="2" align="center">
+									 								<br/>
   			 						 								<button type="button"  class="licDelBtn btn btn-primary" id="licDel" name="licDel" >삭제</button>
 									 							    <button type="button" class="licUpdate btn btn-primary" id="licUpdate" name="licUpdate" >수정</button> 
 									 							</td>
@@ -380,13 +437,9 @@
 									 </c:forEach>
 							 	</c:when>
 						 	</c:choose>	
-						 	<div>
-						 		<button type="button" onclick="javascript:licRetrieve();"class="btn btn-primary btn-sm">조회</button>
-						 	</div>
 						 </div>
 	           	    </div>
 	           	</div>
-	           	<!-- <button type="button" id="retrieveLic" onclick="javascript:licRetrieve();"class="btn btn-primary btn-sm">조회</button> -->
 	        </div>  
         </form>
      </section>  
@@ -398,7 +451,7 @@
     		<div class="row justify-content-center py-5 mt-5">
           		<div class="col-md-12 heading-section text-center ftco-animate">
            			 <h2 class="mb-4">Recommend</h2>
-           			  <h4 class="mb-4">${memberVO.name}님의 관심분야: '<b>${memberVO.interestOption}</b>'<h4>
+           			  <h4 class="mb-4">${memberVO.name}님의 관심분야: '<b>${memberVO.interestOption}</b>'</h4>
            			 <div align="center">
 	           			 <table>
 	                        <tbody>
@@ -474,7 +527,7 @@
           		</div>
           		<div>
 	          		<h3 class="mb-4">Contact Number</h3>
-		            <p><a href="tel://1234567920">+ 1235 2355 98</a></p>
+		            <p><a href="tel://${memberVO.phone}">+ ${memberVO.phone}</a></p>
 	            </div>
 	          </div>
           </div>
@@ -485,7 +538,7 @@
           		</div>
           		<div>
 	          		<h3 class="mb-4">Email Address</h3>
-		            <p><a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+		            <p><a href="mailto:${memberVO.email}">${memberVO.email}</a></p>
 		          </div>
 	          </div>
           </div>
@@ -502,7 +555,7 @@
           </div>
         </div>
 
-        <div class="row no-gutters block-9">
+<%--         <div class="row no-gutters block-9">
           <div class="col-md-6 order-md-last d-flex">
             <form action="#" class="bg-light p-4 p-md-5 contact-form">
               <div class="form-group">
@@ -527,7 +580,7 @@
           <div class="col-md-6 d-flex">
           	<div class="img" style="background-image: url(${hContext}/resources/images/about.jpg);"></div>
           </div>
-        </div>
+        </div> --%>
       </div>
     </section>
 		
@@ -692,8 +745,8 @@
 			      html+='		</td>                                                                                                                 ';
 			      html+='	</tr>                                                                                                                     ';
 			      html+='	<tr>';  
-			      html+='		<td><input type="text" id="lNameU" name="lNameU" size="30"  maxlength="10" readonly="readonly" value="';
-				  html+= lName;
+			      html+='		<td><input type="text" id="lNameU" name="lName" size="15"  maxlength="10" readonly="readonly" value="';
+				  html+= lName.trim();
 				  html+='"/>';
 			      html+='<hr/>                                                                                                 ';
 			      html+='		</td>                                                                                                                 ';
@@ -701,40 +754,40 @@
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td id="lGroup" value="${vo.lGroup}" >자격분류: </td>                                                                    ';
 			      html+='		<td>                                                                                                                  ';
-				  html+='			<input type="text" id="lGroupU" name="lGroupU" size="30"  maxlength="10" value="';
-				  html+=lGroup;
+				  html+='			<input type="text" id="lGroupU" name="lGroup" size="15"  maxlength="10" value="';
+				  html+=lGroup.trim();
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
 			      html+='	</tr>                                                                                                                     ';
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>자격등급: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lGradeU" name="lGradeU" size="30"  maxlength="10" value="';
-				  html+=lGrade;
+			      html+='			<input type="text" id="lGradeU" name="lGrade" size="15"  maxlength="10" value="';
+				  html+=lGrade.trim();
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
 			      html+='		</tr>                                                                                                                 ';
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>자격번호: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lNumU" name="lNumU" size="30"  maxlength="10" value="';
-				  html+=lNum;
+			      html+='			<input type="text" id="lNumU" name="lNum" size="15"  maxlength="10" value="';
+				  html+=lNum.trim();
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
 			      html+='	</tr>                                                                                                                     ';
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>취득일자: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lDateU" name="lDateU" size="30"  maxlength="10" value="';
-				  html+=lDate;
+			      html+='			<input type="text" id="lDateU" name="lDate" size="15"  maxlength="10" value="';
+				  html+=lDate.trim();
 				  html+='"/>	';
 				  html+='		</td>                                                                                                                 ';
 			      html+='	</tr>                                                                                                                     ';
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>발행기관: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lOrganU" name="lOrganU" size="30"  maxlength="10" value="';
-				  html+=lOrgan;
+			      html+='			<input type="text" id="lOrganU" name="lOrgan" size="15"  maxlength="10" value="';
+				  html+=lOrgan.trim();
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
 			      html+='	</tr>                                                                                                                     ';
