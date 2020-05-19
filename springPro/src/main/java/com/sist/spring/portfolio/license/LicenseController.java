@@ -216,9 +216,7 @@ MessageVO message=new MessageVO();
 		return jsonStr;
 	}	
 	//등록
-	@RequestMapping(value = "portfolio/license_insert.spring",method=RequestMethod.POST
-				,produces = "application/json; charset=UTF-8")
-	@ResponseBody
+	@RequestMapping(value = "portfolio/license_insert.spring",method=RequestMethod.POST)
 	public String doInsert(LicenseVO licenseVO, HttpServletRequest req, Model model) {
 		HttpSession session=req.getSession();
 		MemberVO sessionVO=(MemberVO)session.getAttribute("member");
@@ -259,12 +257,12 @@ MessageVO message=new MessageVO();
 		}
 		
 		//JSON
-		Gson gson = new Gson();
-		String json = gson.toJson(message);
-		LOG.debug("1.3===================");
-		LOG.debug("1.3=json="+json); 
-		LOG.debug("1.3===================");
-			
+//		Gson gson = new Gson();
+//		String json = gson.toJson(message);
+//		LOG.debug("1.3===================");
+//		LOG.debug("1.3=json="+json); 
+//		LOG.debug("1.3===================");
+//			
 			
 			return "/portfolio/index" ;
 	}	
