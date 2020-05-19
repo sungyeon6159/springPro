@@ -38,7 +38,7 @@ public class LicenseController {
 	LOG.debug("1 license = "+license);
 	LOG.debug("1===========================");	
 	
-	LicenseVO outVO=(LicenseVO) licenseService.doSelectOne(license);
+	LicenseVO outVO=(LicenseVO) licenseService.doSelectOneLic(license);
 	LOG.debug("1.2===========================");
 	LOG.debug("1.2 outVO = "+outVO);
 	LOG.debug("1.2===========================");		

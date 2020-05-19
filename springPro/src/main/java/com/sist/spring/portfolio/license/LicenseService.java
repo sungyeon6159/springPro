@@ -29,6 +29,9 @@ public class LicenseService implements com.sist.spring.cmn.Service{
 	public DTO doSelectOne(DTO dto) {
 		return licenseDao.doSelectOne(dto);
 	}
+	public DTO doSelectOneLic(DTO dto) {
+		return licenseDao.doSelectOneLic(dto);
+	}
 
 	@Override
 	public int doDelete(DTO dto) {
