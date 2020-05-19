@@ -395,7 +395,7 @@ public class MemberController {
 	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.GET)
 	public String doSelectOne(HttpServletRequest req ,MemberVO user,SearchVO search, Model model) {
 		HttpSession session =req.getSession();
-		MemberVO sessionVO=(MemberVO) session.getAttribute("loginMember");
+		MemberVO sessionVO=(MemberVO) session.getAttribute("member");
 		user.setMemberId(req.getParameter("hiddenId")); //frm의 hiddenId 값들 가져와서 set
 		
 		LOG.debug("1===================");

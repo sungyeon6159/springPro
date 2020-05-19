@@ -1056,7 +1056,8 @@
         <div >
 	    	<!-- 입력 From -->
             <div>
-                <table class="table" id="portfolioTable">                    
+                <table class="table" id="portfolioTable">     
+                               
                     <tr>
                         <td>
                             <textarea style="width: 1000px" rows="2" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
@@ -1078,36 +1079,37 @@
         
         
         <div class="table-responsive">
+        
     	<table class="" id="memberTable" style="width: 1100px;" >
-		<tbody>
  				<!-- Data있는 경우 -->
  				<c:choose>
  					<c:when test="${list.size()>0 }">
 					<c:forEach var="vo" items="${list }">
 					<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />
-						<tr style="border-top: 5px; margin-top: 5px;">
-							<td><c:out value="${vo.regId }"></c:out></td><td></td>
-						</tr>
-						<tr>
-							<td><c:out value="${vo.cContent }"></c:out></td>
-							<td align="right"><c:out value="${vo.regDt }"></c:out></td>
-						</tr>
-						<c:if test="${vo.regId == sessionVO.memberId}">
-						<tr style="border-bottom: 1px; margin-bottom: 5px;">
-                           	<td colspan="2" align="right">
-	                           	<button type="button" class="btn pull-right btn-primary doUpdate" id="doUpdate" >수정</button>
-	                           	<button type="button" class="btn pull-right btn-primary doDelete" id="doDelete" >삭제</button>
-                           	</td>
-                       	</tr>
-                       	
-                       	</c:if> 
+						<tbody>
+							<tr style="border-top: 5px; margin-top: 5px;">
+								<td><c:out value="${vo.regId }"></c:out></td><td></td>
+							</tr>
+							<tr>
+								<td><c:out value="${vo.cContent }"></c:out></td>
+								<td align="right"><c:out value="${vo.regDt }"></c:out></td>
+							</tr>
+							<c:if test="${vo.regId == sessionVO.memberId}">
+							<tr style="border-bottom: 1px; margin-bottom: 5px;">
+	                           	<td colspan="2" align="right">
+		                           	<button type="button" class="btn pull-right btn-primary doUpdate" id="doUpdate" >수정</button>
+		                           	<button type="button" class="btn pull-right btn-primary doDelete" id="doDelete" >삭제</button>
+	                           	</td>
+	                       	</tr>
+	                       	
+	                       	</c:if> 
+			 			</tbody>
 					</c:forEach>
  					</c:when>
  					<c:otherwise>
  						<tr><td colspan="99">등록된 게시글이 없습니다.</td></tr>
  					</c:otherwise>
  				</c:choose>
- 			</tbody>
  			</table>
     	</div>
     	</form>
@@ -1232,24 +1234,26 @@ $.ajax({
          var html = "";
          var tbody = doUpdate.parent().parent().parent();
          var removeTbody = tbody.eq(0);
-	      removeTbody.empty();
-	      
-	    html += '<tbody>
-		html += '<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />				';
+	    removeTbody.empty();
+
+
+	    html += '<tbody>																												';
 		html += '	<tr style="border-top: 5px; margin-top: 5px;">                                                                      ';
 		html += '		<td><c:out value="${vo.regId }"></c:out></td><td></td>                                                          ';
 		html += '	</tr>                                                                                                               ';
-		html += '	<tr>                                                                                                                ';
-		html += '		<textarea name="message" id="message" placeholder="Message"  ></textarea>                                       ';
-		html += '	</tr>                                                                                                               ';
+		html += '	<tr><td colspan="2" align="right">                                                                                                                 ';
+		html += '		<textarea style="width: 1000px" rows="2" cols="30" name="message" id="message" placeholder="Message"  ></textarea>      ';
+		html += '	</td></tr>                                                                                                               ';
 		html += '	<tr style="border-bottom: 1px; margin-bottom: 5px;">                                                                ';
 		html += '		<td colspan="2" align="right">                                                                                  ';
 		html += '			<button type="button"  class="noUpdate btn btn-primary" id="noUpdate" name="noUpdate" >수정취소</button>       ';
 		html += '			<button type="button" class="modCom btn btn-primary" id="modCom" name="modCom" >수정완료</button>       		 ';
 		html += '		</td>                                                                                                           ';
 		html += '	</tr>	                                                                                                            ';
-		html += '</tbody>	                                                                                                            ';                                                           ';
-	    tbody.append(html); 																							
+		html += '</tbody>	                                                                                                            ';                                                   
+	    tbody.append(html); 
+	                                                       
+		                                                                                                                                                                
  },
  error:function(xhr,status,error){
    alert("error:"+error);
@@ -1266,17 +1270,13 @@ $.ajax({
 
 
 
-$(document).on("click",".noUpdate",function(){//수정취소버튼
+ $(document).on("click",".noUpdate",function(){//수정취소버튼
 	
 	event.preventDefault();
 	doRetrieve();
-}); 
+});  
 
-/* $("#noUpdate").on("click", function() {
-	event.preventDefault();
-	doRetrieve();
-});
- */
+
 
 
 
@@ -1295,7 +1295,7 @@ $(document).on("click",".noUpdate",function(){//수정취소버튼
        dataType:"html",
        data:{
              //"cNo":cNo1,
-             "regId":regId1,
+             "regId":regId1, 
              "cContent":cContent1
        },
        success:function(data){ //성공
