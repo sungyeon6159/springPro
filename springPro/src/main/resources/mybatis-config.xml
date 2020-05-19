@@ -11,6 +11,11 @@
     
     <typeAliases>
         <typeAlias type="com.sist.spring.portfolio.license.LicenseVO" alias="LicenseVO"/>
+        <typeAlias type="com.sist.spring.portfolio.project.ProjectVO" alias="ProjectVO"/>
+        <typeAlias type="com.sist.spring.portfolio.skill.SkillVO" alias="SkillVO"/>
+        <typeAlias type="com.sist.spring.portfolio.project.PjtFileVO" alias="PjtFileVO"/>
+        <typeAlias type="com.sist.spring.portfolio.member.MemberVO" alias="MemberVO"/>
+        <typeAlias type="com.sist.spring.portfolio.member.file.FileMemberVO" alias="FileMemberVO"/>
         <typeAlias type="com.sist.spring.cmn.SearchVO" alias="SearchVO"/>  
     </typeAliases>
 </configuration>  
