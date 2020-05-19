@@ -175,7 +175,7 @@ public class SkillController {
 		
 	}
 	
-	@RequestMapping(value = "/skill/do_insert.spring",method = RequestMethod.POST
+	@RequestMapping(value = "skill/do_insert.spring",method = RequestMethod.POST
 					,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInsert(SkillVO skillVO, HttpServletRequest req, Model model) {

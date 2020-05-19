@@ -686,7 +686,7 @@
 
     	  console.log("licenseInsert");
           var licFrm = document.licenseInsertForm;
-          licFrm.action = "${hContext}/license/do_insert.spring";
+          licFrm.action = "${hContext}/portfolio/license_insert.spring";
           licFrm.method="POST";
           licFrm.submit(); 
           
