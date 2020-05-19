@@ -689,7 +689,8 @@
           licFrm.action = "${hContext}/portfolio/license_insert.spring";
           licFrm.method="POST";
           licFrm.submit(); 
-          
+
+          console.log("skillInsert");
          var skillFrm = document.skillInsertForm;
          skillFrm.action = "${hContext}/skill/do_insert.spring";
          skillFrm.method="POST";

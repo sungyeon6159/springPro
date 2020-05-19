@@ -64,7 +64,7 @@
 	          <li class="nav-item"><a href="#Recommends-section" class="nav-link"><span>Recommends</span></a></li>
 	          <li class="nav-item"><a href="${hContext}/portfolio/do_retrieve.spring" class="nav-link"><span>Portfolio List</span></a></li>
 	       	  <li class="nav-item"><a href="${hContext }/portfolio/logout.spring" class="nav-link"><span>LogOut</span></a></li>
-	        <li class="nav-item"><a href="${hContext }/portfolio/member/member_mypage.jsp" class="nav-link"><span>MYPage</span></a></li>
+    		  <li class="nav-item"><a href="javascript:mypage();" class="nav-link"><span>myPage</span></a></li>
 	        </ul>
 	      </div>
 	    </div>    
@@ -594,10 +594,10 @@
       </div>
     </footer>
     
-  
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
 
 
   <script src="${hContext}/resources/js/jquery.min.js"></script>
@@ -852,6 +852,29 @@
 		  });
 		//--수정완료버튼
 
+		
+		//do_retieve 
+		function mypage() {
+
+    	  /* console.log("licenseInsert");
+          var licFrm = document.licenseInsertForm;
+          licFrm.action = "${hContext}/portfolio/license_insert.spring";
+          licFrm.method="POST";
+          licFrm.submit();  */
+
+         console.log("skillDoretrieve");
+         location.href="${hContext}/portfolio/mypage_retrieve.spring";
+
+          
+         /* console.log("pjtInsert");
+         var pjtFrm = document.projectInsetForm;
+         pjtFrm.action = "${hContext}/project/do_.spring";
+         pjtFrm.hiddenCnt.value=projectCnt;
+         pjtFrm.method="POST";
+         pjtFrm.submit();  */
+         
+      }
+	      
 
  	//삭제
 	 $(".licDelBtn").on("click",function(){

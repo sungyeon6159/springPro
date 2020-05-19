@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
+import com.sist.spring.covid.CovidUserVO;
 import com.sist.spring.portfolio.member.MemberVO;
 
 @Controller
@@ -32,46 +33,30 @@ public class SkillController {
 	SkillService skillService;
 	
 	
-	@RequestMapping(value="skill/do_retrieve.spring",method = RequestMethod.GET
-			,produces = "application/json;charset=UTF-8")
-	@ResponseBody
+	@RequestMapping(value="/portfolio/skill/do_retrieve.spring",method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req,SkillVO skill,Model model) {
-		LOG.debug("1===================");
-		LOG.debug("1=skill="+skill);
-		LOG.debug("1===================");	
 		
-		model.addAttribute("param", skill);
+		/*
+		 * HttpSession session=req.getSession(); MemberVO sessionVO=(MemberVO)
+		 * session.getAttribute("member");
+		 * 
+		 * skill.setMemberId(sessionVO.getMemberId());
+		 * 
+		 * LOG.debug("1==================="); LOG.debug("1=skill="+skill);
+		 * LOG.debug("1===================");
+		 * 
+		 * model.addAttribute("param", skill);
+		 * 
+		 * LOG.debug("1.2==================="); LOG.debug("1.2=skill="+skill);
+		 * LOG.debug("1.2===================");
+		 * 
+		 * List<SkillVO> list =(List<SkillVO>) skillService.doRetrieve(skill);
+		 * LOG.debug("1.3==================="); for(SkillVO vo :list) {
+		 * LOG.debug("vo="+vo); } LOG.debug("1.3===================");
+		 * model.addAttribute("list", list);
+		 */
 		
-		LOG.debug("1.2===================");
-		LOG.debug("1.2=skill="+skill);
-		LOG.debug("1.2===================");
-		
-		List<SkillVO> list =(List<SkillVO>) skillService.doRetrieve(skill);
-		LOG.debug("1.3===================");
-		for(SkillVO vo :list) {
-			LOG.debug("vo="+vo);
-		}
-		LOG.debug("1.3===================");		
-		model.addAttribute("list", list);
-		
-		//총글수
-		int totalCnt = 0;
-		if(null != list && list.size()>0) {
-			totalCnt = list.get(0).getTotalCnt();
-		}
-		model.addAttribute("totalCnt", totalCnt);
-		
-		//list to json
-		Gson gson=new Gson();
-		String json = gson.toJson(list);
-		LOG.debug("====================");
-		LOG.debug("=json="+json);
-		LOG.debug("====================");
-		
-		
-		
-		
-		return json;
+		return "portfolio/member/member_mypage_check";
 	}
 
 	

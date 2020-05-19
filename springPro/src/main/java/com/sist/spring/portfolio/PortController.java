@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -58,6 +59,44 @@ public class PortController {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@RequestMapping(value="/portfolio/mypage_retrieve.spring",method=RequestMethod.GET)
+	public String mypageRetrieve(HttpServletRequest req,SkillVO skill,LicenseVO license,ProjectVO project, Model model) {
+		
+		HttpSession session=req.getSession();
+		MemberVO sessionVO=(MemberVO) session.getAttribute("member");
+		
+		skill.setMemberId(sessionVO.getMemberId());
+		license.setMemberId(sessionVO.getMemberId());
+		project.setMemberId(sessionVO.getMemberId());
+		
+		model.addAttribute("param", skill);
+		model.addAttribute("param", license);
+		model.addAttribute("param", project);
+		
+		List<SkillVO> skillList =(List<SkillVO>) skillService.doRetrieve(skill);
+		LOG.debug("1.3===================");
+		for(SkillVO vo :skillList) {
+			LOG.debug("vo="+vo);
+		}
+		List<LicenseVO> licenseList =(List<LicenseVO>) licService.doRetrieve(license);
+		LOG.debug("1.3===================");
+		for(LicenseVO vo :licenseList) {
+			LOG.debug("vo="+vo);
+		}
+		List<ProjectVO> projectList =(List<ProjectVO>) pjtService.doRetrieve(project);
+		LOG.debug("1.3===================");
+		for(ProjectVO vo :projectList) {
+			LOG.debug("vo="+vo);
+		}
+		LOG.debug("1.3===================");
+		model.addAttribute("list", skillList);
+		model.addAttribute("list", licenseList);
+		model.addAttribute("list", projectList);
+		
+		
+		
+		return "portfolio/member/member_mypage_check";
+	}
 	
 	@RequestMapping(value="/portfolio/total_retrieve.spring",method=RequestMethod.GET)
 		public String doRetrieve(HttpServletRequest req, Model model) {
