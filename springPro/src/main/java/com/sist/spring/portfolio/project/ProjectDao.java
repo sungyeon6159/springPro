@@ -206,6 +206,8 @@ public class ProjectDao implements Dao {
 		sb.append("    projects          ");
 		sb.append("WHERE                ");
 		sb.append("    member_id=?      ");
+		sb.append("ORDER BY git_adress");
+		
 //		Object args[]= {inVO.getMemberId()};
 		
 		//Param setting

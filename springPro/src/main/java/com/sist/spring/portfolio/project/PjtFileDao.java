@@ -242,7 +242,7 @@ public class PjtFileDao implements Dao {
 		sb.append("    file_project     \n");
 		sb.append("WHERE                \n");
 		sb.append("	member_id=?			\n");
-		sb.append("ORDER BY save_pnm	\n");
+		sb.append("ORDER BY git_adress	\n");
 		
 		//		Object args[]= {inVO.getMemberId()};
 		
