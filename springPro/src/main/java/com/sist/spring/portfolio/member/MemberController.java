@@ -390,7 +390,77 @@ public class MemberController {
 		return json;
 
 	}
-	
+	@RequestMapping(value = "/portfolio/do_mem_Comment.spring",method = RequestMethod.GET)
+	public String doMemComment(HttpServletRequest req ,MemberVO user,SearchVO search, Model model) {
+		HttpSession session =req.getSession();
+		MemberVO sessionVO=(MemberVO) session.getAttribute("member");
+		user.setMemberId(req.getParameter("portfolioId")); //frm의 hiddenId 값들 가져와서 set
+		
+		LOG.debug("1===================");
+		LOG.debug("1=user="+user);
+		LOG.debug("2=sssesion="+sessionVO.getMemberId());
+		LOG.debug("1===================");
+		
+		MemberVO outVO = (MemberVO) memberService.doSelectOne(user); //selectOne해서 한줄 뽑아옴
+		LOG.debug("1.2===================");
+		LOG.debug("1.2=outVO="+outVO);
+		LOG.debug("1.2===================");
+		
+		FileMemberVO inVO = new FileMemberVO(); //객체생성
+		inVO.setMemberId(user.getMemberId()); //
+		
+		FileMemberVO fileVO= (FileMemberVO) fmService.doSelectOne(inVO);
+		
+		model.addAttribute("fileVO",fileVO);
+		model.addAttribute("memberVO",outVO);
+		
+		
+		LOG.debug("1===================");
+		LOG.debug("1=search="+search);
+		LOG.debug("1===================");
+		   
+		//페이지 사이즈
+		if(search.getPageSize()==0) {
+			search.setPageSize(20);
+		}
+		//페이지 num
+		if(search.getPageNum()==0) {
+			search.setPageNum(1);
+		}
+		
+		//검색구분
+		search.setSearchDiv(StringUtil.nvl(search.getSearchDiv()));
+		
+		//검색어
+		search.setSearchWord(StringUtil.nvl(search.getSearchWord()));
+		
+		model.addAttribute("param",search);
+		
+		LOG.debug("1.2===================");
+		LOG.debug("1.2=search="+search);
+		LOG.debug("1.2===================");
+		
+		List<CommentVO> list = (List<CommentVO>) commentService.doRetrieve(search);
+		LOG.debug("1.3===================");
+		for(CommentVO vo :list) {
+			LOG.debug("vo="+vo);
+		}
+		LOG.debug("1.3===================");
+		
+		model.addAttribute("list", list);
+		
+		//총글수
+		int totalCnt = 0;
+		if(null != list && list.size() >0) {
+			totalCnt = list.get(0).getTotalCnt();
+		}
+		model.addAttribute("totalCnt", totalCnt);
+		int maxPageNo = ((totalCnt - 1) / 10) + 1;
+		model.addAttribute("maxPageNo",maxPageNo);
+		model.addAttribute("sessionVO",sessionVO);
+		
+		return "portfolio/member/index_test";
+	}
 	
 	@RequestMapping(value = "/portfolio/do_select_one.spring",method = RequestMethod.GET)
 	public String doSelectOne(HttpServletRequest req ,MemberVO user,SearchVO search, Model model) {
@@ -400,6 +470,7 @@ public class MemberController {
 		
 		LOG.debug("1===================");
 		LOG.debug("1=user="+user);
+		LOG.debug("2=sssesion="+sessionVO.getMemberId());
 		LOG.debug("1===================");
 		
 		MemberVO outVO = (MemberVO) memberService.doSelectOne(user); //selectOne해서 한줄 뽑아옴
