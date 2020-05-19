@@ -692,7 +692,7 @@
 			      html+='		</td>                                                                                                                 ';
 			      html+='	</tr>                                                                                                                     ';
 			      html+='	<tr>';  
-			      html+='		<td><input type="text" id="lNameU" name="lGroupz" size="30"  maxlength="10" readonly="readonly" value="';
+			      html+='		<td><input type="text" id="lNameU" name="lNameU" size="30"  maxlength="10" readonly="readonly" value="';
 				  html+= lName;
 				  html+='"/>';
 			      html+='<hr/>                                                                                                 ';
@@ -701,7 +701,7 @@
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td id="lGroup" value="${vo.lGroup}" >자격분류: </td>                                                                    ';
 			      html+='		<td>                                                                                                                  ';
-				  html+='			<input type="text" id="lGroupU" name="lGroupz" size="30"  maxlength="10" value="';
+				  html+='			<input type="text" id="lGroupU" name="lGroupU" size="30"  maxlength="10" value="';
 				  html+=lGroup;
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
@@ -709,7 +709,7 @@
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>자격등급: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lGradeU" name="lGrade" size="30"  maxlength="10" value="';
+			      html+='			<input type="text" id="lGradeU" name="lGradeU" size="30"  maxlength="10" value="';
 				  html+=lGrade;
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
@@ -717,7 +717,7 @@
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>자격번호: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lNumU" name="lNum" size="30"  maxlength="10" value="';
+			      html+='			<input type="text" id="lNumU" name="lNumU" size="30"  maxlength="10" value="';
 				  html+=lNum;
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
@@ -725,7 +725,7 @@
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>취득일자: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lDateU" name="lDate" size="30"  maxlength="10" value="';
+			      html+='			<input type="text" id="lDateU" name="lDateU" size="30"  maxlength="10" value="';
 				  html+=lDate;
 				  html+='"/>	';
 				  html+='		</td>                                                                                                                 ';
@@ -733,7 +733,7 @@
 			      html+='	<tr>                                                                                                                      ';
 			      html+='		<td>발행기관: </td>                                                                                                      ';
 			      html+='		<td>                                                                                                                  ';
-			      html+='			<input type="text" id="lOrganU" name="lOrgan" size="30"  maxlength="10" value="';
+			      html+='			<input type="text" id="lOrganU" name="lOrganU" size="30"  maxlength="10" value="';
 				  html+=lOrgan;
 				  html+='"/>	';
 			      html+='		</td>                                                                                                                 ';
