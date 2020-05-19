@@ -26,6 +26,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style type="text/css">
+
+em.error {
+        color:#FF0000;
+     font:100% arial,helvetica,clean,sans-serif;
+     font-size:15px;
+     font-weight:bold;  
+    }
+</style>
   <title>Bombom</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -316,6 +325,9 @@
 <script src="<c:url value="/resources/js/jquery.animateNumber.min.js"/>"></script>
 <script src="<c:url value="/resources/js/scrollax.min.js"/>"></script>
 <script src="<c:url value="/resources/js/main.js"/>"></script>
+    <!-- jQuery validator -->
+<script src="<c:url value="/resources/js/jquery.validate.js"/>"></script>
+
     <script type="text/javascript">
 		function signUp() {
 			//console.log("doRetrieve()");
@@ -323,48 +335,196 @@
 			frm.action = "${hContext}/member/signUp.spring";
 			frm.submit();
 		}
+	
+		 function bindEventHandler(){
+	            $("#signUp_form").validate({
+	                onfocus: true,
+	                //서버전송여부
+	                debug: false,
+	                 
+	                rules: {
+	               	 memberId:{
+	                       //필수값
+	                       required: true,
+	                       //최소길이
+	                       minlength: 3
+	                    },password:{
+	                        //필수값
+	                        required: true,
+	                        //범위
+	                        rangelength: [4,12]
+	                    },passwordConfirm:{
+	                        //필수값
+	                        required: true,
+	                        //범위
+	                        rangelength: [4,12],
 
+	                        equalTo:"#password"
+	                    },email:{
+	                        //필수값
+	                        required: true,
+	                        //이메일형식
+	                        email: true
+	                    },name:{
+	                    	//필수값
+	                        required: true,
+	                        //최소길이
+	                        minlength: 2
+	                    },phone2:{
+	                    	//필수값
+	                        required: true,
+	                        //최소길이
+	                        minlength: 4
+	                    },phone3:{
+	                    	//필수값
+	                        required: true,
+	                        //최소길이
+	                        minlength: 4
+	                    }
+
+	                },messages: {
+	                    //message
+	                    memberId:{
+	                       //필수값 
+	                       required: "&nbsp;아이디는 필수값 입니다.",
+	                       //최소길이
+	                       minlength: $.validator.format('{0}자 이상 입력하세요.')
+	                    },password:{
+	                        //필수값 
+	                        required: "&nbsp;비밀번호는 필수값 입니다.",
+	                        //최소길이
+	                        rangelength: $.validator.format('비밀번호는 {0}이상~{1}이하로 입력하세요.')
+	                    },passwordConfirm:{
+	                         //필수값 
+	                         required: "&nbsp;비밀번호확인을 입력하세요.",
+	                         //최소길이
+	                         rangelength: $.validator.format('비밀번호확인는 {0}이상~{1}이하로 입력하세요.'),
+	                         //pass==confirm_pass 
+	                         equalTo:"비밀번호 항목과 일치하지 않습니다."
+	                    },email:{
+	                        //필수값
+	                        required: "&nbsp;이메일은 필수값 입니다.",
+	                        //이메일형식
+	                        email:  "올바른 이메일 형식이 아닙니다."
+	                    },name:{
+	                    	//필수값 
+	                        required: "&nbsp;이름은 필수값 입니다.",
+	                        //최소길이
+	                        minlength: $.validator.format('{0}자 이상 입력하세요.')
+	                    },phone2:{
+	                    	//필수값 
+	                        required: "&nbsp;전화번호는 필수값 입니다.",
+	                        //최소길이
+	                        minlength: $.validator.format('{0}자 이상 입력하세요.')
+	                    },phone3:{
+	                    	//필수값 
+	                        required: "&nbsp;전화번호는 필수값 입니다.",
+	                        //최소길이
+	                        minlength: $.validator.format('{0}자 이상 입력하세요.')
+	                    }
+	                },errorElement: "em"
+	                ,errorPlacement: function ( error, element ) {
+	                    // Add the `help-block` class to the error element
+	                    error.addClass( "help-block" );
+
+	                    if ( element.prop( "type" ) === "checkbox" ) {
+	                        error.insertAfter( element.parent( "label" ) );
+	                    } else {
+	                        error.insertAfter( element );
+	                    }
+	                },
+	                highlight: function ( element, errorClass, validClass ) {
+	                    $( element ).parents(".col-lg-5").addClass( "has-error" ).removeClass( "has-success" );
+	                },
+	                unhighlight: function (element, errorClass, validClass) {
+	                    $( element ).parents(".col-lg-5").addClass( "has-success" ).removeClass( "has-error" );
+	                },
+					
+	                submitHandler:function(form){
+
+	                	//ajax
+	                    $.ajax({
+	                        type : "GET",
+	                        url : "${hContext}/portfolio/SignUp/doInsertMember.spring",
+	                        dataType : "html",
+	                        data : {
+	                            "memberId" : $("#memberId").val(),
+	                            "password" : $("#password").val(),
+	                            "name" : $("#name").val(),
+	                            "email" : $("#email").val(),
+	                            "birth": $("#birth1").val()+"-"+$("#birth2").val()+"-"+$("#birth3").val(),
+	                            "phone": $("#phone1").val()+$("#phone2").val()+$("#phone3").val(),
+	                            "authority" : "1",
+	                            "interestOption" : $("#interestPosition").val(),
+	                            "open" : "1"
+	                        },
+	                        success : function(data) { //성공
+	                        	goLoginPage();
+	                            console.log("data:" + data);
+	                            var parseData = $.parseJSON(data);
+	                            if (parseData.msgId == "1") {
+	                                alert(parseData.msgMsg);
+	                            } else {
+	                                alert(parseData.msgMsg);
+	                            }
+	                            
+
+	                        },
+	                        error : function(xhr, status, error) {
+	                            alert("error:" + error);
+	                        },
+	                        complete : function(data) {
+
+	                        }
+
+	                    });//--ajax 
+						
+			        }
+	         });
+
+	        }
 		
-		//등록
-	     $("#doInsertBtn").on("click", function() {
+		//등록 --------------validation 전
+	     /* $("#doInsertBtn").on("click", function() {
 			//값 null check
 			if ($("#memberId").val() == "" || $("#memberId").val() == false) {
                 alert("아이디를 입력 하세요.");
                 $("#memberId").focus();
-                return;
+                return false;
             }
 			if ($("#password").val() == "" || $("#password").val() == false) {
                 alert("패스워드를 입력 하세요.");
                 $("#password").focus();
-                return;
+                return false;
             }
-			/* if($("password") != $("passwordConfirm")){
+			if($("password") != $("passwordConfirm")){
 		        alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); 
 		        $("#passwordConfirm").focus();
 		        return; 
-		    } */
+		    }
 			if ($("#name").val() == "" || $("#name").val() == false) {
                 alert("이름을 입력 하세요.");
                 $("#name").focus();
-                return;
+                return false;
             }
 			if ($("#email").val() == "" || $("#email").val() == false) {
                 alert("이메일을 입력 하세요.");
                 $("#email").focus();
-                return;
+                return false;
             }
 			if ($("#birth1").val() == "" || $("#birth1").val() == false) {
                 alert("생년월일을 입력 하세요.");
                 $("#birth1").focus();
-                return;
+                return false;
             }
 			//confirm
-            if (confirm("등록 하시겠습니까?") == false)return;
+            if (confirm("등록 하시겠습니까?") == false)return false;
           //ajax
             $.ajax({
                 type : "GET",
                 url : "${hContext}/portfolio/SignUp/doInsertMember.spring",
                 dataType : "html",
+                async : false,
                 data : {
                     "memberId" : $("#memberId").val(),
                     "password" : $("#password").val(),
@@ -377,6 +537,7 @@
                     "open" : "1"
                 },
                 success : function(data) { //성공
+                	goLoginPage();
                     console.log("data:" + data);
                     var parseData = $.parseJSON(data);
                     if (parseData.msgId == "1") {
@@ -384,6 +545,7 @@
                     } else {
                         alert(parseData.msgMsg);
                     }
+                    
 
                 },
                 error : function(xhr, status, error) {
@@ -395,7 +557,7 @@
 
             });//--ajax 
 
-        });
+        }); */
 
 	   /*   $("#memberTable>tbody").on("click", "tr", function() {
 			 //console.log("#memberTable>tbody");
@@ -413,6 +575,21 @@
 			 
 		}); */
 
+
+
+		function goLoginPage(){
+			alert('회원가입 되었습니다. 로그인해주세요.');
+			location.href="${hContext}/portfolio/member/login.jsp";
+
+			};
+
+		
+		$(document).ready(function(){
+            //input validation
+            bindEventHandler();
+               
+        });
+		
 	        
      </script>
     
