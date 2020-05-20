@@ -11,7 +11,7 @@ BomBom: Portfolio
 ```
 ### 2.1. 담당업무
 ```
-정진우 :
+정진우 : 
 강현규 :
 박성연 :
 박승종 :
@@ -19,12 +19,12 @@ BomBom: Portfolio
 김민지 :
 최재훈 :
 ```
-### 3. 요구사항
-
+### 3. 요구사항 정의서
+![요구사항](https://github.com/HYKim8/springPro/blob/master/bombom_%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EC%A0%95%EC%9D%98%EC%84%9C.png "이미지설명") 
 ### 4. WBS
-
+![WBS](https://github.com/HYKim8/springPro/blob/master/bombom_WBS.png "이미지설명") 
 ### 5. 개발아키텍처 : MVC
-
+![WBS](https://github.com/HYKim8/springPro/blob/master/spring-mvc-architecture.png "이미지설명") 
 ### 6. 개발목록
 
 ### 7. 단위테스트
@@ -35,59 +35,5 @@ BomBom: Portfolio
 
 ### 10. 개발URL
 
-# 헤더
-## 헤더
-### 헤더
-#### 헤더
-##### 헤더
-###### 헤더
 
-개행 :스페이스 두칸
-
-## 인용상자 :>
-> 여기에 인용할 내용을 채워 넣으면 됩니다.  
-빈 줄이 없으면 자동으로 인용 상자에 포함됩니다.  
-인용이 끝났습니다.
-
-- 아이템1
-+ 아이템2
-  - 1단계 하위 아이템
-  + 2단계 하위 
-
-1. 아이템 1  
-2. 아이템 2  
-  2.1. 하위이템  
-    2.1.1 하위아이템
-    
-## 코드 블록
-``` 프로그래밍 언어이름
-코드 내용
-```
-
-```python
-def func();
-print "HR Kim"
-print "Spring"
-```
-
-```javascript
-var data = "HR Spring";
-data.song = "너에게로 초대";
-```
-
-가로선
----
-***
--------
-
-하이퍼 링크
-```[링크테스트](URL "링크테스트")
-```
-[HR_Spring](https://cafe.naver.com/kndjang "SIST")
-
-강조
-__강조텍스트__  
-강조텍스트  
-
-이미지 넣기  
-![튤립](https://github.com/ParkSeungJong/eHRGit0101/blob/master/eHRGit0101/src/eHRGit0101/pexels-photo-1883385.jpeg "이미지설명")  
+> 업데이트 중..
