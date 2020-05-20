@@ -39,7 +39,7 @@ public class ProjectDao implements Dao {
 			outData.setPjtInfo(rs.getString("pjt_info"));
 			outData.setPjtStart(rs.getString("pjt_start"));
 			outData.setPjtEnd(rs.getString("pjt_end"));
-			outData.setGitAddress(rs.getString("git_adress"));
+			outData.setGitAddress(rs.getString("git_address"));
 			
 //			if(rs.getInt("rnum")==0) {
 //				outData.setNum(1);
@@ -65,7 +65,7 @@ public class ProjectDao implements Dao {
 		sb.append("    pjt_info,            ");
 		sb.append("    pjt_start,           ");
 		sb.append("    pjt_end,             ");
-		sb.append("    git_adress          ");
+		sb.append("    git_address          ");
 		sb.append(") VALUES (               ");
 		sb.append("    ?,                   ");
 		sb.append("    ?,                   ");
@@ -110,7 +110,7 @@ public class ProjectDao implements Dao {
 		sb.append("    pjt_info = ?     ");
 		sb.append("    ,pjt_start = ?   ");
 		sb.append("    ,pjt_end = ?     ");
-		sb.append("    ,git_adress = ? ");
+		sb.append("    ,git_address = ? ");
 		sb.append("WHERE                ");
 		sb.append("    pjt_name = ?     ");
 		sb.append("    AND member_id = ?");
@@ -150,7 +150,7 @@ public class ProjectDao implements Dao {
 		sb.append("    pjt_info,        ");
 		sb.append("    pjt_start,       ");
 		sb.append("    pjt_end,         ");
-		sb.append("    git_adress      ");
+		sb.append("    git_address      ");
 		sb.append("FROM                 ");
 		sb.append("    projects          ");
 		sb.append("WHERE                ");
@@ -201,12 +201,12 @@ public class ProjectDao implements Dao {
 		sb.append("    pjt_info,        ");
 		sb.append("    pjt_start,       ");
 		sb.append("    pjt_end,         ");
-		sb.append("    git_adress      ");
+		sb.append("    git_address      ");
 		sb.append("FROM                 ");
 		sb.append("    projects          ");
 		sb.append("WHERE                ");
 		sb.append("    member_id=?      ");
-		sb.append("ORDER BY git_adress");
+		sb.append("ORDER BY git_address");
 		
 //		Object args[]= {inVO.getMemberId()};
 		
@@ -240,7 +240,7 @@ public class ProjectDao implements Dao {
 		sb.append("    pjt_info,             ");
 		sb.append("    pjt_start,            ");
 		sb.append("    pjt_end,        		");
-		sb.append("    git_adress           ");
+		sb.append("    git_address           ");
 		sb.append(") VALUES (               ");
 		sb.append("    ?,                   ");
 		sb.append("    ?,                   ");
