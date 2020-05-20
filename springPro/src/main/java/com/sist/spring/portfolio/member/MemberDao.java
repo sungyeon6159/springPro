@@ -110,36 +110,24 @@ public class MemberDao implements Dao {
 
 	@Override
 	public int doUpdate(DTO dto) {
+		
 		int flag = 0;
 		MemberVO inVO = (MemberVO) dto;
-		StringBuilder sb=new StringBuilder();
-		sb.append(" UPDATE hr_member         		\n");
-		sb.append(" SET password = ?,               \n");
-		sb.append("     name = ?,          		   	\n");
-		sb.append("     email = ?,          	  	\n");
-		sb.append("     birth = ?,              	\n");
-		sb.append("     phone = ?,         		 	\n");
-		sb.append("     authority = ?,          	\n");
-		sb.append("     interestOption = ?,         \n");
-		sb.append("     open = ?          			\n");
-		sb.append(" WHERE                    		\n");
-		sb.append("     member_id = ?             	\n");
 		
-		LOG.debug("==============================");
-		LOG.debug("=Query=\n"+sb.toString());
-		LOG.debug("=Param= "+inVO.toString());
-		Object[] args= {inVO.getPassword()
-				      ,inVO.getName()
-				      ,inVO.getEmail()
-				      ,inVO.getBirth()
-				      ,inVO.getPhone()
-				      ,inVO.getAuthority()
-				      ,inVO.getInterestOption()
-				      ,inVO.getOpen()
-				      ,inVO.getMemberId()};
-		flag = this.jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("=flag= "+flag);
-		LOG.debug("==============================");
+		LOG.debug("1==============================");
+		LOG.debug("1=inVO="+inVO);
+		LOG.debug("1==============================");
+
+		String statement = NAMESPACE+".doUpdate";
+		LOG.debug("2==============================");
+		LOG.debug("2=statement="+statement);
+		LOG.debug("2==============================");
+
+		flag = this.sqlSessionTemplate.update(statement, inVO);
+		LOG.debug("3==============================");
+		LOG.debug("3=flag="+flag);
+		LOG.debug("3==============================");
+
 		return flag;
 	}
 

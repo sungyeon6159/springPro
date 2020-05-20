@@ -111,7 +111,21 @@
 		    #{open,jdbcType=VARCHAR}              
 		)                     
 	</insert>
-
+	
+	<!-- 업데이트 ( 사용 x) -->
+	<update id="doUpdate" parameterType="MemberVO">
+		UPDATE member         	
+		SET password = #{password,jdbcType=VARCHAR},          
+		    name = #{name,jdbcType=VARCHAR},          		
+		    email = #{email,jdbcType=VARCHAR},          	
+		    birth = #{birth,jdbcType=VARCHAR},             
+		    phone = #{phone,jdbcType=VARCHAR},         		
+		    authority = #{authority,jdbcType=VARCHAR},         
+		    interestOption = #{interestOption,jdbcType=VARCHAR},    
+		    open = #{open,jdbcType=VARCHAR}          		
+		WHERE                    	
+		    member_id = #{memberId,jdbcType=VARCHAR}          
+	</update>
 </mapper>
 
 
