@@ -7,7 +7,7 @@
     <sql id="baseCondition">
         <choose>
             <when test="'10' == searchDiv">
-                AND u_id like '%' || #{searchWord} || '%'
+                AND member_id like '%' || #{searchWord} || '%'
             </when>
             <when test="'20' == searchDiv">
                 AND name like '%' || #{searchWord} || '%'

@@ -439,7 +439,7 @@ em.error {
 	                unhighlight: function (element, errorClass, validClass) {
 	                    $( element ).parents(".col-lg-5").addClass( "has-success" ).removeClass( "has-error" );
 	                },
-					
+					//서밋 헨들러
 	                submitHandler:function(form){
 
 	                	//ajax
@@ -482,7 +482,7 @@ em.error {
 			        }
 	         });
 
-	        }
+	       }
 		
 		//등록 --------------validation 전
 	     /* $("#doInsertBtn").on("click", function() {
