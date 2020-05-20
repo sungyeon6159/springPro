@@ -171,8 +171,27 @@ public class ProjectDao implements Dao {
 
 	@Override
 	public int doDelete(DTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int flag=0;
+		ProjectVO inVO=(ProjectVO)dto;
+		StringBuilder sb=new StringBuilder();
+		sb.append("  DELETE FROM projects   ");
+		sb.append("  WHERE                  ");
+		sb.append("  git_adress = ?         ");
+		sb.append("  AND member_id = ?      ");
+		LOG.debug("==============================");
+		LOG.debug("=Query=\n"+sb.toString());
+		LOG.debug("=Param=\n"+inVO.toString());
+		Object[] args= {
+						 inVO.getGitAddress()
+						,inVO.getMemberId()
+						};
+		
+		flag=this.jdbcTemplate.update(sb.toString(),args);
+		LOG.debug("==============================");
+		LOG.debug("=flag: "+flag);
+		LOG.debug("==============================");
+		
+		return flag;
 	}
 
 	/***

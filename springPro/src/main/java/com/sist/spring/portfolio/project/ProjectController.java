@@ -275,6 +275,103 @@ public class ProjectController {
       return "portfolio/recommendJob/recommendJob";
    }
 
+	   @RequestMapping(value = "project/do_update.spring",method = RequestMethod.POST
+				,produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String doUpdate(ProjectVO project) {
+			LOG.debug("1===================");
+			LOG.debug("1=project="+project);
+			LOG.debug("1===================");
+	
+			int  flag = pjtService.doUpdate(project);
+			LOG.debug("1.2===================");
+			LOG.debug("1.2=flag="+flag); 
+			LOG.debug("1.2===================");
+	
+			//메시지 처리
+			MessageVO message=new MessageVO();
+	
+			message.setMsgId(flag+"");
+			//성공
+			if(flag ==1) {
+				message.setMsgMsg(project.getPjtName()+"의 Project가 수정 되었습니다.");
+			//실패	
+			}else {
+				message.setMsgMsg(project.getPjtName()+"Project의 등록 실패.");			
+			}		
+	
+			//JSON
+			Gson gson=new Gson();
+			String json = gson.toJson(message);
+	
+			LOG.debug("1.3===================");
+			LOG.debug("1.3=json="+json); 
+			LOG.debug("1.3===================");		
+	
+			return json;
+	
+		}
+	   
+	   @RequestMapping(value = "project/do_select_one.spring",method = RequestMethod.GET
+				,produces = "application/json; charset=UTF-8")
+		@ResponseBody
+		public String doSelectOne(ProjectVO project) {
+			LOG.debug("1===================");
+			LOG.debug("1=project="+project);
+			LOG.debug("1===================");
+			
+			ProjectVO outVO = (ProjectVO) pjtService.doSelectOne(project);
+			LOG.debug("1.2===================");
+			LOG.debug("1.2=outVO="+outVO);
+			LOG.debug("1.2===================");
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(outVO);
+			
+			LOG.debug("1.3===================");
+			LOG.debug("1.3=json="+json);
+			LOG.debug("1.3===================");
+			
+			return json;
+		}
+	   
+	   @RequestMapping(value = "project/do_delete.spring",method = RequestMethod.POST
+				,produces = "application/json; charset=UTF-8")
+		@ResponseBody
+		public String doDelete(ProjectVO project) {
+			LOG.debug("1===================");
+			LOG.debug("1=project="+project);
+			LOG.debug("1===================");
+			
+			int flag = 0;
+			flag = pjtService.doDelete(project);
+			
+			MessageVO message = new MessageVO();
+			message.setMsgId(String.valueOf(flag));
+			
+			LOG.debug("1.2===================");
+			LOG.debug("1.2=flag="+flag); 
+			LOG.debug("1.2===================");
+			//성공
+			if(flag == 1) {
+				message.setMsgMsg(project.getGitAddress()+"의 ProjectList가 삭제 되었습니다.");
+			//실패
+			}else {
+				message.setMsgMsg(project.getGitAddress()+"ProjectList의 삭제 실패.");
+			}
+			
+			//JSON
+			Gson gson = new Gson();
+			String json = gson.toJson(message);
+			LOG.debug("1.3===================");
+			LOG.debug("1.3=json="+json); 
+			LOG.debug("1.3===================");
+			
+			
+			return json;
+			
+		}
+   
    
    @RequestMapping(value="portfolio/do_insert.spring", method=RequestMethod.POST)
    public String do_insert(MultipartHttpServletRequest mReg,ProjectVO projectVO ,  HttpServletRequest req, Model model) {

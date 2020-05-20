@@ -447,17 +447,19 @@
 																				<tr>
 																					<td><p class="mb-4 col-lg-3"><b>Project Name</b></p></td>
 																					<td><p class="mb-4 col-lg-3"><b>Project Description</b></p></td>
-																					<td><p class="mb-4 col-lg-4"><b>Project Period</b></p></td>
+																					<td><p class="mb-4 col-lg-4"><b>Project startDate</b></p></td>
+																					<td><p class="mb-4 col-lg-4"><b>Project endDate</b></p></td>
 																					<td><p class="mb-4 col-lg-2"><b>Github Address</b></p></td>
 																				</tr>
 																				<tr>
 																					<td>${list3.get(i).pjtName }</td>
 																					<td>${list3.get(i).pjtInfo }</td>
-																					<td>${list3.get(i).pjtStart } - ${list3.get(i).pjtEnd }</td>
+																					<td>${list3.get(i).pjtStart }</td>
+																					<td>${list3.get(i).pjtEnd }</td>
 																					<td>${list3.get(i).gitAddress }</td>
 																					<td rowspan="2">
-																					<input type="button" id="projectUpdate" name="projectUpdate" class="buttons" value="Modify">
-																					<input type="button" id="projectDelete" name="projectDelete" class="buttons" value="Delete">
+																					<input type="button" id="projectUpdate" name="projectUpdate" class="buttons projectUpdate" value="Modify">
+																					<input type="button" id="projectDelete" name="projectDelete" class="buttons projectDelete" value="Delete">
 																					</td>
 																				</tr>			
 																			</tbody>
@@ -1344,10 +1346,10 @@
                console.log("수정성공후우우우우");
                console.log("lName: "+lName.trim());
                console.log("lGroup: "+lGroup.trim());
-               console.log("lGrade: "+lGrade);
-               console.log("lNum: "+lNum);
-               console.log("lDate: "+lDate);
-               console.log("lOrgan: "+lOrgan);
+               console.log("lGrade: "+lGrade.trim());
+               console.log("lNum: "+lNum.trim());
+               console.log("lDate: "+lDate.trim());
+               console.log("lOrgan: "+lOrgan.trim());
                alert("수정되었습니다.");
                skillRetrieve();
             },
@@ -1368,8 +1370,8 @@
       $(".licDelete").on("click",function(){
 
          //console.log("licUpdate click");
-         var licUpdate = $(this);
-         var tr = licUpdate.parent().parent().parent();
+         var licDelete = $(this);
+         var tr = licDelete.parent().parent().parent();
          var td = tr.children().children();
          
          var memberId = td.eq(0).text();
@@ -1412,23 +1414,230 @@
          });
 //--license----------------------------     
       
+//project------------------------------
 
-       function projectUpdate() {
-      	 console.log("projectUpdate");
-      	 var frm = document.projectUp_frm;
-      	 frm.action = "${hContext}/";
-      	 frm.method = "POST";
-      	 frm.submit();
-        }
-
+	    //수정
+		  $(".projectUpdate").on("click",function(event){
+		  
+			 var projectUpdate = $(this);
+			 var tr = projectUpdate.parent().parent().parent();
+			 var td = tr.children().children();
+			 var memberId = td.eq(0).text();
+		     var pjtName = td.eq(6).text();
+			 var pjtInfo = td.eq(7).text();
+			 var pjtStart = td.eq(8).text();
+			 var pjtEnd = td.eq(9).text();
+			 var gitAddress = td.eq(10).text();
 	
+			console.log("memberId= "+memberId);
+			console.log("pjtName= "+pjtName);
+			console.log("pjtInfo= "+pjtInfo);
+			console.log("pjtStart= "+pjtStart);
+			console.log("pjtEnd= "+pjtEnd);
+			console.log("gitAddress= "+gitAddress);	
+				
+		     
+		     //ajax
+				$.ajax({
+				type:"GET",
+				url:"${hContext}/project/do_select_one.spring",
+				dataType:"html", 
+				data:{ //"memberId":"sohyun1234"
+						"memberId":memberId.trim(),
+						"pjtName" : pjtName.trim(),
+						"pjtInfo": pjtInfo.trim(),
+						"pjtStart": pjtStart.trim(),
+						"pjtEnd": pjtEnd.trim(),
+						"gitAddress": gitAddress.trim()
+				},
+				success:function(data){ //성공
+						console.log("data:"+data);  
+						var html = "";
+						var tbody = projectUpdate.parent().parent().parent();
+						var removeTbody = tbody.eq(0);
+					removeTbody.empty();
+					
+					html+='<tbody>                                                                                                             ';
+					html+='   <tr>                                                                                                               ';
+					html+='      <td><input type="hidden" id="memberIdU" name="memberIdU" size="15"   value="';
+					html+=memberId.trim();
+					html+='" /> ';
+					html+='</td>                                      ';
+					html+='   </tr>                                                                                                              ';
+					html+='   <tr>                                                                                                              ';
+					html+='    	<td><p class="mb-4 col-lg-3"><b>Project Name</b></p></td>                                                      ';
+					html+='    	<td><p class="mb-4 col-lg-3"><b>Project Description</b></p></td>                                               ';
+					html+='    	<td><p class="mb-4 col-lg-4"><b>Project Period</b></p></td>                                                    ';
+					html+='    	<td><p class="mb-4 col-lg-2"><b>Github Address</b></p></td>                                                    ';
+					html+='   </tr>                                                                                                             ';
+					html+='   <tr>                                                                                                               ';
+					html+='      <td>                                                                                                           ';
+					html+='         <input type="text" id="pjtNameU" name="pjtNameU" size="15"  readonly="readonly" maxlength="10" value="';
+					html+=pjtName.trim();
+					html+='" />                                                                                         ';
+					html+='      </td>                                                                                                          ';
+					html+='      <td>                                                                                                           ';
+					html+='         <input type="text" id="pjtInfoU" name="pjtInfoU" size="15"  maxlength="10" value="';
+					html+=pjtInfo.trim();
+					html+='" />                                                                                         ';
+					html+='      </td>                                                                                                          ';
+					html+='      <td>                                                                                                           ';
+					html+='         <input type="text" id="pjtStartU" name="pjtStartU" size="15"  maxlength="10" value="';
+					html+=pjtStart.trim();
+					html+='" />                                                                                       ';
+					html+='      </td>                                                                                                          ';
+					html+='      <td>                                                                                                           ';
+					html+='         <input type="text" id="pjtEndU" name="pjtEndU" size="15"  maxlength="10" value="';
+					html+=pjtEnd.trim();
+					html+='" /> ';
+					html+='      </td>                                                                                                          ';
+					html+='      <td>                                                                                                           ';
+					html+='         <input type="text" id="gitAddressU" name="gitAddressU" size="15"  maxlength="10" value="';
+					html+=gitAddress.trim();
+					html+='" />                                                                                         ';
+					html+='      </td>                                                                                                          ';
+					html+='      <td rowspan="2">                                                                                               ';
+					html+='         <button type="buttons"  class="pjtCan buttons" id="pjtCan" name="pjtCan" >Cancellation</button>                                                     ';
+					html+='         <button type="buttons" class="pjtUpdate buttons" id="pjtUpdate" name="pjtUpdate" >Completed</button>                                                     ';
+					html+='      </td>                                                                                                          ';
+					html+='   </tr>                                                                                                              ';
+					html+='</tbody>                                                                                                            ';                                                                                                                                                          
+					tbody.append(html);   
+			},
+			error:function(xhr,status,error){
+				alert("error:"+error);
+			},
+			complete:function(data){
+			
+			}   
+			
+			});//--ajax 
+			
+			}); //--수정버튼
+			
+			//수정취소버튼
+				$(document).on("click",".pjtCan",function(){
+					history.go(0);
+				});
+				
+			//수정완료버튼
+				$(document).on("click",".pjtUpdate",function(){
+				var memberId=$("#memberIdU").val();
+				var pjtName = $("#pjtNameU").val();
+				var pjtInfo = $("#pjtInfoU").val();
+				var pjtStart = $("#pjtStartU").val(); 
+				var pjtEnd = $("#pjtEndU").val();
+				var gitAddress = $("#gitAddressU").val();
+				
+				if($("#pjtInfoU").val()==null || $("#pjtInfoU").val().length<=0 ||$("#pjtInfoU").val()=='undefined'){
+					$("#pjtInfoU").focus();
+					alert("프로젝스설명을 입력하세요.");
+					return;
+					}
 
+				if($("#pjtStartU").val()==null || $("#pjtStartU").val().length<=0 || $("#pjtStartU").val()=='undefined'){
+					$("#pjtStartU").focus();
+					alert("시작일을 입력하세요.");
+					return;
+					}
 
+				if($("#pjtEndU").val()==null || $("#pjtEndU").val().length<=0 ||  $("#pjtEndU").val()=='undefined'){
+					$("#pjtEndU").focus();
+					alert("종료일을 입력하세요.");
+					return;
+					}
+            
+				if( $("#gitAddressU").val()==null ||  $("#gitAddressU").val().length<=0|| $("#gitAddressU").val()=='undefined'){
+					$("#gitAddressU").focus();
+					alert("깃주소를 입력하세요.");
+					return;
+					}
+					
+				if(confirm("수정 하시겠습니까?")==false) return;
+				
+				//ajax
+				$.ajax({
+					type:"POST",
+					url:"${hContext}/project/do_update.spring",
+					dataType:"html", 
+					data:{ //"memberId":"sohyun1234"
+						"memberId":memberId.trim(),
+						"pjtName" : pjtName.trim(),
+						"pjtInfo": pjtInfo.trim(),
+						"pjtStart": pjtStart.trim(),
+						"pjtEnd": pjtEnd.trim(),
+						"gitAddress": gitAddress.trim() 
+					},
+					success:function(data){ //성공
+					console.log("수정성공후우우우우");
+					console.log("pjtName: "+pjtName.trim());
+					console.log("pjtInfo: "+pjtInfo.trim());
+					console.log("pjtStart: "+pjtStart.trim());
+					console.log("pjtEnd: "+pjtEnd.trim());
+					console.log("gitAddress: "+gitAddress.trim());
 
-
-
-
-      
+					alert("수정되었습니다.");
+					skillRetrieve();
+					},
+					error:function(xhr,status,error){
+					alert("error:"+error);
+					},
+					complete:function(data){
+					
+					}   
+					
+				});//--ajax
+			
+			
+				});//--수정완료버튼
+				
+				//삭제
+				$(".projectDelete").on("click",function(){
+				
+					//console.log("projectDelete click");
+					var projectDelete = $(this);
+					var tr = projectDelete.parent().parent().parent();
+					var td = tr.children().children();
+					
+					var memberId = td.eq(0).text();
+					var gitAddress= td.eq(10).text();
+				
+					console.log("memberId= "+memberId);
+					console.log("gitAddress= "+gitAddress);
+				
+					//confirm
+						if(confirm(gitAddress+"Project를 삭제 하시겠습니까?")==false) return;
+						
+					//ajax
+					$.ajax({
+						type:"POST",
+						url:"${hContext}/project/do_delete.spring",
+						dataType:"html", 
+						data:{ //"memberId":"sohyun1234"
+								"memberId" : memberId.trim(),
+								"gitAddress" : gitAddress.trim()
+						},
+						success:function(data){ //성공
+								//console.log("data:"+data);  
+									var parseData = $.parseJSON(data);
+							if(parseData.msgId=="1"){
+									alert(parseData.msgMsg);
+									history.go(0);
+								}else{
+									alert(parseData.msgMsg);
+								}
+						},
+						error:function(xhr,status,error){
+							alert("error:"+error);
+						},
+						complete:function(data){
+						
+						}   
+						
+						});//--ajax
+				
+					});
+//--project----------------------------   
 
       $("#uploadBtn").on("click", function(){
          console.log("uploadTest");
