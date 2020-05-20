@@ -98,7 +98,7 @@ public class SkillController {
 	}
 	
 	
-	@RequestMapping(value = "skill/do_select_one.do",method = RequestMethod.POST
+	@RequestMapping(value = "skill/do_select_one.spring",method = RequestMethod.GET
 			,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doSelectOne(SkillVO skill) {

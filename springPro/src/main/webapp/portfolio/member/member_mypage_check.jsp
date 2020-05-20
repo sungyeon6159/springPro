@@ -46,6 +46,25 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
  
+ 
+		 <style>
+		.buttons {
+		    background-color: #2E64FE;
+		    border: none;
+		    color: white;
+		    padding: 10px 16px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 10px;
+		    margin: 2px 1px;
+		    cursor: pointer;
+		    position: right;
+		}
+		.activity {
+			width: 535px;
+		}
+		</style>
     
     <title>My page</title>
     
@@ -66,6 +85,8 @@
              <li class="nav-item"><a href="#skills-section" class="nav-link"><span>Skills</span></a></li>
              <li class="nav-item"><a href="#license-section" class="nav-link"><span>License</span></a></li>
              <li class="nav-item"><a href="#Projects-section" class="nav-link"><span>Projects</span></a></li>
+             <li class="nav-item"><a href="${hContext}/portfolio/do_retrieve.spring" class="nav-link"><span>Portfolio List</span></a></li>
+             <li class="nav-item"><a href="${hContext }/portfolio/logout.spring" class="nav-link"><span>LogOut</span></a></li>
            </ul>
          </div>
        </div>
@@ -87,48 +108,50 @@
 			    <div class="block-18 shadow">
 			       <div class="page-header">
 			  	    	<h2>Skill List</h2>
-			  	    		<form action="${hContext}/portfolio/mypage_retrieve.spring" id="skillRetrieve_frm" name="skillRetrieve_frm" method="get">
+			  	    	
+			  	    		<form action="${hContext}/portfolio/" id="skillUp_frm" name="skillUp_frm" method="POST">
 					    		<input type="hidden" name="hiddenId" id="hiddenId">
-					    	</form>
+					    	
 					    		<!-- Grid영역 -->
 							    	<div class="table-responsive">
-							    		<table class="table table-hover" id="memberTable">
+							    		<table class="table table-hover" id="skillTable">
 							    		    <!-- hidden-sm hidden-xs 숨기기 -->
 							    			<thead class="bg-primary">
 							    			</thead>
-							    			<tbody>
 										  	    		<!-- Data있는 경우 -->
 										    				<c:choose>
 										    					<c:when test="${list1.size()>0 }">
 										    						<c:forEach var="i" begin="0" end="${list1.size()-1}">
-										    							<tr>
-													    					<td class="text-left" style="display:none;">${list1.get(i).memberId}</td>
-													    					<td class="text-left col-sm-12">
 													    					<table>
+													    					<tbody>
 													    						<tr>
+													    							<td hidden="hidden" class="text-left" style="display:none;">${list1.get(i).memberId}</td>
 													    							<td>
-													    								<h7 class="mb-4"><b>Skill Name</b></h7>
+													    								<h6 class="mb-4"><b>Skill Name</b></h6>
 													    							</td>	
 													    							<td>
-													    								<span>${list1.get(i).sName }</span>
+													    								${list1.get(i).sName }
 													    							</td>
 													    							<td>
-													    								<h7><b>Marstery</b></h7>
+													    								<h6><b>Marstery</b></h6>
 													    							</td>
 													    							<td>
-													    								${list1.get(i).sMarstery } %
+													    								${list1.get(i).sMarstery }
 													    							</td>
 													    							<td>
-													    								<h7><b>Activity History</b></h7>
+													    								<h6><b>Activity History</b></h6>
 													    							</td>
 													    							<td>
 													    								${list1.get(i).sContent }
 													    							</td>
+													    							<td>
+													    								<input type="button" id="skillUpdate" name="skillUpdate" class="buttons skillUpdate" value="Modify">
+													    								<br>
+													    								<input type="button" id="skillDelete" name="skillDelete" class="buttons skillDelete" value="Delete">
+													    							</td>
 													    						</tr>
-													    					
+													    						</tbody>
 													    					</table>
-													    					</td>
-												    					</tr>
 											    					</c:forEach>
 										    					</c:when>
 											    					<c:otherwise>
@@ -136,11 +159,12 @@
 											    					</c:otherwise>
 											    			</c:choose>
 										  	    	
-										  	    	</tbody>
 									    		</table>
+									    		<input type="button" id="skillAdd" name="skillAdd" class="buttons" value="Add">
 									    	</div>
 									    	<!--// Grid영역 -->    
 										  	    	
+										  	    </form>	
 								              </div>
 								            </div>
 								          </div>
@@ -246,9 +270,10 @@
 			    <div class="block-18 shadow">
 			       <div class="page-header">
 					    	<h2>License List</h2>
-					    		<form action="${hContext}/portfolio/mypage_retrieve.spring" id="licenseRetrieve_frm" name="licenseRetrieve_frm" method="get">
+					    	
+					    		<form action="${hContext}/portfolio/" id="licenseUp_frm" name="licenseUp_frm" method="POST">
 						    		<input type="hidden" name="hiddenId" id="hiddenId">
-						    	</form>
+						    	
 						    		<!-- Grid영역 -->
 								    	<div class="table-responsive">
 								    		<table class="table table-hover" id="memberTable">
@@ -270,37 +295,29 @@
 													    								<br>${list2.get(i).lName }
 													    							</td>
 													    							<td>
-													    								${list2.get(i).lName }
-													    							</td>	
-													    							<td>
 													    								<h7><b>License Classification</b></h7>
-													    							</td>
-													    							<td>
-													    								${list2.get(i).lGroup }
+													    								<br>${list2.get(i).lGroup }
 													    							</td>
 													    							<td>
 													    								<h7><b>Type of License</b></h7>
-													    							</td>
-													    							<td>
-													    								${list2.get(i).lGrade }
+													    								<br>${list2.get(i).lGrade }
 													    							</td>
 													    							<td>
 													    								<h7><b>License Number</b></h7>
-													    							</td>
-													    							<td>
-													    								${list2.get(i).lNum }
+													    								<br>${list2.get(i).lNum }
 													    							</td>
 													    							<td>
 													    								<h7><b>Date of Acquisition</b></h7>
-													    							</td>
-													    							<td>
-													    								${list2.get(i).lDate }
+													    								<br>${list2.get(i).lDate }
 													    							</td>
 													    							<td>
 													    								<h7><b>Issuing Agency</b></h7>
+													    								<br>${list2.get(i).lOrgan }
 													    							</td>
 													    							<td>
-													    								${list2.get(i).lOrgan }
+													    								<input type="button" id="licenseUpdate" name="licenseUpdate" class="buttons" value="Modify">
+													    								<br>
+													    								<input type="button" id="licenseDelete" name="licenseDelete" class="buttons" value="Delete">
 													    							</td>
 													    						</tr>
 													    					
@@ -316,9 +333,11 @@
 										  	    	
 										  	    	</tbody>
 									    		</table>
+									    		<input type="button" id="licenseAdd" name="licenseAdd" class="buttons" value="Add">
 									    	</div>
 									    	<!--// Grid영역 -->    
 										  	    	
+										  	    </form>
 								              </div>
 								            </div>
 								          </div>
@@ -420,9 +439,10 @@
 			    <div class="block-18 shadow">
 			       <div class="page-header">
 					    	<h2>Project List</h2>
-					    		<form action="${hContext}/portfolio/mypage_retrieve.spring" id="projectRetrieve_frm" name="projectRetrieve_frm" method="get">
+					    	
+					    		<form action="${hContext}/portfolio" id="projectUp_frm" name="projectUp_frm" method="POST">
 						    		<input type="hidden" name="hiddenId" id="hiddenId">
-						    	</form>
+						    	
 						    		<!-- Grid영역 -->
 								    	<div class="table-responsive">
 								    		<table class="table table-hover" id="memberTable">
@@ -441,34 +461,31 @@
 													    						<tr>
 													    							<td>
 													    								<h7 class="mb-4"><b>Project Name</b></h7>
+													    								<br>${list3.get(i).pjtName }
 													    							</td>	
 													    							<td>
-													    								<span>${list3.get(i).pjtName }</span>
-													    							</td>
-													    							<td>
 													    								<h7><b>Project Description</b></h7>
-													    							</td>
-													    							<td>
-													    								${list3.get(i).pjtInfo }
+													    								<br>${list3.get(i).pjtInfo }
 													    							</td>
 													    							<td>
 													    								<h7><b>Project Period</b></h7>
-													    							</td>
-													    							<td>
-													    								${list3.get(i).pjtStart } - ${list3.get(i).pjtEnd }
+													    								<br>${list3.get(i).pjtStart } - ${list3.get(i).pjtEnd }
 													    							</td>
 													    							<td>
 													    								<h7><b>Github Address</b></h7>
+													    								<br>${list3.get(i).gitAddress }
 													    							</td>
 													    							<td>
-													    								${list3.get(i).gitAddress }
+													    								<input type="button" id="projectUpdate" name="projectUpdate" class="buttons" value="Modify">
+													    								<br>
+													    								<input type="button" id="projectDelete" name="projectDelete" class="buttons" value="Delete">
 													    							</td>
-													    							<%-- <td>
+													    							<%-- 
+													    							<td>
 													    								<h7><b>Project DemonstrationVideo</b></h7>
+													    								<br>${list3.get(i).lDate }
 													    							</td>
-													    							<td>
-													    								${list3.get(i).lDate }
-													    							</td> --%>
+													    							 --%>
 													    						</tr>
 													    					
 													    					</table>
@@ -483,9 +500,11 @@
 										  	    	
 										  	    	</tbody>
 									    		</table>
+									    		<input type="button" id="projectAdd" name="projectAdd" class="buttons" value="Add">
 									    	</div>
 									    	<!--// Grid영역 -->    
-										  	    	
+										  	    
+										  	    </form>	
 								              </div>
 								            </div>
 								          </div>
@@ -926,8 +945,6 @@
 
 
 
-
-
        
       function skillInsert() {
            console.log("skillInsert");
@@ -948,18 +965,6 @@
      }
        
       function pjtInsert() {
-    	  console.log("licenseInsert");
-          var licFrm = document.licenseInsertForm;
-          licFrm.action = "${hContext}/portfolio/license_insert.spring";
-          licFrm.method="POST";
-          licFrm.submit(); 
-          
-    	  var skillFrm = document.skillInsertForm;
-    	  skillFrm.action = "${hContext}/skill/do_insert.spring";
-    	  skillFrm.method="POST";
-    	  skillFrm.submit(); 
-
-          
          console.log("pjtInsert");
          var pjtFrm = document.projectInsetForm;
          pjtFrm.action = "${hContext}/portfolio/do_insert.spring";
@@ -967,6 +972,216 @@
          pjtFrm.submit(); 
          
       }
+
+
+    //조회버튼 클릭 시
+      function skillRetrieve() {
+          var frm = document.skillUp_frm;
+          frm.action="${hContext}//portfolio/mypage_retrieve.spring";
+          frm.submit();
+       }
+
+	    //수정
+		  $(".skillUpdate").on("click",function(event){
+			 console.log("Modify");
+			 var skillUpdate = $(this);
+		     var tdArr = new Array();
+	
+		     skillUpdate.each(function(i){
+				 var tr = skillUpdate.parent().parent().parent().eq(i);
+		         var td = tr.children().children();
+		         var memberId = td.eq(0).text();
+		         var sName = td.eq(2).text();
+			     var sMarstery = td.eq(4).text();
+			     var sContent = td.eq(6).text();
+	
+			     tdArr.push(memberId);
+			     tdArr.push(sName);
+			     tdArr.push(sMarstery);
+			     tdArr.push(sContent);
+	      }); //--raio.each
+	
+	      	 var memberId = tdArr[0];
+	     	 var sName = tdArr[1];
+		     var sMarstery = tdArr[2];
+		     var sContent = tdArr[3];
+	
+		     console.log("memberId = "+memberId.trim());
+		     console.log("sName = "+sName.trim());
+		     console.log("sMarstery = "+sMarstery.trim());
+		     console.log("sContent = "+sContent.trim());
+		     
+		     //ajax
+		     $.ajax({
+		      type:"GET",
+		      url:"${hContext}/skill/do_select_one.spring",
+		      dataType:"html", 
+		      data:{ //"memberId":"sohyun1234"
+		             "memberId": memberId.trim(),
+		             "sName" : sName.trim(),
+		             "sMarstery": sMarstery.trim(),
+		             "sContent": sContent.trim()
+		      },
+		      success:function(data){ //성공
+		          console.log("data:"+data);  
+		          var html = '';
+		          var tbody = skillUpdate.parent().parent().parent();
+		          var removeTbody = tbody.eq(0);
+			      removeTbody.empty();
+	
+			      html+='  <tbody>                                                                                                      ';
+			      html+='  <tr>                                                                                                         ';
+			      html+='  	<td class="text-left" style="display:none;">${list1.get(i).memberId}</td>                                 ';
+			      html+='  	<td>                                                                                                      ';
+			      html+='  		<h6 class="mb-4"><b>Skill Name</b></h6>                                                               ';
+			      html+='  	</td>	                                                                                                  ';
+			      html+='  	<td>                                                                                                      ';
+			      html+='  		${list1.get(i).sName }                                                                                ';
+			      html+='  	</td>                                                                                                     ';
+			      html+='	    <tr>                                                                                                      '; 
+			      html+='		<td><input type="text" id="sNameU" name="sNameU" size="10"  maxlength="10" readonly="readonly" value="    ';
+			      html+=       sName.trim();
+			      html+='     "/>                                                                                                       ';
+			      html+='		</td>                                                                                                     ';
+			      html+='	    </tr>                                                                                                     '; 
+			      html+='  	<td>                                                                                                      ';
+			      html+='  		<h6><b>Marstery</b></h6>                                                                              ';
+			      html+='  	</td>                                                                                                     ';
+			      html+='  	<td>                                                                                                      ';
+			      html+='  		${list1.get(i).sMarstery }                                                                            ';
+			      html+='  	</td>                                                                                                     ';
+			      html+='	    <tr>                                                                                                      '; 
+			      html+='		<td><input type="text" id="sMarsteryU" name="sMarsteryU" size="10"   value="               ';
+			      html+=       sMarstery.trim();
+			      html+='     "/>                                                                                                       ';
+			      html+='		</td>                                                                                                     ';
+			      html+='	    </tr>                                                                                                     '; 
+			      html+='  	<td>                                                                                                      ';
+			      html+='  		<h6><b>Activity History</b></h6>                                                                      ';
+			      html+='  	</td>                                                                                                     ';
+			      html+='  	<td>                                                                                                      ';
+			      html+='  		${list1.get(i).sContent }                                                                             ';
+			      html+='  	</td>                                                                                                     ';
+			      html+='	    <tr>                                                                                                      '; 
+			      html+='		<td><input type="text" id="sContentU" name="sContentU" size="30"   value="                 ';
+			      html+=       sContent.trim();
+			      html+='     "/>                                                                                                       ';
+			      html+='		</td>                                                                                                     ';
+			      html+='	    </tr>                                                                                                     ';
+			      html+='	<tr>                                                                                                          ';
+			      html+='		<td colspan="2">                                                                                          ';
+			      html+='			<button type="buttons"  class="buttons" id="skillCan" name="skillCan" >수정취소</button>                 ';
+			      html+='			<button type="buttons" class="buttons" id="doUpdate" name="doUpdate" >수정완료</button>                  ';
+			      html+='		</td>                                                                                                     ';
+			      html+='	</tr>                                                                                                         ';			     
+			      html+='  </tbody>                                                                                                     ';
+				  tbody.append(html);
+		      },
+		      error:function(xhr,status,error){
+		    	  console.log("memberId====== "+$("#memberId").val()); 
+		        alert("error:"+error);
+		      },
+		      complete:function(data){
+		      
+		      }   
+		      
+		     });//--ajax 
+			      
+	      	});//--수정  
+
+			  //수정취소버튼
+			  $(document).on("click",".skillCan",function(){
+			    	history.go(0);
+			    });
+		
+			  //수정완료버튼
+			  $(document).on("click",".doUpdate",function(){//댓글수정완료버튼
+				     var sName = $("#sNameU").val();
+				     var sMarstery = $("#sMarsteryU").val();
+				     var sContent = $("#sContentU").val(); 
+		
+					 console.log("수정전------------------")
+				     console.log("sName: "+sName);
+				     console.log("sMarstery: "+sMarstery);
+				     console.log("sContent: "+sContent);
+				     console.log("//수정전------------------")
+				     
+		     if($("#sMarsteryU").val()==null || $("#sMarsteryU").val().length<=0 ||$("#sMarsteryU").val()=='undefined'){
+					$("#sMarsteryU").focus();
+					alert("자격분류를 입력하세요.");
+					return;
+				}
+		
+		     if($("#sContent").val()==null || $("#sContent").val().length<=0 || $("#sContent").val()=='undefined'){
+					$("#sContent").focus();
+					alert("자격등급을 입력하세요.");
+					return;
+				}
+		
+		     if(confirm("수정 하시겠습니까?")==false) return;
+
+		   //ajax
+		     $.ajax({
+		      type:"POST",
+		      url:"${hContext}/skill/do_update.spring",
+		      dataType:"html", 
+		      data:{ //"memberId":"sohyun1234"
+		    	  	 "memberId": memberId.trim(),
+		             "sName" : sName.trim(),
+		             "sMarstery": sMarstery.trim(),
+		             "sContent": sContent.trim()
+		      },
+		      success:function(data){ //성공
+			      	 console.log("수정성공후우우우우");
+			       	 console.log("sName: "+sName.trim());
+			      	 console.log("sMarstery: "+sMarstery.trim());
+				     console.log("sContent: "+sContent.trim());
+		    	  alert("수정되었습니다.");
+		    	  skillRetrieve();
+		      },
+		      error:function(xhr,status,error){
+		        alert("error:"+error);
+		      },
+		      complete:function(data){
+		      
+		      }   
+		      
+		     });//--ajax
+			  
+		  });
+		//--수정완료버튼
+
+	      /* function skillUpdate() {
+	 	 console.log("skillUpdate");
+	 	 var frm = document.skillUp_frm;
+	 	 frm.action = "${hContext}/skill/do_select_one.spring";
+	 	 frm.method = "POST";
+	 	 frm.submit(); */
+	    
+       function licenseUpdate() {
+      	 console.log("licenseUpdate");
+      	 var frm = document.licenseUp_frm;
+      	 frm.action = "${hContext}";
+      	 frm.method = "POST";
+      	 frm.submit();
+        }
+
+       function projectUpdate() {
+      	 console.log("projectUpdate");
+      	 var frm = document.projectUp_frm;
+      	 frm.action = "${hContext}/";
+      	 frm.method = "POST";
+      	 frm.submit();
+        }
+
+	
+
+
+
+
+
+
+      
 
       $("#uploadBtn").on("click", function(){
          console.log("uploadTest");

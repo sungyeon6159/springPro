@@ -26,7 +26,7 @@
 		     s_name as sName,           
 		     member_id as memberId,        
 		     s_marstery as sMarstery,       
-		     s_content as sContent,        
+		     s_content as sContent        
 		   
 		 FROM                  
 		     skill             
