@@ -20,6 +20,7 @@ import com.sist.spring.cmn.MessageVO;
 import com.sist.spring.cmn.SearchVO;
 import com.sist.spring.cmn.StringUtil;
 import com.sist.spring.covid.CovidUserVO;
+import com.sist.spring.portfolio.license.LicenseVO;
 import com.sist.spring.portfolio.member.MemberVO;
 
 @Controller
@@ -36,27 +37,29 @@ public class SkillController {
 	@RequestMapping(value="/portfolio/skill/do_retrieve.spring",method = RequestMethod.GET)
 	public String doRetrieve(HttpServletRequest req,SkillVO skill,Model model) {
 		
-		/*
-		 * HttpSession session=req.getSession(); MemberVO sessionVO=(MemberVO)
-		 * session.getAttribute("member");
-		 * 
-		 * skill.setMemberId(sessionVO.getMemberId());
-		 * 
-		 * LOG.debug("1==================="); LOG.debug("1=skill="+skill);
-		 * LOG.debug("1===================");
-		 * 
-		 * model.addAttribute("param", skill);
-		 * 
-		 * LOG.debug("1.2==================="); LOG.debug("1.2=skill="+skill);
-		 * LOG.debug("1.2===================");
-		 * 
-		 * List<SkillVO> list =(List<SkillVO>) skillService.doRetrieve(skill);
-		 * LOG.debug("1.3==================="); for(SkillVO vo :list) {
-		 * LOG.debug("vo="+vo); } LOG.debug("1.3===================");
-		 * model.addAttribute("list", list);
-		 */
+		SkillVO inVO=new SkillVO();
+		inVO.setMemberId(inVO.getMemberId());
 		
-		return "portfolio/member/member_mypage_check";
+		LOG.debug("1===================");
+		LOG.debug("1=skill="+skill);
+		LOG.debug("1===================");
+
+		List<SkillVO>  list = (List<SkillVO>) skillService.doRetrieve(inVO);
+		LOG.debug("1.3===========================");
+		for(SkillVO vo:list) {
+			LOG.debug("1.3 vo = "+vo);
+		}
+
+		LOG.debug("1.3===========================");		
+		model.addAttribute("list",list);
+		//총글수
+		int totalCnt = 0;
+		if(list!=null && list.size()>0) {
+			totalCnt =list.get(0).getTotalCnt();
+		}
+		model.addAttribute("totalCnt",totalCnt);		
+
+		return "portfolio/index";
 	}
 
 	
@@ -79,10 +82,10 @@ public class SkillController {
 		message.setMsgId(flag+"");
 		//성공
 		if(flag ==1) {
-			message.setMsgMsg(skill.getsContent()+"님이 수정 되었습니다.");
+			message.setMsgMsg(skill.getsName()+"의 Skill이 수정 되었습니다.");
 		//실패	
 		}else {
-			message.setMsgMsg(skill.getsContent()+"님 등록 실패.");			
+			message.setMsgMsg(skill.getsName()+"Skill의 등록 실패.");			
 		}		
 
 		//JSON
@@ -123,7 +126,7 @@ public class SkillController {
 	
 	
 	
-	@RequestMapping(value = "skill/do_delete.do",method = RequestMethod.POST
+	@RequestMapping(value = "skill/do_delete.spring",method = RequestMethod.POST
 					,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doDelete(SkillVO skill) {
@@ -142,10 +145,10 @@ public class SkillController {
 		LOG.debug("1.2===================");
 		//성공
 		if(flag == 1) {
-			message.setMsgMsg(skill.getMemberId()+"님이 삭제 되었습니다.");
+			message.setMsgMsg(skill.getsName()+"의 SkillList가 삭제 되었습니다.");
 		//실패
 		}else {
-			message.setMsgMsg(skill.getMemberId()+"삭제 실패.");
+			message.setMsgMsg(skill.getMemberId()+"SkillList의 삭제 실패.");
 		}
 		
 		//JSON

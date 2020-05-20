@@ -127,19 +127,19 @@
 													    						<tr>
 													    							<td hidden="hidden" class="text-left" style="display:none;">${list1.get(i).memberId}</td>
 													    							<td>
-													    								<h6 class="mb-4"><b>Skill Name</b></h6>
+													    								<h7 class="mb-4"><b>Skill Name</b></h7>
 													    							</td>	
 													    							<td>
 													    								${list1.get(i).sName }
 													    							</td>
 													    							<td>
-													    								<h6><b>Marstery</b></h6>
+													    								<h7><b>Marstery</b></h7>
 													    							</td>
 													    							<td>
 													    								${list1.get(i).sMarstery }
 													    							</td>
 													    							<td>
-													    								<h6><b>Activity History</b></h6>
+													    								<h7><b>Activity History</b></h7>
 													    							</td>
 													    							<td>
 													    								${list1.get(i).sContent }
@@ -261,86 +261,71 @@
     </section>
    <!--// Skills -->
    
-   <!-- license -->
+<!-- license -->
       <section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="license-section">
          <div class="container-fluid px-md-5">
           <div class="row d-md-flex align-items-center">
-             
              <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-			    <div class="block-18 shadow">
-			       <div class="page-header">
-					    	<h2>License List</h2>
-					    	
-					    		<form action="${hContext}/portfolio/" id="licenseUp_frm" name="licenseUp_frm" method="POST">
-						    		<input type="hidden" name="hiddenId" id="hiddenId">
-						    	
-						    		<!-- Grid영역 -->
-								    	<div class="table-responsive">
-								    		<table class="table table-hover" id="memberTable">
-								    		    <!-- hidden-sm hidden-xs 숨기기 -->
-								    			<thead class="bg-primary">
-								    			</thead>
-								    			<tbody>
-										  	    		<!-- Data있는 경우 -->
-										    				<c:choose>
-										    					<c:when test="${list2.size()>0 }">
-										    						<c:forEach var="i" begin="0" end="${list2.size()-1}">
-										    							<tr>
-													    					<td class="text-left" style="display:none;">${list2.get(i).memberId}</td>
-													    					<td class="text-left col-sm-12">
-													    					<table>
-													    						<tr>
-													    							<td>
-													    								<h7 class="mb-4"><b>License Name</b></h7>
-													    								<br>${list2.get(i).lName }
-													    							</td>
-													    							<td>
-													    								<h7><b>License Classification</b></h7>
-													    								<br>${list2.get(i).lGroup }
-													    							</td>
-													    							<td>
-													    								<h7><b>Type of License</b></h7>
-													    								<br>${list2.get(i).lGrade }
-													    							</td>
-													    							<td>
-													    								<h7><b>License Number</b></h7>
-													    								<br>${list2.get(i).lNum }
-													    							</td>
-													    							<td>
-													    								<h7><b>Date of Acquisition</b></h7>
-													    								<br>${list2.get(i).lDate }
-													    							</td>
-													    							<td>
-													    								<h7><b>Issuing Agency</b></h7>
-													    								<br>${list2.get(i).lOrgan }
-													    							</td>
-													    							<td>
-													    								<input type="button" id="licenseUpdate" name="licenseUpdate" class="buttons" value="Modify">
-													    								<br>
-													    								<input type="button" id="licenseDelete" name="licenseDelete" class="buttons" value="Delete">
-													    							</td>
-													    						</tr>
-													    					
-													    					</table>
-													    					</td>
-												    					</tr>
-											    					</c:forEach>
-										    					</c:when>
-										    					<c:otherwise>
-										    						<tr><td colspan="99">등록된 자격증이 없습니다.</td></tr>
-										    					</c:otherwise>
-										    				</c:choose>
-										  	    	
-										  	    	</tbody>
-									    		</table>
-									    		<input type="button" id="licenseAdd" name="licenseAdd" class="buttons" value="Add">
-									    	</div>
-									    	<!--// Grid영역 -->    
-										  	    	
-										  	    </form>
-								              </div>
-								            </div>
-								          </div>
+             <div class="block-18 shadow">
+                <div class="page-header">
+                      <h2>License List</h2>
+                         <form action="${hContext}/portfolio/mypage_retrieve.spring" id="licenseRetrieve_frm" name="licenseRetrieve_frm" method="get">
+                            <input type="hidden" name="hiddenId" id="hiddenId">
+                         </form>
+                            <!-- Grid영역 -->
+                               <div class="table-responsive">
+                                  <table class="table table-hover" id="licenseTable">
+                                      <!-- hidden-sm hidden-xs 숨기기 -->
+                                     <thead class="bg-primary">
+                                     </thead>
+                                     <tbody>
+                                             <!-- Data있는 경우 -->
+                                              <c:choose>
+                                                 <c:when test="${list2.size()>0 }">
+                                                    <c:forEach var="i" begin="0" end="${list2.size()-1}">
+                                                          <table class="col-lg-12 table table-hover">
+                                                             <tbody>
+                                                             <tr>
+                                                                <td style="display:none;">${list2.get(i).memberId}</td>
+                                                             </tr>
+                                                                <tr>
+                                                                   <td><p class="mb-4 col-lg-2"><b>License Name</b></p></td>
+                                                                   <td><p class="mb-4 col-lg-2"><b>License Classification</b></p></td>
+                                                                   <td><p class="mb-4 col-lg-1"><b>Type of License</b></p></td>
+                                                                   <td><p class="mb-4 col-lg-1"><b>License Number</b></p></td>
+                                                                   <td><p class="mb-4 col-lg-2"><b>Date of Acquisition</b></p></td>
+                                                                   <td><p class="mb-4 col-lg-2"><b>Issuing Agency</b></p></td>
+                                                                   <td><p class="mb-4 col-lg-2"></p></td>
+                                                                </tr>
+                                                                <tr>
+                                                                   <td>${list2.get(i).lName }</td>
+                                                                   <td>${list2.get(i).lGroup }</td>
+                                                                   <td>${list2.get(i).lGrade }</td>
+                                                                   <td>${list2.get(i).lNum }</td>
+                                                                   <td>${list2.get(i).lDate }</td>
+                                                                   <td>${list2.get(i).lOrgan }</td>
+                                                                   <td rowspan="2">
+                                                                      <input type="button" id="licUpdate" name="licUpdate" class="buttons licUpdate" value="Modify">
+                                                                      <input type="button" id="licDelete" name="licDelete" class="buttons licDelete" value="Delete">
+                                                                   </td>
+                                                                </tr>
+                                                             </tbody>
+                                                          </table>
+                                                          </td>
+                                                       </tr>
+                                                    </c:forEach>
+                                                 </c:when>
+                                                 <c:otherwise>
+                                                    <tr><td colspan="99">등록된 자격증이 없습니다.</td></tr>
+                                                 </c:otherwise>
+                                              </c:choose>
+                                          </tbody>
+                                     </table>
+                                  </div>
+                                  <!--// Grid영역 -->    
+                                      </div>
+                                    </div>
+                                  </div>
              
                <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
                 <div class="block-18 shadow">
@@ -445,7 +430,7 @@
 						    	
 						    		<!-- Grid영역 -->
 								    	<div class="table-responsive">
-								    		<table class="table table-hover" id="memberTable">
+								    		<table class="table table-hover" id="projectTable">
 								    		    <!-- hidden-sm hidden-xs 숨기기 -->
 								    			<thead class="bg-primary">
 								    			</thead>
@@ -454,47 +439,33 @@
 										    				<c:choose>
 										    					<c:when test="${list3.size()>0 }">
 										    						<c:forEach var="i" begin="0" end="${list3.size()-1}">
-										    							<tr>
-													    					<td class="text-left" style="display:none;">${list3.get(i).memberId}</td>
-													    					<td class="text-left col-sm-12">
-													    					<table>
-													    						<tr>
-													    							<td>
-													    								<h7 class="mb-4"><b>Project Name</b></h7>
-													    								<br>${list3.get(i).pjtName }
-													    							</td>	
-													    							<td>
-													    								<h7><b>Project Description</b></h7>
-													    								<br>${list3.get(i).pjtInfo }
-													    							</td>
-													    							<td>
-													    								<h7><b>Project Period</b></h7>
-													    								<br>${list3.get(i).pjtStart } - ${list3.get(i).pjtEnd }
-													    							</td>
-													    							<td>
-													    								<h7><b>Github Address</b></h7>
-													    								<br>${list3.get(i).gitAddress }
-													    							</td>
-													    							<td>
-													    								<input type="button" id="projectUpdate" name="projectUpdate" class="buttons" value="Modify">
-													    								<br>
-													    								<input type="button" id="projectDelete" name="projectDelete" class="buttons" value="Delete">
-													    							</td>
-													    							<%-- 
-													    							<td>
-													    								<h7><b>Project DemonstrationVideo</b></h7>
-													    								<br>${list3.get(i).lDate }
-													    							</td>
-													    							 --%>
-													    						</tr>
-													    					
-													    					</table>
-													    					</td>
-												    					</tr>
+										    							<table class="col-lg-12 table table-hover">
+																			<tbody>
+																				<tr>
+																		            <td style="display:none;">${list3.get(i).memberId}</td>
+																		        </tr>
+																				<tr>
+																					<td><p class="mb-4 col-lg-3"><b>Project Name</b></p></td>
+																					<td><p class="mb-4 col-lg-3"><b>Project Description</b></p></td>
+																					<td><p class="mb-4 col-lg-4"><b>Project Period</b></p></td>
+																					<td><p class="mb-4 col-lg-2"><b>Github Address</b></p></td>
+																				</tr>
+																				<tr>
+																					<td>${list3.get(i).pjtName }</td>
+																					<td>${list3.get(i).pjtInfo }</td>
+																					<td>${list3.get(i).pjtStart } - ${list3.get(i).pjtEnd }</td>
+																					<td>${list3.get(i).gitAddress }</td>
+																					<td rowspan="2">
+																					<input type="button" id="projectUpdate" name="projectUpdate" class="buttons" value="Modify">
+																					<input type="button" id="projectDelete" name="projectDelete" class="buttons" value="Delete">
+																					</td>
+																				</tr>			
+																			</tbody>
+																		</table>
 											    					</c:forEach>
 										    					</c:when>
 										    					<c:otherwise>
-										    						<tr><td colspan="99">등록된 자격증이 없습니다.</td></tr>
+										    						<tr><td colspan="99">등록된 프로젝트가 없습니다.</td></tr>
 										    					</c:otherwise>
 										    				</c:choose>
 										  	    	
@@ -973,7 +944,7 @@
          
       }
 
-
+//skill------------------------------
     //조회버튼 클릭 시
       function skillRetrieve() {
           var frm = document.skillUp_frm;
@@ -1029,56 +1000,49 @@
 		          var removeTbody = tbody.eq(0);
 			      removeTbody.empty();
 	
-			      html+='  <tbody>                                                                                                      ';
-			      html+='  <tr>                                                                                                         ';
-			      html+='  	<td class="text-left" style="display:none;">${list1.get(i).memberId}</td>                                 ';
-			      html+='  	<td>                                                                                                      ';
-			      html+='  		<h6 class="mb-4"><b>Skill Name</b></h6>                                                               ';
-			      html+='  	</td>	                                                                                                  ';
-			      html+='  	<td>                                                                                                      ';
-			      html+='  		${list1.get(i).sName }                                                                                ';
-			      html+='  	</td>                                                                                                     ';
-			      html+='	    <tr>                                                                                                      '; 
-			      html+='		<td><input type="text" id="sNameU" name="sNameU" size="10"  maxlength="10" readonly="readonly" value="    ';
-			      html+=       sName.trim();
-			      html+='     "/>                                                                                                       ';
-			      html+='		</td>                                                                                                     ';
-			      html+='	    </tr>                                                                                                     '; 
-			      html+='  	<td>                                                                                                      ';
-			      html+='  		<h6><b>Marstery</b></h6>                                                                              ';
-			      html+='  	</td>                                                                                                     ';
-			      html+='  	<td>                                                                                                      ';
-			      html+='  		${list1.get(i).sMarstery }                                                                            ';
-			      html+='  	</td>                                                                                                     ';
-			      html+='	    <tr>                                                                                                      '; 
-			      html+='		<td><input type="text" id="sMarsteryU" name="sMarsteryU" size="10"   value="               ';
-			      html+=       sMarstery.trim();
-			      html+='     "/>                                                                                                       ';
-			      html+='		</td>                                                                                                     ';
-			      html+='	    </tr>                                                                                                     '; 
-			      html+='  	<td>                                                                                                      ';
-			      html+='  		<h6><b>Activity History</b></h6>                                                                      ';
-			      html+='  	</td>                                                                                                     ';
-			      html+='  	<td>                                                                                                      ';
-			      html+='  		${list1.get(i).sContent }                                                                             ';
-			      html+='  	</td>                                                                                                     ';
-			      html+='	    <tr>                                                                                                      '; 
-			      html+='		<td><input type="text" id="sContentU" name="sContentU" size="30"   value="                 ';
-			      html+=       sContent.trim();
-			      html+='     "/>                                                                                                       ';
-			      html+='		</td>                                                                                                     ';
-			      html+='	    </tr>                                                                                                     ';
-			      html+='	<tr>                                                                                                          ';
-			      html+='		<td colspan="2">                                                                                          ';
-			      html+='			<button type="buttons"  class="buttons" id="skillCan" name="skillCan" >수정취소</button>                 ';
-			      html+='			<button type="buttons" class="buttons" id="doUpdate" name="doUpdate" >수정완료</button>                  ';
-			      html+='		</td>                                                                                                     ';
-			      html+='	</tr>                                                                                                         ';			     
-			      html+='  </tbody>                                                                                                     ';
+			      html+='  <tbody>                                                                                                             ';
+			      html+='  <tr>                                                                                                                ';
+			      html+='		<td><input type="hidden" id="memberIdU" name="memberIdU" size="10"  maxlength="10" readonly="readonly" value="';
+			      html+=       memberId.trim();
+			      html+='     "/>                                                                                                              ';
+			      html+='		</td>                                                                                                          ';
+			      html+='	    <tr>                                                                                                           ';
+				  html+='  	        <td>                                                                                                       ';
+				  html+='  		    <h7 class="mb-4"><b>Skill Name</b></h7>                                                                    ';
+				  html+='  	        </td>	                                                                                                   ';
+				  html+='		    <td><input type="text" id="sNameU" name="sNameU" size="4"  maxlength="10" readonly="readonly" value="';
+				  html+=            sName.trim();
+				  html+='           "/>                                                                                                        ';
+				  html+='		    </td>                                                                                                      ';
+			      html+='	    </tr>                                                                                                          '; 
+			      html+='	    <tr>                                                                                                           ';
+			      html+='  	        <td>                                                                                                       ';
+			      html+='  		    <h7><b>Marstery</b></h7>                                                                                   ';
+			      html+='  	        </td>                                                                                                      ';
+			      html+='		    <td><input type="text" id="sMarsteryU" name="sMarsteryU" size="4"   value="';
+			      html+=            sMarstery.trim();
+			      html+='            "/>                                                                                                       ';
+			      html+='		    </td>                                                                                                      ';
+			      html+='	    </tr>                                                                                                          '; 
+			      html+='	    <tr>                                                                                                           ';
+			      html+='  	         <td>                                                                                                      ';
+			      html+='  		     <h7><b>Activity History</b></h7>                                                                          ';
+			      html+='  	         </td>                                                                                                     ';
+			      html+='		     <td><input type="text" id="sContentU" name="sContentU" size="30"   value="';
+			      html+=             sContent.trim();
+			      html+='            "/>                                                                                                       ';
+			      html+='		     </td>                                                                                                     ';
+			      html+='	    </tr>                                                                                                          ';
+			      html+='	 <tr>                                                                                                              ';
+			      html+='		<td colspan="2">                                                                                               ';
+			      html+='			<button type="buttons"  class=" skillCan buttons" id="skillCan" name="skillCan" >Cancellation</button>           ';
+			      html+='			<button type="buttons" class="doUpdate buttons" id="doUpdate" name="doUpdate" >Completed</button>             ';
+			      html+='		</td>                                                                                                          ';
+			      html+='	 </tr>                                                                                                             ';			     
+			      html+='  </tbody>                                                                                                            ';
 				  tbody.append(html);
 		      },
 		      error:function(xhr,status,error){
-		    	  console.log("memberId====== "+$("#memberId").val()); 
 		        alert("error:"+error);
 		      },
 		      complete:function(data){
@@ -1096,11 +1060,14 @@
 		
 			  //수정완료버튼
 			  $(document).on("click",".doUpdate",function(){//댓글수정완료버튼
+				  console.log("doUpdate");
+				  	 var memberId = $("#memberIdU").val();
 				     var sName = $("#sNameU").val();
 				     var sMarstery = $("#sMarsteryU").val();
 				     var sContent = $("#sContentU").val(); 
 		
 					 console.log("수정전------------------")
+					 console.log("memberId: "+memberId);
 				     console.log("sName: "+sName);
 				     console.log("sMarstery: "+sMarstery);
 				     console.log("sContent: "+sContent);
@@ -1108,18 +1075,18 @@
 				     
 		     if($("#sMarsteryU").val()==null || $("#sMarsteryU").val().length<=0 ||$("#sMarsteryU").val()=='undefined'){
 					$("#sMarsteryU").focus();
-					alert("자격분류를 입력하세요.");
+					alert("스킬등급를 입력하세요.");
 					return;
 				}
 		
-		     if($("#sContent").val()==null || $("#sContent").val().length<=0 || $("#sContent").val()=='undefined'){
-					$("#sContent").focus();
-					alert("자격등급을 입력하세요.");
+		     if($("#sContentU").val()==null || $("#sContentU").val().length<=0 || $("#sContentU").val()=='undefined'){
+					$("#sContentU").focus();
+					alert("커멘츄을 입력하세요.");
 					return;
 				}
 		
 		     if(confirm("수정 하시겠습니까?")==false) return;
-
+				
 		   //ajax
 		     $.ajax({
 		      type:"POST",
@@ -1137,7 +1104,7 @@
 			      	 console.log("sMarstery: "+sMarstery.trim());
 				     console.log("sContent: "+sContent.trim());
 		    	  alert("수정되었습니다.");
-		    	  skillRetrieve();
+		    	 skillRetrieve();
 		      },
 		      error:function(xhr,status,error){
 		        alert("error:"+error);
@@ -1146,25 +1113,305 @@
 		      
 		      }   
 		      
-		     });//--ajax
+		     });//--ajax 
 			  
 		  });
 		//--수정완료버튼
+ 	
+ 	//삭제
+	 $(".skillDelete").on("click",function(){
+		 console.log("삭제");
+		 var skillDelete = $(this);
 
-	      /* function skillUpdate() {
-	 	 console.log("skillUpdate");
-	 	 var frm = document.skillUp_frm;
-	 	 frm.action = "${hContext}/skill/do_select_one.spring";
-	 	 frm.method = "POST";
-	 	 frm.submit(); */
-	    
-       function licenseUpdate() {
-      	 console.log("licenseUpdate");
-      	 var frm = document.licenseUp_frm;
-      	 frm.action = "${hContext}";
-      	 frm.method = "POST";
-      	 frm.submit();
-        }
+		 var tr = skillDelete.parent().parent().parent();
+      	 var td = tr.children().children();
+
+		  var memberId = td.eq(0).text();
+	      var sName = td.eq(2).text();
+	      console.log("sName="+sName);
+
+		  //confirm
+     	  if(confirm(sName.trim()+"의 SkillList 를 삭제 하시겠습니까?")==false) return;
+	       
+		   //ajax
+		   $.ajax({
+		    type:"POST",
+		    url:"${hContext}/skill/do_delete.spring",
+		    dataType:"html", 
+		    data:{ //"memberId":"sohyun1234"
+		           "memberId":memberId.trim(),
+		           "sName" : sName.trim()
+		    },
+		    success:function(data){ //성공
+		     //console.log("data:"+data);  
+		     var parseData = $.parseJSON(data);
+					 if(parseData.msgId=="1"){
+							alert(parseData.msgMsg);
+							//licRetrieve();
+							history.go(0);
+						 }else{
+							alert(parseData.msgMsg);
+							 }
+		
+		    },
+		    error:function(xhr,status,error){
+		      alert("error:"+error);
+		    },
+		    complete:function(data){
+		    
+		    }   
+		    
+		   });//--ajax 
+		    
+
+		 });	
+	
+//--skill----------------------------
+
+//license----------------------------
+
+    //수정버튼
+   $(".licUpdate").on("click",function(){
+      //console.log("licUpdate click");
+      var licUpdate = $(this);
+      var tr = licUpdate.parent().parent().parent();
+      var td = tr.children().children();
+      var memberId = td.eq(0).text();
+      var lName= td.eq(8).text();
+      var lGroup = td.eq(9).text();
+      var lGrade = td.eq(10).text();
+      var lNum = td.eq(11).text();
+      var lDate = td.eq(12).text();
+      var lOrgan = td.eq(13).text();
+
+      console.log("memberId= "+memberId);
+      console.log("lName= "+lName);
+      console.log("lGroup= "+lGroup);
+      console.log("lGrade= "+lGrade);
+      console.log("lNum= "+lNum);
+      console.log("lDate= "+lDate);
+      console.log("lOrgan= "+lOrgan);
+      
+      //ajax
+        $.ajax({
+         type:"GET",
+         url:"${hContext}/portfolio/go_update.spring",
+         dataType:"html", 
+         data:{ //"memberId":"sohyun1234"
+                "memberId":memberId.trim(),
+                "lName" : lName.trim(),
+                "lGroup": lGroup.trim(),
+                "lGrade": lGrade.trim(),
+                "lNum": lNum.trim(),
+                "lDate": lDate.trim(),
+                "lOrgan": lOrgan.trim() 
+         },
+         success:function(data){ //성공
+                console.log("data:"+data);  
+                var html = "";
+                var tbody = licUpdate.parent().parent().parent();
+                var removeTbody = tbody.eq(0);
+               removeTbody.empty();
+               
+               html+='<tbody>                                                                                                             ';
+               html+='   <tr>                                                                                                               ';
+               html+='      <td><input type="hidden" id="memberIdU" name="memberIdU" size="15"   value="';
+               html+=memberId.trim();
+               html+='" /> ';
+               html+='</td>                                      ';
+               html+='   </tr>                                                                                                              ';
+               html+='   <tr>                                                                                                               ';
+               html+='      <td><p class="mb-4"><b>License Name</b></p></td>                                                              ';
+               html+='      <td><p class="mb-4"><b>License Classification</b></p></td>                                                   ';
+               html+='      <td><p class="mb-4"><b>Type of License</b></p></td>                                                          ';
+               html+='      <td><p class="mb-4"><b>License Number</b></p></td>                                                           ';
+               html+='      <td><p class="mb-4"><b>Date of Acquisition</b></p></td>                                                      ';
+               html+='      <td><p class="mb-4"><b>Issuing Agency</b></p></td>                                                           ';
+               html+='   </tr>                                                                                                              ';
+               html+='   <tr>                                                                                                               ';
+               html+='      <td>                                                                                                           ';
+               html+='         <input type="text" id="lNameU" name="lNameU" size="15"  readonly="readonly" maxlength="10" value="';
+               html+=lName.trim();
+               html+='" />                                                                                         ';
+               html+='      </td>                                                                                                          ';
+               html+='      <td>                                                                                                           ';
+               html+='         <input type="text" id="lGroupU" name="lGroupU" size="15"  maxlength="10" value="';
+               html+=lGroup.trim();
+               html+='" />                                                                                         ';
+               html+='      </td>                                                                                                          ';
+               html+='      <td>                                                                                                           ';
+               html+='         <input type="text" id="lGradeU" name="lGradeU" size="15"  maxlength="10" value="';
+               html+=lGrade.trim();
+               html+='" />                                                                                       ';
+               html+='      </td>                                                                                                          ';
+               html+='      <td>                                                                                                           ';
+               html+='         <input type="text" id="lNumU" name="lNumU" size="15"  maxlength="10" value="';
+               html+=lNum.trim();
+               html+='" />                                                                                         ';
+               html+='      </td>                                                                                                          ';
+               html+='      <td>                                                                                                           ';
+               html+='         <input type="text" id="lDateU" name="lDateU" size="15"  maxlength="10" value="';
+               html+=lDate.trim();
+               html+='" />                                                                                        ';
+               html+='      </td>                                                                                                          ';
+               html+='      <td>                                                                                                           ';
+               html+='         <input type="text" id="lOrganU" name="lOrganU" size="15"  maxlength="10" value="';
+               html+=lOrgan.trim();
+               html+='" />                                                                                         ';
+               html+='      </td>                                                                                                          ';
+               html+='      <td rowspan="2">                                                                                               ';
+               html+='         <button type="buttons"  class="licCan buttons" id="licCan" name="licCan" >Cancellation</button>                                                     ';
+               html+='         <button type="buttons" class="dolicUpdate buttons" id="dolicUpdate" name="dolicUpdate" >Completed</button>                                                     ';
+               html+='      </td>                                                                                                          ';
+               html+='   </tr>                                                                                                              ';
+               html+='</tbody>                                                                                                            ';                                                                                                                                                          
+               tbody.append(html);                                                                      
+         },
+         error:function(xhr,status,error){
+           alert("error:"+error);
+         },
+         complete:function(data){
+         
+         }   
+         
+        });//--ajax 
+
+      }); //--수정버튼
+
+
+      //수정취소버튼
+      $(document).on("click",".licCan",function(){
+          history.go(0);
+       });
+
+      //수정완료버튼
+      $(document).on("click",".dolicUpdate",function(){
+          var memberId=$("#memberIdU").val();
+          var lName = $("#lNameU").val();
+           var lGroup = $("#lGroupU").val();
+           var lGrade = $("#lGradeU").val(); 
+           var lNum = $("#lNumU").val();
+           var lDate = $("#lDateU").val();
+           var lOrgan= $("#lOrganU").val(); 
+
+           if($("#lGroupU").val()==null || $("#lGroupU").val().length<=0 ||$("#lGroupU").val()=='undefined'){
+               $("#lGroupU").focus();
+               alert("자격분류를 입력하세요.");
+               return;
+            }
+
+           if($("#lGradeU").val()==null || $("#lGradeU").val().length<=0 || $("#lGradeU").val()=='undefined'){
+               $("#lGradeU").focus();
+               alert("자격등급을 입력하세요.");
+               return;
+            }
+
+           if($("#lNumU").val()==null || $("#lNumU").val().length<=0 ||  $("#lNumU").val()=='undefined'){
+               $("#lNumU").focus();
+               alert("자격번호 입력하세요.");
+               return;
+            }
+            
+           if( $("#lDateU").val()==null ||  $("#lDateU").val().length<=0|| $("#lDateU").val()=='undefined'){
+               $("#lDateU").focus();
+               alert("취득일을 입력하세요.");
+               return;
+            }
+
+           if($("#lOrganU").val()==null || $("#lOrganU").val().length<=0|| $("#lOrganU").val()=='undefined'){
+               $("#lOrganU").focus();
+               alert("발행기관을 입력하세요.");
+               return;
+            }
+
+           if(confirm("수정 하시겠습니까?")==false) return;
+
+          //ajax
+           $.ajax({
+            type:"POST",
+            url:"${hContext}/portfolio/do_update.spring",
+            dataType:"html", 
+            data:{ //"memberId":"sohyun1234"
+                   "memberId":memberId.trim(),
+                   "lName" : lName.trim(),
+                   "lGroup": lGroup.trim(),
+                   "lGrade": lGrade.trim(),
+                   "lNum": lNum.trim(),
+                   "lDate": lDate.trim(),
+                   "lOrgan": lOrgan.trim() 
+            },
+            success:function(data){ //성공
+               console.log("수정성공후우우우우");
+               console.log("lName: "+lName.trim());
+               console.log("lGroup: "+lGroup.trim());
+               console.log("lGrade: "+lGrade);
+               console.log("lNum: "+lNum);
+               console.log("lDate: "+lDate);
+               console.log("lOrgan: "+lOrgan);
+               alert("수정되었습니다.");
+               skillRetrieve();
+            },
+            error:function(xhr,status,error){
+              alert("error:"+error);
+            },
+            complete:function(data){
+            
+            }   
+            
+           });//--ajax
+
+
+         });//--수정완료버튼
+
+      
+      //삭제
+      $(".licDelete").on("click",function(){
+
+         //console.log("licUpdate click");
+         var licUpdate = $(this);
+         var tr = licUpdate.parent().parent().parent();
+         var td = tr.children().children();
+         
+         var memberId = td.eq(0).text();
+         var lName= td.eq(8).text();
+
+         console.log("memberId= "+memberId);
+         console.log("lName= "+lName);
+
+         //confirm
+            if(confirm(lName+"을(를) 삭제 하시겠습니까?")==false) return;
+             
+           //ajax
+          $.ajax({
+              type:"POST",
+              url:"${hContext}/portfolio/do_delete_license.spring",
+              dataType:"html", 
+              data:{ //"memberId":"sohyun1234"
+                     "memberId":memberId.trim(),
+                     "lName" : lName.trim()
+              },
+              success:function(data){ //성공
+                     //console.log("data:"+data);  
+                        var parseData = $.parseJSON(data);
+                   if(parseData.msgId=="1"){
+                        alert(parseData.msgMsg);
+                        history.go(0);
+                      }else{
+                        alert(parseData.msgMsg);
+                      }
+              },
+              error:function(xhr,status,error){
+                alert("error:"+error);
+              },
+              complete:function(data){
+              
+              }   
+              
+             });//--ajax
+
+         });
+//--license----------------------------     
+      
 
        function projectUpdate() {
       	 console.log("projectUpdate");
