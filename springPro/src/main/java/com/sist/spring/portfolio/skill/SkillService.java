@@ -20,10 +20,10 @@ public class SkillService implements Service {
 	@Autowired
 	SkillDao skillDao;
 	
-	public int doDeleteAll() {
-		
-		return this.skillDao.doDeleteAll();
-	}
+//	public int doDeleteAll() {
+//		
+//		return this.skillDao.doDeleteAll();
+//	}
 	
 	public int doInsert(DTO dto) {
 		return this.skillDao.doInsert(dto);
