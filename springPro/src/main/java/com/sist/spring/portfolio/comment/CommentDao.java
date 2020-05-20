@@ -163,62 +163,37 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		return flag;
 	}
 
-	 @Override
-	   public List<?> doRetrieve(DTO dto) {
-	      SearchVO  inVO= (SearchVO) dto;
+	@Override
+	public List<?> doRetrieve(DTO dto) {
+		CommentVO  inVO= (CommentVO) dto;
 
-	      StringBuilder sb=new StringBuilder();
-	      sb.append("SELECT T1.*,T2.*                                                \n");
-	      sb.append("FROM(                                                           \n");
-	      sb.append("    SELECT  B.c_no    C_NO,                                        \n");
-	      sb.append("            B.c_cont C_CONT,                                    \n");
-	      sb.append("            CASE TO_CHAR(B.REG_DT,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')  \n");
-	      sb.append("                                                THEN TO_CHAR(SYSDATE,'HH24:MI')     \n");
-	      sb.append("            ELSE TO_CHAR(B.REG_DT,'YYYY/MM/DD') END reg_dt,                          \n");
-	      sb.append("            B.mod_dt MOD_DT,                               \n");
-	      sb.append("             B.reg_id REG_ID,                               \n");
-	      sb.append("            B.portfolio_Id PORTFOLIO_ID                          \n");
-	      sb.append("    FROM(                                                       \n");
-	      sb.append("        SELECT ROWNUM rnum,                                     \n");
-	      sb.append("               A.*                                              \n");
-	      sb.append("        FROM (                                                  \n");
-	      sb.append("            SELECT *                                            \n");
-	      sb.append("            FROM Comments                                       \n");
-	      sb.append("         WHERE portfolio_Id like '%' || ? ||'%'                 \n");
-	      sb.append("        )A --10                                                 \n");
-	      //sb.append("        WHERE ROWNUM <= (&PAGE_SIZE*(&PAGE_NUM-1)+&PAGE_SIZE) \n");
-	      sb.append("        WHERE ROWNUM <= (?*(?-1)+?)                         \n");
-	      sb.append("    )B --1                                                      \n");
-	      //sb.append("    WHERE B.RNUM >= (&PAGE_SIZE*(&PAGE_NUM-1)+1)              \n");
-	      sb.append("    WHERE B.RNUM >= (?*(?-1)+1)                             \n");
-	      sb.append("    )T1 CROSS JOIN                                              \n");
-	      sb.append("    (                                                           \n");
-	      sb.append("    SELECT count(*) total_cnt                                   \n");
-	      sb.append("    FROM Comments                                               \n");
-	      sb.append("         WHERE portfolio_Id like '%' || ? ||'%'                 \n");
-	      //sb.append("         WHERE portfolio_Id like '%' || ? ||'%'                 \n");
-	      sb.append("    )T2                                                         \n");
-	      
-	      //param 
-	      List<Object> listArg = new ArrayList<Object>();
-	      listArg.add(inVO.getSearchWord());
-	      listArg.add(inVO.getPageSize());
-	      listArg.add(inVO.getPageNum());
-	      listArg.add(inVO.getPageSize());
-	      listArg.add(inVO.getPageSize());
-	      listArg.add(inVO.getPageNum());            
-	      listArg.add(inVO.getSearchWord());
-	      
-	      //param set
-	      List<CommentVO> retlist = this.jdbcTemplate.query(sb.toString(), listArg.toArray(), rowMapper);
-	      LOG.debug("==================================");
-	      LOG.debug("============doRetrieve============");
-	      LOG.debug("query \n"+sb.toString());
-	      LOG.debug("param: "+listArg);
-	      LOG.debug("==================================");
-	      return retlist;
-	   
-	   }
+		StringBuilder sb=new StringBuilder();
+		sb.append("SELECT c_no ,                                                      			     \n");
+		sb.append("       c_cont ,                                                    				 \n");
+		sb.append("       CASE TO_CHAR(REG_DT,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')      \n");
+		sb.append("                                           THEN TO_CHAR(SYSDATE,'HH24:MI')  	   \n");
+		sb.append("       ELSE TO_CHAR(REG_DT,'YYYY/MM/DD') END ,                      	  	   \n");
+		sb.append("       mod_dt  ,     							                        		\n");
+		sb.append("       reg_id  ,  								               		   	 	   \n");
+		sb.append("       portfolio_Id 					                                     	   \n");
+		sb.append("FROM                                                                           \n");
+		sb.append("    Comments                                    	                               \n");
+		sb.append("WHERE portfolio_Id= ?                           				                  \n");
+		sb.append("ORDER BY REG_DT DESC                          				                  \n");
+		//param 
+		List<Object> listArg = new ArrayList<Object>();
+		listArg.add(inVO.getPortfolioId());
+		
+		//param set
+		List<CommentVO> retlist = this.jdbcTemplate.query(sb.toString(), listArg.toArray(), rowMapper);
+		LOG.debug("==================================");
+		LOG.debug("============doRetrieve============");
+		LOG.debug("query \n"+sb.toString());
+		LOG.debug("param: "+listArg);
+		LOG.debug("==================================");
+		return retlist;
+	
+	}
 
 
 }
