@@ -1161,10 +1161,11 @@ $("#doInsert").on("click", function() {
 	
 	//ajax
 	$.ajax({
-	   type:"POST",
-	   url:"${hContext}/comment/add.spring",
+	   type:"GET",
+	   url:"${hContext}/comment/do_insert.spring",
 	   dataType:"html",
 	   data:{
+		   "cNo": $("#cNo").val(),
 		   "cContent": $("#cContent").val(),
 		   "regId": $("#regId").val(),
 		   "portfolioId": $("#portfolioId").val()

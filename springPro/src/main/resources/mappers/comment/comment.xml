@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.spring.portfolio.comment">
+
+    <!-- 목록조회 -->
+    <select id="doRetrieve" parameterType="CommentVO" resultType="CommentVO">
+      SELECT c_no  as cNo,                                          
+             c_cont as cContent,                                        
+             CASE TO_CHAR(REG_DT,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')  
+                                                 THEN TO_CHAR(SYSDATE,'HH24:MI')     
+             ELSE TO_CHAR(REG_DT,'YYYY/MM/DD') END  regDt,              
+             mod_dt  as modDt,     							            
+             reg_id  as regId,  								           
+             portfolio_Id  as  portfolioId                              
+      FROM                                     
+          Comments                              
+      WHERE portfolio_Id= #{portfolioId}                       
+    </select>
+
+   
+    
+    <!-- 수정 -->
+    <update id="doUpdate" parameterType="LicenseVO">
+         UPDATE License       
+         SET l_group = #{lGroup},      
+             l_grade = #{lGrade},      
+             l_num = #{lNum},        
+             l_date = #{lDate},       
+             l_organ = #{lOrgan}      
+         WHERE  member_id = #{memberId} 
+         AND l_name=#{lName}       
+    </update>
+    
+   
+    <sql id="licenseCol">
+      l_name  as lName,
+      l_group as lGroup,
+      l_grade as lGrade,
+      l_num   as lNum,
+      l_organ as lOrgan,
+      TO_CHAR(l_date,'YYYY/MM/DD')  as lDate,
+      member_id as memberId 
+    </sql>
+    
+    
+    <!-- 단건조회 -->
+    <select id="doSelectOne" parameterType="LicenseVO" resultType="LicenseVO">
+      SELECT
+          <include refid="licenseCol"/>
+      FROM license
+      WHERE member_id = #{memberId}
+    </select>
+    
+     <!-- 특정멤버,자격증 단건조회 -->
+    <select id="doSelectOneLic" parameterType="LicenseVO" resultType="LicenseVO">
+      SELECT
+          <include refid="licenseCol"/>
+      FROM license
+      WHERE member_id = #{memberId}
+      AND l_name=#{lName} 
+    </select>
+
+   <!-- 등록  -->
+   <insert id="doInsert" parameterType="CommentVO">
+      INSERT INTO Comments( 			
+      		     c_no,    				
+      		     c_cont,  				
+      		     reg_dt,    			
+      		     mod_dt,    			
+      		     reg_id,    			
+      		     portfolio_id   		
+      
+       )VALUES(            
+                  COMMENTS_SEQ.nextval,         
+                  #{cContent,jdbcType=VARCHAR},        
+                  TO_CHAR(SYSDATE, 'YYYY-MM-DD'),        
+                  TO_CHAR(SYSDATE, 'YYYY-MM-DD'),        
+                  #{regId,jdbcType=VARCHAR},        
+                  #{portfolioId,jdbcType=VARCHAR}   
+      )
+   
+   </insert>
+   
+   <!-- 회원 자격증 전부 삭제 -->
+   <delete id="doDelete" parameterType="CommentVO"  >
+        DELETE FROM Comments WHERE c_no = #{cNo}
+      
+   </delete>
+
+    
+</mapper>

@@ -602,7 +602,7 @@ public class MemberController {
 		model.addAttribute("sessionVO",sessionVO);
 		
 		//return "portfolio/member/index_test";
-		return "portfolio/index";
+		return "portfolio/member/index_test";
 	}
 	
 	

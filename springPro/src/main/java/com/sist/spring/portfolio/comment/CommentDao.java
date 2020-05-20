@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Repository;
 import com.sist.spring.cmn.DTO;
 import com.sist.spring.cmn.Dao;
 import com.sist.spring.cmn.SearchVO;
-import com.sist.spring.portfolio.license.LicenseVO;
 @Repository
 public class CommentDao implements Dao {
 	
@@ -23,6 +23,12 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+
+	private final String NAMESPACE= "com.sist.spring.portfolio.comment";
+	@Autowired
+	SqlSessionTemplate sqlSessionTemplate;
+
 	
 	public CommentDao() {}
 	
@@ -47,37 +53,22 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	public int doInsert(DTO dto) {
 		int flag = 0;
 		CommentVO inVO = (CommentVO)dto;
-		StringBuilder sb=new StringBuilder();
-		sb.append("INSERT INTO Comments( 			 \n");
-		sb.append("		     c_no,    				 \n");
-		sb.append("		     c_cont,  				   \n");
-		sb.append("		     reg_dt,    			 \n");
-		sb.append("		     mod_dt,    			 \n");
-		sb.append("		     reg_id,    			 \n");
-		sb.append("		     portfolio_id   			  \n");
-		sb.append(")VALUES(             			 \n");
-		sb.append("		     COMMENTS_SEQ.nextval,          \n");
-		sb.append("		     ?,        						  \n");
-		sb.append("		     TO_CHAR(SYSDATE, 'YYYY-MM-DD'),          \n");
-		sb.append("		     TO_CHAR(SYSDATE, 'YYYY-MM-DD'),          \n");
-		sb.append("		     ?,         								 \n");
-		sb.append("		     ?          							 \n");
-		sb.append(")                     								\n");
-					
-		LOG.debug("========================================");
-		LOG.debug("==============doInsert==================");
-		LOG.debug("Query =\n"+sb.toString());
-		LOG.debug("param = "+inVO.toString());
-		
-		Object[] args = {
-							
-							inVO.getcContent(),
-							inVO.getRegId(),
-							inVO.getPortfolioId()
-						};
-		flag = this.jdbcTemplate.update(sb.toString(),args);
-		LOG.debug("flag = "+flag);
-		LOG.debug("========================================");		
+
+		LOG.debug("1==============================");
+		LOG.debug("1=inVO="+inVO);
+		LOG.debug("1==============================");
+
+		// namespace+id = com.sist.ehr.user.doInsert
+		String statement = NAMESPACE+".doInsert";
+		LOG.debug("2==============================");
+		LOG.debug("2=statement="+statement);
+		LOG.debug("2==============================");
+
+		flag = this.sqlSessionTemplate.insert(statement, inVO);
+		LOG.debug("3==============================");
+		LOG.debug("3=flag="+flag);
+		LOG.debug("3==============================");
+
 		return flag;
 	}
 
@@ -90,7 +81,7 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 		
 		sb.append("UPDATE COMMENTS       ");
 		sb.append("SET                  ");
-		sb.append("    mod_dt =  TO_CHAR(SYSDATE, 'YYYY-MM-DD')    ");
+		sb.append("    reg_dt =  TO_CHAR(SYSDATE, 'YYYY/MM/DD')    ");
 		sb.append("    ,c_cont = ?   ");
 		
 		sb.append("WHERE                ");
@@ -152,25 +143,23 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	@Override
 	public int doDelete(DTO dto) {
 		int flag=0;
-		
 		CommentVO inVO=(CommentVO) dto;
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("DELETE FROM Comments   \n");
-		sb.append("WHERE c_no=? 		 \n");
-		
-		LOG.debug("==================================");
-		LOG.debug("============doDelete=============");
-		LOG.debug("QEURY =\n"+sb.toString());
-		LOG.debug("Param ="+inVO);
-		
-		Object[] args = {inVO.getcNo()};
-		
-		//jdbcTemplate.update(sql, args(가변배열))
-		flag = jdbcTemplate.update(sb.toString(), args);
-		LOG.debug("flag ="+flag);
-		LOG.debug("==================================");
-		
+		LOG.debug("1==============================");
+		LOG.debug("1=inVO="+inVO);
+		LOG.debug("1==============================");
+
+		// namespace+id = com.sist.ehr.user.doInsert
+		String statement = NAMESPACE+".doDelete";
+		LOG.debug("2==============================");
+		LOG.debug("2=statement="+statement);
+		LOG.debug("2==============================");
+
+		flag = this.sqlSessionTemplate.delete(statement, inVO);
+		LOG.debug("3==============================");
+		LOG.debug("3=flag="+flag);
+		LOG.debug("3==============================");
+
 		return flag;
 	}
 

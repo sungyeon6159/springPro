@@ -147,7 +147,7 @@ public class CommentController {
 	
 	
 	
-	@RequestMapping(value ="comment/add.spring", method = RequestMethod.POST
+	@RequestMapping(value ="comment/do_insert.spring", method = RequestMethod.GET
 			,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInsert(HttpServletRequest req, CommentVO user) {
