@@ -250,7 +250,7 @@ public class PjtFileDao implements Dao {
 		List<Object> listArgs = new ArrayList<Object>();
 				
 		listArgs.add(inVO.getMemberId());
-				
+				  
 		
 		
 		outList=this.jdbcTemplate.query(sb.toString(),listArgs.toArray(), rowMapper);

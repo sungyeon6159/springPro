@@ -247,7 +247,7 @@ public class ProjectDao implements Dao {
 		sb.append("    ?,                   ");
 		sb.append("    ?,                   ");
 		sb.append("    ?,                   ");
-		sb.append("    ?                    ");
+		sb.append("    ?                    ");  
 		sb.append(")						");
 
 		LOG.debug("==============================");
