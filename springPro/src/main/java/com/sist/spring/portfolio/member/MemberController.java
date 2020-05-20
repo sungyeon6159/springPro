@@ -154,7 +154,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/portfolio/toHome.spring",method=RequestMethod.GET)
-	public String doRetrieve(HttpServletRequest req, Model model) {
+	public String toHome(HttpServletRequest req, Model model) {
 		HttpSession session = req.getSession();
 		
 		LOG.debug("=======================================");
@@ -478,15 +478,85 @@ public class MemberController {
 		LOG.debug("1.2=outVO="+outVO);
 		LOG.debug("1.2===================");
 		
-		FileMemberVO inVO = new FileMemberVO(); //객체생성
-		inVO.setMemberId(user.getMemberId()); //
+		PjtFileVO pjtFileVO=new PjtFileVO();
+		ProjectVO pjtVO=new ProjectVO();
+		LicenseVO licVO=new LicenseVO();
+		MemberVO memVO=new MemberVO();
+		FileMemberVO fileMemberInVO=new FileMemberVO();
+		SkillVO skillVO = new SkillVO();
 		
-		FileMemberVO fileVO= (FileMemberVO) fmService.doSelectOne(inVO);
+		pjtFileVO.setMemberId(outVO.getMemberId());
+		skillVO.setMemberId(outVO.getMemberId());
+		pjtVO.setMemberId(outVO.getMemberId());
+		licVO.setMemberId(outVO.getMemberId());
+		memVO.setMemberId(outVO.getMemberId());
+		fileMemberInVO.setMemberId(outVO.getMemberId());
 		
-		model.addAttribute("fileVO",fileVO);
-		model.addAttribute("memberVO",outVO);
+		LOG.debug("==========================");
+		LOG.debug("==ProjectService/doRetrieve");
+		LOG.debug("==========================");
 		
+		List<SkillVO> skillList=(List<SkillVO>)skillService.doRetrieve(skillVO);
+		List<ProjectVO> pjtList=(List<ProjectVO>)pjtService.doRetrieve(pjtVO);
+		List<LicenseVO> licList=(List<LicenseVO>)licService.doRetrieve(licVO);
+		FileMemberVO fileMemberVO=(FileMemberVO)fmService.doSelectOne(fileMemberInVO);
+		List<PjtFileVO> pjtFileList =(List<PjtFileVO>)pjtFileService.doRetrieve(pjtFileVO);
 		
+		StringBuilder out=new StringBuilder();
+		List<String> companyList=new ArrayList<String>();
+		List<String> recommendList=new ArrayList<String>();
+		List<String> urlList=new ArrayList<String>();
+		String url = "http://www.jobkorea.co.kr/Search/?stext="+outVO.getInterestOption();    //크롤링할 url지정
+        Document doc = null;        //Document에는 페이지의 전체 소스가 저장된다
+ 
+	    try {
+	 
+            doc = Jsoup.connect(url).get();//해당 페이지안에 있는 전체 소스
+ 
+        } catch (IOException e) {
+ 
+            e.printStackTrace();
+ 
+        }
+    
+        //select를 이용하여 원하는 태그를 선택한다. select는 원하는 값을 가져오기 위한 중요한 기능이다.
+        //                               ==>원하는 값들이 들어있는 덩어리를 가져온다
+	    Elements element = doc.select("div.post-list-info"); 
+	    Elements element2 = doc.select("div.post-list-corp"); 
+     
+        System.out.println("============================================================");
+ 
+        //Iterator을 사용하여 하나씩 값 가져오기
+        //덩어리안에서 필요한부분만 선택하여 가져올 수 있다.
+        Iterator<Element> ie1 = element.select("a.title").iterator();
+        Iterator<Element> ie2 = element2.select("a.name").iterator();
+        Iterator<Element> ie3 = element2.select("a.name").iterator();
+        LOG.debug("Crawling test1href ");
+        while (ie1.hasNext()) {	
+        	out.append(ie1.next().text()+",");
+            recommendList.add(ie1.next().text());
+        }
+        while (ie2.hasNext()) {
+        	String temp=ie2.next().attr("abs:href");
+            urlList.add(temp);
+        }
+        while (ie3.hasNext()) {
+        	companyList.add(ie3.next().text());
+        }
+       
+        model.addAttribute("memberVO", outVO);
+		model.addAttribute("recommendList",recommendList);
+		model.addAttribute("companyList",companyList);
+        model.addAttribute("pjtList",pjtList);
+        model.addAttribute("licList", licList);
+        model.addAttribute("fileVO", fileMemberVO);
+        model.addAttribute("skillList", skillList);
+        model.addAttribute("urlList", urlList);
+        model.addAttribute("pjtFileList", pjtFileList);
+        
+        session.setAttribute("member", outVO);
+		
+		//----------------------------------------------------------------------------댓글기능 시작
 		LOG.debug("1===================");
 		LOG.debug("1=search="+search);
 		LOG.debug("1===================");
@@ -531,7 +601,8 @@ public class MemberController {
 		model.addAttribute("maxPageNo",maxPageNo);
 		model.addAttribute("sessionVO",sessionVO);
 		
-		return "portfolio/member/index_test";
+		//return "portfolio/member/index_test";
+		return "portfolio/index";
 	}
 	
 	
