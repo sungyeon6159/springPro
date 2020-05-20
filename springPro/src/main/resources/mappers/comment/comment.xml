@@ -45,23 +45,6 @@
     </sql>
     
     
-    <!-- 단건조회 -->
-    <select id="doSelectOne" parameterType="LicenseVO" resultType="LicenseVO">
-      SELECT
-          <include refid="licenseCol"/>
-      FROM license
-      WHERE member_id = #{memberId}
-    </select>
-    
-     <!-- 특정멤버,자격증 단건조회 -->
-    <select id="doSelectOneLic" parameterType="LicenseVO" resultType="LicenseVO">
-      SELECT
-          <include refid="licenseCol"/>
-      FROM license
-      WHERE member_id = #{memberId}
-      AND l_name=#{lName} 
-    </select>
-
    <!-- 등록  -->
    <insert id="doInsert" parameterType="CommentVO">
       INSERT INTO Comments( 			

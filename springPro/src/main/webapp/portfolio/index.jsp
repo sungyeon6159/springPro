@@ -583,6 +583,78 @@
         </div> --%>
       </div>
     </section>
+    
+    <!-- Comment -->
+	<div>
+    <!-- commentfrm -->
+   	<form id="commentfrm" name="commentfrm" >
+      <div class="container">
+        <div >
+	    	<!-- 입력 From -->
+            <div>
+                <table class="table" id="portfolioTable">     
+                               
+                    <tr>
+                        <td>
+                            <textarea style="width: 1000px" rows="2" cols="30" id="cContent" name="cContent" placeholder="댓글을 입력하세요"></textarea>
+                            <input type="hidden" id="portfolioId" name="portfolioId" placeholder="아이디" value="${memberVO.memberId}" />
+                            <input type="hidden" id="regId" name="regId" placeholder="아이디" value="${sessionVO.memberId}" />
+                            <input type="hidden" name="pageNum" id="pageNum" value="${vo.pageNum }">
+                            <input type="hidden" id="searchWord" name="searchWord" value="${memberVO.memberId}">
+						
+                        </td>
+                        <td align="left">
+                        	<button type="button" class="btn pull-right btn-primary" id="doInsert"  >등록</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        	<!-- 입력 From --> 
+        	
+        </div>
+        
+        
+        <div class="table-responsive">
+        
+    	<table class="" id="memberTable" style="width: 1100px;" >
+    		<input type="hidden" id="sessionID" value="${sessionVO.memberId}">
+ 				<!-- Data있는 경우 -->
+ 				<c:choose>
+ 					<c:when test="${list.size()>0 }">
+					<c:forEach var="vo" items="${list }">
+						<tbody>
+							<tr style="border-top: 5px; margin-top: 5px;">
+								<td><c:out value="${vo.regId }"></c:out></td>
+								<td align="right"><c:out value="${vo.regDt }"></c:out></td>
+							</tr>
+							<tr>
+								<td><input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" />${vo.cNo}</td>
+								<td><c:out value="${vo.cContent }"></c:out></td>
+							</tr>
+							<tr>
+							<c:if test="${vo.regId == sessionVO.memberId}">
+							   	<td colspan="2" align="right">
+		                           	<button type="button" class="btn pull-right btn-primary doUpdate" id="doUpdate" >수정</button>
+		                           	<button type="button" class="btn pull-right btn-primary doDelete" id="doDelete" >삭제</button>
+	                           	</td>
+	                       	</c:if>
+	                       	</tr>
+							 
+			 			</tbody>
+					</c:forEach>
+ 					</c:when>
+ 					<c:otherwise>
+ 						<tr><td colspan="99">등록된 게시글이 없습니다.</td></tr>
+ 					</c:otherwise>
+ 				</c:choose>
+ 			</table>
+    	</div>
+    	</form>
+    	<!-- comment frm -->
+	</div>
+	<!-- Comment -->
+    
+    
 		
 
     <footer class="ftco-footer ftco-section">
@@ -683,6 +755,211 @@
       var option = "width = 500, height = 500, top = 200, left = 200, location = no"
       window.open(url, name, option);
   }
+
+
+//Comment--------------------------------------------------------------------------  
+function cmtRetrieve(){
+	//console.log('cmtRetrieve');
+	
+	var frm = document.commentfrm;
+	frm.pageNum.value = 1;
+	frm.searchWord.value=$("#searchWord").val();
+	frm.portfolioId.value=$("#portfolioId").val();
+	frm.regId.value=$("#regId").val();
+	frm.action = "${hContext}/portfolio/do_mem_Comment.spring";
+	frm.submit();
+} 
+
+
+//등록
+$("#doInsert").on("click", function() {
+	//값  Null check
+	if($("#cContent").val() == "" || $("#cContent").val() == false){
+		alert("내용을 입력 하세요.");
+		$("#cContent").focus();
+		return;
+	}
+
+	console.log("#regId:" + $("#regId").val(), "#cContent:" + $("#cContent").val()  );
+	
+	//confirm
+	if(confirm("댓글을 등록 하시겠습니까?")==false)return;
+
+	// name이 같은 체크박스의 값들을 배열에 담는다.
+   
+	
+	//ajax
+	$.ajax({
+	   type:"GET",
+	   url:"${hContext}/comment/do_insert.spring",
+	   dataType:"html",
+	   data:{
+		   "cNo": $("#cNo").val(),
+		   "cContent": $("#cContent").val(),
+		   "regId": $("#regId").val(),
+		   "portfolioId": $("#portfolioId").val()
+	   },
+	   success:function(data){ //성공
+	      console.log("data:"+data);
+	      var parseData = $.parseJSON(data);
+	      if(parseData.msgId == "1"){
+			 alert(parseData.msgMsg);
+			 alert('댓글이 등록되었습니다.')
+			 cmtRetrieve();
+		  }else{
+			 alert(parseData.msgMsg);
+		  }
+	      
+	   },
+	   error:function(xhr,status,error){
+	      alert("error:"+error);
+	   },
+	   complete:function(data){
+	   
+	   }   
+	   
+	});//--ajax
+	
+}); 
+
+
+$(".doUpdate").on("click",function(event){
+	 var doUpdate = $(this);
+	 
+	 var tr = doUpdate.parent().parent().parent();
+     var td = tr.children().children();
+     var regId = td.eq(0).text().trim();
+     var cNo = td.eq(2).text().trim();
+     var cContent = td.eq(3).text().trim();
+
+     
+	 console.log("regId:"+regId);
+	 console.log("cNo:"+cNo);
+	 console.log("cContent:"+cContent);
+
+         var html = "";
+         var tbody = doUpdate.parent().parent().parent();
+         var removeTbody = tbody.eq(0);
+	    removeTbody.empty();
+
+
+	    html += '<tbody>																												';
+		html += '	<tr><td>                                                                     ';
+		html += '	<input type="hidden" maxlength="20" class="form-control input-sm" id="cNo" name="cNo" value="${vo.cNo}" /> ';
+		html += '	</td></tr>                                                       									               ';
+		html += '	<tr style="border-top: 5px; margin-top: 5px;">                                                                      ';
+		html += '		<td>';
+		html +=regId;
+		html += '</td><td></td>																								';
+		html += '	</tr>                                                                                                               ';
+		html += '	<tr><td colspan="2" align="right">                                                                                                                 ';
+		html += '		<textarea style="width: 1000px" rows="2" cols="30" name="message" id="message" placeholder="'+cContent+'" value=\"${vo.cContent}\"  ></textarea>      ';
+		html += '	</td></tr>                                                                                                               ';
+		html += '	<tr style="border-bottom: 1px; margin-bottom: 5px;">                                                                ';
+		html += '		<td colspan="2" align="right">                                                                                  ';
+		html += '			<button type="button"  class="noUpdate btn btn-primary" id="noUpdate" name="noUpdate" >수정취소</button>       ';
+		html += '			<button type="button" onclick="javascipt:updateTest(\''+cNo+'\');" class="modCom btn btn-primary" id="modCom" name="modCom" >수정완료</button>       		 ';
+		html += '		</td>                                                                                                           ';
+		html += '	</tr>	                                                                                                            ';
+		html += '</tbody>	                                                                                                            ';                                                   
+	    tbody.append(html); 
+	          
+
+
+ });//--수정  
+
+
+
+ 
+ function updateTest(cno){
+		
+		console.log(cno);
+		
+		$.ajax({
+			 type:"GET",
+			 url:"${hContext}/comment/do_update.spring",
+			 dataType:"html", 
+			 data:{ //"memberId":"sohyun1234"
+					 "cNo": cno,
+					 "regId": $("#sessionID").val().trim(),
+			         "cContent" :$("#message").val().trim(),
+			         "portfolioId": $("#portfolioId").val().trim()
+			        
+			 },
+			 success:function(data){ //성공
+				 cmtRetrieve();
+			 },
+			 error:function(xhr,status,error){
+			   alert("error:"+error);
+			 },
+			 complete:function(data){
+			 
+			 }   
+			 
+			});//--ajax 
+
+				
+	   };
+
+
+	   
+
+ $(document).on("click",".noUpdate",function(){//수정취소버튼
+	
+	event.preventDefault();
+	cmtRetrieve();
+});  
+
+
+//삭제
+ $(".doDelete").on("click", function() {
+ 	//console.log("#doDelete");
+
+ 	//u_id null check
+ 	console.log("#cNo:" + $("#cNo").val()  );
+ 	if ($("#cNo").val() == "" || $("#cNo").val() == false) {
+ 		alert("삭제 데이터를 선택 하세요.");
+ 		return;
+ 	} 
+
+ 	//confirm
+ 	if (confirm("삭제 하시겠습니까?") == false)
+ 		return;
+
+ 	//ajax
+ 	$.ajax({
+ 		type : "POST",
+ 		url : "${hContext}/comment/do_delete.spring",
+ 		dataType : "html",
+ 		data : {
+ 			"cNo" : $("#cNo").val()
+ 		},
+ 		success : function(data) { //성공
+ 			console.log("data:" + data);
+ 			//{"msgId":"1","msgMsg":"j_hr0000002님이 삭제 되었습니다.","num":0,"totalCnt":0}   
+ 			var parseData = $.parseJSON(data);
+ 			if (parseData.msgId == "1") {
+ 				alert(parseData.msgMsg);
+ 				cmtRetrieve();
+ 			} else {
+ 				alert(parseData.msgMsg);
+ 			}
+
+ 		},
+ 		error : function(xhr, status, error) {
+ 			alert("error:" + error);
+ 		},
+ 		complete : function(data) {
+
+ 		}
+
+ 	});//--ajax 
+
+ });
+
+
+  
+//Comment--------------------------------------------------------------------------  
   
 //License------------------------------
  	//수정

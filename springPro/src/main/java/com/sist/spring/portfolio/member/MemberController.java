@@ -274,6 +274,7 @@ public class MemberController {
 			FileMemberVO fileMemberInVO=new FileMemberVO();
 			SkillVO skillVO = new SkillVO();
 			
+			
 			pjtFileVO.setMemberId(outVO.getMemberId());
 			skillVO.setMemberId(outVO.getMemberId());
 			pjtVO.setMemberId(outVO.getMemberId());
@@ -290,6 +291,7 @@ public class MemberController {
 			List<LicenseVO> licList=(List<LicenseVO>)licService.doRetrieve(licVO);
 			FileMemberVO fileMemberVO=(FileMemberVO)fmService.doSelectOne(fileMemberInVO);
 			List<PjtFileVO> pjtFileList =(List<PjtFileVO>)pjtFileService.doRetrieve(pjtFileVO);
+			
 			
 			
 			HttpSession session=req.getSession();
@@ -347,7 +349,60 @@ public class MemberController {
 	        model.addAttribute("pjtFileList", pjtFileList);
 	        
 	        session.setAttribute("member", outVO);
-
+	        
+	        //----댓글-----------------------------------------------
+	        
+	        SearchVO search =new SearchVO();
+	        CommentVO cmtVO = new CommentVO();
+	        cmtVO.setPortfolioId(outVO.getMemberId());
+	        
+	        LOG.debug("1===================");
+			LOG.debug("1=search="+search);
+			LOG.debug("1=portfolioId="+outVO.getMemberId());
+			LOG.debug("1===================");
+			   
+			//페이지 사이즈
+			if(search.getPageSize()==0) {
+				search.setPageSize(20);
+			}
+			//페이지 num
+			if(search.getPageNum()==0) {
+				search.setPageNum(1);
+			}
+			
+			//검색구분
+			search.setSearchDiv(StringUtil.nvl(search.getSearchDiv()));
+			
+			//검색어
+			search.setSearchWord(StringUtil.nvl(search.getSearchWord()));
+			
+			model.addAttribute("param",search);
+			
+			LOG.debug("1.2===================");
+			LOG.debug("1.2=search="+search);
+			LOG.debug("1.2===================");
+			
+			List<CommentVO> list = (List<CommentVO>) commentService.doRetrieve(search);
+			LOG.debug("1.3===================");
+			for(CommentVO vo :list) {
+				LOG.debug("vo="+vo);
+			}
+			LOG.debug("1.3===================");
+			
+			model.addAttribute("list", list);
+			
+			//총글수
+			int totalCnt = 0;
+			if(null != list && list.size() >0) {
+				totalCnt = list.get(0).getTotalCnt();
+			}
+			model.addAttribute("totalCnt", totalCnt);
+			int maxPageNo = ((totalCnt - 1) / 10) + 1;
+			model.addAttribute("maxPageNo",maxPageNo);
+			model.addAttribute("sessionVO",outVO);
+	        
+	        
+	        
 	        
 			return "portfolio/index";
 
@@ -391,10 +446,11 @@ public class MemberController {
 
 	}
 	@RequestMapping(value = "/portfolio/do_mem_Comment.spring",method = RequestMethod.GET)
-	public String doMemComment(HttpServletRequest req ,MemberVO user,SearchVO search, Model model) {
+	public String doMemComment(HttpServletRequest req ,MemberVO user,SearchVO search,CommentVO cmt, Model model) {
 		HttpSession session =req.getSession();
 		MemberVO sessionVO=(MemberVO) session.getAttribute("member");
-		user.setMemberId(req.getParameter("portfolioId")); //frm의 hiddenId 값들 가져와서 set
+		user.setMemberId(req.getParameter("portfolioId"));
+		cmt.setRegId(sessionVO.getMemberId());
 		
 		LOG.debug("1===================");
 		LOG.debug("1=user="+user);
@@ -602,7 +658,7 @@ public class MemberController {
 		model.addAttribute("sessionVO",sessionVO);
 		
 		//return "portfolio/member/index_test";
-		return "portfolio/member/index_test";
+		return "portfolio/index";
 	}
 	
 	

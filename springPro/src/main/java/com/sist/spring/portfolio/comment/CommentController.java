@@ -192,7 +192,7 @@ public class CommentController {
 	public String doRetrieve(HttpServletRequest req, SearchVO search,CommentVO cmtuser, MemberVO user, Model model){
 		
 		HttpSession session =req.getSession();
-		MemberVO sessionVO=(MemberVO) session.getAttribute("loginMember");
+		MemberVO sessionVO=(MemberVO) session.getAttribute("member");
 		cmtuser.setPortfolioId(req.getParameter("portfolioId"));
 	
 		
