@@ -276,7 +276,7 @@ public class ProjectController {
    }
 
    
-   @RequestMapping(value="project/do_insert.spring", method=RequestMethod.POST)
+   @RequestMapping(value="portfolio/do_insert.spring", method=RequestMethod.POST)
    public String do_insert(MultipartHttpServletRequest mReg,ProjectVO projectVO ,  HttpServletRequest req, Model model) {
 	   HttpSession session= req.getSession();
 	   MemberVO sessionVO=(MemberVO)session.getAttribute("member");
