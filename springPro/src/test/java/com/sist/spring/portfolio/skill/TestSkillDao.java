@@ -69,7 +69,7 @@ public class TestSkillDao {
 	public void doInsert() {
 		
 		//1. 삭제	
-		dao.doDeleteAll();
+		//dao.doDeleteAll();
 		
 		//2. 입력
 		int flag = dao.doInsert(skill01);
@@ -99,7 +99,7 @@ public class TestSkillDao {
 		//5.비교
 		
 		//1.전체 삭제		
-		dao.doDeleteAll();
+		//dao.doDeleteAll();
 		
 		//2.추가:4건		
 		//2. 입력
