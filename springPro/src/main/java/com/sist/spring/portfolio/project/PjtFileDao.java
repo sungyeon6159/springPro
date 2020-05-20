@@ -38,7 +38,7 @@ public class PjtFileDao implements Dao {
 			outData.setMemberId(rs.getString("member_id"));
 			outData.setExt(rs.getString("ext"));
 			outData.setFileSize(rs.getLong("file_size"));
-			outData.setGitAddress(rs.getString("git_address"));
+			outData.setGitAddress(rs.getString("git_adress"));
 			outData.setOrgNm(rs.getString("org_nm"));
 			outData.setSavePNm(rs.getString("save_pnm"));
 			
@@ -70,7 +70,7 @@ public class PjtFileDao implements Dao {
 		sb.append("    file_size,                   \n");
 		sb.append("    ext,                         \n");
 		sb.append("    div_file,                    \n");
-		sb.append("    git_address,                  \n");
+		sb.append("    git_adress,                  \n");
 		sb.append("    member_id                    \n");
 		sb.append(") VALUES (                       \n");
 		sb.append("    ?,                           \n");
@@ -116,7 +116,7 @@ public class PjtFileDao implements Dao {
 		sb.append("    ,div_file=?              \n");
 		sb.append("WHERE                        \n");
 		sb.append("    save_pnm = ?           \n");
-		sb.append("    AND git_address = ?       \n");
+		sb.append("    AND git_adress = ?       \n");
 		sb.append("    AND member_id=?			\n");
 		
 		LOG.debug("==============================");
@@ -157,12 +157,12 @@ public class PjtFileDao implements Dao {
 		sb.append("    file_size,       \n");
 		sb.append("    ext,             \n");
 		sb.append("    div_file,        \n");
-		sb.append("    git_address,      \n");
+		sb.append("    git_adress,      \n");
 		sb.append("    member_id        \n");
 		sb.append("FROM                 \n");
 		sb.append("    file_project     \n");
 		sb.append("WHERE                \n");
-		sb.append("	git_address=?		\n");
+		sb.append("	git_adress=?		\n");
 		
 		Object args[]= {
 					inVO.getGitAddress()
@@ -186,7 +186,7 @@ public class PjtFileDao implements Dao {
 		sb.append("    file_size,       \n");
 		sb.append("    ext,             \n");
 		sb.append("    div_file,        \n");
-		sb.append("    git_address,      \n");
+		sb.append("    git_adress,      \n");
 		sb.append("    member_id        \n");
 		sb.append("FROM                 \n");
 		sb.append("    file_project     \n");
@@ -236,13 +236,13 @@ public class PjtFileDao implements Dao {
 		sb.append("    file_size,       \n");
 		sb.append("    ext,             \n");
 		sb.append("    div_file,        \n");
-		sb.append("    git_address,      \n");
+		sb.append("    git_adress,      \n");
 		sb.append("    member_id        \n");
 		sb.append("FROM                 \n");
 		sb.append("    file_project     \n");
 		sb.append("WHERE                \n");
 		sb.append("	member_id=?			\n");
-		sb.append("ORDER BY git_address	\n");
+		sb.append("ORDER BY git_adress	\n");
 		
 		//		Object args[]= {inVO.getMemberId()};
 		
@@ -250,7 +250,7 @@ public class PjtFileDao implements Dao {
 		List<Object> listArgs = new ArrayList<Object>();
 				
 		listArgs.add(inVO.getMemberId());
-				  
+				
 		
 		
 		outList=this.jdbcTemplate.query(sb.toString(),listArgs.toArray(), rowMapper);
