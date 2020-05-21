@@ -765,7 +765,7 @@ function cmtRetrieve(){
 	frm.pageNum.value = 1;
 	frm.searchWord.value=$("#searchWord").val();
 	frm.portfolioId.value=$("#portfolioId").val();
-	frm.regId.value=$("#regId").val();
+	frm.regId.value=$("#sessionID").val();
 	frm.action = "${hContext}/portfolio/do_mem_Comment.spring";
 	frm.submit();
 } 

@@ -151,7 +151,10 @@ public class CommentController {
 			,produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInsert(HttpServletRequest req, CommentVO user) {
-	
+	HttpSession session=req.getSession();
+	MemberVO sessionVO=(MemberVO)session.getAttribute("member");
+		
+	user.setRegId(sessionVO.getMemberId());
 	user.setPortfolioId(req.getParameter("portfolioId")); 		
 	LOG.debug("1===================");
 	LOG.debug("1=user="+user);
