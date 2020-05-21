@@ -167,29 +167,20 @@ private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	public List<?> doRetrieve(DTO dto) {
 		CommentVO  inVO= (CommentVO) dto;
 
-		StringBuilder sb=new StringBuilder();
-		sb.append("SELECT c_no ,                                                      			     \n");
-		sb.append("       c_cont ,                                                    				 \n");
-		sb.append("       CASE TO_CHAR(REG_DT,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')      \n");
-		sb.append("                                           THEN TO_CHAR(SYSDATE,'HH24:MI')  	   \n");
-		sb.append("       ELSE TO_CHAR(REG_DT,'YYYY/MM/DD') END ,                      	  	   \n");
-		sb.append("       mod_dt  ,     							                        		\n");
-		sb.append("       reg_id  ,  								               		   	 	   \n");
-		sb.append("       portfolio_Id 					                                     	   \n");
-		sb.append("FROM                                                                           \n");
-		sb.append("    Comments                                    	                               \n");
-		sb.append("WHERE portfolio_Id= ?                           				                  \n");
-		sb.append("ORDER BY REG_DT DESC                          				                  \n");
-		//param 
-		List<Object> listArg = new ArrayList<Object>();
-		listArg.add(inVO.getPortfolioId());
-		
-		//param set
-		List<CommentVO> retlist = this.jdbcTemplate.query(sb.toString(), listArg.toArray(), rowMapper);
+		  LOG.debug("1==============================");
+	      LOG.debug("1=inVO="+inVO);
+	      LOG.debug("1==============================");
+	      
+	      // namespace+id = com.sist.spring.portfolio.license.doInsert 
+	      String statement = NAMESPACE+".doRetrieve";
+	      LOG.debug("2==============================");
+	      LOG.debug("2=statement="+statement);
+	      LOG.debug("2==============================");   
+	     //param set
+		List<CommentVO> retlist = this.sqlSessionTemplate.selectList(statement, inVO);
 		LOG.debug("==================================");
 		LOG.debug("============doRetrieve============");
-		LOG.debug("query \n"+sb.toString());
-		LOG.debug("param: "+listArg);
+		LOG.debug("result: "+retlist);
 		LOG.debug("==================================");
 		return retlist;
 	

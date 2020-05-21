@@ -273,7 +273,7 @@ public class MemberController {
 			MemberVO memVO=new MemberVO();
 			FileMemberVO fileMemberInVO=new FileMemberVO();
 			SkillVO skillVO = new SkillVO();
-			
+			CommentVO commentVO=new CommentVO();
 			
 			pjtFileVO.setMemberId(outVO.getMemberId());
 			skillVO.setMemberId(outVO.getMemberId());
@@ -281,6 +281,7 @@ public class MemberController {
 			licVO.setMemberId(outVO.getMemberId());
 			memVO.setMemberId(outVO.getMemberId());
 			fileMemberInVO.setMemberId(outVO.getMemberId());
+			commentVO.setPortfolioId(outVO.getMemberId());
 			
 			LOG.debug("==========================");
 			LOG.debug("==ProjectService/doRetrieve");
@@ -291,6 +292,7 @@ public class MemberController {
 			List<LicenseVO> licList=(List<LicenseVO>)licService.doRetrieve(licVO);
 			FileMemberVO fileMemberVO=(FileMemberVO)fmService.doSelectOne(fileMemberInVO);
 			List<PjtFileVO> pjtFileList =(List<PjtFileVO>)pjtFileService.doRetrieve(pjtFileVO);
+			List<CommentVO> commentList =(List<CommentVO>)commentService.doRetrieve(commentVO);
 			
 			
 			
@@ -347,6 +349,8 @@ public class MemberController {
 	        model.addAttribute("skillList", skillList);
 	        model.addAttribute("urlList", urlList);
 	        model.addAttribute("pjtFileList", pjtFileList);
+	        model.addAttribute("list", commentList);
+	        
 	        
 	        session.setAttribute("member", outVO);
 	        

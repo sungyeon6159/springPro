@@ -9,8 +9,8 @@
       SELECT c_no  as cNo,                                          
              c_cont as cContent,                                        
              CASE TO_CHAR(REG_DT,'YYYY/MM/DD') WHEN TO_CHAR(SYSDATE,'YYYY/MM/DD')  
-                                                 THEN TO_CHAR(SYSDATE,'HH24:MI')     
-             ELSE TO_CHAR(REG_DT,'YYYY/MM/DD') END  regDt,              
+                                                 THEN TO_CHAR(SYSDATE,'HH24:MI')    
+             ELSE TO_CHAR(REG_DT,'YYYY/MM/DD') END  as regDt,              
              mod_dt  as modDt,     							            
              reg_id  as regId,  								           
              portfolio_Id  as  portfolioId                              
