@@ -155,23 +155,19 @@ public class MemberController {
 	
 	@RequestMapping(value="/portfolio/toHome.spring",method=RequestMethod.GET)
 	public String toHome(HttpServletRequest req, Model model) {
-		HttpSession session = req.getSession();
 		
 		LOG.debug("=======================================");
-		LOG.debug("=doRetrieve/param");
-		LOG.debug("=doRetrieve/memberId:"+session.getAttribute("memberId"));
-		LOG.debug("=======================================");
+		LOG.debug("=toHome/param");
+		HttpSession session=req.getSession();
+		MemberVO outVO=(MemberVO)session.getAttribute("member");
 		
-		MemberVO inVO=new MemberVO();
-		inVO.setMemberId(String.valueOf(session.getAttribute("memberId")));
-		
-		MemberVO outVO=(MemberVO)this.memberService.doSelectOne(inVO);
 			PjtFileVO pjtFileVO=new PjtFileVO();
 			ProjectVO pjtVO=new ProjectVO();
 			LicenseVO licVO=new LicenseVO();
 			MemberVO memVO=new MemberVO();
 			FileMemberVO fileMemberInVO=new FileMemberVO();
 			SkillVO skillVO = new SkillVO();
+			CommentVO commentVO=new CommentVO();
 			
 			pjtFileVO.setMemberId(outVO.getMemberId());
 			skillVO.setMemberId(outVO.getMemberId());
@@ -179,6 +175,7 @@ public class MemberController {
 			licVO.setMemberId(outVO.getMemberId());
 			memVO.setMemberId(outVO.getMemberId());
 			fileMemberInVO.setMemberId(outVO.getMemberId());
+			commentVO.setPortfolioId(outVO.getMemberId());
 			
 			LOG.debug("==========================");
 			LOG.debug("==ProjectService/doRetrieve");
@@ -189,6 +186,8 @@ public class MemberController {
 			List<LicenseVO> licList=(List<LicenseVO>)licService.doRetrieve(licVO);
 			FileMemberVO fileMemberVO=(FileMemberVO)fmService.doSelectOne(fileMemberInVO);
 			List<PjtFileVO> pjtFileList =(List<PjtFileVO>)pjtFileService.doRetrieve(pjtFileVO);
+			List<CommentVO> commentList =(List<CommentVO>)commentService.doRetrieve(commentVO);
+			
 			
 			
 			
@@ -243,6 +242,11 @@ public class MemberController {
 	        model.addAttribute("skillList", skillList);
 	        model.addAttribute("urlList", urlList);
 	        model.addAttribute("pjtFileList", pjtFileList);
+	        model.addAttribute("list", commentList);
+	        
+	        
+	        session.setAttribute("member", outVO);
+	        
 	     
 	return "portfolio/index";
 	 

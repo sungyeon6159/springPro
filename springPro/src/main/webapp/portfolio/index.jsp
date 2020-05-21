@@ -52,7 +52,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
 	    <div class="container">
 	      <div>
-	     	 <a class="navbar-brand" href="index.jsp"><span>B</span>ombom</a>
+	     	 <a class="navbar-brand" href="${hContext}/portfolio/toHome.spring"><span>B</span>ombom</a>
 	     	  <div align="left"> 
 		      	<table> 
 		        	<tbody>
